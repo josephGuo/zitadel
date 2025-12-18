@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/zitadel/logging"
 	"go.opentelemetry.io/otel/attribute"
 	"google.golang.org/grpc/codes"

@@ -48,7 +48,6 @@ require (
 	github.com/gorilla/securecookie v1.1.2
 	github.com/gorilla/websocket v1.5.3
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
-	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.3
 	github.com/h2non/gock v1.2.0
 	github.com/hashicorp/golang-lru/v2 v2.0.7
