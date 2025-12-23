@@ -22,7 +22,7 @@ rm -f protoc-gen-connect-openapi.tar.gz protoc-gen-connect-openapi
 # Determine download URL based on OS and architecture
 if [ "$(uname)" = "Darwin" ]; then
   echo "Downloading for Darwin..."
-  URL="https://github.com/sudorandom/protoc-gen-connect-openapi/releases/download/v0.18.0/protoc-gen-connect-openapi_0.18.0_darwin_all.tar.gz"
+  URL="https://github.com/sudorandom/protoc-gen-connect-openapi/releases/download/v0.21.3/protoc-gen-connect-openapi_0.21.3_darwin_all.tar.gz"
 else
   ARCH=$(uname -m)
   case $ARCH in
@@ -38,7 +38,7 @@ else
       ;;
   esac
   echo "Downloading for Linux ${ARCH}..."
-  URL="https://github.com/sudorandom/protoc-gen-connect-openapi/releases/download/v0.18.0/protoc-gen-connect-openapi_0.18.0_linux_${ARCH}.tar.gz"
+  URL="https://github.com/sudorandom/protoc-gen-connect-openapi/releases/download/v0.21.3/protoc-gen-connect-openapi_0.21.3_linux_${ARCH}.tar.gz"
 fi
 
 # Download with retries

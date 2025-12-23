@@ -3,6 +3,7 @@ services:
     restart: unless-stopped
     #image: ghcr.io/zitadel/zitadel:latest
     # #docker build -f ./apps/api/Dockerfile -t zitadel.local .
+    # #docker build -f ./apps/login/Dockerfile -t zitadel.login .
     image: zitadel.local:local
     #command: start-from-init --masterkey "MasterkeyNeedsToHave32Characters"
     environment:
