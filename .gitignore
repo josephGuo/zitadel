@@ -42,31 +42,31 @@ load-test/.keys
 
 #binaries
 cmd/zitadel/zitadel
-**/statik/statik.go
+#**/statik/statik.go
 /zitadelctl
 /zitadel
 
 # buildfolders and generated files
-console/src/app/proto/generated/
-**.pb.go
-!pkg/grpc/protoc/v2/options.pb.go
-**.proto.mock.go
-**.pb.*.go
-pkg/**/**.connect.go
-**.gen.go
-openapi/**/*.json
-/internal/api/assets/authz.go
-/internal/api/assets/router.go
+# console/src/app/proto/generated/
+# **.pb.go
+# !pkg/grpc/protoc/v2/options.pb.go
+# **.proto.mock.go
+# **.pb.*.go
+# pkg/**/**.connect.go
+# **.gen.go
+# openapi/**/*.json
+# /internal/api/assets/authz.go
+# /internal/api/assets/router.go
 /internal/api/ui/console/static/*
-!/internal/api/ui/console/static/gitkeep
+# !/internal/api/ui/console/static/gitkeep
 docs/docs/apis/auth
 docs/docs/apis/admin
 docs/docs/apis/mgmt
 docs/docs/apis/system
 docs/docs/apis/proto
 **/.sass-cache
-/internal/api/ui/login/static/resources/themes/zitadel/css/zitadel.css
-/internal/api/ui/login/static/resources/themes/zitadel/css/zitadel.css.map
+# /internal/api/ui/login/static/resources/themes/zitadel/css/zitadel.css
+# /internal/api/ui/login/static/resources/themes/zitadel/css/zitadel.css.map
 zitadel-*-*
 !apps/**/zitadel-*-*
 
