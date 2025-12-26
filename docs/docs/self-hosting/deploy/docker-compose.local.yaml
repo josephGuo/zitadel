@@ -1,10 +1,25 @@
 services:
+  #临时容器
+  wait-for-postgres:
+    image: postgres:17.5-alpine3.22
+    container_name: wait-for-postgres
+    command: >
+      sh -c "
+      until pg_isready -h devPostgresql -p 5432;
+      do sleep 2;
+      done
+      "
+    networks:  
+      - infra-pgsql
+
   zitadel:
     restart: unless-stopped
     #image: ghcr.io/zitadel/zitadel:latest
-    # #docker build -f ./apps/api/Dockerfile -t zitadel.local .
-    # #docker build -f ./apps/login/Dockerfile -t zitadel.login .
     image: zitadel.local:local
+    # # docker build -f ./apps/api/Dockerfile -t zitadel.local .
+    #local run: ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+    #docker run: docker run -p 8080:8080 -e ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local:last start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+        
     #command: start-from-init --masterkey "MasterkeyNeedsToHave32Characters"
     environment:
       # See "What's next" to learn about how to serve Zitadel on a different domain or IP.
@@ -15,7 +30,7 @@ services:
       ZITADEL_TLS_ENABLED: false
 
       # Database connection settings.
-      ZITADEL_DATABASE_POSTGRES_HOST: host.docker.internal
+      ZITADEL_DATABASE_POSTGRES_HOST: devPostgresql
       ZITADEL_DATABASE_POSTGRES_PORT: 5432
       # The database is created by the init job if it does not exist.
       ZITADEL_DATABASE_POSTGRES_DATABASE: zitadel
@@ -31,6 +46,7 @@ services:
       # By configuring a login client, the setup job creates a user of type machine with the role IAM_LOGIN_CLIENT.
       # It writes a PAT to the path specified in ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH.
       # The PAT is passed to the login container via the environment variable ZITADEL_SERVICE_USER_TOKEN_FILE.
+      #
       ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH: /current-dir/login-client.pat
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: false
       ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_USERNAME: login-client
@@ -78,25 +94,33 @@ services:
       timeout: 60s
       retries: 5
       start_period: 10s
+    depends_on:
+      wait-for-postgres:
+        condition: service_completed_successfully
     user: "0"
     volumes:
       - .:/current-dir:delegated
-      - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
-    command: ["/usr/local/bin/wait-for-it.sh", "devPostgresql:5432", "--", "start-from-init ", "--masterkey", "MasterkeyNeedsToHave32Characters"]  
+    command: start-from-init --masterkey "MasterkeyNeedsToHave32Characters"
     ports:
       - 8080:8080
       - 3000:3000
-    ## 创建一个名为 external-pgsql 的自定义桥接网络:docker network create external-pgsql
-    ## 连接外部容器到网络:docker network connect external-pgsql devPostgresql
+    ## 创建一个名为 infra-pgsql 的自定义桥接网络:docker network create infra-pgsql
+    ## 连接外部容器到网络:docker network connect infra-pgsql devPostgresql
     #  
     networks:
-      - zitadel
-      - external-pgsql
-
+      - infra-pgsql
+  #http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost and enter Password1! to log in.
+  #Loginname:login-client
+  #userID:352604967703412739
+  #Token:KgTnhml1pXZnXfsDqKiVsy3rAMuwu1jsgTiRQ4-kKe7RKjNHzw1BnSYEja2GJJo9XSgxKg8
+  #
 
   login:
     restart: unless-stopped
-    image: ghcr.io/zitadel/zitadel-login:latest
+    #image: ghcr.io/zitadel/zitadel-login:latest
+    # docker build -f ./apps/login/Dockerfile -t zitadel.login .
+    # docker run -p 3000:3000 -v /path/on/your/host/login-client.pat:/path/in/container/login-client.pat:ro -e ZITADEL_SERVICE_USER_TOKEN_FILE=/path/in/container/login-client.pat ghcr.io/zitadel/zitadel-login:latest
+    image: zitadel-login:latest
     # If you can't use the network_mode service:zitadel, you can pass the environment variables ZITADEL_API_URL=http://zitadel:8080 and CUSTOM_REQUEST_HEADERS=Host:localhost instead.
     environment:
       - ZITADEL_API_URL=http://localhost:8080
@@ -111,33 +135,8 @@ services:
         condition: service_healthy
         restart: false
 
-  db:
-    restart: unless-stopped
-    image: postgres:17
-    environment:
-      PGUSER: postgres
-      POSTGRES_PASSWORD: postgres
-    healthcheck:
-      test: 
-      - CMD-SHELL
-      - pg_isready
-      - -d
-      - zitadel
-      - -U
-      - postgres
-      interval: 10s
-      timeout: 30s
-      retries: 5
-      start_period: 20s
-    networks:
-      - zitadel
-    ports:
-      - 5432:5432
-    volumes:
-      - 'data:/var/lib/postgresql/data:rw'
-
 networks:
-  zitadel:
+  infra-pgsql:
+    external: true
+    name: infra-pgsql
 
-volumes:
-  data:
