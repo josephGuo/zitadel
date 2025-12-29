@@ -1,0 +1,9 @@
+# pnpm nx run-many --target generate
+# pnpm nx run-many --target build
+
+# docker build -f ./apps/api/Dockerfile -t zitadel.api.loc .
+#local run: ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+#docker run: docker run -p 8080:8080 -e ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local:last start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+
+# docker build -f ./apps/login/Dockerfile.local -t zitadel.login.loc .
+# docker run -p 3000:3000 -v /path/on/your/host/login-client.pat:/path/in/container/login-client.pat:ro -e ZITADEL_SERVICE_USER_TOKEN_FILE=/path/in/container/login-client.pat ghcr.io/zitadel/zitadel-login:latest

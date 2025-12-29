@@ -1,1 +1,11 @@
+# generate code 
+    pnpm nx run-many --target generate
+# build api&login    
+    pnpm nx run-many --target build
+# build docker images
+    docker build -f ./apps/api/Dockerfile -t zitadel.api.loc .
+    docker build -f ./apps/login/Dockerfile.local -t zitadel.login.loc .
+# start zitadel with docker-compose
+    docker-compose -f docs/docs/self-hosting/deploy/docker-compose.local.yaml up -d
+# default user login
 Visit http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost and enter `Password1!` to log in.
