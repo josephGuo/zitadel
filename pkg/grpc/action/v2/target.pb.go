@@ -28,6 +28,67 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type PayloadType int32
+
+const (
+	PayloadType_PAYLOAD_TYPE_UNSPECIFIED PayloadType = 0
+	// PAYLOAD_TYPE_JSON will send the payload as JSON in the body of the request.
+	// For integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.
+	// This is the current default, for backwards compatibility reasons.
+	PayloadType_PAYLOAD_TYPE_JSON PayloadType = 1
+	// PAYLOAD_TYPE_JWT will send the payload as JSON Web Token (JWT) in the body of the request.
+	// This allows the receiver to verify the authenticity and integrity of the payload
+	// using the signing key (published on the JWKS URL).
+	PayloadType_PAYLOAD_TYPE_JWT PayloadType = 2
+	// PAYLOAD_TYPE_JWE will send the payload as Encrypted JWT (JWE) in the body of the request.
+	// This allows additional security, e.g when passing sensitive information.
+	// You can provide your own public key for encryption.
+	PayloadType_PAYLOAD_TYPE_JWE PayloadType = 3
+)
+
+// Enum value maps for PayloadType.
+var (
+	PayloadType_name = map[int32]string{
+		0: "PAYLOAD_TYPE_UNSPECIFIED",
+		1: "PAYLOAD_TYPE_JSON",
+		2: "PAYLOAD_TYPE_JWT",
+		3: "PAYLOAD_TYPE_JWE",
+	}
+	PayloadType_value = map[string]int32{
+		"PAYLOAD_TYPE_UNSPECIFIED": 0,
+		"PAYLOAD_TYPE_JSON":        1,
+		"PAYLOAD_TYPE_JWT":         2,
+		"PAYLOAD_TYPE_JWE":         3,
+	}
+)
+
+func (x PayloadType) Enum() *PayloadType {
+	p := new(PayloadType)
+	*p = x
+	return p
+}
+
+func (x PayloadType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PayloadType) Descriptor() protoreflect.EnumDescriptor {
+	return file_zitadel_action_v2_target_proto_enumTypes[0].Descriptor()
+}
+
+func (PayloadType) Type() protoreflect.EnumType {
+	return &file_zitadel_action_v2_target_proto_enumTypes[0]
+}
+
+func (x PayloadType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PayloadType.Descriptor instead.
+func (PayloadType) EnumDescriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_target_proto_rawDescGZIP(), []int{0}
+}
+
 type Target struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The unique identifier of the target.
@@ -56,7 +117,16 @@ type Target struct {
 	// on the receiver side. The key should be treated as a secret and only known to ZITADEL and the receiver.
 	// The signature is included in the request header `X-ZITADEL-Signature`
 	// and calculated over the raw body of the request using HMAC with SHA256.
-	SigningKey    string `protobuf:"bytes,10,opt,name=signing_key,json=signingKey,proto3" json:"signing_key,omitempty"`
+	SigningKey string `protobuf:"bytes,10,opt,name=signing_key,json=signingKey,proto3" json:"signing_key,omitempty"`
+	// Payload type defines how the payload is formatted and secured.
+	// The default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.
+	// For integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.
+	// You can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends
+	// the payload as a signed JWT in the body of the request. This allows the receiver to verify
+	// the authenticity and integrity of the payload using the signing key (published on the JWKS URL).
+	// If you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload
+	// as an encrypted JWT in the body of the request. You can provide your own public key for encryption.
+	PayloadType   PayloadType `protobuf:"varint,11,opt,name=payload_type,json=payloadType,proto3,enum=zitadel.action.v2.PayloadType" json:"payload_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -172,6 +242,13 @@ func (x *Target) GetSigningKey() string {
 		return x.SigningKey
 	}
 	return ""
+}
+
+func (x *Target) GetPayloadType() PayloadType {
+	if x != nil {
+		return x.PayloadType
+	}
+	return PayloadType_PAYLOAD_TYPE_UNSPECIFIED
 }
 
 type isTarget_TargetType interface {
@@ -322,11 +399,117 @@ func (*RESTAsync) Descriptor() ([]byte, []int) {
 	return file_zitadel_action_v2_target_proto_rawDescGZIP(), []int{3}
 }
 
+type PublicKey struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// KeyID is the unique identifier of the public key.
+	// It's also used as the `kid` field in the JWE header when the payload type is set to `PAYLOAD_TYPE_JWE`.
+	KeyId string `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	// Active indicates whether the public key is active and used for payload encryption.
+	// Only one public key can be active at a time.
+	Active bool `protobuf:"varint,2,opt,name=active,proto3" json:"active,omitempty"`
+	// The public key in PEM format.
+	PublicKey []byte `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	// Fingerprint is the fingerprint of the public key. It's prefixed with the hashing algorithm used
+	// and base64 encoded without padding, e.g. `SHA256:STqK+Sd4qgdu+UjiwI8NBjOD6P7UqQ42EZYIdySEyTw`.
+	// The fingerprint can be used to easily compare the public key with other sources.
+	Fingerprint string `protobuf:"bytes,4,opt,name=fingerprint,proto3" json:"fingerprint,omitempty"`
+	// ExpirationDate is the timestamp when the public key automatically expires and
+	// no longer will be used for payload encryption, even when active.
+	// Be sure to upload and activate a new public key before the expiration date
+	// to avoid failed executions.
+	ExpirationDate *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
+	// CreationDate is the timestamp when the the public key was uploaded.
+	CreationDate *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=creation_date,json=creationDate,proto3" json:"creation_date,omitempty"`
+	// ChangeDate is the timestamp when the public key was last changed, e.g. activated or deactivated.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublicKey) Reset() {
+	*x = PublicKey{}
+	mi := &file_zitadel_action_v2_target_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublicKey) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublicKey) ProtoMessage() {}
+
+func (x *PublicKey) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_target_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublicKey.ProtoReflect.Descriptor instead.
+func (*PublicKey) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_target_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *PublicKey) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+func (x *PublicKey) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *PublicKey) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *PublicKey) GetFingerprint() string {
+	if x != nil {
+		return x.Fingerprint
+	}
+	return ""
+}
+
+func (x *PublicKey) GetExpirationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationDate
+	}
+	return nil
+}
+
+func (x *PublicKey) GetCreationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreationDate
+	}
+	return nil
+}
+
+func (x *PublicKey) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
 var File_zitadel_action_v2_target_proto protoreflect.FileDescriptor
 
 const file_zitadel_action_v2_target_proto_rawDesc = "" +
 	"\n" +
-	"\x1ezitadel/action/v2/target.proto\x12\x11zitadel.action.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa5\x05\n" +
+	"\x1ezitadel/action/v2/target.proto\x12\x11zitadel.action.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x82\x06\n" +
 	"\x06Target\x12(\n" +
 	"\x02id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629012906488334\"R\x02id\x12`\n" +
 	"\rcreation_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\x12\\\n" +
@@ -343,13 +526,29 @@ const file_zitadel_action_v2_target_proto_rawDesc = "" +
 	"\vsigning_key\x18\n" +
 	" \x01(\tB\x0f\x92A\fJ\n" +
 	"\"98KmsU67\"R\n" +
-	"signingKeyB\r\n" +
+	"signingKey\x12[\n" +
+	"\fpayload_type\x18\v \x01(\x0e2\x1e.zitadel.action.v2.PayloadTypeB\x18\x92A\x15J\x13\"PAYLOAD_TYPE_JSON\"R\vpayloadTypeB\r\n" +
 	"\vtarget_type\";\n" +
 	"\vRESTWebhook\x12,\n" +
 	"\x12interrupt_on_error\x18\x01 \x01(\bR\x10interruptOnError\"8\n" +
 	"\bRESTCall\x12,\n" +
 	"\x12interrupt_on_error\x18\x01 \x01(\bR\x10interruptOnError\"\v\n" +
-	"\tRESTAsyncB6Z4github.com/zitadel/zitadel/pkg/grpc/action/v2;actionb\x06proto3"
+	"\tRESTAsync\"\xa7\x04\n" +
+	"\tPublicKey\x12/\n" +
+	"\x06key_id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629032906489576\"R\x05keyId\x12!\n" +
+	"\x06active\x18\x02 \x01(\bB\t\x92A\x06J\x04trueR\x06active\x12C\n" +
+	"\n" +
+	"public_key\x18\x03 \x01(\fB$\x92A!J\x1f\"-----BEGIN PUBLIC KEY-----...\"R\tpublicKey\x12[\n" +
+	"\vfingerprint\x18\x04 \x01(\tB9\x92A6J4\"SHA256:STqK+Sd4qgdu+UjiwI8NBjOD6P7UqQ42EZYIdySEyTw\"R\vfingerprint\x12d\n" +
+	"\x0fexpiration_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\x0eexpirationDate\x12`\n" +
+	"\rcreation_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\x12\\\n" +
+	"\vchange_date\x18\a \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\n" +
+	"changeDate*n\n" +
+	"\vPayloadType\x12\x1c\n" +
+	"\x18PAYLOAD_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
+	"\x11PAYLOAD_TYPE_JSON\x10\x01\x12\x14\n" +
+	"\x10PAYLOAD_TYPE_JWT\x10\x02\x12\x14\n" +
+	"\x10PAYLOAD_TYPE_JWE\x10\x03B6Z4github.com/zitadel/zitadel/pkg/grpc/action/v2;actionb\x06proto3"
 
 var (
 	file_zitadel_action_v2_target_proto_rawDescOnce sync.Once
@@ -363,27 +562,34 @@ func file_zitadel_action_v2_target_proto_rawDescGZIP() []byte {
 	return file_zitadel_action_v2_target_proto_rawDescData
 }
 
-var file_zitadel_action_v2_target_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_zitadel_action_v2_target_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_zitadel_action_v2_target_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_zitadel_action_v2_target_proto_goTypes = []any{
-	(*Target)(nil),                // 0: zitadel.action.v2.Target
-	(*RESTWebhook)(nil),           // 1: zitadel.action.v2.RESTWebhook
-	(*RESTCall)(nil),              // 2: zitadel.action.v2.RESTCall
-	(*RESTAsync)(nil),             // 3: zitadel.action.v2.RESTAsync
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),   // 5: google.protobuf.Duration
+	(PayloadType)(0),              // 0: zitadel.action.v2.PayloadType
+	(*Target)(nil),                // 1: zitadel.action.v2.Target
+	(*RESTWebhook)(nil),           // 2: zitadel.action.v2.RESTWebhook
+	(*RESTCall)(nil),              // 3: zitadel.action.v2.RESTCall
+	(*RESTAsync)(nil),             // 4: zitadel.action.v2.RESTAsync
+	(*PublicKey)(nil),             // 5: zitadel.action.v2.PublicKey
+	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),   // 7: google.protobuf.Duration
 }
 var file_zitadel_action_v2_target_proto_depIdxs = []int32{
-	4, // 0: zitadel.action.v2.Target.creation_date:type_name -> google.protobuf.Timestamp
-	4, // 1: zitadel.action.v2.Target.change_date:type_name -> google.protobuf.Timestamp
-	1, // 2: zitadel.action.v2.Target.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
-	2, // 3: zitadel.action.v2.Target.rest_call:type_name -> zitadel.action.v2.RESTCall
-	3, // 4: zitadel.action.v2.Target.rest_async:type_name -> zitadel.action.v2.RESTAsync
-	5, // 5: zitadel.action.v2.Target.timeout:type_name -> google.protobuf.Duration
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	6,  // 0: zitadel.action.v2.Target.creation_date:type_name -> google.protobuf.Timestamp
+	6,  // 1: zitadel.action.v2.Target.change_date:type_name -> google.protobuf.Timestamp
+	2,  // 2: zitadel.action.v2.Target.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
+	3,  // 3: zitadel.action.v2.Target.rest_call:type_name -> zitadel.action.v2.RESTCall
+	4,  // 4: zitadel.action.v2.Target.rest_async:type_name -> zitadel.action.v2.RESTAsync
+	7,  // 5: zitadel.action.v2.Target.timeout:type_name -> google.protobuf.Duration
+	0,  // 6: zitadel.action.v2.Target.payload_type:type_name -> zitadel.action.v2.PayloadType
+	6,  // 7: zitadel.action.v2.PublicKey.expiration_date:type_name -> google.protobuf.Timestamp
+	6,  // 8: zitadel.action.v2.PublicKey.creation_date:type_name -> google.protobuf.Timestamp
+	6,  // 9: zitadel.action.v2.PublicKey.change_date:type_name -> google.protobuf.Timestamp
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_action_v2_target_proto_init() }
@@ -401,13 +607,14 @@ func file_zitadel_action_v2_target_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_action_v2_target_proto_rawDesc), len(file_zitadel_action_v2_target_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      1,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_zitadel_action_v2_target_proto_goTypes,
 		DependencyIndexes: file_zitadel_action_v2_target_proto_depIdxs,
+		EnumInfos:         file_zitadel_action_v2_target_proto_enumTypes,
 		MessageInfos:      file_zitadel_action_v2_target_proto_msgTypes,
 	}.Build()
 	File_zitadel_action_v2_target_proto = out.File

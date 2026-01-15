@@ -110,6 +110,8 @@ func (m *CreateTargetRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for PayloadType
+
 	oneofTargetTypePresent := false
 	switch v := m.TargetType.(type) {
 	case *CreateTargetRequest_RestWebhook:
@@ -499,6 +501,8 @@ func (m *UpdateTargetRequest) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
+
+	// no validation rules for PayloadType
 
 	switch v := m.TargetType.(type) {
 	case *UpdateTargetRequest_RestWebhook:
@@ -1763,6 +1767,1409 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ListTargetsResponseValidationError{}
+
+// Validate checks the field values on AddPublicKeyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddPublicKeyRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddPublicKeyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddPublicKeyRequestMultiError, or nil if none found.
+func (m *AddPublicKeyRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddPublicKeyRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTargetId()); l < 1 || l > 200 {
+		err := AddPublicKeyRequestValidationError{
+			field:  "TargetId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := len(m.GetPublicKey()); l < 1 || l > 8192 {
+		err := AddPublicKeyRequestValidationError{
+			field:  "PublicKey",
+			reason: "value length must be between 1 and 8192 bytes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.ExpirationDate != nil {
+
+		if all {
+			switch v := interface{}(m.GetExpirationDate()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AddPublicKeyRequestValidationError{
+						field:  "ExpirationDate",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AddPublicKeyRequestValidationError{
+						field:  "ExpirationDate",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetExpirationDate()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AddPublicKeyRequestValidationError{
+					field:  "ExpirationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return AddPublicKeyRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddPublicKeyRequestMultiError is an error wrapping multiple validation
+// errors returned by AddPublicKeyRequest.ValidateAll() if the designated
+// constraints aren't met.
+type AddPublicKeyRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddPublicKeyRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddPublicKeyRequestMultiError) AllErrors() []error { return m }
+
+// AddPublicKeyRequestValidationError is the validation error returned by
+// AddPublicKeyRequest.Validate if the designated constraints aren't met.
+type AddPublicKeyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddPublicKeyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddPublicKeyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddPublicKeyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddPublicKeyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddPublicKeyRequestValidationError) ErrorName() string {
+	return "AddPublicKeyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddPublicKeyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddPublicKeyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddPublicKeyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddPublicKeyRequestValidationError{}
+
+// Validate checks the field values on AddPublicKeyResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddPublicKeyResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddPublicKeyResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddPublicKeyResponseMultiError, or nil if none found.
+func (m *AddPublicKeyResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddPublicKeyResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for KeyId
+
+	if all {
+		switch v := interface{}(m.GetCreationDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AddPublicKeyResponseValidationError{
+					field:  "CreationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AddPublicKeyResponseValidationError{
+					field:  "CreationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetCreationDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AddPublicKeyResponseValidationError{
+				field:  "CreationDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return AddPublicKeyResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddPublicKeyResponseMultiError is an error wrapping multiple validation
+// errors returned by AddPublicKeyResponse.ValidateAll() if the designated
+// constraints aren't met.
+type AddPublicKeyResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddPublicKeyResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddPublicKeyResponseMultiError) AllErrors() []error { return m }
+
+// AddPublicKeyResponseValidationError is the validation error returned by
+// AddPublicKeyResponse.Validate if the designated constraints aren't met.
+type AddPublicKeyResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddPublicKeyResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddPublicKeyResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddPublicKeyResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddPublicKeyResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddPublicKeyResponseValidationError) ErrorName() string {
+	return "AddPublicKeyResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddPublicKeyResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddPublicKeyResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddPublicKeyResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddPublicKeyResponseValidationError{}
+
+// Validate checks the field values on ActivatePublicKeyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ActivatePublicKeyRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ActivatePublicKeyRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ActivatePublicKeyRequestMultiError, or nil if none found.
+func (m *ActivatePublicKeyRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ActivatePublicKeyRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTargetId()); l < 1 || l > 200 {
+		err := ActivatePublicKeyRequestValidationError{
+			field:  "TargetId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetKeyId()); l < 1 || l > 200 {
+		err := ActivatePublicKeyRequestValidationError{
+			field:  "KeyId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ActivatePublicKeyRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ActivatePublicKeyRequestMultiError is an error wrapping multiple validation
+// errors returned by ActivatePublicKeyRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ActivatePublicKeyRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ActivatePublicKeyRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ActivatePublicKeyRequestMultiError) AllErrors() []error { return m }
+
+// ActivatePublicKeyRequestValidationError is the validation error returned by
+// ActivatePublicKeyRequest.Validate if the designated constraints aren't met.
+type ActivatePublicKeyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ActivatePublicKeyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ActivatePublicKeyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ActivatePublicKeyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ActivatePublicKeyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ActivatePublicKeyRequestValidationError) ErrorName() string {
+	return "ActivatePublicKeyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ActivatePublicKeyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sActivatePublicKeyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ActivatePublicKeyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ActivatePublicKeyRequestValidationError{}
+
+// Validate checks the field values on ActivatePublicKeyResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ActivatePublicKeyResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ActivatePublicKeyResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ActivatePublicKeyResponseMultiError, or nil if none found.
+func (m *ActivatePublicKeyResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ActivatePublicKeyResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetChangeDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ActivatePublicKeyResponseValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ActivatePublicKeyResponseValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetChangeDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ActivatePublicKeyResponseValidationError{
+				field:  "ChangeDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ActivatePublicKeyResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ActivatePublicKeyResponseMultiError is an error wrapping multiple validation
+// errors returned by ActivatePublicKeyResponse.ValidateAll() if the
+// designated constraints aren't met.
+type ActivatePublicKeyResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ActivatePublicKeyResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ActivatePublicKeyResponseMultiError) AllErrors() []error { return m }
+
+// ActivatePublicKeyResponseValidationError is the validation error returned by
+// ActivatePublicKeyResponse.Validate if the designated constraints aren't met.
+type ActivatePublicKeyResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ActivatePublicKeyResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ActivatePublicKeyResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ActivatePublicKeyResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ActivatePublicKeyResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ActivatePublicKeyResponseValidationError) ErrorName() string {
+	return "ActivatePublicKeyResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ActivatePublicKeyResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sActivatePublicKeyResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ActivatePublicKeyResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ActivatePublicKeyResponseValidationError{}
+
+// Validate checks the field values on DeactivatePublicKeyRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeactivatePublicKeyRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeactivatePublicKeyRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeactivatePublicKeyRequestMultiError, or nil if none found.
+func (m *DeactivatePublicKeyRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeactivatePublicKeyRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTargetId()); l < 1 || l > 200 {
+		err := DeactivatePublicKeyRequestValidationError{
+			field:  "TargetId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetKeyId()); l < 1 || l > 200 {
+		err := DeactivatePublicKeyRequestValidationError{
+			field:  "KeyId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeactivatePublicKeyRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeactivatePublicKeyRequestMultiError is an error wrapping multiple
+// validation errors returned by DeactivatePublicKeyRequest.ValidateAll() if
+// the designated constraints aren't met.
+type DeactivatePublicKeyRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeactivatePublicKeyRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeactivatePublicKeyRequestMultiError) AllErrors() []error { return m }
+
+// DeactivatePublicKeyRequestValidationError is the validation error returned
+// by DeactivatePublicKeyRequest.Validate if the designated constraints aren't met.
+type DeactivatePublicKeyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeactivatePublicKeyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeactivatePublicKeyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeactivatePublicKeyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeactivatePublicKeyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeactivatePublicKeyRequestValidationError) ErrorName() string {
+	return "DeactivatePublicKeyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeactivatePublicKeyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeactivatePublicKeyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeactivatePublicKeyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeactivatePublicKeyRequestValidationError{}
+
+// Validate checks the field values on DeactivatePublicKeyResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeactivatePublicKeyResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeactivatePublicKeyResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeactivatePublicKeyResponseMultiError, or nil if none found.
+func (m *DeactivatePublicKeyResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeactivatePublicKeyResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetChangeDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DeactivatePublicKeyResponseValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DeactivatePublicKeyResponseValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetChangeDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DeactivatePublicKeyResponseValidationError{
+				field:  "ChangeDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return DeactivatePublicKeyResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeactivatePublicKeyResponseMultiError is an error wrapping multiple
+// validation errors returned by DeactivatePublicKeyResponse.ValidateAll() if
+// the designated constraints aren't met.
+type DeactivatePublicKeyResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeactivatePublicKeyResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeactivatePublicKeyResponseMultiError) AllErrors() []error { return m }
+
+// DeactivatePublicKeyResponseValidationError is the validation error returned
+// by DeactivatePublicKeyResponse.Validate if the designated constraints
+// aren't met.
+type DeactivatePublicKeyResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeactivatePublicKeyResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeactivatePublicKeyResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeactivatePublicKeyResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeactivatePublicKeyResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeactivatePublicKeyResponseValidationError) ErrorName() string {
+	return "DeactivatePublicKeyResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeactivatePublicKeyResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeactivatePublicKeyResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeactivatePublicKeyResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeactivatePublicKeyResponseValidationError{}
+
+// Validate checks the field values on RemovePublicKeyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RemovePublicKeyRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RemovePublicKeyRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RemovePublicKeyRequestMultiError, or nil if none found.
+func (m *RemovePublicKeyRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RemovePublicKeyRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTargetId()); l < 1 || l > 200 {
+		err := RemovePublicKeyRequestValidationError{
+			field:  "TargetId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetKeyId()); l < 1 || l > 200 {
+		err := RemovePublicKeyRequestValidationError{
+			field:  "KeyId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return RemovePublicKeyRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// RemovePublicKeyRequestMultiError is an error wrapping multiple validation
+// errors returned by RemovePublicKeyRequest.ValidateAll() if the designated
+// constraints aren't met.
+type RemovePublicKeyRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RemovePublicKeyRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RemovePublicKeyRequestMultiError) AllErrors() []error { return m }
+
+// RemovePublicKeyRequestValidationError is the validation error returned by
+// RemovePublicKeyRequest.Validate if the designated constraints aren't met.
+type RemovePublicKeyRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemovePublicKeyRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemovePublicKeyRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemovePublicKeyRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemovePublicKeyRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemovePublicKeyRequestValidationError) ErrorName() string {
+	return "RemovePublicKeyRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemovePublicKeyRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemovePublicKeyRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemovePublicKeyRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemovePublicKeyRequestValidationError{}
+
+// Validate checks the field values on RemovePublicKeyResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RemovePublicKeyResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RemovePublicKeyResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RemovePublicKeyResponseMultiError, or nil if none found.
+func (m *RemovePublicKeyResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RemovePublicKeyResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetDeletionDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RemovePublicKeyResponseValidationError{
+					field:  "DeletionDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RemovePublicKeyResponseValidationError{
+					field:  "DeletionDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetDeletionDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RemovePublicKeyResponseValidationError{
+				field:  "DeletionDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return RemovePublicKeyResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// RemovePublicKeyResponseMultiError is an error wrapping multiple validation
+// errors returned by RemovePublicKeyResponse.ValidateAll() if the designated
+// constraints aren't met.
+type RemovePublicKeyResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RemovePublicKeyResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RemovePublicKeyResponseMultiError) AllErrors() []error { return m }
+
+// RemovePublicKeyResponseValidationError is the validation error returned by
+// RemovePublicKeyResponse.Validate if the designated constraints aren't met.
+type RemovePublicKeyResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemovePublicKeyResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemovePublicKeyResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemovePublicKeyResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemovePublicKeyResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemovePublicKeyResponseValidationError) ErrorName() string {
+	return "RemovePublicKeyResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemovePublicKeyResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemovePublicKeyResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemovePublicKeyResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemovePublicKeyResponseValidationError{}
+
+// Validate checks the field values on ListPublicKeysRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListPublicKeysRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListPublicKeysRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListPublicKeysRequestMultiError, or nil if none found.
+func (m *ListPublicKeysRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListPublicKeysRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTargetId()); l < 1 || l > 200 {
+		err := ListPublicKeysRequestValidationError{
+			field:  "TargetId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for SortingColumn
+
+	for idx, item := range m.GetFilters() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListPublicKeysRequestValidationError{
+						field:  fmt.Sprintf("Filters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListPublicKeysRequestValidationError{
+						field:  fmt.Sprintf("Filters[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListPublicKeysRequestValidationError{
+					field:  fmt.Sprintf("Filters[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Pagination != nil {
+
+		if all {
+			switch v := interface{}(m.GetPagination()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListPublicKeysRequestValidationError{
+						field:  "Pagination",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListPublicKeysRequestValidationError{
+						field:  "Pagination",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetPagination()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListPublicKeysRequestValidationError{
+					field:  "Pagination",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListPublicKeysRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListPublicKeysRequestMultiError is an error wrapping multiple validation
+// errors returned by ListPublicKeysRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListPublicKeysRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListPublicKeysRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListPublicKeysRequestMultiError) AllErrors() []error { return m }
+
+// ListPublicKeysRequestValidationError is the validation error returned by
+// ListPublicKeysRequest.Validate if the designated constraints aren't met.
+type ListPublicKeysRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListPublicKeysRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListPublicKeysRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListPublicKeysRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListPublicKeysRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListPublicKeysRequestValidationError) ErrorName() string {
+	return "ListPublicKeysRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListPublicKeysRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListPublicKeysRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListPublicKeysRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListPublicKeysRequestValidationError{}
+
+// Validate checks the field values on ListPublicKeysResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListPublicKeysResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListPublicKeysResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListPublicKeysResponseMultiError, or nil if none found.
+func (m *ListPublicKeysResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListPublicKeysResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetPagination()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ListPublicKeysResponseValidationError{
+					field:  "Pagination",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ListPublicKeysResponseValidationError{
+					field:  "Pagination",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPagination()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListPublicKeysResponseValidationError{
+				field:  "Pagination",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetPublicKeys() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListPublicKeysResponseValidationError{
+						field:  fmt.Sprintf("PublicKeys[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListPublicKeysResponseValidationError{
+						field:  fmt.Sprintf("PublicKeys[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListPublicKeysResponseValidationError{
+					field:  fmt.Sprintf("PublicKeys[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListPublicKeysResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListPublicKeysResponseMultiError is an error wrapping multiple validation
+// errors returned by ListPublicKeysResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListPublicKeysResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListPublicKeysResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListPublicKeysResponseMultiError) AllErrors() []error { return m }
+
+// ListPublicKeysResponseValidationError is the validation error returned by
+// ListPublicKeysResponse.Validate if the designated constraints aren't met.
+type ListPublicKeysResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListPublicKeysResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListPublicKeysResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListPublicKeysResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListPublicKeysResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListPublicKeysResponseValidationError) ErrorName() string {
+	return "ListPublicKeysResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListPublicKeysResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListPublicKeysResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListPublicKeysResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListPublicKeysResponseValidationError{}
 
 // Validate checks the field values on SetExecutionRequest with the rules
 // defined in the proto definition for this message. If any rules are

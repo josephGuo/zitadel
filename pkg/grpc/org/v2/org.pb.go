@@ -78,12 +78,66 @@ func (OrganizationState) EnumDescriptor() ([]byte, []int) {
 	return file_zitadel_org_v2_org_proto_rawDescGZIP(), []int{0}
 }
 
+type DomainValidationType int32
+
+const (
+	DomainValidationType_DOMAIN_VALIDATION_TYPE_UNSPECIFIED DomainValidationType = 0
+	// HTTP validation requires you to host a specific file on your domain.
+	// This file is checked by us to verify that you own the domain.
+	DomainValidationType_DOMAIN_VALIDATION_TYPE_HTTP DomainValidationType = 1
+	// DNS validation requires you to create a specific TXT record in your domain's DNS settings.
+	// This record is checked by us to verify that you own the domain.
+	DomainValidationType_DOMAIN_VALIDATION_TYPE_DNS DomainValidationType = 2
+)
+
+// Enum value maps for DomainValidationType.
+var (
+	DomainValidationType_name = map[int32]string{
+		0: "DOMAIN_VALIDATION_TYPE_UNSPECIFIED",
+		1: "DOMAIN_VALIDATION_TYPE_HTTP",
+		2: "DOMAIN_VALIDATION_TYPE_DNS",
+	}
+	DomainValidationType_value = map[string]int32{
+		"DOMAIN_VALIDATION_TYPE_UNSPECIFIED": 0,
+		"DOMAIN_VALIDATION_TYPE_HTTP":        1,
+		"DOMAIN_VALIDATION_TYPE_DNS":         2,
+	}
+)
+
+func (x DomainValidationType) Enum() *DomainValidationType {
+	p := new(DomainValidationType)
+	*p = x
+	return p
+}
+
+func (x DomainValidationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DomainValidationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_zitadel_org_v2_org_proto_enumTypes[1].Descriptor()
+}
+
+func (DomainValidationType) Type() protoreflect.EnumType {
+	return &file_zitadel_org_v2_org_proto_enumTypes[1]
+}
+
+func (x DomainValidationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DomainValidationType.Descriptor instead.
+func (DomainValidationType) EnumDescriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_proto_rawDescGZIP(), []int{1}
+}
+
 type Organization struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier of the organization.
-	Id      string      `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID is the unique identifier of the organization.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Details about the organizations' creation and change date.
 	Details *v2.Details `protobuf:"bytes,2,opt,name=details,proto3" json:"details,omitempty"`
-	// Current state of the organization, for example active, inactive and deleted.
+	// Current state of the organization, for example active, inactive or deleted.
 	State OrganizationState `protobuf:"varint,3,opt,name=state,proto3,enum=zitadel.org.v2.OrganizationState" json:"state,omitempty"`
 	// Name of the organization.
 	Name string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
@@ -158,6 +212,87 @@ func (x *Organization) GetPrimaryDomain() string {
 	return ""
 }
 
+type Domain struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization the domain belongs to.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Domain is the fully qualified domain name.
+	Domain string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	// IsVerified is a boolean flag indicating if the domain has been verified.
+	IsVerified bool `protobuf:"varint,3,opt,name=is_verified,json=isVerified,proto3" json:"is_verified,omitempty"`
+	// IsPrimary is a boolean flag indicating if the domain is the primary domain of the organization.
+	IsPrimary bool `protobuf:"varint,4,opt,name=is_primary,json=isPrimary,proto3" json:"is_primary,omitempty"`
+	// ValidationType indicates the protocol used to validate the domain ownership.
+	ValidationType DomainValidationType `protobuf:"varint,5,opt,name=validation_type,json=validationType,proto3,enum=zitadel.org.v2.DomainValidationType" json:"validation_type,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Domain) Reset() {
+	*x = Domain{}
+	mi := &file_zitadel_org_v2_org_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Domain) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Domain) ProtoMessage() {}
+
+func (x *Domain) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Domain.ProtoReflect.Descriptor instead.
+func (*Domain) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Domain) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *Domain) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *Domain) GetIsVerified() bool {
+	if x != nil {
+		return x.IsVerified
+	}
+	return false
+}
+
+func (x *Domain) GetIsPrimary() bool {
+	if x != nil {
+		return x.IsPrimary
+	}
+	return false
+}
+
+func (x *Domain) GetValidationType() DomainValidationType {
+	if x != nil {
+		return x.ValidationType
+	}
+	return DomainValidationType_DOMAIN_VALIDATION_TYPE_UNSPECIFIED
+}
+
 var File_zitadel_org_v2_org_proto protoreflect.FileDescriptor
 
 const file_zitadel_org_v2_org_proto_rawDesc = "" +
@@ -168,12 +303,24 @@ const file_zitadel_org_v2_org_proto_rawDesc = "" +
 	"\adetails\x18\x02 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\x127\n" +
 	"\x05state\x18\x03 \x01(\x0e2!.zitadel.org.v2.OrganizationStateR\x05state\x12\"\n" +
 	"\x04name\x18\x04 \x01(\tB\x0e\x92A\vJ\t\"ZITADEL\"R\x04name\x12;\n" +
-	"\x0eprimary_domain\x18\x05 \x01(\tB\x14\x92A\x11J\x0f\"zitadel.cloud\"R\rprimaryDomain*\x97\x01\n" +
+	"\x0eprimary_domain\x18\x05 \x01(\tB\x14\x92A\x11J\x0f\"zitadel.cloud\"R\rprimaryDomain\"\x86\x02\n" +
+	"\x06Domain\x12A\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629023906488334\"R\x0eorganizationId\x12*\n" +
+	"\x06domain\x18\x02 \x01(\tB\x12\x92A\x0fJ\r\"zitadel.com\"R\x06domain\x12\x1f\n" +
+	"\vis_verified\x18\x03 \x01(\bR\n" +
+	"isVerified\x12\x1d\n" +
+	"\n" +
+	"is_primary\x18\x04 \x01(\bR\tisPrimary\x12M\n" +
+	"\x0fvalidation_type\x18\x05 \x01(\x0e2$.zitadel.org.v2.DomainValidationTypeR\x0evalidationType*\x97\x01\n" +
 	"\x11OrganizationState\x12\"\n" +
 	"\x1eORGANIZATION_STATE_UNSPECIFIED\x10\x00\x12\x1d\n" +
 	"\x19ORGANIZATION_STATE_ACTIVE\x10\x01\x12\x1f\n" +
 	"\x1bORGANIZATION_STATE_INACTIVE\x10\x02\x12\x1e\n" +
-	"\x1aORGANIZATION_STATE_REMOVED\x10\x03B0Z.github.com/zitadel/zitadel/pkg/grpc/org/v2;orgb\x06proto3"
+	"\x1aORGANIZATION_STATE_REMOVED\x10\x03*\x7f\n" +
+	"\x14DomainValidationType\x12&\n" +
+	"\"DOMAIN_VALIDATION_TYPE_UNSPECIFIED\x10\x00\x12\x1f\n" +
+	"\x1bDOMAIN_VALIDATION_TYPE_HTTP\x10\x01\x12\x1e\n" +
+	"\x1aDOMAIN_VALIDATION_TYPE_DNS\x10\x02B0Z.github.com/zitadel/zitadel/pkg/grpc/org/v2;orgb\x06proto3"
 
 var (
 	file_zitadel_org_v2_org_proto_rawDescOnce sync.Once
@@ -187,21 +334,24 @@ func file_zitadel_org_v2_org_proto_rawDescGZIP() []byte {
 	return file_zitadel_org_v2_org_proto_rawDescData
 }
 
-var file_zitadel_org_v2_org_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_zitadel_org_v2_org_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_zitadel_org_v2_org_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_zitadel_org_v2_org_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_zitadel_org_v2_org_proto_goTypes = []any{
-	(OrganizationState)(0), // 0: zitadel.org.v2.OrganizationState
-	(*Organization)(nil),   // 1: zitadel.org.v2.Organization
-	(*v2.Details)(nil),     // 2: zitadel.object.v2.Details
+	(OrganizationState)(0),    // 0: zitadel.org.v2.OrganizationState
+	(DomainValidationType)(0), // 1: zitadel.org.v2.DomainValidationType
+	(*Organization)(nil),      // 2: zitadel.org.v2.Organization
+	(*Domain)(nil),            // 3: zitadel.org.v2.Domain
+	(*v2.Details)(nil),        // 4: zitadel.object.v2.Details
 }
 var file_zitadel_org_v2_org_proto_depIdxs = []int32{
-	2, // 0: zitadel.org.v2.Organization.details:type_name -> zitadel.object.v2.Details
+	4, // 0: zitadel.org.v2.Organization.details:type_name -> zitadel.object.v2.Details
 	0, // 1: zitadel.org.v2.Organization.state:type_name -> zitadel.org.v2.OrganizationState
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1, // 2: zitadel.org.v2.Domain.validation_type:type_name -> zitadel.org.v2.DomainValidationType
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_org_v2_org_proto_init() }
@@ -214,8 +364,8 @@ func file_zitadel_org_v2_org_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_org_v2_org_proto_rawDesc), len(file_zitadel_org_v2_org_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   1,
+			NumEnums:      2,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

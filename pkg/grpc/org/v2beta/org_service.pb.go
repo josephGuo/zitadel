@@ -1948,86 +1948,81 @@ const file_zitadel_org_v2beta_org_service_proto_rawDesc = "" +
 	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12#\n" +
 	"\x04keys\x18\x02 \x03(\tB\x0f\xfaB\f\x92\x01\t\"\ar\x05\x10\x01\x18\xc8\x01R\x04keys\"\x86\x01\n" +
 	"\"DeleteOrganizationMetadataResponse\x12`\n" +
-	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\fdeletionDate2\xeb\x1a\n" +
-	"\x13OrganizationService\x12\x8e\x02\n" +
-	"\x12CreateOrganization\x12-.zitadel.org.v2beta.CreateOrganizationRequest\x1a..zitadel.org.v2beta.CreateOrganizationResponse\"\x98\x01\x92AcJ*\n" +
+	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\fdeletionDate2\xa4\x1b\n" +
+	"\x13OrganizationService\x12\x91\x02\n" +
+	"\x12CreateOrganization\x12-.zitadel.org.v2beta.CreateOrganizationRequest\x1a..zitadel.org.v2beta.CreateOrganizationResponse\"\x9b\x01\x92AcJ*\n" +
 	"\x03200\x12#\n" +
 	"!Organization created successfullyJ3\n" +
 	"\x03409\x12,\n" +
-	"*The organization to create already exists.X\x01\x8a\xb5\x18\x0e\n" +
-	"\f\n" +
-	"\n" +
-	"org.create\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v2beta/organizations\x12\xaa\x02\n" +
-	"\x12UpdateOrganization\x12-.zitadel.org.v2beta.UpdateOrganizationRequest\x1a..zitadel.org.v2beta.UpdateOrganizationResponse\"\xb4\x01\x92A{J*\n" +
+	"*The organization to create already exists.X\x01\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v2beta/organizations\x12\xae\x02\n" +
+	"\x12UpdateOrganization\x12-.zitadel.org.v2beta.UpdateOrganizationRequest\x1a..zitadel.org.v2beta.UpdateOrganizationResponse\"\xb8\x01\x92A{J*\n" +
 	"\x03200\x12#\n" +
 	"!Organization created successfullyJ!\n" +
 	"\x03404\x12\x1a\n" +
 	"\x18Organisation's not foundJ*\n" +
 	"\x03409\x12#\n" +
-	"!Organisation's name already taken\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/v2beta/organizations/{id}\x12\xb7\x01\n" +
-	"\x11ListOrganizations\x12,.zitadel.org.v2beta.ListOrganizationsRequest\x1a-.zitadel.org.v2beta.ListOrganizationsResponse\"E\x92A\vJ\a\n" +
-	"\x03200\x12\x00X\x01\x8a\xb5\x18\f\n" +
-	"\n" +
-	"\n" +
-	"\biam.read\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v2beta/organizations/search\x12\xfc\x01\n" +
-	"\x12DeleteOrganization\x12-.zitadel.org.v2beta.DeleteOrganizationRequest\x1a..zitadel.org.v2beta.DeleteOrganizationResponse\"\x86\x01\x92AOJ*\n" +
+	"!Organisation's name already taken\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/v2beta/organizations/{id}\x12\xbc\x01\n" +
+	"\x11ListOrganizations\x12,.zitadel.org.v2beta.ListOrganizationsRequest\x1a-.zitadel.org.v2beta.ListOrganizationsResponse\"J\x92A\vJ\a\n" +
+	"\x03200\x12\x00X\x01\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v2beta/organizations/search\x12\xff\x01\n" +
+	"\x12DeleteOrganization\x12-.zitadel.org.v2beta.DeleteOrganizationRequest\x1a..zitadel.org.v2beta.DeleteOrganizationResponse\"\x89\x01\x92AOJ*\n" +
 	"\x03200\x12#\n" +
 	"!Organization created successfullyJ!\n" +
 	"\x03404\x12\x1a\n" +
-	"\x18Organisation's not found\x8a\xb5\x18\x0e\n" +
-	"\f\n" +
-	"\n" +
-	"org.delete\x82\xd3\xe4\x93\x02\x1c*\x1a/v2beta/organizations/{id}\x12\xff\x01\n" +
-	"\x17SetOrganizationMetadata\x122.zitadel.org.v2beta.SetOrganizationMetadataRequest\x1a3.zitadel.org.v2beta.SetOrganizationMetadataResponse\"{\x92A,J\a\n" +
+	"\x18Organisation's not found\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1c*\x1a/v2beta/organizations/{id}\x12\x83\x02\n" +
+	"\x17SetOrganizationMetadata\x122.zitadel.org.v2beta.SetOrganizationMetadataRequest\x1a3.zitadel.org.v2beta.SetOrganizationMetadataResponse\"\x7f\x92A,J\a\n" +
 	"\x03200\x12\x00J!\n" +
 	"\x03400\x12\x1a\n" +
-	"\x18Organisation's not found\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x025:\x01*\"0/v2beta/organizations/{organization_id}/metadata\x12\xe5\x01\n" +
-	"\x18ListOrganizationMetadata\x123.zitadel.org.v2beta.ListOrganizationMetadataRequest\x1a4.zitadel.org.v2beta.ListOrganizationMetadataResponse\"^\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\f\n" +
-	"\n" +
-	"\n" +
-	"\borg.read\x82\xd3\xe4\x93\x02<:\x01*\"7/v2beta/organizations/{organization_id}/metadata/search\x12\xe2\x01\n" +
-	"\x1aDeleteOrganizationMetadata\x125.zitadel.org.v2beta.DeleteOrganizationMetadataRequest\x1a6.zitadel.org.v2beta.DeleteOrganizationMetadataResponse\"U\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x022*0/v2beta/organizations/{organization_id}/metadata\x12\xf5\x01\n" +
-	"\x15AddOrganizationDomain\x120.zitadel.org.v2beta.AddOrganizationDomainRequest\x1a1.zitadel.org.v2beta.AddOrganizationDomainResponse\"w\x92A)J\a\n" +
+	"\x18Organisation's not found\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x025:\x01*\"0/v2beta/organizations/{organization_id}/metadata\x12\xea\x01\n" +
+	"\x18ListOrganizationMetadata\x123.zitadel.org.v2beta.ListOrganizationMetadataRequest\x1a4.zitadel.org.v2beta.ListOrganizationMetadataResponse\"c\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02<:\x01*\"7/v2beta/organizations/{organization_id}/metadata/search\x12\xe6\x01\n" +
+	"\x1aDeleteOrganizationMetadata\x125.zitadel.org.v2beta.DeleteOrganizationMetadataRequest\x1a6.zitadel.org.v2beta.DeleteOrganizationMetadataResponse\"Y\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x022*0/v2beta/organizations/{organization_id}/metadata\x12\xf9\x01\n" +
+	"\x15AddOrganizationDomain\x120.zitadel.org.v2beta.AddOrganizationDomainRequest\x1a1.zitadel.org.v2beta.AddOrganizationDomainResponse\"{\x92A)J\a\n" +
 	"\x03200\x12\x00J\x1e\n" +
 	"\x03409\x12\x17\n" +
-	"\x15Domain already exists\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x024:\x01*\"//v2beta/organizations/{organization_id}/domains\x12\xe1\x01\n" +
-	"\x17ListOrganizationDomains\x122.zitadel.org.v2beta.ListOrganizationDomainsRequest\x1a3.zitadel.org.v2beta.ListOrganizationDomainsResponse\"]\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\f\n" +
-	"\n" +
-	"\n" +
-	"\borg.read\x82\xd3\xe4\x93\x02;:\x01*\"6/v2beta/organizations/{organization_id}/domains/search\x12\xdb\x01\n" +
-	"\x18DeleteOrganizationDomain\x123.zitadel.org.v2beta.DeleteOrganizationDomainRequest\x1a4.zitadel.org.v2beta.DeleteOrganizationDomainResponse\"T\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x021*//v2beta/organizations/{organization_id}/domains\x12\xc6\x02\n" +
-	"$GenerateOrganizationDomainValidation\x12?.zitadel.org.v2beta.GenerateOrganizationDomainValidationRequest\x1a@.zitadel.org.v2beta.GenerateOrganizationDomainValidationResponse\"\x9a\x01\x92A8J\a\n" +
+	"\x15Domain already exists\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x024:\x01*\"//v2beta/organizations/{organization_id}/domains\x12\xe6\x01\n" +
+	"\x17ListOrganizationDomains\x122.zitadel.org.v2beta.ListOrganizationDomainsRequest\x1a3.zitadel.org.v2beta.ListOrganizationDomainsResponse\"b\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02;:\x01*\"6/v2beta/organizations/{organization_id}/domains/search\x12\xdf\x01\n" +
+	"\x18DeleteOrganizationDomain\x123.zitadel.org.v2beta.DeleteOrganizationDomainRequest\x1a4.zitadel.org.v2beta.DeleteOrganizationDomainResponse\"X\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x021*//v2beta/organizations/{organization_id}/domains\x12\xca\x02\n" +
+	"$GenerateOrganizationDomainValidation\x12?.zitadel.org.v2beta.GenerateOrganizationDomainValidationRequest\x1a@.zitadel.org.v2beta.GenerateOrganizationDomainValidationResponse\"\x9e\x01\x92A8J\a\n" +
 	"\x03200\x12\x00J-\n" +
 	"\x03404\x12&\n" +
-	"$Domain doesn't exist on organization\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x02H:\x01*\"C/v2beta/organizations/{organization_id}/domains/validation/generate\x12\xf0\x01\n" +
-	"\x18VerifyOrganizationDomain\x123.zitadel.org.v2beta.VerifyOrganizationDomainRequest\x1a4.zitadel.org.v2beta.VerifyOrganizationDomainResponse\"i\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x02F:\x01*\"A/v2beta/organizations/{organization_id}/domains/validation/verify\x12\xce\x01\n" +
-	"\x16DeactivateOrganization\x121.zitadel.org.v2beta.DeactivateOrganizationRequest\x1a2.zitadel.org.v2beta.DeactivateOrganizationResponse\"M\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x02*:\x01*\"%/v2beta/organizations/{id}/deactivate\x12\xc6\x01\n" +
-	"\x14ActivateOrganization\x12/.zitadel.org.v2beta.ActivateOrganizationRequest\x1a0.zitadel.org.v2beta.ActivateOrganizationResponse\"K\x92A\tJ\a\n" +
-	"\x03200\x12\x00\x8a\xb5\x18\r\n" +
-	"\v\n" +
-	"\torg.write\x82\xd3\xe4\x93\x02(:\x01*\"#/v2beta/organizations/{id}/activateB\xc9\b\x92A\x91\b\x12\xef\x02\n" +
+	"$Domain doesn't exist on organization\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02H:\x01*\"C/v2beta/organizations/{organization_id}/domains/validation/generate\x12\xf4\x01\n" +
+	"\x18VerifyOrganizationDomain\x123.zitadel.org.v2beta.VerifyOrganizationDomainRequest\x1a4.zitadel.org.v2beta.VerifyOrganizationDomainResponse\"m\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02F:\x01*\"A/v2beta/organizations/{organization_id}/domains/validation/verify\x12\xd2\x01\n" +
+	"\x16DeactivateOrganization\x121.zitadel.org.v2beta.DeactivateOrganizationRequest\x1a2.zitadel.org.v2beta.DeactivateOrganizationResponse\"Q\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02*:\x01*\"%/v2beta/organizations/{id}/deactivate\x12\xca\x01\n" +
+	"\x14ActivateOrganization\x12/.zitadel.org.v2beta.ActivateOrganizationRequest\x1a0.zitadel.org.v2beta.ActivateOrganizationResponse\"O\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02(:\x01*\"#/v2beta/organizations/{id}/activateB\xc9\b\x92A\x91\b\x12\xef\x02\n" +
 	"\x1bOrganization Service (Beta)\x12\xcc\x01This API is intended to manage organizations in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +

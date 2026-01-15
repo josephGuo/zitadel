@@ -636,7 +636,7 @@
     "/global/orgs/_by_domain": {
       "get": {
         "summary": "Get Organization By Domain",
-        "description": "Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.\n\nSearch an organization by the domain, overall organizations. The domain must match exactly.",
+        "description": "Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nSearch an organization by the domain, overall organizations. The domain must match exactly.",
         "operationId": "ManagementService_GetOrgByDomainGlobal",
         "responses": {
           "200": {
@@ -2614,7 +2614,7 @@
     "/metadata/_bulk": {
       "delete": {
         "summary": "Bulk Delete Metadata",
-        "description": "Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.\n\nRemove a list of metadata objects from an organization with a list of keys.",
+        "description": "Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.\n\nRemove a list of metadata objects from an organization with a list of keys.",
         "operationId": "ManagementService_BulkRemoveOrgMetadata",
         "responses": {
           "200": {
@@ -2655,7 +2655,7 @@
       },
       "post": {
         "summary": "Bulk Set Organization Metadata",
-        "description": "Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.\n\nThis endpoint sets a list of metadata to the organization. Make sure the values are base64 encoded.",
+        "description": "Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.\n\nThis endpoint sets a list of metadata to the organization. Make sure the values are base64 encoded.",
         "operationId": "ManagementService_BulkSetOrgMetadata",
         "responses": {
           "200": {
@@ -2698,7 +2698,7 @@
     "/metadata/_search": {
       "post": {
         "summary": "Search Organization Metadata",
-        "description": "Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.\n\nGet the metadata of an organization filtered by your query.",
+        "description": "Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.\n\nGet the metadata of an organization filtered by your query.",
         "operationId": "ManagementService_ListOrgMetadata",
         "responses": {
           "200": {
@@ -2741,7 +2741,7 @@
     "/metadata/{key}": {
       "get": {
         "summary": "Get Organization Metadata By Key",
-        "description": "Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.\n\nGet a metadata object from an organization by a specific key.",
+        "description": "Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.\n\nGet a metadata object from an organization by a specific key.",
         "operationId": "ManagementService_GetOrgMetadata",
         "responses": {
           "200": {
@@ -2780,7 +2780,7 @@
       },
       "delete": {
         "summary": "Delete Organization Metadata By Key",
-        "description": "Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.\n\nRemove a metadata object from an organization with a specific key.",
+        "description": "Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.\n\nRemove a metadata object from an organization with a specific key.",
         "operationId": "ManagementService_RemoveOrgMetadata",
         "responses": {
           "200": {
@@ -2819,7 +2819,7 @@
       },
       "post": {
         "summary": "Set Organization Metadata",
-        "description": "Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.\n\nThis endpoint either adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.",
+        "description": "Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.\n\nThis endpoint either adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.",
         "operationId": "ManagementService_SetOrgMetadata",
         "responses": {
           "200": {
@@ -2868,7 +2868,7 @@
     "/orgs": {
       "post": {
         "summary": "Create Organization",
-        "description": "Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-create-organization.api.mdx) instead\n\nCreate a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.",
+        "description": "Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead\n\nCreate a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.",
         "operationId": "ManagementService_AddOrg",
         "responses": {
           "200": {
@@ -2941,7 +2941,7 @@
       },
       "delete": {
         "summary": "Delete Organization",
-        "description": "Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization.api.mdx) instead.\n\nDeletes my organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.",
+        "description": "Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization.api.mdx) instead.\n\nDeletes my organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.",
         "operationId": "ManagementService_RemoveOrg",
         "responses": {
           "200": {
@@ -2973,7 +2973,7 @@
       },
       "put": {
         "summary": "Update Organization",
-        "description": "Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-update-organization.api.mdx) instead.\n\nChange the name of the organization.",
+        "description": "Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-update-organization.api.mdx) instead.\n\nChange the name of the organization.",
         "operationId": "ManagementService_UpdateOrg",
         "responses": {
           "200": {
@@ -3015,7 +3015,7 @@
     "/orgs/me/_deactivate": {
       "post": {
         "summary": "Deactivate Organization",
-        "description": "Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-deactivate-organization.api.mdx) instead.\n\nSets the state of my organization to deactivated. Users of this organization will not be able to log in.",
+        "description": "Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-deactivate-organization.api.mdx) instead.\n\nSets the state of my organization to deactivated. Users of this organization will not be able to log in.",
         "operationId": "ManagementService_DeactivateOrg",
         "responses": {
           "200": {
@@ -3057,7 +3057,7 @@
     "/orgs/me/_reactivate": {
       "post": {
         "summary": "Reactivate Organization",
-        "description": "Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-activate-organization.api.mdx) instead.\n\nSet the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.",
+        "description": "Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-activate-organization.api.mdx) instead.\n\nSet the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.",
         "operationId": "ManagementService_ReactivateOrg",
         "responses": {
           "200": {
@@ -3140,7 +3140,7 @@
     "/orgs/me/domains": {
       "post": {
         "summary": "Add Domain",
-        "description": "Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-add-organization-domain.api.mdx) instead.\n\nAdd a new domain to an organization. The domains are used to identify to which organization a user belongs.",
+        "description": "Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization-domain.api.mdx) instead.\n\nAdd a new domain to an organization. The domains are used to identify to which organization a user belongs.",
         "operationId": "ManagementService_AddOrgDomain",
         "responses": {
           "200": {
@@ -3182,7 +3182,7 @@
     "/orgs/me/domains/_search": {
       "post": {
         "summary": "Search Domains",
-        "description": "Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-domains.api.mdx) instead.\n\nReturns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.",
+        "description": "Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-domains.api.mdx) instead.\n\nReturns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.",
         "operationId": "ManagementService_ListOrgDomains",
         "responses": {
           "200": {
@@ -3224,7 +3224,7 @@
     "/orgs/me/domains/{domain}": {
       "delete": {
         "summary": "Remove Domain",
-        "description": "Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-domain.api.mdx) instead.\n\nDelete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.",
+        "description": "Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-domain.api.mdx) instead.\n\nDelete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.",
         "operationId": "ManagementService_RemoveOrgDomain",
         "responses": {
           "200": {
@@ -3303,7 +3303,7 @@
     "/orgs/me/domains/{domain}/validation/_generate": {
       "post": {
         "summary": "Generate Domain Verification",
-        "description": "Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-generate-organization-domain-validation.api.mdx) instead.\n\nGenerate a new file to be able to verify your domain with DNS or HTTP challenge.",
+        "description": "Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-generate-organization-domain-validation.api.mdx) instead.\n\nGenerate a new file to be able to verify your domain with DNS or HTTP challenge.",
         "operationId": "ManagementService_GenerateOrgDomainValidation",
         "responses": {
           "200": {
@@ -3351,7 +3351,7 @@
     "/orgs/me/domains/{domain}/validation/_validate": {
       "post": {
         "summary": "Verify Domain",
-        "description": "Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-verify-organization-domain.api.mdx) instead.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.",
+        "description": "Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.",
         "operationId": "ManagementService_ValidateOrgDomain",
         "responses": {
           "200": {
@@ -8306,7 +8306,7 @@
     },
     "/text/default/message/password_change/{language}": {
       "get": {
-        "summary": "Get Default Password Change Message Text",
+        "summary": "Get Default Password Changed Message Text",
         "description": "Get the default text of the password-changed message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when the password of a user has been changed.",
         "operationId": "ManagementService_GetDefaultPasswordChangeMessageText",
         "responses": {
@@ -9063,7 +9063,7 @@
     },
     "/text/message/password_change/{language}": {
       "get": {
-        "summary": "Get Custom Password Change Message Text",
+        "summary": "Get Custom Password Changed Message Text",
         "description": "Get the custom text of the password-changed message/email that is configured on the organization. The message is sent when the password of a user has been changed.",
         "operationId": "ManagementService_GetCustomPasswordChangeMessageText",
         "responses": {
@@ -12094,8 +12094,8 @@
     },
     "/users/{userId}/passwordless/_link": {
       "post": {
-        "summary": "Add Passwordless/Passkey Registration Link",
-        "description": "Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.\n\nAdds a new passwordless/passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.",
+        "summary": "Add Passkey Registration Link",
+        "description": "Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.\n\nAdds a new passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.",
         "operationId": "ManagementService_AddPasswordlessRegistration",
         "responses": {
           "200": {
@@ -12135,8 +12135,8 @@
     },
     "/users/{userId}/passwordless/_search": {
       "post": {
-        "summary": "Search Passwordless/Passkey authentication",
-        "description": "Deprecated: use [user service v2 ListPasskeys](apis/resources/user_service_v2/user-service-list-passkeys.api.mdx) instead.\n\nGet a list of configured passwordless/passkey authentication methods from the user. Passwordless/passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.",
+        "summary": "Search Passkey authentication",
+        "description": "Deprecated: use [user service v2 ListPasskeys](apis/resources/user_service_v2/user-service-list-passkeys.api.mdx) instead.\n\nGet a list of configured passkey authentication methods from the user. Passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.",
         "operationId": "ManagementService_ListHumanPasswordless",
         "responses": {
           "200": {
@@ -12176,8 +12176,8 @@
     },
     "/users/{userId}/passwordless/_send_link": {
       "post": {
-        "summary": "Send Passwordless/Passkey Registration Link",
-        "description": "Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.\n\nAdds a new passwordless/passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.",
+        "summary": "Send Passkey Registration Link",
+        "description": "Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.\n\nAdds a new passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.",
         "operationId": "ManagementService_SendPasswordlessRegistration",
         "responses": {
           "200": {
@@ -12225,8 +12225,8 @@
     },
     "/users/{userId}/passwordless/{tokenId}": {
       "delete": {
-        "summary": "Delete Passwordless/Passkey",
-        "description": "Deprecated: use [user service v2 RemovePasskey](apis/resources/user_service_v2/user-service-remove-passkey.api.mdx) instead.\n\nRemove a configured passwordless/passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).",
+        "summary": "Delete Passkey",
+        "description": "Deprecated: use [user service v2 RemovePasskey](apis/resources/user_service_v2/user-service-remove-passkey.api.mdx) instead.\n\nRemove a configured passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).",
         "operationId": "ManagementService_RemoveHumanPasswordless",
         "responses": {
           "200": {

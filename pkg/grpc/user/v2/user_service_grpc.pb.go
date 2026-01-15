@@ -340,7 +340,7 @@ type UserServiceClient interface {
 	ListPersonalAccessTokens(ctx context.Context, in *ListPersonalAccessTokensRequest, opts ...grpc.CallOption) (*ListPersonalAccessTokensResponse, error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more..
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more..
 	ListAuthenticationMethodTypes(ctx context.Context, in *ListAuthenticationMethodTypesRequest, opts ...grpc.CallOption) (*ListAuthenticationMethodTypesResponse, error)
 	ListAuthenticationFactors(ctx context.Context, in *ListAuthenticationFactorsRequest, opts ...grpc.CallOption) (*ListAuthenticationFactorsResponse, error)
 	// Create an invite code for a user
@@ -1256,7 +1256,7 @@ type UserServiceServer interface {
 	ListPersonalAccessTokens(context.Context, *ListPersonalAccessTokensRequest) (*ListPersonalAccessTokensResponse, error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more..
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more..
 	ListAuthenticationMethodTypes(context.Context, *ListAuthenticationMethodTypesRequest) (*ListAuthenticationMethodTypesResponse, error)
 	ListAuthenticationFactors(context.Context, *ListAuthenticationFactorsRequest) (*ListAuthenticationFactorsResponse, error)
 	// Create an invite code for a user

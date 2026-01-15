@@ -939,3 +939,163 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DefaultOrganizationQueryValidationError{}
+
+// Validate checks the field values on DomainSearchFilter with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DomainSearchFilter) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DomainSearchFilter with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DomainSearchFilterMultiError, or nil if none found.
+func (m *DomainSearchFilter) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DomainSearchFilter) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	oneofFilterPresent := false
+	switch v := m.Filter.(type) {
+	case *DomainSearchFilter_DomainFilter:
+		if v == nil {
+			err := DomainSearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofFilterPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDomainFilter()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DomainSearchFilterValidationError{
+						field:  "DomainFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DomainSearchFilterValidationError{
+						field:  "DomainFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDomainFilter()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DomainSearchFilterValidationError{
+					field:  "DomainFilter",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+	if !oneofFilterPresent {
+		err := DomainSearchFilterValidationError{
+			field:  "Filter",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DomainSearchFilterMultiError(errors)
+	}
+
+	return nil
+}
+
+// DomainSearchFilterMultiError is an error wrapping multiple validation errors
+// returned by DomainSearchFilter.ValidateAll() if the designated constraints
+// aren't met.
+type DomainSearchFilterMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DomainSearchFilterMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DomainSearchFilterMultiError) AllErrors() []error { return m }
+
+// DomainSearchFilterValidationError is the validation error returned by
+// DomainSearchFilter.Validate if the designated constraints aren't met.
+type DomainSearchFilterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DomainSearchFilterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DomainSearchFilterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DomainSearchFilterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DomainSearchFilterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DomainSearchFilterValidationError) ErrorName() string {
+	return "DomainSearchFilterValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DomainSearchFilterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDomainSearchFilter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DomainSearchFilterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DomainSearchFilterValidationError{}

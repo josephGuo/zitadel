@@ -1049,3 +1049,204 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = InTargetIDsFilterValidationError{}
+
+// Validate checks the field values on PublicKeySearchFilter with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PublicKeySearchFilter) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PublicKeySearchFilter with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PublicKeySearchFilterMultiError, or nil if none found.
+func (m *PublicKeySearchFilter) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PublicKeySearchFilter) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	switch v := m.Filter.(type) {
+	case *PublicKeySearchFilter_KeyIdsFilter:
+		if v == nil {
+			err := PublicKeySearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetKeyIdsFilter()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PublicKeySearchFilterValidationError{
+						field:  "KeyIdsFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PublicKeySearchFilterValidationError{
+						field:  "KeyIdsFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetKeyIdsFilter()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PublicKeySearchFilterValidationError{
+					field:  "KeyIdsFilter",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *PublicKeySearchFilter_ActiveFilter:
+		if v == nil {
+			err := PublicKeySearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		// no validation rules for ActiveFilter
+	case *PublicKeySearchFilter_ExpirationDateFilter:
+		if v == nil {
+			err := PublicKeySearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetExpirationDateFilter()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PublicKeySearchFilterValidationError{
+						field:  "ExpirationDateFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PublicKeySearchFilterValidationError{
+						field:  "ExpirationDateFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetExpirationDateFilter()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PublicKeySearchFilterValidationError{
+					field:  "ExpirationDateFilter",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+
+	if len(errors) > 0 {
+		return PublicKeySearchFilterMultiError(errors)
+	}
+
+	return nil
+}
+
+// PublicKeySearchFilterMultiError is an error wrapping multiple validation
+// errors returned by PublicKeySearchFilter.ValidateAll() if the designated
+// constraints aren't met.
+type PublicKeySearchFilterMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PublicKeySearchFilterMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PublicKeySearchFilterMultiError) AllErrors() []error { return m }
+
+// PublicKeySearchFilterValidationError is the validation error returned by
+// PublicKeySearchFilter.Validate if the designated constraints aren't met.
+type PublicKeySearchFilterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PublicKeySearchFilterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PublicKeySearchFilterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PublicKeySearchFilterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PublicKeySearchFilterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PublicKeySearchFilterValidationError) ErrorName() string {
+	return "PublicKeySearchFilterValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PublicKeySearchFilterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPublicKeySearchFilter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PublicKeySearchFilterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PublicKeySearchFilterValidationError{}

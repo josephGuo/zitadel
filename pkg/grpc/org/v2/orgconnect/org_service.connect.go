@@ -36,21 +36,148 @@ const (
 	// OrganizationServiceAddOrganizationProcedure is the fully-qualified name of the
 	// OrganizationService's AddOrganization RPC.
 	OrganizationServiceAddOrganizationProcedure = "/zitadel.org.v2.OrganizationService/AddOrganization"
+	// OrganizationServiceUpdateOrganizationProcedure is the fully-qualified name of the
+	// OrganizationService's UpdateOrganization RPC.
+	OrganizationServiceUpdateOrganizationProcedure = "/zitadel.org.v2.OrganizationService/UpdateOrganization"
 	// OrganizationServiceListOrganizationsProcedure is the fully-qualified name of the
 	// OrganizationService's ListOrganizations RPC.
 	OrganizationServiceListOrganizationsProcedure = "/zitadel.org.v2.OrganizationService/ListOrganizations"
+	// OrganizationServiceDeleteOrganizationProcedure is the fully-qualified name of the
+	// OrganizationService's DeleteOrganization RPC.
+	OrganizationServiceDeleteOrganizationProcedure = "/zitadel.org.v2.OrganizationService/DeleteOrganization"
+	// OrganizationServiceSetOrganizationMetadataProcedure is the fully-qualified name of the
+	// OrganizationService's SetOrganizationMetadata RPC.
+	OrganizationServiceSetOrganizationMetadataProcedure = "/zitadel.org.v2.OrganizationService/SetOrganizationMetadata"
+	// OrganizationServiceListOrganizationMetadataProcedure is the fully-qualified name of the
+	// OrganizationService's ListOrganizationMetadata RPC.
+	OrganizationServiceListOrganizationMetadataProcedure = "/zitadel.org.v2.OrganizationService/ListOrganizationMetadata"
+	// OrganizationServiceDeleteOrganizationMetadataProcedure is the fully-qualified name of the
+	// OrganizationService's DeleteOrganizationMetadata RPC.
+	OrganizationServiceDeleteOrganizationMetadataProcedure = "/zitadel.org.v2.OrganizationService/DeleteOrganizationMetadata"
+	// OrganizationServiceAddOrganizationDomainProcedure is the fully-qualified name of the
+	// OrganizationService's AddOrganizationDomain RPC.
+	OrganizationServiceAddOrganizationDomainProcedure = "/zitadel.org.v2.OrganizationService/AddOrganizationDomain"
+	// OrganizationServiceListOrganizationDomainsProcedure is the fully-qualified name of the
+	// OrganizationService's ListOrganizationDomains RPC.
+	OrganizationServiceListOrganizationDomainsProcedure = "/zitadel.org.v2.OrganizationService/ListOrganizationDomains"
+	// OrganizationServiceDeleteOrganizationDomainProcedure is the fully-qualified name of the
+	// OrganizationService's DeleteOrganizationDomain RPC.
+	OrganizationServiceDeleteOrganizationDomainProcedure = "/zitadel.org.v2.OrganizationService/DeleteOrganizationDomain"
+	// OrganizationServiceGenerateOrganizationDomainValidationProcedure is the fully-qualified name of
+	// the OrganizationService's GenerateOrganizationDomainValidation RPC.
+	OrganizationServiceGenerateOrganizationDomainValidationProcedure = "/zitadel.org.v2.OrganizationService/GenerateOrganizationDomainValidation"
+	// OrganizationServiceVerifyOrganizationDomainProcedure is the fully-qualified name of the
+	// OrganizationService's VerifyOrganizationDomain RPC.
+	OrganizationServiceVerifyOrganizationDomainProcedure = "/zitadel.org.v2.OrganizationService/VerifyOrganizationDomain"
+	// OrganizationServiceDeactivateOrganizationProcedure is the fully-qualified name of the
+	// OrganizationService's DeactivateOrganization RPC.
+	OrganizationServiceDeactivateOrganizationProcedure = "/zitadel.org.v2.OrganizationService/DeactivateOrganization"
+	// OrganizationServiceActivateOrganizationProcedure is the fully-qualified name of the
+	// OrganizationService's ActivateOrganization RPC.
+	OrganizationServiceActivateOrganizationProcedure = "/zitadel.org.v2.OrganizationService/ActivateOrganization"
 )
 
 // OrganizationServiceClient is a client for the zitadel.org.v2.OrganizationService service.
 type OrganizationServiceClient interface {
-	// Create an Organization
+	// Add Organization
 	//
 	// Create a new organization with an administrative user. If no specific roles are sent for the users, they will be granted the role ORG_OWNER.
-	AddOrganization(context.Context, *connect.Request[v2.AddOrganizationRequest]) (*connect.Response[v2.AddOrganizationResponse], error)
-	// Search Organizations
 	//
-	// Search for Organizations. By default, we will return all organization of the instance. Make sure to include a limit and sorting for pagination..
+	// Required permission:
+	//   - `org.create`
+	AddOrganization(context.Context, *connect.Request[v2.AddOrganizationRequest]) (*connect.Response[v2.AddOrganizationResponse], error)
+	// Update Organization
+	//
+	// Change the name of the organization.
+	//
+	// Required permission:
+	//   - `org.write`
+	UpdateOrganization(context.Context, *connect.Request[v2.UpdateOrganizationRequest]) (*connect.Response[v2.UpdateOrganizationResponse], error)
+	// List Organizations
+	//
+	// Search for Organizations. By default, we will return all organization of the instance that you have permission to read.
+	// Make sure to include a limit and sorting for pagination.
+	//
+	// Required permission:
+	//   - `org.read`
 	ListOrganizations(context.Context, *connect.Request[v2.ListOrganizationsRequest]) (*connect.Response[v2.ListOrganizationsResponse], error)
+	// Delete Organization
+	//
+	// Deletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.
+	//
+	// Required permission:
+	//   - `org.delete`
+	DeleteOrganization(context.Context, *connect.Request[v2.DeleteOrganizationRequest]) (*connect.Response[v2.DeleteOrganizationResponse], error)
+	// Set Organization Metadata
+	//
+	// Adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.
+	//
+	// Required permission:
+	//   - `org.write`
+	SetOrganizationMetadata(context.Context, *connect.Request[v2.SetOrganizationMetadataRequest]) (*connect.Response[v2.SetOrganizationMetadataResponse], error)
+	// List Organization Metadata
+	//
+	// List metadata of an organization filtered by query.
+	//
+	// Required permission:
+	//   - `org.read`
+	ListOrganizationMetadata(context.Context, *connect.Request[v2.ListOrganizationMetadataRequest]) (*connect.Response[v2.ListOrganizationMetadataResponse], error)
+	// Delete Organization Metadata
+	//
+	// Delete metadata objects from an organization with a specific key.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeleteOrganizationMetadata(context.Context, *connect.Request[v2.DeleteOrganizationMetadataRequest]) (*connect.Response[v2.DeleteOrganizationMetadataResponse], error)
+	// Add Organization Domain
+	//
+	// Add a new domain to an organization. The domains are used to identify to which organization a user belongs.
+	//
+	// Required permission:
+	//   - `org.write`
+	AddOrganizationDomain(context.Context, *connect.Request[v2.AddOrganizationDomainRequest]) (*connect.Response[v2.AddOrganizationDomainResponse], error)
+	// List Organization Domains
+	//
+	// Returns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.
+	//
+	// Required permission:
+	//   - `org.read`
+	ListOrganizationDomains(context.Context, *connect.Request[v2.ListOrganizationDomainsRequest]) (*connect.Response[v2.ListOrganizationDomainsResponse], error)
+	// Delete Organization Domain
+	//
+	// Delete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeleteOrganizationDomain(context.Context, *connect.Request[v2.DeleteOrganizationDomainRequest]) (*connect.Response[v2.DeleteOrganizationDomainResponse], error)
+	// Generate Organization Domain Validation
+	//
+	// Generate a new file to be able to verify your domain with DNS or HTTP challenge.
+	//
+	// Required permission:
+	//   - `org.write`
+	GenerateOrganizationDomainValidation(context.Context, *connect.Request[v2.GenerateOrganizationDomainValidationRequest]) (*connect.Response[v2.GenerateOrganizationDomainValidationResponse], error)
+	// Verify Organization Domain
+	//
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	//
+	// Required permission:
+	//   - `org.write`
+	VerifyOrganizationDomain(context.Context, *connect.Request[v2.VerifyOrganizationDomainRequest]) (*connect.Response[v2.VerifyOrganizationDomainResponse], error)
+	// Deactivate Organization
+	//
+	// Sets the state of my organization to deactivated. Users of this organization will not be able to log in.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeactivateOrganization(context.Context, *connect.Request[v2.DeactivateOrganizationRequest]) (*connect.Response[v2.DeactivateOrganizationResponse], error)
+	// Activate Organization
+	//
+	// Set the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.
+	//
+	// Required permission:
+	//   - `org.write`
+	ActivateOrganization(context.Context, *connect.Request[v2.ActivateOrganizationRequest]) (*connect.Response[v2.ActivateOrganizationResponse], error)
 }
 
 // NewOrganizationServiceClient constructs a client for the zitadel.org.v2.OrganizationService
@@ -70,10 +197,82 @@ func NewOrganizationServiceClient(httpClient connect.HTTPClient, baseURL string,
 			connect.WithSchema(organizationServiceMethods.ByName("AddOrganization")),
 			connect.WithClientOptions(opts...),
 		),
+		updateOrganization: connect.NewClient[v2.UpdateOrganizationRequest, v2.UpdateOrganizationResponse](
+			httpClient,
+			baseURL+OrganizationServiceUpdateOrganizationProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("UpdateOrganization")),
+			connect.WithClientOptions(opts...),
+		),
 		listOrganizations: connect.NewClient[v2.ListOrganizationsRequest, v2.ListOrganizationsResponse](
 			httpClient,
 			baseURL+OrganizationServiceListOrganizationsProcedure,
 			connect.WithSchema(organizationServiceMethods.ByName("ListOrganizations")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteOrganization: connect.NewClient[v2.DeleteOrganizationRequest, v2.DeleteOrganizationResponse](
+			httpClient,
+			baseURL+OrganizationServiceDeleteOrganizationProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganization")),
+			connect.WithClientOptions(opts...),
+		),
+		setOrganizationMetadata: connect.NewClient[v2.SetOrganizationMetadataRequest, v2.SetOrganizationMetadataResponse](
+			httpClient,
+			baseURL+OrganizationServiceSetOrganizationMetadataProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("SetOrganizationMetadata")),
+			connect.WithClientOptions(opts...),
+		),
+		listOrganizationMetadata: connect.NewClient[v2.ListOrganizationMetadataRequest, v2.ListOrganizationMetadataResponse](
+			httpClient,
+			baseURL+OrganizationServiceListOrganizationMetadataProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("ListOrganizationMetadata")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteOrganizationMetadata: connect.NewClient[v2.DeleteOrganizationMetadataRequest, v2.DeleteOrganizationMetadataResponse](
+			httpClient,
+			baseURL+OrganizationServiceDeleteOrganizationMetadataProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganizationMetadata")),
+			connect.WithClientOptions(opts...),
+		),
+		addOrganizationDomain: connect.NewClient[v2.AddOrganizationDomainRequest, v2.AddOrganizationDomainResponse](
+			httpClient,
+			baseURL+OrganizationServiceAddOrganizationDomainProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("AddOrganizationDomain")),
+			connect.WithClientOptions(opts...),
+		),
+		listOrganizationDomains: connect.NewClient[v2.ListOrganizationDomainsRequest, v2.ListOrganizationDomainsResponse](
+			httpClient,
+			baseURL+OrganizationServiceListOrganizationDomainsProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("ListOrganizationDomains")),
+			connect.WithClientOptions(opts...),
+		),
+		deleteOrganizationDomain: connect.NewClient[v2.DeleteOrganizationDomainRequest, v2.DeleteOrganizationDomainResponse](
+			httpClient,
+			baseURL+OrganizationServiceDeleteOrganizationDomainProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganizationDomain")),
+			connect.WithClientOptions(opts...),
+		),
+		generateOrganizationDomainValidation: connect.NewClient[v2.GenerateOrganizationDomainValidationRequest, v2.GenerateOrganizationDomainValidationResponse](
+			httpClient,
+			baseURL+OrganizationServiceGenerateOrganizationDomainValidationProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("GenerateOrganizationDomainValidation")),
+			connect.WithClientOptions(opts...),
+		),
+		verifyOrganizationDomain: connect.NewClient[v2.VerifyOrganizationDomainRequest, v2.VerifyOrganizationDomainResponse](
+			httpClient,
+			baseURL+OrganizationServiceVerifyOrganizationDomainProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("VerifyOrganizationDomain")),
+			connect.WithClientOptions(opts...),
+		),
+		deactivateOrganization: connect.NewClient[v2.DeactivateOrganizationRequest, v2.DeactivateOrganizationResponse](
+			httpClient,
+			baseURL+OrganizationServiceDeactivateOrganizationProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("DeactivateOrganization")),
+			connect.WithClientOptions(opts...),
+		),
+		activateOrganization: connect.NewClient[v2.ActivateOrganizationRequest, v2.ActivateOrganizationResponse](
+			httpClient,
+			baseURL+OrganizationServiceActivateOrganizationProcedure,
+			connect.WithSchema(organizationServiceMethods.ByName("ActivateOrganization")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -81,8 +280,20 @@ func NewOrganizationServiceClient(httpClient connect.HTTPClient, baseURL string,
 
 // organizationServiceClient implements OrganizationServiceClient.
 type organizationServiceClient struct {
-	addOrganization   *connect.Client[v2.AddOrganizationRequest, v2.AddOrganizationResponse]
-	listOrganizations *connect.Client[v2.ListOrganizationsRequest, v2.ListOrganizationsResponse]
+	addOrganization                      *connect.Client[v2.AddOrganizationRequest, v2.AddOrganizationResponse]
+	updateOrganization                   *connect.Client[v2.UpdateOrganizationRequest, v2.UpdateOrganizationResponse]
+	listOrganizations                    *connect.Client[v2.ListOrganizationsRequest, v2.ListOrganizationsResponse]
+	deleteOrganization                   *connect.Client[v2.DeleteOrganizationRequest, v2.DeleteOrganizationResponse]
+	setOrganizationMetadata              *connect.Client[v2.SetOrganizationMetadataRequest, v2.SetOrganizationMetadataResponse]
+	listOrganizationMetadata             *connect.Client[v2.ListOrganizationMetadataRequest, v2.ListOrganizationMetadataResponse]
+	deleteOrganizationMetadata           *connect.Client[v2.DeleteOrganizationMetadataRequest, v2.DeleteOrganizationMetadataResponse]
+	addOrganizationDomain                *connect.Client[v2.AddOrganizationDomainRequest, v2.AddOrganizationDomainResponse]
+	listOrganizationDomains              *connect.Client[v2.ListOrganizationDomainsRequest, v2.ListOrganizationDomainsResponse]
+	deleteOrganizationDomain             *connect.Client[v2.DeleteOrganizationDomainRequest, v2.DeleteOrganizationDomainResponse]
+	generateOrganizationDomainValidation *connect.Client[v2.GenerateOrganizationDomainValidationRequest, v2.GenerateOrganizationDomainValidationResponse]
+	verifyOrganizationDomain             *connect.Client[v2.VerifyOrganizationDomainRequest, v2.VerifyOrganizationDomainResponse]
+	deactivateOrganization               *connect.Client[v2.DeactivateOrganizationRequest, v2.DeactivateOrganizationResponse]
+	activateOrganization                 *connect.Client[v2.ActivateOrganizationRequest, v2.ActivateOrganizationResponse]
 }
 
 // AddOrganization calls zitadel.org.v2.OrganizationService.AddOrganization.
@@ -90,22 +301,174 @@ func (c *organizationServiceClient) AddOrganization(ctx context.Context, req *co
 	return c.addOrganization.CallUnary(ctx, req)
 }
 
+// UpdateOrganization calls zitadel.org.v2.OrganizationService.UpdateOrganization.
+func (c *organizationServiceClient) UpdateOrganization(ctx context.Context, req *connect.Request[v2.UpdateOrganizationRequest]) (*connect.Response[v2.UpdateOrganizationResponse], error) {
+	return c.updateOrganization.CallUnary(ctx, req)
+}
+
 // ListOrganizations calls zitadel.org.v2.OrganizationService.ListOrganizations.
 func (c *organizationServiceClient) ListOrganizations(ctx context.Context, req *connect.Request[v2.ListOrganizationsRequest]) (*connect.Response[v2.ListOrganizationsResponse], error) {
 	return c.listOrganizations.CallUnary(ctx, req)
 }
 
+// DeleteOrganization calls zitadel.org.v2.OrganizationService.DeleteOrganization.
+func (c *organizationServiceClient) DeleteOrganization(ctx context.Context, req *connect.Request[v2.DeleteOrganizationRequest]) (*connect.Response[v2.DeleteOrganizationResponse], error) {
+	return c.deleteOrganization.CallUnary(ctx, req)
+}
+
+// SetOrganizationMetadata calls zitadel.org.v2.OrganizationService.SetOrganizationMetadata.
+func (c *organizationServiceClient) SetOrganizationMetadata(ctx context.Context, req *connect.Request[v2.SetOrganizationMetadataRequest]) (*connect.Response[v2.SetOrganizationMetadataResponse], error) {
+	return c.setOrganizationMetadata.CallUnary(ctx, req)
+}
+
+// ListOrganizationMetadata calls zitadel.org.v2.OrganizationService.ListOrganizationMetadata.
+func (c *organizationServiceClient) ListOrganizationMetadata(ctx context.Context, req *connect.Request[v2.ListOrganizationMetadataRequest]) (*connect.Response[v2.ListOrganizationMetadataResponse], error) {
+	return c.listOrganizationMetadata.CallUnary(ctx, req)
+}
+
+// DeleteOrganizationMetadata calls zitadel.org.v2.OrganizationService.DeleteOrganizationMetadata.
+func (c *organizationServiceClient) DeleteOrganizationMetadata(ctx context.Context, req *connect.Request[v2.DeleteOrganizationMetadataRequest]) (*connect.Response[v2.DeleteOrganizationMetadataResponse], error) {
+	return c.deleteOrganizationMetadata.CallUnary(ctx, req)
+}
+
+// AddOrganizationDomain calls zitadel.org.v2.OrganizationService.AddOrganizationDomain.
+func (c *organizationServiceClient) AddOrganizationDomain(ctx context.Context, req *connect.Request[v2.AddOrganizationDomainRequest]) (*connect.Response[v2.AddOrganizationDomainResponse], error) {
+	return c.addOrganizationDomain.CallUnary(ctx, req)
+}
+
+// ListOrganizationDomains calls zitadel.org.v2.OrganizationService.ListOrganizationDomains.
+func (c *organizationServiceClient) ListOrganizationDomains(ctx context.Context, req *connect.Request[v2.ListOrganizationDomainsRequest]) (*connect.Response[v2.ListOrganizationDomainsResponse], error) {
+	return c.listOrganizationDomains.CallUnary(ctx, req)
+}
+
+// DeleteOrganizationDomain calls zitadel.org.v2.OrganizationService.DeleteOrganizationDomain.
+func (c *organizationServiceClient) DeleteOrganizationDomain(ctx context.Context, req *connect.Request[v2.DeleteOrganizationDomainRequest]) (*connect.Response[v2.DeleteOrganizationDomainResponse], error) {
+	return c.deleteOrganizationDomain.CallUnary(ctx, req)
+}
+
+// GenerateOrganizationDomainValidation calls
+// zitadel.org.v2.OrganizationService.GenerateOrganizationDomainValidation.
+func (c *organizationServiceClient) GenerateOrganizationDomainValidation(ctx context.Context, req *connect.Request[v2.GenerateOrganizationDomainValidationRequest]) (*connect.Response[v2.GenerateOrganizationDomainValidationResponse], error) {
+	return c.generateOrganizationDomainValidation.CallUnary(ctx, req)
+}
+
+// VerifyOrganizationDomain calls zitadel.org.v2.OrganizationService.VerifyOrganizationDomain.
+func (c *organizationServiceClient) VerifyOrganizationDomain(ctx context.Context, req *connect.Request[v2.VerifyOrganizationDomainRequest]) (*connect.Response[v2.VerifyOrganizationDomainResponse], error) {
+	return c.verifyOrganizationDomain.CallUnary(ctx, req)
+}
+
+// DeactivateOrganization calls zitadel.org.v2.OrganizationService.DeactivateOrganization.
+func (c *organizationServiceClient) DeactivateOrganization(ctx context.Context, req *connect.Request[v2.DeactivateOrganizationRequest]) (*connect.Response[v2.DeactivateOrganizationResponse], error) {
+	return c.deactivateOrganization.CallUnary(ctx, req)
+}
+
+// ActivateOrganization calls zitadel.org.v2.OrganizationService.ActivateOrganization.
+func (c *organizationServiceClient) ActivateOrganization(ctx context.Context, req *connect.Request[v2.ActivateOrganizationRequest]) (*connect.Response[v2.ActivateOrganizationResponse], error) {
+	return c.activateOrganization.CallUnary(ctx, req)
+}
+
 // OrganizationServiceHandler is an implementation of the zitadel.org.v2.OrganizationService
 // service.
 type OrganizationServiceHandler interface {
-	// Create an Organization
+	// Add Organization
 	//
 	// Create a new organization with an administrative user. If no specific roles are sent for the users, they will be granted the role ORG_OWNER.
-	AddOrganization(context.Context, *connect.Request[v2.AddOrganizationRequest]) (*connect.Response[v2.AddOrganizationResponse], error)
-	// Search Organizations
 	//
-	// Search for Organizations. By default, we will return all organization of the instance. Make sure to include a limit and sorting for pagination..
+	// Required permission:
+	//   - `org.create`
+	AddOrganization(context.Context, *connect.Request[v2.AddOrganizationRequest]) (*connect.Response[v2.AddOrganizationResponse], error)
+	// Update Organization
+	//
+	// Change the name of the organization.
+	//
+	// Required permission:
+	//   - `org.write`
+	UpdateOrganization(context.Context, *connect.Request[v2.UpdateOrganizationRequest]) (*connect.Response[v2.UpdateOrganizationResponse], error)
+	// List Organizations
+	//
+	// Search for Organizations. By default, we will return all organization of the instance that you have permission to read.
+	// Make sure to include a limit and sorting for pagination.
+	//
+	// Required permission:
+	//   - `org.read`
 	ListOrganizations(context.Context, *connect.Request[v2.ListOrganizationsRequest]) (*connect.Response[v2.ListOrganizationsResponse], error)
+	// Delete Organization
+	//
+	// Deletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.
+	//
+	// Required permission:
+	//   - `org.delete`
+	DeleteOrganization(context.Context, *connect.Request[v2.DeleteOrganizationRequest]) (*connect.Response[v2.DeleteOrganizationResponse], error)
+	// Set Organization Metadata
+	//
+	// Adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.
+	//
+	// Required permission:
+	//   - `org.write`
+	SetOrganizationMetadata(context.Context, *connect.Request[v2.SetOrganizationMetadataRequest]) (*connect.Response[v2.SetOrganizationMetadataResponse], error)
+	// List Organization Metadata
+	//
+	// List metadata of an organization filtered by query.
+	//
+	// Required permission:
+	//   - `org.read`
+	ListOrganizationMetadata(context.Context, *connect.Request[v2.ListOrganizationMetadataRequest]) (*connect.Response[v2.ListOrganizationMetadataResponse], error)
+	// Delete Organization Metadata
+	//
+	// Delete metadata objects from an organization with a specific key.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeleteOrganizationMetadata(context.Context, *connect.Request[v2.DeleteOrganizationMetadataRequest]) (*connect.Response[v2.DeleteOrganizationMetadataResponse], error)
+	// Add Organization Domain
+	//
+	// Add a new domain to an organization. The domains are used to identify to which organization a user belongs.
+	//
+	// Required permission:
+	//   - `org.write`
+	AddOrganizationDomain(context.Context, *connect.Request[v2.AddOrganizationDomainRequest]) (*connect.Response[v2.AddOrganizationDomainResponse], error)
+	// List Organization Domains
+	//
+	// Returns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.
+	//
+	// Required permission:
+	//   - `org.read`
+	ListOrganizationDomains(context.Context, *connect.Request[v2.ListOrganizationDomainsRequest]) (*connect.Response[v2.ListOrganizationDomainsResponse], error)
+	// Delete Organization Domain
+	//
+	// Delete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeleteOrganizationDomain(context.Context, *connect.Request[v2.DeleteOrganizationDomainRequest]) (*connect.Response[v2.DeleteOrganizationDomainResponse], error)
+	// Generate Organization Domain Validation
+	//
+	// Generate a new file to be able to verify your domain with DNS or HTTP challenge.
+	//
+	// Required permission:
+	//   - `org.write`
+	GenerateOrganizationDomainValidation(context.Context, *connect.Request[v2.GenerateOrganizationDomainValidationRequest]) (*connect.Response[v2.GenerateOrganizationDomainValidationResponse], error)
+	// Verify Organization Domain
+	//
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	//
+	// Required permission:
+	//   - `org.write`
+	VerifyOrganizationDomain(context.Context, *connect.Request[v2.VerifyOrganizationDomainRequest]) (*connect.Response[v2.VerifyOrganizationDomainResponse], error)
+	// Deactivate Organization
+	//
+	// Sets the state of my organization to deactivated. Users of this organization will not be able to log in.
+	//
+	// Required permission:
+	//   - `org.write`
+	DeactivateOrganization(context.Context, *connect.Request[v2.DeactivateOrganizationRequest]) (*connect.Response[v2.DeactivateOrganizationResponse], error)
+	// Activate Organization
+	//
+	// Set the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.
+	//
+	// Required permission:
+	//   - `org.write`
+	ActivateOrganization(context.Context, *connect.Request[v2.ActivateOrganizationRequest]) (*connect.Response[v2.ActivateOrganizationResponse], error)
 }
 
 // NewOrganizationServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -121,18 +484,114 @@ func NewOrganizationServiceHandler(svc OrganizationServiceHandler, opts ...conne
 		connect.WithSchema(organizationServiceMethods.ByName("AddOrganization")),
 		connect.WithHandlerOptions(opts...),
 	)
+	organizationServiceUpdateOrganizationHandler := connect.NewUnaryHandler(
+		OrganizationServiceUpdateOrganizationProcedure,
+		svc.UpdateOrganization,
+		connect.WithSchema(organizationServiceMethods.ByName("UpdateOrganization")),
+		connect.WithHandlerOptions(opts...),
+	)
 	organizationServiceListOrganizationsHandler := connect.NewUnaryHandler(
 		OrganizationServiceListOrganizationsProcedure,
 		svc.ListOrganizations,
 		connect.WithSchema(organizationServiceMethods.ByName("ListOrganizations")),
 		connect.WithHandlerOptions(opts...),
 	)
+	organizationServiceDeleteOrganizationHandler := connect.NewUnaryHandler(
+		OrganizationServiceDeleteOrganizationProcedure,
+		svc.DeleteOrganization,
+		connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganization")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceSetOrganizationMetadataHandler := connect.NewUnaryHandler(
+		OrganizationServiceSetOrganizationMetadataProcedure,
+		svc.SetOrganizationMetadata,
+		connect.WithSchema(organizationServiceMethods.ByName("SetOrganizationMetadata")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceListOrganizationMetadataHandler := connect.NewUnaryHandler(
+		OrganizationServiceListOrganizationMetadataProcedure,
+		svc.ListOrganizationMetadata,
+		connect.WithSchema(organizationServiceMethods.ByName("ListOrganizationMetadata")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceDeleteOrganizationMetadataHandler := connect.NewUnaryHandler(
+		OrganizationServiceDeleteOrganizationMetadataProcedure,
+		svc.DeleteOrganizationMetadata,
+		connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganizationMetadata")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceAddOrganizationDomainHandler := connect.NewUnaryHandler(
+		OrganizationServiceAddOrganizationDomainProcedure,
+		svc.AddOrganizationDomain,
+		connect.WithSchema(organizationServiceMethods.ByName("AddOrganizationDomain")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceListOrganizationDomainsHandler := connect.NewUnaryHandler(
+		OrganizationServiceListOrganizationDomainsProcedure,
+		svc.ListOrganizationDomains,
+		connect.WithSchema(organizationServiceMethods.ByName("ListOrganizationDomains")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceDeleteOrganizationDomainHandler := connect.NewUnaryHandler(
+		OrganizationServiceDeleteOrganizationDomainProcedure,
+		svc.DeleteOrganizationDomain,
+		connect.WithSchema(organizationServiceMethods.ByName("DeleteOrganizationDomain")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceGenerateOrganizationDomainValidationHandler := connect.NewUnaryHandler(
+		OrganizationServiceGenerateOrganizationDomainValidationProcedure,
+		svc.GenerateOrganizationDomainValidation,
+		connect.WithSchema(organizationServiceMethods.ByName("GenerateOrganizationDomainValidation")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceVerifyOrganizationDomainHandler := connect.NewUnaryHandler(
+		OrganizationServiceVerifyOrganizationDomainProcedure,
+		svc.VerifyOrganizationDomain,
+		connect.WithSchema(organizationServiceMethods.ByName("VerifyOrganizationDomain")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceDeactivateOrganizationHandler := connect.NewUnaryHandler(
+		OrganizationServiceDeactivateOrganizationProcedure,
+		svc.DeactivateOrganization,
+		connect.WithSchema(organizationServiceMethods.ByName("DeactivateOrganization")),
+		connect.WithHandlerOptions(opts...),
+	)
+	organizationServiceActivateOrganizationHandler := connect.NewUnaryHandler(
+		OrganizationServiceActivateOrganizationProcedure,
+		svc.ActivateOrganization,
+		connect.WithSchema(organizationServiceMethods.ByName("ActivateOrganization")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/zitadel.org.v2.OrganizationService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrganizationServiceAddOrganizationProcedure:
 			organizationServiceAddOrganizationHandler.ServeHTTP(w, r)
+		case OrganizationServiceUpdateOrganizationProcedure:
+			organizationServiceUpdateOrganizationHandler.ServeHTTP(w, r)
 		case OrganizationServiceListOrganizationsProcedure:
 			organizationServiceListOrganizationsHandler.ServeHTTP(w, r)
+		case OrganizationServiceDeleteOrganizationProcedure:
+			organizationServiceDeleteOrganizationHandler.ServeHTTP(w, r)
+		case OrganizationServiceSetOrganizationMetadataProcedure:
+			organizationServiceSetOrganizationMetadataHandler.ServeHTTP(w, r)
+		case OrganizationServiceListOrganizationMetadataProcedure:
+			organizationServiceListOrganizationMetadataHandler.ServeHTTP(w, r)
+		case OrganizationServiceDeleteOrganizationMetadataProcedure:
+			organizationServiceDeleteOrganizationMetadataHandler.ServeHTTP(w, r)
+		case OrganizationServiceAddOrganizationDomainProcedure:
+			organizationServiceAddOrganizationDomainHandler.ServeHTTP(w, r)
+		case OrganizationServiceListOrganizationDomainsProcedure:
+			organizationServiceListOrganizationDomainsHandler.ServeHTTP(w, r)
+		case OrganizationServiceDeleteOrganizationDomainProcedure:
+			organizationServiceDeleteOrganizationDomainHandler.ServeHTTP(w, r)
+		case OrganizationServiceGenerateOrganizationDomainValidationProcedure:
+			organizationServiceGenerateOrganizationDomainValidationHandler.ServeHTTP(w, r)
+		case OrganizationServiceVerifyOrganizationDomainProcedure:
+			organizationServiceVerifyOrganizationDomainHandler.ServeHTTP(w, r)
+		case OrganizationServiceDeactivateOrganizationProcedure:
+			organizationServiceDeactivateOrganizationHandler.ServeHTTP(w, r)
+		case OrganizationServiceActivateOrganizationProcedure:
+			organizationServiceActivateOrganizationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -146,6 +605,54 @@ func (UnimplementedOrganizationServiceHandler) AddOrganization(context.Context, 
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.AddOrganization is not implemented"))
 }
 
+func (UnimplementedOrganizationServiceHandler) UpdateOrganization(context.Context, *connect.Request[v2.UpdateOrganizationRequest]) (*connect.Response[v2.UpdateOrganizationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.UpdateOrganization is not implemented"))
+}
+
 func (UnimplementedOrganizationServiceHandler) ListOrganizations(context.Context, *connect.Request[v2.ListOrganizationsRequest]) (*connect.Response[v2.ListOrganizationsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.ListOrganizations is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) DeleteOrganization(context.Context, *connect.Request[v2.DeleteOrganizationRequest]) (*connect.Response[v2.DeleteOrganizationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.DeleteOrganization is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) SetOrganizationMetadata(context.Context, *connect.Request[v2.SetOrganizationMetadataRequest]) (*connect.Response[v2.SetOrganizationMetadataResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.SetOrganizationMetadata is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) ListOrganizationMetadata(context.Context, *connect.Request[v2.ListOrganizationMetadataRequest]) (*connect.Response[v2.ListOrganizationMetadataResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.ListOrganizationMetadata is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) DeleteOrganizationMetadata(context.Context, *connect.Request[v2.DeleteOrganizationMetadataRequest]) (*connect.Response[v2.DeleteOrganizationMetadataResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.DeleteOrganizationMetadata is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) AddOrganizationDomain(context.Context, *connect.Request[v2.AddOrganizationDomainRequest]) (*connect.Response[v2.AddOrganizationDomainResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.AddOrganizationDomain is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) ListOrganizationDomains(context.Context, *connect.Request[v2.ListOrganizationDomainsRequest]) (*connect.Response[v2.ListOrganizationDomainsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.ListOrganizationDomains is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) DeleteOrganizationDomain(context.Context, *connect.Request[v2.DeleteOrganizationDomainRequest]) (*connect.Response[v2.DeleteOrganizationDomainResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.DeleteOrganizationDomain is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) GenerateOrganizationDomainValidation(context.Context, *connect.Request[v2.GenerateOrganizationDomainValidationRequest]) (*connect.Response[v2.GenerateOrganizationDomainValidationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.GenerateOrganizationDomainValidation is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) VerifyOrganizationDomain(context.Context, *connect.Request[v2.VerifyOrganizationDomainRequest]) (*connect.Response[v2.VerifyOrganizationDomainResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.VerifyOrganizationDomain is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) DeactivateOrganization(context.Context, *connect.Request[v2.DeactivateOrganizationRequest]) (*connect.Response[v2.DeactivateOrganizationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.DeactivateOrganization is not implemented"))
+}
+
+func (UnimplementedOrganizationServiceHandler) ActivateOrganization(context.Context, *connect.Request[v2.ActivateOrganizationRequest]) (*connect.Response[v2.ActivateOrganizationResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.org.v2.OrganizationService.ActivateOrganization is not implemented"))
 }

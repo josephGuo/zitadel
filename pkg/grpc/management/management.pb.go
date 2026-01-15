@@ -35101,7 +35101,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"action_ids\x18\x03 \x03(\tR\tactionIds\"P\n" +
 	"\x19SetTriggerActionsResponse\x123\n" +
-	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2\x90\x9f\n" +
+	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2\x92\x9f\n" +
 	"\n" +
 	"\x11ManagementService\x12\xe8\x01\n" +
 	"\aHealthz\x12%.zitadel.management.v1.HealthzRequest\x1a&.zitadel.management.v1.HealthzResponse\"\x8d\x01\x92Az\n" +
@@ -36571,14 +36571,14 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\rMessage Texts\x12>Reset Custom Passwordless Registration Message Text to Default\x1a\xc6\x01Removes the custom text of the passwordless/passkey registration from the organization and therefore the default configuration from the instance or translation files will be triggered for the users.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
-	"\rpolicy.delete\x82\xd3\xe4\x93\x024*2/text/message/passwordless_registration/{language}\x12\xb5\x05\n" +
-	"\"GetCustomPasswordChangeMessageText\x12@.zitadel.management.v1.GetCustomPasswordChangeMessageTextRequest\x1aA.zitadel.management.v1.GetCustomPasswordChangeMessageTextResponse\"\x89\x04\x92A\xc4\x03\n" +
-	"\rMessage Texts\x12'Get Custom Password Change Message Text\x1a\xa3\x01Get the custom text of the password-changed message/email that is configured on the organization. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
+	"\rpolicy.delete\x82\xd3\xe4\x93\x024*2/text/message/passwordless_registration/{language}\x12\xb6\x05\n" +
+	"\"GetCustomPasswordChangeMessageText\x12@.zitadel.management.v1.GetCustomPasswordChangeMessageTextRequest\x1aA.zitadel.management.v1.GetCustomPasswordChangeMessageTextResponse\"\x8a\x04\x92A\xc5\x03\n" +
+	"\rMessage Texts\x12(Get Custom Password Changed Message Text\x1a\xa3\x01Get the custom text of the password-changed message/email that is configured on the organization. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02*\x12(/text/message/password_change/{language}\x12\xe8\x05\n" +
-	"#GetDefaultPasswordChangeMessageText\x12A.zitadel.management.v1.GetDefaultPasswordChangeMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultPasswordChangeMessageTextResponse\"\xb9\x04\x92A\xec\x03\n" +
-	"\rMessage Texts\x12(Get Default Password Change Message Text\x1a\xca\x01Get the default text of the password-changed message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02*\x12(/text/message/password_change/{language}\x12\xe9\x05\n" +
+	"#GetDefaultPasswordChangeMessageText\x12A.zitadel.management.v1.GetDefaultPasswordChangeMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultPasswordChangeMessageTextResponse\"\xba\x04\x92A\xed\x03\n" +
+	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\xca\x01Get the default text of the password-changed message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x022\x120/text/default/message/password_change/{language}\x12\xb2\a\n" +

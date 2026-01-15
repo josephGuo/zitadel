@@ -738,7 +738,7 @@
     "/v2/users/{userId}/authentication_methods": {
       "get": {
         "summary": "List all possible authentication methods of a user",
-        "description": "List all possible authentication methods of a user like password, passwordless, (T)OTP and more..",
+        "description": "List all possible authentication methods of a user like password, passkey, (T)OTP and more..",
         "operationId": "UserService_ListAuthenticationMethodTypes",
         "responses": {
           "200": {

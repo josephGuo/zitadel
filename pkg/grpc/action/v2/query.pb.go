@@ -200,6 +200,62 @@ func (ExecutionFieldName) EnumDescriptor() ([]byte, []int) {
 	return file_zitadel_action_v2_query_proto_rawDescGZIP(), []int{2}
 }
 
+type PublicKeyFieldName int32
+
+const (
+	// Unspecified field name.
+	PublicKeyFieldName_PUBLIC_KEY_FIELD_NAME_UNSPECIFIED PublicKeyFieldName = 0
+	// Sort by creation date.
+	PublicKeyFieldName_PUBLIC_KEY_FIELD_NAME_CREATION_DATE PublicKeyFieldName = 1
+	// Sort by change date.
+	PublicKeyFieldName_PUBLIC_KEY_FIELD_NAME_CHANGE_DATE PublicKeyFieldName = 2
+	// Sort by expiration date.
+	PublicKeyFieldName_PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE PublicKeyFieldName = 3
+)
+
+// Enum value maps for PublicKeyFieldName.
+var (
+	PublicKeyFieldName_name = map[int32]string{
+		0: "PUBLIC_KEY_FIELD_NAME_UNSPECIFIED",
+		1: "PUBLIC_KEY_FIELD_NAME_CREATION_DATE",
+		2: "PUBLIC_KEY_FIELD_NAME_CHANGE_DATE",
+		3: "PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE",
+	}
+	PublicKeyFieldName_value = map[string]int32{
+		"PUBLIC_KEY_FIELD_NAME_UNSPECIFIED":     0,
+		"PUBLIC_KEY_FIELD_NAME_CREATION_DATE":   1,
+		"PUBLIC_KEY_FIELD_NAME_CHANGE_DATE":     2,
+		"PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE": 3,
+	}
+)
+
+func (x PublicKeyFieldName) Enum() *PublicKeyFieldName {
+	p := new(PublicKeyFieldName)
+	*p = x
+	return p
+}
+
+func (x PublicKeyFieldName) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PublicKeyFieldName) Descriptor() protoreflect.EnumDescriptor {
+	return file_zitadel_action_v2_query_proto_enumTypes[3].Descriptor()
+}
+
+func (PublicKeyFieldName) Type() protoreflect.EnumType {
+	return &file_zitadel_action_v2_query_proto_enumTypes[3]
+}
+
+func (x PublicKeyFieldName) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PublicKeyFieldName.Descriptor instead.
+func (PublicKeyFieldName) EnumDescriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_query_proto_rawDescGZIP(), []int{3}
+}
+
 type ExecutionSearchFilter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Filter:
@@ -619,6 +675,107 @@ func (x *InTargetIDsFilter) GetTargetIds() []string {
 	return nil
 }
 
+type PublicKeySearchFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Filter:
+	//
+	//	*PublicKeySearchFilter_KeyIdsFilter
+	//	*PublicKeySearchFilter_ActiveFilter
+	//	*PublicKeySearchFilter_ExpirationDateFilter
+	Filter        isPublicKeySearchFilter_Filter `protobuf_oneof:"filter"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PublicKeySearchFilter) Reset() {
+	*x = PublicKeySearchFilter{}
+	mi := &file_zitadel_action_v2_query_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PublicKeySearchFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublicKeySearchFilter) ProtoMessage() {}
+
+func (x *PublicKeySearchFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_query_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublicKeySearchFilter.ProtoReflect.Descriptor instead.
+func (*PublicKeySearchFilter) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_query_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *PublicKeySearchFilter) GetFilter() isPublicKeySearchFilter_Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *PublicKeySearchFilter) GetKeyIdsFilter() *v2.InIDsFilter {
+	if x != nil {
+		if x, ok := x.Filter.(*PublicKeySearchFilter_KeyIdsFilter); ok {
+			return x.KeyIdsFilter
+		}
+	}
+	return nil
+}
+
+func (x *PublicKeySearchFilter) GetActiveFilter() bool {
+	if x != nil {
+		if x, ok := x.Filter.(*PublicKeySearchFilter_ActiveFilter); ok {
+			return x.ActiveFilter
+		}
+	}
+	return false
+}
+
+func (x *PublicKeySearchFilter) GetExpirationDateFilter() *v2.TimestampFilter {
+	if x != nil {
+		if x, ok := x.Filter.(*PublicKeySearchFilter_ExpirationDateFilter); ok {
+			return x.ExpirationDateFilter
+		}
+	}
+	return nil
+}
+
+type isPublicKeySearchFilter_Filter interface {
+	isPublicKeySearchFilter_Filter()
+}
+
+type PublicKeySearchFilter_KeyIdsFilter struct {
+	// Filter the keys by one or multiple ids.
+	KeyIdsFilter *v2.InIDsFilter `protobuf:"bytes,1,opt,name=key_ids_filter,json=keyIdsFilter,proto3,oneof"`
+}
+
+type PublicKeySearchFilter_ActiveFilter struct {
+	// Filter the keys by their active status.
+	ActiveFilter bool `protobuf:"varint,2,opt,name=active_filter,json=activeFilter,proto3,oneof"`
+}
+
+type PublicKeySearchFilter_ExpirationDateFilter struct {
+	// Filter the keys by their expiration status.
+	ExpirationDateFilter *v2.TimestampFilter `protobuf:"bytes,3,opt,name=expiration_date_filter,json=expirationDateFilter,proto3,oneof"`
+}
+
+func (*PublicKeySearchFilter_KeyIdsFilter) isPublicKeySearchFilter_Filter() {}
+
+func (*PublicKeySearchFilter_ActiveFilter) isPublicKeySearchFilter_Filter() {}
+
+func (*PublicKeySearchFilter_ExpirationDateFilter) isPublicKeySearchFilter_Filter() {}
+
 var File_zitadel_action_v2_query_proto protoreflect.FileDescriptor
 
 const file_zitadel_action_v2_query_proto_rawDesc = "" +
@@ -647,7 +804,12 @@ const file_zitadel_action_v2_query_proto_rawDesc = "" +
 	"\x06method\x18\x02 \x01(\x0e2#.zitadel.filter.v2.TextFilterMethodB\b\xfaB\x05\x82\x01\x02\x10\x01R\x06method\"b\n" +
 	"\x11InTargetIDsFilter\x12M\n" +
 	"\n" +
-	"target_ids\x18\x01 \x03(\tB.\x92A+J)[\"69629023906488334\",\"69622366012355662\"]R\ttargetIds*\xb9\x02\n" +
+	"target_ids\x18\x01 \x03(\tB.\x92A+J)[\"69629023906488334\",\"69622366012355662\"]R\ttargetIds\"\xec\x01\n" +
+	"\x15PublicKeySearchFilter\x12F\n" +
+	"\x0ekey_ids_filter\x18\x01 \x01(\v2\x1e.zitadel.filter.v2.InIDsFilterH\x00R\fkeyIdsFilter\x12%\n" +
+	"\ractive_filter\x18\x02 \x01(\bH\x00R\factiveFilter\x12Z\n" +
+	"\x16expiration_date_filter\x18\x03 \x01(\v2\".zitadel.filter.v2.TimestampFilterH\x00R\x14expirationDateFilterB\b\n" +
+	"\x06filter*\xb9\x02\n" +
 	"\x0fTargetFieldName\x12!\n" +
 	"\x1dTARGET_FIELD_NAME_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14TARGET_FIELD_NAME_ID\x10\x01\x12\"\n" +
@@ -668,7 +830,12 @@ const file_zitadel_action_v2_query_proto_rawDesc = "" +
 	" EXECUTION_FIELD_NAME_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17EXECUTION_FIELD_NAME_ID\x10\x01\x12%\n" +
 	"!EXECUTION_FIELD_NAME_CREATED_DATE\x10\x02\x12%\n" +
-	"!EXECUTION_FIELD_NAME_CHANGED_DATE\x10\x03B6Z4github.com/zitadel/zitadel/pkg/grpc/action/v2;actionb\x06proto3"
+	"!EXECUTION_FIELD_NAME_CHANGED_DATE\x10\x03*\xb6\x01\n" +
+	"\x12PublicKeyFieldName\x12%\n" +
+	"!PUBLIC_KEY_FIELD_NAME_UNSPECIFIED\x10\x00\x12'\n" +
+	"#PUBLIC_KEY_FIELD_NAME_CREATION_DATE\x10\x01\x12%\n" +
+	"!PUBLIC_KEY_FIELD_NAME_CHANGE_DATE\x10\x02\x12)\n" +
+	"%PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE\x10\x03B6Z4github.com/zitadel/zitadel/pkg/grpc/action/v2;actionb\x06proto3"
 
 var (
 	file_zitadel_action_v2_query_proto_rawDescOnce sync.Once
@@ -682,36 +849,42 @@ func file_zitadel_action_v2_query_proto_rawDescGZIP() []byte {
 	return file_zitadel_action_v2_query_proto_rawDescData
 }
 
-var file_zitadel_action_v2_query_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_zitadel_action_v2_query_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_zitadel_action_v2_query_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_zitadel_action_v2_query_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_zitadel_action_v2_query_proto_goTypes = []any{
 	(TargetFieldName)(0),          // 0: zitadel.action.v2.TargetFieldName
 	(ExecutionType)(0),            // 1: zitadel.action.v2.ExecutionType
 	(ExecutionFieldName)(0),       // 2: zitadel.action.v2.ExecutionFieldName
-	(*ExecutionSearchFilter)(nil), // 3: zitadel.action.v2.ExecutionSearchFilter
-	(*InConditionsFilter)(nil),    // 4: zitadel.action.v2.InConditionsFilter
-	(*ExecutionTypeFilter)(nil),   // 5: zitadel.action.v2.ExecutionTypeFilter
-	(*TargetFilter)(nil),          // 6: zitadel.action.v2.TargetFilter
-	(*TargetSearchFilter)(nil),    // 7: zitadel.action.v2.TargetSearchFilter
-	(*TargetNameFilter)(nil),      // 8: zitadel.action.v2.TargetNameFilter
-	(*InTargetIDsFilter)(nil),     // 9: zitadel.action.v2.InTargetIDsFilter
-	(*Condition)(nil),             // 10: zitadel.action.v2.Condition
-	(v2.TextFilterMethod)(0),      // 11: zitadel.filter.v2.TextFilterMethod
+	(PublicKeyFieldName)(0),       // 3: zitadel.action.v2.PublicKeyFieldName
+	(*ExecutionSearchFilter)(nil), // 4: zitadel.action.v2.ExecutionSearchFilter
+	(*InConditionsFilter)(nil),    // 5: zitadel.action.v2.InConditionsFilter
+	(*ExecutionTypeFilter)(nil),   // 6: zitadel.action.v2.ExecutionTypeFilter
+	(*TargetFilter)(nil),          // 7: zitadel.action.v2.TargetFilter
+	(*TargetSearchFilter)(nil),    // 8: zitadel.action.v2.TargetSearchFilter
+	(*TargetNameFilter)(nil),      // 9: zitadel.action.v2.TargetNameFilter
+	(*InTargetIDsFilter)(nil),     // 10: zitadel.action.v2.InTargetIDsFilter
+	(*PublicKeySearchFilter)(nil), // 11: zitadel.action.v2.PublicKeySearchFilter
+	(*Condition)(nil),             // 12: zitadel.action.v2.Condition
+	(v2.TextFilterMethod)(0),      // 13: zitadel.filter.v2.TextFilterMethod
+	(*v2.InIDsFilter)(nil),        // 14: zitadel.filter.v2.InIDsFilter
+	(*v2.TimestampFilter)(nil),    // 15: zitadel.filter.v2.TimestampFilter
 }
 var file_zitadel_action_v2_query_proto_depIdxs = []int32{
-	4,  // 0: zitadel.action.v2.ExecutionSearchFilter.in_conditions_filter:type_name -> zitadel.action.v2.InConditionsFilter
-	5,  // 1: zitadel.action.v2.ExecutionSearchFilter.execution_type_filter:type_name -> zitadel.action.v2.ExecutionTypeFilter
-	6,  // 2: zitadel.action.v2.ExecutionSearchFilter.target_filter:type_name -> zitadel.action.v2.TargetFilter
-	10, // 3: zitadel.action.v2.InConditionsFilter.conditions:type_name -> zitadel.action.v2.Condition
+	5,  // 0: zitadel.action.v2.ExecutionSearchFilter.in_conditions_filter:type_name -> zitadel.action.v2.InConditionsFilter
+	6,  // 1: zitadel.action.v2.ExecutionSearchFilter.execution_type_filter:type_name -> zitadel.action.v2.ExecutionTypeFilter
+	7,  // 2: zitadel.action.v2.ExecutionSearchFilter.target_filter:type_name -> zitadel.action.v2.TargetFilter
+	12, // 3: zitadel.action.v2.InConditionsFilter.conditions:type_name -> zitadel.action.v2.Condition
 	1,  // 4: zitadel.action.v2.ExecutionTypeFilter.execution_type:type_name -> zitadel.action.v2.ExecutionType
-	8,  // 5: zitadel.action.v2.TargetSearchFilter.target_name_filter:type_name -> zitadel.action.v2.TargetNameFilter
-	9,  // 6: zitadel.action.v2.TargetSearchFilter.in_target_ids_filter:type_name -> zitadel.action.v2.InTargetIDsFilter
-	11, // 7: zitadel.action.v2.TargetNameFilter.method:type_name -> zitadel.filter.v2.TextFilterMethod
-	8,  // [8:8] is the sub-list for method output_type
-	8,  // [8:8] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	9,  // 5: zitadel.action.v2.TargetSearchFilter.target_name_filter:type_name -> zitadel.action.v2.TargetNameFilter
+	10, // 6: zitadel.action.v2.TargetSearchFilter.in_target_ids_filter:type_name -> zitadel.action.v2.InTargetIDsFilter
+	13, // 7: zitadel.action.v2.TargetNameFilter.method:type_name -> zitadel.filter.v2.TextFilterMethod
+	14, // 8: zitadel.action.v2.PublicKeySearchFilter.key_ids_filter:type_name -> zitadel.filter.v2.InIDsFilter
+	15, // 9: zitadel.action.v2.PublicKeySearchFilter.expiration_date_filter:type_name -> zitadel.filter.v2.TimestampFilter
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_action_v2_query_proto_init() }
@@ -729,13 +902,18 @@ func file_zitadel_action_v2_query_proto_init() {
 		(*TargetSearchFilter_TargetNameFilter)(nil),
 		(*TargetSearchFilter_InTargetIdsFilter)(nil),
 	}
+	file_zitadel_action_v2_query_proto_msgTypes[7].OneofWrappers = []any{
+		(*PublicKeySearchFilter_KeyIdsFilter)(nil),
+		(*PublicKeySearchFilter_ActiveFilter)(nil),
+		(*PublicKeySearchFilter_ExpirationDateFilter)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_action_v2_query_proto_rawDesc), len(file_zitadel_action_v2_query_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   7,
+			NumEnums:      4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

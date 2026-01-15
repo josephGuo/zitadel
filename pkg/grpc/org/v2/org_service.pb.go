@@ -9,14 +9,17 @@ package org
 import (
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
+	v21 "github.com/zitadel/zitadel/pkg/grpc/filter/v2"
+	v22 "github.com/zitadel/zitadel/pkg/grpc/metadata/v2"
 	v2 "github.com/zitadel/zitadel/pkg/grpc/object/v2"
 	_ "github.com/zitadel/zitadel/pkg/grpc/protoc/v2"
-	v21 "github.com/zitadel/zitadel/pkg/grpc/user/v2"
+	v23 "github.com/zitadel/zitadel/pkg/grpc/user/v2"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/structpb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -30,10 +33,25 @@ const (
 )
 
 type AddOrganizationRequest struct {
-	state  protoimpl.MessageState          `protogen:"open.v1"`
-	Name   string                          `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name is the unique name of the organization to be created.
+	// This must be unique across the instance.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Specify users to be assigned as organization admins.
+	// If no users are specified here, the organization will be created without any admin users.
+	// The organization can still be managed by any instance administrator.
+	// If no roles are specified for a user, they will be assigned the role ORG_OWNER.
 	Admins []*AddOrganizationRequest_Admin `protobuf:"bytes,2,rep,name=admins,proto3" json:"admins,omitempty"`
-	// optionally set your own id unique for the organization.
+	// OrganizationID is the unique identifier of the organization. This field is optional.
+	// If omitted, the system will generate one,
+	// which is the recommended way. The generated ID will be returned in the response.
+	OrganizationId *string `protobuf:"bytes,4,opt,name=organization_id,json=organizationId,proto3,oneof" json:"organization_id,omitempty"`
+	// Optionally, set a unique id for the organization. If omitted, the system will generate one,
+	// which is the recommended way. The generated ID will be returned in the response.
+	//
+	// Deprecated: use 'organization_id' field instead.
+	//
+	// Deprecated: Marked as deprecated in zitadel/org/v2/org_service.proto.
 	OrgId         *string `protobuf:"bytes,3,opt,name=org_id,json=orgId,proto3,oneof" json:"org_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -83,6 +101,14 @@ func (x *AddOrganizationRequest) GetAdmins() []*AddOrganizationRequest_Admin {
 	return nil
 }
 
+func (x *AddOrganizationRequest) GetOrganizationId() string {
+	if x != nil && x.OrganizationId != nil {
+		return *x.OrganizationId
+	}
+	return ""
+}
+
+// Deprecated: Marked as deprecated in zitadel/org/v2/org_service.proto.
 func (x *AddOrganizationRequest) GetOrgId() string {
 	if x != nil && x.OrgId != nil {
 		return *x.OrgId
@@ -150,6 +176,110 @@ func (x *AddOrganizationResponse) GetCreatedAdmins() []*AddOrganizationResponse_
 	return nil
 }
 
+type UpdateOrganizationRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization to be updated.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Name is the new name for the organization to be set.
+	// Note that since the name is used to generate the organization's default domain,
+	// changing the name will also change the domain.
+	// Additionally, if the domain is used as suffix for user logins,
+	// their login names will also change accordingly.
+	// It will not affect any custom domains added to the organization.
+	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateOrganizationRequest) Reset() {
+	*x = UpdateOrganizationRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateOrganizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOrganizationRequest) ProtoMessage() {}
+
+func (x *UpdateOrganizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOrganizationRequest.ProtoReflect.Descriptor instead.
+func (*UpdateOrganizationRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UpdateOrganizationRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *UpdateOrganizationRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type UpdateOrganizationResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the update to the organization.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateOrganizationResponse) Reset() {
+	*x = UpdateOrganizationResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateOrganizationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOrganizationResponse) ProtoMessage() {}
+
+func (x *UpdateOrganizationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOrganizationResponse.ProtoReflect.Descriptor instead.
+func (*UpdateOrganizationResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UpdateOrganizationResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
 type ListOrganizationsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// list limitations and ordering
@@ -164,7 +294,7 @@ type ListOrganizationsRequest struct {
 
 func (x *ListOrganizationsRequest) Reset() {
 	*x = ListOrganizationsRequest{}
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[2]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -176,7 +306,7 @@ func (x *ListOrganizationsRequest) String() string {
 func (*ListOrganizationsRequest) ProtoMessage() {}
 
 func (x *ListOrganizationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[2]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -189,7 +319,7 @@ func (x *ListOrganizationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrganizationsRequest.ProtoReflect.Descriptor instead.
 func (*ListOrganizationsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{2}
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListOrganizationsRequest) GetQuery() *v2.ListQuery {
@@ -214,17 +344,20 @@ func (x *ListOrganizationsRequest) GetQueries() []*SearchQuery {
 }
 
 type ListOrganizationsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Details       *v2.ListDetails        `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
-	SortingColumn OrganizationFieldName  `protobuf:"varint,2,opt,name=sorting_column,json=sortingColumn,proto3,enum=zitadel.org.v2.OrganizationFieldName" json:"sorting_column,omitempty"`
-	Result        []*Organization        `protobuf:"bytes,3,rep,name=result,proto3" json:"result,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Details of organizations results.
+	Details *v2.ListDetails `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
+	// The sorting columns the result is sorted.
+	SortingColumn OrganizationFieldName `protobuf:"varint,2,opt,name=sorting_column,json=sortingColumn,proto3,enum=zitadel.org.v2.OrganizationFieldName" json:"sorting_column,omitempty"`
+	// The Result is a list of organizations matching the query.
+	Result        []*Organization `protobuf:"bytes,3,rep,name=result,proto3" json:"result,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListOrganizationsResponse) Reset() {
 	*x = ListOrganizationsResponse{}
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[3]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -236,7 +369,7 @@ func (x *ListOrganizationsResponse) String() string {
 func (*ListOrganizationsResponse) ProtoMessage() {}
 
 func (x *ListOrganizationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[3]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -249,7 +382,7 @@ func (x *ListOrganizationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrganizationsResponse.ProtoReflect.Descriptor instead.
 func (*ListOrganizationsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{3}
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListOrganizationsResponse) GetDetails() *v2.ListDetails {
@@ -273,6 +406,1199 @@ func (x *ListOrganizationsResponse) GetResult() []*Organization {
 	return nil
 }
 
+type DeleteOrganizationRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization to be deleted.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationRequest) Reset() {
+	*x = DeleteOrganizationRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationRequest) ProtoMessage() {}
+
+func (x *DeleteOrganizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationRequest.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *DeleteOrganizationRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+type DeleteOrganizationResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// DeletionDate is the timestamp of the deletion of the organization.
+	DeletionDate  *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=deletion_date,json=deletionDate,proto3" json:"deletion_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationResponse) Reset() {
+	*x = DeleteOrganizationResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationResponse) ProtoMessage() {}
+
+func (x *DeleteOrganizationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationResponse.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DeleteOrganizationResponse) GetDeletionDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletionDate
+	}
+	return nil
+}
+
+type DeactivateOrganizationRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization to be deactivated.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeactivateOrganizationRequest) Reset() {
+	*x = DeactivateOrganizationRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeactivateOrganizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeactivateOrganizationRequest) ProtoMessage() {}
+
+func (x *DeactivateOrganizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeactivateOrganizationRequest.ProtoReflect.Descriptor instead.
+func (*DeactivateOrganizationRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeactivateOrganizationRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+type DeactivateOrganizationResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the deactivation of the organization.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeactivateOrganizationResponse) Reset() {
+	*x = DeactivateOrganizationResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeactivateOrganizationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeactivateOrganizationResponse) ProtoMessage() {}
+
+func (x *DeactivateOrganizationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeactivateOrganizationResponse.ProtoReflect.Descriptor instead.
+func (*DeactivateOrganizationResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DeactivateOrganizationResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
+type ActivateOrganizationRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization to be activated.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ActivateOrganizationRequest) Reset() {
+	*x = ActivateOrganizationRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateOrganizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateOrganizationRequest) ProtoMessage() {}
+
+func (x *ActivateOrganizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateOrganizationRequest.ProtoReflect.Descriptor instead.
+func (*ActivateOrganizationRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ActivateOrganizationRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+type ActivateOrganizationResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the activation of the organization.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateOrganizationResponse) Reset() {
+	*x = ActivateOrganizationResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateOrganizationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateOrganizationResponse) ProtoMessage() {}
+
+func (x *ActivateOrganizationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateOrganizationResponse.ProtoReflect.Descriptor instead.
+func (*ActivateOrganizationResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ActivateOrganizationResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
+type AddOrganizationDomainRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization to which the domain is to be added.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Domain is the full qualified domain name to be added to the organization.
+	// Note that the domain has to be unique across the instance.
+	// Depending on the settings, you might have to verify the domain before it can be used.
+	Domain        string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddOrganizationDomainRequest) Reset() {
+	*x = AddOrganizationDomainRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddOrganizationDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOrganizationDomainRequest) ProtoMessage() {}
+
+func (x *AddOrganizationDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOrganizationDomainRequest.ProtoReflect.Descriptor instead.
+func (*AddOrganizationDomainRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *AddOrganizationDomainRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *AddOrganizationDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+type AddOrganizationDomainResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// CreationDate is the timestamp when the organization domain was created.
+	CreationDate  *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=creation_date,json=creationDate,proto3" json:"creation_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddOrganizationDomainResponse) Reset() {
+	*x = AddOrganizationDomainResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddOrganizationDomainResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOrganizationDomainResponse) ProtoMessage() {}
+
+func (x *AddOrganizationDomainResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOrganizationDomainResponse.ProtoReflect.Descriptor instead.
+func (*AddOrganizationDomainResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AddOrganizationDomainResponse) GetCreationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreationDate
+	}
+	return nil
+}
+
+type ListOrganizationDomainsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization from which the domains are to be listed.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// List limitations and ordering.
+	Pagination *v21.PaginationRequest `protobuf:"bytes,2,opt,name=pagination,proto3,oneof" json:"pagination,omitempty"`
+	// Filters define the criteria to query for.
+	Filters []*DomainSearchFilter `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty"`
+	// SortingColumn is the field the result is sorted by.
+	// Beware that if you change this, your result pagination might be inconsistent.
+	SortingColumn DomainFieldName `protobuf:"varint,4,opt,name=sorting_column,json=sortingColumn,proto3,enum=zitadel.org.v2.DomainFieldName" json:"sorting_column,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListOrganizationDomainsRequest) Reset() {
+	*x = ListOrganizationDomainsRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListOrganizationDomainsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOrganizationDomainsRequest) ProtoMessage() {}
+
+func (x *ListOrganizationDomainsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOrganizationDomainsRequest.ProtoReflect.Descriptor instead.
+func (*ListOrganizationDomainsRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListOrganizationDomainsRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *ListOrganizationDomainsRequest) GetPagination() *v21.PaginationRequest {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListOrganizationDomainsRequest) GetFilters() []*DomainSearchFilter {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+func (x *ListOrganizationDomainsRequest) GetSortingColumn() DomainFieldName {
+	if x != nil {
+		return x.SortingColumn
+	}
+	return DomainFieldName_DOMAIN_FIELD_NAME_UNSPECIFIED
+}
+
+type ListOrganizationDomainsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pagination of the organizations domain results.
+	Pagination *v21.PaginationResponse `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Domains is a list of fully qualified domain names registered to the organization matching the query.
+	Domains       []*Domain `protobuf:"bytes,2,rep,name=domains,proto3" json:"domains,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListOrganizationDomainsResponse) Reset() {
+	*x = ListOrganizationDomainsResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListOrganizationDomainsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOrganizationDomainsResponse) ProtoMessage() {}
+
+func (x *ListOrganizationDomainsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOrganizationDomainsResponse.ProtoReflect.Descriptor instead.
+func (*ListOrganizationDomainsResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListOrganizationDomainsResponse) GetPagination() *v21.PaginationResponse {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListOrganizationDomainsResponse) GetDomains() []*Domain {
+	if x != nil {
+		return x.Domains
+	}
+	return nil
+}
+
+type DeleteOrganizationDomainRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization from which the domain is to be deleted.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Domain is the full qualified domain name to be deleted from the organization.
+	// Note that if the domain is used as suffix for user logins,
+	// those users will not be able to log in anymore. They have to use another domain instead.
+	// Also if the domain was used for domain discovery,
+	// users will not be able to find the organization by the domain anymore.
+	Domain        string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationDomainRequest) Reset() {
+	*x = DeleteOrganizationDomainRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationDomainRequest) ProtoMessage() {}
+
+func (x *DeleteOrganizationDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationDomainRequest.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationDomainRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DeleteOrganizationDomainRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *DeleteOrganizationDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+type DeleteOrganizationDomainResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// DeletionDate is the timestamp of the deletion of the organization domain.
+	DeletionDate  *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=deletion_date,json=deletionDate,proto3" json:"deletion_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationDomainResponse) Reset() {
+	*x = DeleteOrganizationDomainResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationDomainResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationDomainResponse) ProtoMessage() {}
+
+func (x *DeleteOrganizationDomainResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationDomainResponse.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationDomainResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *DeleteOrganizationDomainResponse) GetDeletionDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletionDate
+	}
+	return nil
+}
+
+type GenerateOrganizationDomainValidationRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// OrganizationID is the unique identifier of the organization for which the domain validation is to be generated.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Domain is the full qualified domain name for which the validation is to be generated.
+	Domain string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	// Type is the domain validation type to be generated.
+	// Depending on the type, you will have to add a DNS record or a file to your webserver.
+	// Make sure that the challenge is reachable via the chosen method.
+	// The validation has to be done within one hour, otherwise the token will expire and you will have to generate a new one.
+	// After you have added the record or the file, you can verify the domain via the VerifyOrganizationDomain endpoint.
+	// You can check the status of the domain via the ListOrganizationDomains endpoint.
+	// The domain will be marked as verified after a successful verification.
+	Type          DomainValidationType `protobuf:"varint,3,opt,name=type,proto3,enum=zitadel.org.v2.DomainValidationType" json:"type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateOrganizationDomainValidationRequest) Reset() {
+	*x = GenerateOrganizationDomainValidationRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateOrganizationDomainValidationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateOrganizationDomainValidationRequest) ProtoMessage() {}
+
+func (x *GenerateOrganizationDomainValidationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateOrganizationDomainValidationRequest.ProtoReflect.Descriptor instead.
+func (*GenerateOrganizationDomainValidationRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GenerateOrganizationDomainValidationRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *GenerateOrganizationDomainValidationRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *GenerateOrganizationDomainValidationRequest) GetType() DomainValidationType {
+	if x != nil {
+		return x.Type
+	}
+	return DomainValidationType_DOMAIN_VALIDATION_TYPE_UNSPECIFIED
+}
+
+type GenerateOrganizationDomainValidationResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Token is a verification token that needs to be added to the DNS records or as a file to the webserver.
+	// Zitadel will check for this token to verify the domain.
+	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	// URL is the location where the token needs to be placed for HTTP challenge.
+	Url           string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateOrganizationDomainValidationResponse) Reset() {
+	*x = GenerateOrganizationDomainValidationResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateOrganizationDomainValidationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateOrganizationDomainValidationResponse) ProtoMessage() {}
+
+func (x *GenerateOrganizationDomainValidationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateOrganizationDomainValidationResponse.ProtoReflect.Descriptor instead.
+func (*GenerateOrganizationDomainValidationResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *GenerateOrganizationDomainValidationResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *GenerateOrganizationDomainValidationResponse) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type VerifyOrganizationDomainRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Organization ID is the unique identifier of the organization whose domain is to be verified.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Domain is the full qualified domain name to be verified.
+	Domain        string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyOrganizationDomainRequest) Reset() {
+	*x = VerifyOrganizationDomainRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyOrganizationDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyOrganizationDomainRequest) ProtoMessage() {}
+
+func (x *VerifyOrganizationDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyOrganizationDomainRequest.ProtoReflect.Descriptor instead.
+func (*VerifyOrganizationDomainRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *VerifyOrganizationDomainRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *VerifyOrganizationDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+type VerifyOrganizationDomainResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the verification of the organization domain.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyOrganizationDomainResponse) Reset() {
+	*x = VerifyOrganizationDomainResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyOrganizationDomainResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyOrganizationDomainResponse) ProtoMessage() {}
+
+func (x *VerifyOrganizationDomainResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyOrganizationDomainResponse.ProtoReflect.Descriptor instead.
+func (*VerifyOrganizationDomainResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *VerifyOrganizationDomainResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
+type Metadata struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Key is identifier of the metadata entry.
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	// Value is the values of the metadata entry.
+	Value         []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Metadata) Reset() {
+	*x = Metadata{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Metadata) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Metadata) ProtoMessage() {}
+
+func (x *Metadata) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Metadata.ProtoReflect.Descriptor instead.
+func (*Metadata) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *Metadata) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *Metadata) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+type SetOrganizationMetadataRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Organization ID is the unique identifier of the organization whose metadata is to be set.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Metadata is a list of metadata entries to set.
+	Metadata      []*Metadata `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetOrganizationMetadataRequest) Reset() {
+	*x = SetOrganizationMetadataRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetOrganizationMetadataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOrganizationMetadataRequest) ProtoMessage() {}
+
+func (x *SetOrganizationMetadataRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOrganizationMetadataRequest.ProtoReflect.Descriptor instead.
+func (*SetOrganizationMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *SetOrganizationMetadataRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *SetOrganizationMetadataRequest) GetMetadata() []*Metadata {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+type SetOrganizationMetadataResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The timestamp of the update of the organization metadata.
+	SetDate       *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=set_date,json=setDate,proto3" json:"set_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetOrganizationMetadataResponse) Reset() {
+	*x = SetOrganizationMetadataResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetOrganizationMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOrganizationMetadataResponse) ProtoMessage() {}
+
+func (x *SetOrganizationMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOrganizationMetadataResponse.ProtoReflect.Descriptor instead.
+func (*SetOrganizationMetadataResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *SetOrganizationMetadataResponse) GetSetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SetDate
+	}
+	return nil
+}
+
+type ListOrganizationMetadataRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Organization ID is the unique identifier of the organization whose metadata is to be listed.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// List limitations and ordering.
+	Pagination *v21.PaginationRequest `protobuf:"bytes,2,opt,name=pagination,proto3,oneof" json:"pagination,omitempty"`
+	// Filters define the criteria to query the metadata for.
+	Filters       []*v22.MetadataSearchFilter `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListOrganizationMetadataRequest) Reset() {
+	*x = ListOrganizationMetadataRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListOrganizationMetadataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOrganizationMetadataRequest) ProtoMessage() {}
+
+func (x *ListOrganizationMetadataRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOrganizationMetadataRequest.ProtoReflect.Descriptor instead.
+func (*ListOrganizationMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ListOrganizationMetadataRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *ListOrganizationMetadataRequest) GetPagination() *v21.PaginationRequest {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListOrganizationMetadataRequest) GetFilters() []*v22.MetadataSearchFilter {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+type ListOrganizationMetadataResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pagination of the Organizations metadata results.
+	Pagination *v21.PaginationResponse `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Metadata is a list of organization metadata that matched the query.
+	Metadata      []*v22.Metadata `protobuf:"bytes,2,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListOrganizationMetadataResponse) Reset() {
+	*x = ListOrganizationMetadataResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListOrganizationMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOrganizationMetadataResponse) ProtoMessage() {}
+
+func (x *ListOrganizationMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOrganizationMetadataResponse.ProtoReflect.Descriptor instead.
+func (*ListOrganizationMetadataResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ListOrganizationMetadataResponse) GetPagination() *v21.PaginationResponse {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListOrganizationMetadataResponse) GetMetadata() []*v22.Metadata {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+type DeleteOrganizationMetadataRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Organization ID is the unique identifier of the organization whose metadata is to be deleted.
+	OrganizationId string `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	// Keys are the organization metadata entries to be deleted by their key.
+	Keys          []string `protobuf:"bytes,2,rep,name=keys,proto3" json:"keys,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationMetadataRequest) Reset() {
+	*x = DeleteOrganizationMetadataRequest{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationMetadataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationMetadataRequest) ProtoMessage() {}
+
+func (x *DeleteOrganizationMetadataRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationMetadataRequest.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *DeleteOrganizationMetadataRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *DeleteOrganizationMetadataRequest) GetKeys() []string {
+	if x != nil {
+		return x.Keys
+	}
+	return nil
+}
+
+type DeleteOrganizationMetadataResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// DeletionDate is the timestamp of the deletion of the organization metadata.
+	DeletionDate  *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=deletion_date,json=deletionDate,proto3" json:"deletion_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteOrganizationMetadataResponse) Reset() {
+	*x = DeleteOrganizationMetadataResponse{}
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteOrganizationMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOrganizationMetadataResponse) ProtoMessage() {}
+
+func (x *DeleteOrganizationMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOrganizationMetadataResponse.ProtoReflect.Descriptor instead.
+func (*DeleteOrganizationMetadataResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_org_v2_org_service_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *DeleteOrganizationMetadataResponse) GetDeletionDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletionDate
+	}
+	return nil
+}
+
 type AddOrganizationRequest_Admin struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to UserType:
@@ -288,7 +1614,7 @@ type AddOrganizationRequest_Admin struct {
 
 func (x *AddOrganizationRequest_Admin) Reset() {
 	*x = AddOrganizationRequest_Admin{}
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[4]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -300,7 +1626,7 @@ func (x *AddOrganizationRequest_Admin) String() string {
 func (*AddOrganizationRequest_Admin) ProtoMessage() {}
 
 func (x *AddOrganizationRequest_Admin) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[4]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -332,7 +1658,7 @@ func (x *AddOrganizationRequest_Admin) GetUserId() string {
 	return ""
 }
 
-func (x *AddOrganizationRequest_Admin) GetHuman() *v21.AddHumanUserRequest {
+func (x *AddOrganizationRequest_Admin) GetHuman() *v23.AddHumanUserRequest {
 	if x != nil {
 		if x, ok := x.UserType.(*AddOrganizationRequest_Admin_Human); ok {
 			return x.Human
@@ -357,7 +1683,7 @@ type AddOrganizationRequest_Admin_UserId struct {
 }
 
 type AddOrganizationRequest_Admin_Human struct {
-	Human *v21.AddHumanUserRequest `protobuf:"bytes,2,opt,name=human,proto3,oneof"`
+	Human *v23.AddHumanUserRequest `protobuf:"bytes,2,opt,name=human,proto3,oneof"`
 }
 
 func (*AddOrganizationRequest_Admin_UserId) isAddOrganizationRequest_Admin_UserType() {}
@@ -375,7 +1701,7 @@ type AddOrganizationResponse_CreatedAdmin struct {
 
 func (x *AddOrganizationResponse_CreatedAdmin) Reset() {
 	*x = AddOrganizationResponse_CreatedAdmin{}
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[5]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -387,7 +1713,7 @@ func (x *AddOrganizationResponse_CreatedAdmin) String() string {
 func (*AddOrganizationResponse_CreatedAdmin) ProtoMessage() {}
 
 func (x *AddOrganizationResponse_CreatedAdmin) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[5]
+	mi := &file_zitadel_org_v2_org_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -428,16 +1754,18 @@ var File_zitadel_org_v2_org_service_proto protoreflect.FileDescriptor
 
 const file_zitadel_org_v2_org_service_proto_rawDesc = "" +
 	"\n" +
-	" zitadel/org/v2/org_service.proto\x12\x0ezitadel.org.v2\x1a\x1ezitadel/object/v2/object.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1azitadel/user/v2/auth.proto\x1a\x1bzitadel/user/v2/email.proto\x1a\x1bzitadel/user/v2/phone.proto\x1a\x19zitadel/user/v2/idp.proto\x1a\x1ezitadel/user/v2/password.proto\x1a\x1azitadel/user/v2/user.proto\x1a\"zitadel/user/v2/user_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x18zitadel/org/v2/org.proto\x1a\x1azitadel/org/v2/query.proto\"\xfd\x02\n" +
+	" zitadel/org/v2/org_service.proto\x12\x0ezitadel.org.v2\x1a\x1ezitadel/object/v2/object.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1azitadel/user/v2/auth.proto\x1a\x1bzitadel/user/v2/email.proto\x1a\x1bzitadel/user/v2/phone.proto\x1a\x19zitadel/user/v2/idp.proto\x1a\x1ezitadel/user/v2/password.proto\x1a\x1azitadel/user/v2/user.proto\x1a\"zitadel/user/v2/user_service.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x18zitadel/org/v2/org.proto\x1a\x1azitadel/org/v2/query.proto\x1a\x1ezitadel/filter/v2/filter.proto\x1a\"zitadel/metadata/v2/metadata.proto\"\xfb\x03\n" +
 	"\x16AddOrganizationRequest\x126\n" +
 	"\x04name\x18\x01 \x01(\tB\"\x92A\x11J\t\"ZITADEL\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12D\n" +
-	"\x06admins\x18\x02 \x03(\v2,.zitadel.org.v2.AddOrganizationRequest.AdminR\x06admins\x12T\n" +
-	"\x06org_id\x18\x03 \x01(\tB8\x92A+J&\"d654e6ba-70a3-48ef-a95d-37c8d8a7901a\"x\xc8\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\x05orgId\x88\x01\x01\x1a\x83\x01\n" +
+	"\x06admins\x18\x02 \x03(\v2,.zitadel.org.v2.AddOrganizationRequest.AdminR\x06admins\x12f\n" +
+	"\x0forganization_id\x18\x04 \x01(\tB8\x92A+J&\"d654e6ba-70a3-48ef-a95d-37c8d8a7901a\"x\xc8\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\x0eorganizationId\x88\x01\x01\x12V\n" +
+	"\x06org_id\x18\x03 \x01(\tB:\x92A+J&\"d654e6ba-70a3-48ef-a95d-37c8d8a7901a\"x\xc8\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01\x18\x01H\x01R\x05orgId\x88\x01\x01\x1a\x83\x01\n" +
 	"\x05Admin\x12\x19\n" +
 	"\auser_id\x18\x01 \x01(\tH\x00R\x06userId\x12<\n" +
 	"\x05human\x18\x02 \x01(\v2$.zitadel.user.v2.AddHumanUserRequestH\x00R\x05human\x12\x14\n" +
 	"\x05roles\x18\x03 \x03(\tR\x05rolesB\v\n" +
-	"\tuser_typeB\t\n" +
+	"\tuser_typeB\x12\n" +
+	"\x10_organization_idB\t\n" +
 	"\a_org_id\"\xe5\x02\n" +
 	"\x17AddOrganizationResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\x12'\n" +
@@ -450,7 +1778,13 @@ const file_zitadel_org_v2_org_service_proto_rawDesc = "" +
 	"\n" +
 	"phone_code\x18\x03 \x01(\tH\x01R\tphoneCode\x88\x01\x01B\r\n" +
 	"\v_email_codeB\r\n" +
-	"\v_phone_code\"\xd3\x01\n" +
+	"\v_phone_code\"\xad\x01\n" +
+	"\x19UpdateOrganizationRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x129\n" +
+	"\x04name\x18\x02 \x01(\tB%\x92A\x14J\f\"Customer 1\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\"z\n" +
+	"\x1aUpdateOrganizationResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\n" +
+	"changeDate\"\xd3\x01\n" +
 	"\x18ListOrganizationsRequest\x122\n" +
 	"\x05query\x18\x01 \x01(\v2\x1c.zitadel.object.v2.ListQueryR\x05query\x12L\n" +
 	"\x0esorting_column\x18\x02 \x01(\x0e2%.zitadel.org.v2.OrganizationFieldNameR\rsortingColumn\x125\n" +
@@ -458,14 +1792,99 @@ const file_zitadel_org_v2_org_service_proto_rawDesc = "" +
 	"\x19ListOrganizationsResponse\x128\n" +
 	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2.ListDetailsR\adetails\x12L\n" +
 	"\x0esorting_column\x18\x02 \x01(\x0e2%.zitadel.org.v2.OrganizationFieldNameR\rsortingColumn\x124\n" +
-	"\x06result\x18\x03 \x03(\v2\x1c.zitadel.org.v2.OrganizationR\x06result2\xdc\x03\n" +
-	"\x13OrganizationService\x12\xa7\x01\n" +
-	"\x0fAddOrganization\x12&.zitadel.org.v2.AddOrganizationRequest\x1a'.zitadel.org.v2.AddOrganizationResponse\"C\x92A\rJ\v\n" +
-	"\x03200\x12\x04\n" +
-	"\x02OK\x8a\xb5\x18\x13\n" +
-	"\f\n" +
+	"\x06result\x18\x03 \x03(\v2\x1c.zitadel.org.v2.OrganizationR\x06result\"r\n" +
+	"\x19DeleteOrganizationRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629023906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\"~\n" +
+	"\x1aDeleteOrganizationResponse\x12`\n" +
+	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\fdeletionDate\"v\n" +
+	"\x1dDeactivateOrganizationRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629023906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\"~\n" +
+	"\x1eDeactivateOrganizationResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\n" +
+	"changeDate\"t\n" +
+	"\x1bActivateOrganizationRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629023906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\"|\n" +
+	"\x1cActivateOrganizationResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\n" +
+	"changeDate\"\xb8\x01\n" +
+	"\x1cAddOrganizationDomainRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12A\n" +
+	"\x06domain\x18\x02 \x01(\tB)\x92A\x18J\x10\"testdomain.com\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06domain\"\x81\x01\n" +
+	"\x1dAddOrganizationDomainResponse\x12`\n" +
+	"\rcreation_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\"\xd7\x02\n" +
+	"\x1eListOrganizationDomainsRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12I\n" +
 	"\n" +
-	"org.create\x12\x03\b\xc9\x01\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v2/organizations\x12\x9a\x02\n" +
+	"pagination\x18\x02 \x01(\v2$.zitadel.filter.v2.PaginationRequestH\x00R\n" +
+	"pagination\x88\x01\x01\x12<\n" +
+	"\afilters\x18\x03 \x03(\v2\".zitadel.org.v2.DomainSearchFilterR\afilters\x12F\n" +
+	"\x0esorting_column\x18\x04 \x01(\x0e2\x1f.zitadel.org.v2.DomainFieldNameR\rsortingColumnB\r\n" +
+	"\v_pagination\"\x9a\x01\n" +
+	"\x1fListOrganizationDomainsResponse\x12E\n" +
+	"\n" +
+	"pagination\x18\x01 \x01(\v2%.zitadel.filter.v2.PaginationResponseR\n" +
+	"pagination\x120\n" +
+	"\adomains\x18\x02 \x03(\v2\x16.zitadel.org.v2.DomainR\adomains\"\xbb\x01\n" +
+	"\x1fDeleteOrganizationDomainRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12A\n" +
+	"\x06domain\x18\x02 \x01(\tB)\x92A\x18J\x10\"testdomain.com\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06domain\"\x84\x01\n" +
+	" DeleteOrganizationDomainResponse\x12`\n" +
+	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\fdeletionDate\"\x8d\x02\n" +
+	"+GenerateOrganizationDomainValidationRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12A\n" +
+	"\x06domain\x18\x02 \x01(\tB)\x92A\x18J\x10\"testdomain.com\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06domain\x12D\n" +
+	"\x04type\x18\x03 \x01(\x0e2$.zitadel.org.v2.DomainValidationTypeB\n" +
+	"\xfaB\a\x82\x01\x04\x10\x01 \x00R\x04type\"\xdd\x01\n" +
+	",GenerateOrganizationDomainValidationResponse\x12=\n" +
+	"\x05token\x18\x01 \x01(\tB'\x92A$J\"\"ofSBHsSAVHAoTIE4Iv2gwhaYhTjcY5QX\"R\x05token\x12n\n" +
+	"\x03url\x18\x02 \x01(\tB\\\x92AYJW\"https://testdomain.com/.well-known/zitadel-challenge/ofSBHsSAVHAoTIE4Iv2gwhaYhTjcY5QX\"R\x03url\"\xb7\x01\n" +
+	"\x1fVerifyOrganizationDomainRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12=\n" +
+	"\x06domain\x18\x02 \x01(\tB%\x92A\x18J\x10\"testdomain.com\"x\xfd\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xfd\x01R\x06domain\"\x80\x01\n" +
+	" VerifyOrganizationDomainResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\n" +
+	"changeDate\"K\n" +
+	"\bMetadata\x12\x1c\n" +
+	"\x03key\x18\x01 \x01(\tB\n" +
+	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x03key\x12!\n" +
+	"\x05value\x18\x02 \x01(\fB\v\xfaB\bz\x06\x10\x01\x18\xa0\xc2\x1eR\x05value\"\xb5\x02\n" +
+	"\x1eSetOrganizationMetadataRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12\xbb\x01\n" +
+	"\bmetadata\x18\x02 \x03(\v2\x18.zitadel.org.v2.MetadataB\x84\x01\x92A\x80\x01J~[{\"key\": \"test1\", \"value\": \"VGhpcyBpcyBteSBmaXJzdCB2YWx1ZQ==\"}, {\"key\": \"test2\", \"value\": \"VGhpcyBpcyBteSBzZWNvbmQgdmFsdWU=\"}]R\bmetadata\"y\n" +
+	"\x1fSetOrganizationMetadataResponse\x12V\n" +
+	"\bset_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\asetDate\"\x97\x02\n" +
+	"\x1fListOrganizationMetadataRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12I\n" +
+	"\n" +
+	"pagination\x18\x02 \x01(\v2$.zitadel.filter.v2.PaginationRequestH\x00R\n" +
+	"pagination\x88\x01\x01\x12C\n" +
+	"\afilters\x18\x03 \x03(\v2).zitadel.metadata.v2.MetadataSearchFilterR\afiltersB\r\n" +
+	"\v_pagination\"\xa4\x01\n" +
+	" ListOrganizationMetadataResponse\x12E\n" +
+	"\n" +
+	"pagination\x18\x01 \x01(\v2%.zitadel.filter.v2.PaginationResponseR\n" +
+	"pagination\x129\n" +
+	"\bmetadata\x18\x02 \x03(\v2\x1d.zitadel.metadata.v2.MetadataR\bmetadata\"\x9f\x01\n" +
+	"!DeleteOrganizationMetadataRequest\x12U\n" +
+	"\x0forganization_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629012906488334\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eorganizationId\x12#\n" +
+	"\x04keys\x18\x02 \x03(\tB\x0f\xfaB\f\x92\x01\t\"\ar\x05\x10\x01\x18\xc8\x01R\x04keys\"\x86\x01\n" +
+	"\"DeleteOrganizationMetadataResponse\x12`\n" +
+	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-01-23T10:34:18.051Z\"R\fdeletionDate2\xbf\x1a\n" +
+	"\x13OrganizationService\x12\xaa\x01\n" +
+	"\x0fAddOrganization\x12&.zitadel.org.v2.AddOrganizationRequest\x1a'.zitadel.org.v2.AddOrganizationResponse\"F\x92A\rJ\v\n" +
+	"\x03200\x12\x04\n" +
+	"\x02OK\x8a\xb5\x18\x16\n" +
+	"\x0f\n" +
+	"\rauthenticated\x12\x03\b\xc9\x01\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v2/organizations\x12\xaf\x02\n" +
+	"\x12UpdateOrganization\x12).zitadel.org.v2.UpdateOrganizationRequest\x1a*.zitadel.org.v2.UpdateOrganizationResponse\"\xc1\x01\x92A{J*\n" +
+	"\x03200\x12#\n" +
+	"!Organization updated successfullyJ!\n" +
+	"\x03404\x12\x1a\n" +
+	"\x18Organisation's not foundJ*\n" +
+	"\x03409\x12#\n" +
+	"!Organisation's name already taken\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02(:\x01*\"#/v2/organizations/{organization_id}\x12\x9a\x02\n" +
 	"\x11ListOrganizations\x12(.zitadel.org.v2.ListOrganizationsRequest\x1a).zitadel.org.v2.ListOrganizationsResponse\"\xaf\x01\x92AsJ7\n" +
 	"\x03200\x120\n" +
 	".A list of all organizations matching the queryJ8\n" +
@@ -473,7 +1892,60 @@ const file_zitadel_org_v2_org_service_proto_rawDesc = "" +
 	"\x12invalid list query\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatus\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v2/organizations/_searchB\xaf\a\x92A\xfb\x06\x12\xd9\x01\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v2/organizations/_search\x12\x80\x02\n" +
+	"\x12DeleteOrganization\x12).zitadel.org.v2.DeleteOrganizationRequest\x1a*.zitadel.org.v2.DeleteOrganizationResponse\"\x92\x01\x92AOJ*\n" +
+	"\x03200\x12#\n" +
+	"!Organization created successfullyJ!\n" +
+	"\x03404\x12\x1a\n" +
+	"\x18Organisation's not found\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02%*#/v2/organizations/{organization_id}\x12\xf7\x01\n" +
+	"\x17SetOrganizationMetadata\x12..zitadel.org.v2.SetOrganizationMetadataRequest\x1a/.zitadel.org.v2.SetOrganizationMetadataResponse\"{\x92A,J\a\n" +
+	"\x03200\x12\x00J!\n" +
+	"\x03400\x12\x1a\n" +
+	"\x18Organisation's not found\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x021:\x01*\",/v2/organizations/{organization_id}/metadata\x12\xde\x01\n" +
+	"\x18ListOrganizationMetadata\x12/.zitadel.org.v2.ListOrganizationMetadataRequest\x1a0.zitadel.org.v2.ListOrganizationMetadataResponse\"_\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x028:\x01*\"3/v2/organizations/{organization_id}/metadata/search\x12\xda\x01\n" +
+	"\x1aDeleteOrganizationMetadata\x121.zitadel.org.v2.DeleteOrganizationMetadataRequest\x1a2.zitadel.org.v2.DeleteOrganizationMetadataResponse\"U\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02.*,/v2/organizations/{organization_id}/metadata\x12\xed\x01\n" +
+	"\x15AddOrganizationDomain\x12,.zitadel.org.v2.AddOrganizationDomainRequest\x1a-.zitadel.org.v2.AddOrganizationDomainResponse\"w\x92A)J\a\n" +
+	"\x03200\x12\x00J\x1e\n" +
+	"\x03409\x12\x17\n" +
+	"\x15Domain already exists\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x020:\x01*\"+/v2/organizations/{organization_id}/domains\x12\xda\x01\n" +
+	"\x17ListOrganizationDomains\x12..zitadel.org.v2.ListOrganizationDomainsRequest\x1a/.zitadel.org.v2.ListOrganizationDomainsResponse\"^\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x027:\x01*\"2/v2/organizations/{organization_id}/domains/search\x12\xd3\x01\n" +
+	"\x18DeleteOrganizationDomain\x12/.zitadel.org.v2.DeleteOrganizationDomainRequest\x1a0.zitadel.org.v2.DeleteOrganizationDomainResponse\"T\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02-*+/v2/organizations/{organization_id}/domains\x12\xbe\x02\n" +
+	"$GenerateOrganizationDomainValidation\x12;.zitadel.org.v2.GenerateOrganizationDomainValidationRequest\x1a<.zitadel.org.v2.GenerateOrganizationDomainValidationResponse\"\x9a\x01\x92A8J\a\n" +
+	"\x03200\x12\x00J-\n" +
+	"\x03404\x12&\n" +
+	"$Domain doesn't exist on organization\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02D:\x01*\"?/v2/organizations/{organization_id}/domains/validation/generate\x12\xe8\x01\n" +
+	"\x18VerifyOrganizationDomain\x12/.zitadel.org.v2.VerifyOrganizationDomainRequest\x1a0.zitadel.org.v2.VerifyOrganizationDomainResponse\"i\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02B:\x01*\"=/v2/organizations/{organization_id}/domains/validation/verify\x12\xd3\x01\n" +
+	"\x16DeactivateOrganization\x12-.zitadel.org.v2.DeactivateOrganizationRequest\x1a..zitadel.org.v2.DeactivateOrganizationResponse\"Z\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x023:\x01*\"./v2/organizations/{organization_id}/deactivate\x12\xcb\x01\n" +
+	"\x14ActivateOrganization\x12+.zitadel.org.v2.ActivateOrganizationRequest\x1a,.zitadel.org.v2.ActivateOrganizationResponse\"X\x92A\tJ\a\n" +
+	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
+	"\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x021:\x01*\",/v2/organizations/{organization_id}/activateB\xaf\a\x92A\xfb\x06\x12\xd9\x01\n" +
 	"\x14Organization Service\x12CThis API is intended to manage organizations in a ZITADEL instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
@@ -508,42 +1980,120 @@ func file_zitadel_org_v2_org_service_proto_rawDescGZIP() []byte {
 	return file_zitadel_org_v2_org_service_proto_rawDescData
 }
 
-var file_zitadel_org_v2_org_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_zitadel_org_v2_org_service_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_zitadel_org_v2_org_service_proto_goTypes = []any{
-	(*AddOrganizationRequest)(nil),               // 0: zitadel.org.v2.AddOrganizationRequest
-	(*AddOrganizationResponse)(nil),              // 1: zitadel.org.v2.AddOrganizationResponse
-	(*ListOrganizationsRequest)(nil),             // 2: zitadel.org.v2.ListOrganizationsRequest
-	(*ListOrganizationsResponse)(nil),            // 3: zitadel.org.v2.ListOrganizationsResponse
-	(*AddOrganizationRequest_Admin)(nil),         // 4: zitadel.org.v2.AddOrganizationRequest.Admin
-	(*AddOrganizationResponse_CreatedAdmin)(nil), // 5: zitadel.org.v2.AddOrganizationResponse.CreatedAdmin
-	(*v2.Details)(nil),                           // 6: zitadel.object.v2.Details
-	(*v2.ListQuery)(nil),                         // 7: zitadel.object.v2.ListQuery
-	(OrganizationFieldName)(0),                   // 8: zitadel.org.v2.OrganizationFieldName
-	(*SearchQuery)(nil),                          // 9: zitadel.org.v2.SearchQuery
-	(*v2.ListDetails)(nil),                       // 10: zitadel.object.v2.ListDetails
-	(*Organization)(nil),                         // 11: zitadel.org.v2.Organization
-	(*v21.AddHumanUserRequest)(nil),              // 12: zitadel.user.v2.AddHumanUserRequest
+	(*AddOrganizationRequest)(nil),                       // 0: zitadel.org.v2.AddOrganizationRequest
+	(*AddOrganizationResponse)(nil),                      // 1: zitadel.org.v2.AddOrganizationResponse
+	(*UpdateOrganizationRequest)(nil),                    // 2: zitadel.org.v2.UpdateOrganizationRequest
+	(*UpdateOrganizationResponse)(nil),                   // 3: zitadel.org.v2.UpdateOrganizationResponse
+	(*ListOrganizationsRequest)(nil),                     // 4: zitadel.org.v2.ListOrganizationsRequest
+	(*ListOrganizationsResponse)(nil),                    // 5: zitadel.org.v2.ListOrganizationsResponse
+	(*DeleteOrganizationRequest)(nil),                    // 6: zitadel.org.v2.DeleteOrganizationRequest
+	(*DeleteOrganizationResponse)(nil),                   // 7: zitadel.org.v2.DeleteOrganizationResponse
+	(*DeactivateOrganizationRequest)(nil),                // 8: zitadel.org.v2.DeactivateOrganizationRequest
+	(*DeactivateOrganizationResponse)(nil),               // 9: zitadel.org.v2.DeactivateOrganizationResponse
+	(*ActivateOrganizationRequest)(nil),                  // 10: zitadel.org.v2.ActivateOrganizationRequest
+	(*ActivateOrganizationResponse)(nil),                 // 11: zitadel.org.v2.ActivateOrganizationResponse
+	(*AddOrganizationDomainRequest)(nil),                 // 12: zitadel.org.v2.AddOrganizationDomainRequest
+	(*AddOrganizationDomainResponse)(nil),                // 13: zitadel.org.v2.AddOrganizationDomainResponse
+	(*ListOrganizationDomainsRequest)(nil),               // 14: zitadel.org.v2.ListOrganizationDomainsRequest
+	(*ListOrganizationDomainsResponse)(nil),              // 15: zitadel.org.v2.ListOrganizationDomainsResponse
+	(*DeleteOrganizationDomainRequest)(nil),              // 16: zitadel.org.v2.DeleteOrganizationDomainRequest
+	(*DeleteOrganizationDomainResponse)(nil),             // 17: zitadel.org.v2.DeleteOrganizationDomainResponse
+	(*GenerateOrganizationDomainValidationRequest)(nil),  // 18: zitadel.org.v2.GenerateOrganizationDomainValidationRequest
+	(*GenerateOrganizationDomainValidationResponse)(nil), // 19: zitadel.org.v2.GenerateOrganizationDomainValidationResponse
+	(*VerifyOrganizationDomainRequest)(nil),              // 20: zitadel.org.v2.VerifyOrganizationDomainRequest
+	(*VerifyOrganizationDomainResponse)(nil),             // 21: zitadel.org.v2.VerifyOrganizationDomainResponse
+	(*Metadata)(nil),                                     // 22: zitadel.org.v2.Metadata
+	(*SetOrganizationMetadataRequest)(nil),               // 23: zitadel.org.v2.SetOrganizationMetadataRequest
+	(*SetOrganizationMetadataResponse)(nil),              // 24: zitadel.org.v2.SetOrganizationMetadataResponse
+	(*ListOrganizationMetadataRequest)(nil),              // 25: zitadel.org.v2.ListOrganizationMetadataRequest
+	(*ListOrganizationMetadataResponse)(nil),             // 26: zitadel.org.v2.ListOrganizationMetadataResponse
+	(*DeleteOrganizationMetadataRequest)(nil),            // 27: zitadel.org.v2.DeleteOrganizationMetadataRequest
+	(*DeleteOrganizationMetadataResponse)(nil),           // 28: zitadel.org.v2.DeleteOrganizationMetadataResponse
+	(*AddOrganizationRequest_Admin)(nil),                 // 29: zitadel.org.v2.AddOrganizationRequest.Admin
+	(*AddOrganizationResponse_CreatedAdmin)(nil),         // 30: zitadel.org.v2.AddOrganizationResponse.CreatedAdmin
+	(*v2.Details)(nil),                                   // 31: zitadel.object.v2.Details
+	(*timestamppb.Timestamp)(nil),                        // 32: google.protobuf.Timestamp
+	(*v2.ListQuery)(nil),                                 // 33: zitadel.object.v2.ListQuery
+	(OrganizationFieldName)(0),                           // 34: zitadel.org.v2.OrganizationFieldName
+	(*SearchQuery)(nil),                                  // 35: zitadel.org.v2.SearchQuery
+	(*v2.ListDetails)(nil),                               // 36: zitadel.object.v2.ListDetails
+	(*Organization)(nil),                                 // 37: zitadel.org.v2.Organization
+	(*v21.PaginationRequest)(nil),                        // 38: zitadel.filter.v2.PaginationRequest
+	(*DomainSearchFilter)(nil),                           // 39: zitadel.org.v2.DomainSearchFilter
+	(DomainFieldName)(0),                                 // 40: zitadel.org.v2.DomainFieldName
+	(*v21.PaginationResponse)(nil),                       // 41: zitadel.filter.v2.PaginationResponse
+	(*Domain)(nil),                                       // 42: zitadel.org.v2.Domain
+	(DomainValidationType)(0),                            // 43: zitadel.org.v2.DomainValidationType
+	(*v22.MetadataSearchFilter)(nil),                     // 44: zitadel.metadata.v2.MetadataSearchFilter
+	(*v22.Metadata)(nil),                                 // 45: zitadel.metadata.v2.Metadata
+	(*v23.AddHumanUserRequest)(nil),                      // 46: zitadel.user.v2.AddHumanUserRequest
 }
 var file_zitadel_org_v2_org_service_proto_depIdxs = []int32{
-	4,  // 0: zitadel.org.v2.AddOrganizationRequest.admins:type_name -> zitadel.org.v2.AddOrganizationRequest.Admin
-	6,  // 1: zitadel.org.v2.AddOrganizationResponse.details:type_name -> zitadel.object.v2.Details
-	5,  // 2: zitadel.org.v2.AddOrganizationResponse.created_admins:type_name -> zitadel.org.v2.AddOrganizationResponse.CreatedAdmin
-	7,  // 3: zitadel.org.v2.ListOrganizationsRequest.query:type_name -> zitadel.object.v2.ListQuery
-	8,  // 4: zitadel.org.v2.ListOrganizationsRequest.sorting_column:type_name -> zitadel.org.v2.OrganizationFieldName
-	9,  // 5: zitadel.org.v2.ListOrganizationsRequest.queries:type_name -> zitadel.org.v2.SearchQuery
-	10, // 6: zitadel.org.v2.ListOrganizationsResponse.details:type_name -> zitadel.object.v2.ListDetails
-	8,  // 7: zitadel.org.v2.ListOrganizationsResponse.sorting_column:type_name -> zitadel.org.v2.OrganizationFieldName
-	11, // 8: zitadel.org.v2.ListOrganizationsResponse.result:type_name -> zitadel.org.v2.Organization
-	12, // 9: zitadel.org.v2.AddOrganizationRequest.Admin.human:type_name -> zitadel.user.v2.AddHumanUserRequest
-	0,  // 10: zitadel.org.v2.OrganizationService.AddOrganization:input_type -> zitadel.org.v2.AddOrganizationRequest
-	2,  // 11: zitadel.org.v2.OrganizationService.ListOrganizations:input_type -> zitadel.org.v2.ListOrganizationsRequest
-	1,  // 12: zitadel.org.v2.OrganizationService.AddOrganization:output_type -> zitadel.org.v2.AddOrganizationResponse
-	3,  // 13: zitadel.org.v2.OrganizationService.ListOrganizations:output_type -> zitadel.org.v2.ListOrganizationsResponse
-	12, // [12:14] is the sub-list for method output_type
-	10, // [10:12] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	29, // 0: zitadel.org.v2.AddOrganizationRequest.admins:type_name -> zitadel.org.v2.AddOrganizationRequest.Admin
+	31, // 1: zitadel.org.v2.AddOrganizationResponse.details:type_name -> zitadel.object.v2.Details
+	30, // 2: zitadel.org.v2.AddOrganizationResponse.created_admins:type_name -> zitadel.org.v2.AddOrganizationResponse.CreatedAdmin
+	32, // 3: zitadel.org.v2.UpdateOrganizationResponse.change_date:type_name -> google.protobuf.Timestamp
+	33, // 4: zitadel.org.v2.ListOrganizationsRequest.query:type_name -> zitadel.object.v2.ListQuery
+	34, // 5: zitadel.org.v2.ListOrganizationsRequest.sorting_column:type_name -> zitadel.org.v2.OrganizationFieldName
+	35, // 6: zitadel.org.v2.ListOrganizationsRequest.queries:type_name -> zitadel.org.v2.SearchQuery
+	36, // 7: zitadel.org.v2.ListOrganizationsResponse.details:type_name -> zitadel.object.v2.ListDetails
+	34, // 8: zitadel.org.v2.ListOrganizationsResponse.sorting_column:type_name -> zitadel.org.v2.OrganizationFieldName
+	37, // 9: zitadel.org.v2.ListOrganizationsResponse.result:type_name -> zitadel.org.v2.Organization
+	32, // 10: zitadel.org.v2.DeleteOrganizationResponse.deletion_date:type_name -> google.protobuf.Timestamp
+	32, // 11: zitadel.org.v2.DeactivateOrganizationResponse.change_date:type_name -> google.protobuf.Timestamp
+	32, // 12: zitadel.org.v2.ActivateOrganizationResponse.change_date:type_name -> google.protobuf.Timestamp
+	32, // 13: zitadel.org.v2.AddOrganizationDomainResponse.creation_date:type_name -> google.protobuf.Timestamp
+	38, // 14: zitadel.org.v2.ListOrganizationDomainsRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
+	39, // 15: zitadel.org.v2.ListOrganizationDomainsRequest.filters:type_name -> zitadel.org.v2.DomainSearchFilter
+	40, // 16: zitadel.org.v2.ListOrganizationDomainsRequest.sorting_column:type_name -> zitadel.org.v2.DomainFieldName
+	41, // 17: zitadel.org.v2.ListOrganizationDomainsResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
+	42, // 18: zitadel.org.v2.ListOrganizationDomainsResponse.domains:type_name -> zitadel.org.v2.Domain
+	32, // 19: zitadel.org.v2.DeleteOrganizationDomainResponse.deletion_date:type_name -> google.protobuf.Timestamp
+	43, // 20: zitadel.org.v2.GenerateOrganizationDomainValidationRequest.type:type_name -> zitadel.org.v2.DomainValidationType
+	32, // 21: zitadel.org.v2.VerifyOrganizationDomainResponse.change_date:type_name -> google.protobuf.Timestamp
+	22, // 22: zitadel.org.v2.SetOrganizationMetadataRequest.metadata:type_name -> zitadel.org.v2.Metadata
+	32, // 23: zitadel.org.v2.SetOrganizationMetadataResponse.set_date:type_name -> google.protobuf.Timestamp
+	38, // 24: zitadel.org.v2.ListOrganizationMetadataRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
+	44, // 25: zitadel.org.v2.ListOrganizationMetadataRequest.filters:type_name -> zitadel.metadata.v2.MetadataSearchFilter
+	41, // 26: zitadel.org.v2.ListOrganizationMetadataResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
+	45, // 27: zitadel.org.v2.ListOrganizationMetadataResponse.metadata:type_name -> zitadel.metadata.v2.Metadata
+	32, // 28: zitadel.org.v2.DeleteOrganizationMetadataResponse.deletion_date:type_name -> google.protobuf.Timestamp
+	46, // 29: zitadel.org.v2.AddOrganizationRequest.Admin.human:type_name -> zitadel.user.v2.AddHumanUserRequest
+	0,  // 30: zitadel.org.v2.OrganizationService.AddOrganization:input_type -> zitadel.org.v2.AddOrganizationRequest
+	2,  // 31: zitadel.org.v2.OrganizationService.UpdateOrganization:input_type -> zitadel.org.v2.UpdateOrganizationRequest
+	4,  // 32: zitadel.org.v2.OrganizationService.ListOrganizations:input_type -> zitadel.org.v2.ListOrganizationsRequest
+	6,  // 33: zitadel.org.v2.OrganizationService.DeleteOrganization:input_type -> zitadel.org.v2.DeleteOrganizationRequest
+	23, // 34: zitadel.org.v2.OrganizationService.SetOrganizationMetadata:input_type -> zitadel.org.v2.SetOrganizationMetadataRequest
+	25, // 35: zitadel.org.v2.OrganizationService.ListOrganizationMetadata:input_type -> zitadel.org.v2.ListOrganizationMetadataRequest
+	27, // 36: zitadel.org.v2.OrganizationService.DeleteOrganizationMetadata:input_type -> zitadel.org.v2.DeleteOrganizationMetadataRequest
+	12, // 37: zitadel.org.v2.OrganizationService.AddOrganizationDomain:input_type -> zitadel.org.v2.AddOrganizationDomainRequest
+	14, // 38: zitadel.org.v2.OrganizationService.ListOrganizationDomains:input_type -> zitadel.org.v2.ListOrganizationDomainsRequest
+	16, // 39: zitadel.org.v2.OrganizationService.DeleteOrganizationDomain:input_type -> zitadel.org.v2.DeleteOrganizationDomainRequest
+	18, // 40: zitadel.org.v2.OrganizationService.GenerateOrganizationDomainValidation:input_type -> zitadel.org.v2.GenerateOrganizationDomainValidationRequest
+	20, // 41: zitadel.org.v2.OrganizationService.VerifyOrganizationDomain:input_type -> zitadel.org.v2.VerifyOrganizationDomainRequest
+	8,  // 42: zitadel.org.v2.OrganizationService.DeactivateOrganization:input_type -> zitadel.org.v2.DeactivateOrganizationRequest
+	10, // 43: zitadel.org.v2.OrganizationService.ActivateOrganization:input_type -> zitadel.org.v2.ActivateOrganizationRequest
+	1,  // 44: zitadel.org.v2.OrganizationService.AddOrganization:output_type -> zitadel.org.v2.AddOrganizationResponse
+	3,  // 45: zitadel.org.v2.OrganizationService.UpdateOrganization:output_type -> zitadel.org.v2.UpdateOrganizationResponse
+	5,  // 46: zitadel.org.v2.OrganizationService.ListOrganizations:output_type -> zitadel.org.v2.ListOrganizationsResponse
+	7,  // 47: zitadel.org.v2.OrganizationService.DeleteOrganization:output_type -> zitadel.org.v2.DeleteOrganizationResponse
+	24, // 48: zitadel.org.v2.OrganizationService.SetOrganizationMetadata:output_type -> zitadel.org.v2.SetOrganizationMetadataResponse
+	26, // 49: zitadel.org.v2.OrganizationService.ListOrganizationMetadata:output_type -> zitadel.org.v2.ListOrganizationMetadataResponse
+	28, // 50: zitadel.org.v2.OrganizationService.DeleteOrganizationMetadata:output_type -> zitadel.org.v2.DeleteOrganizationMetadataResponse
+	13, // 51: zitadel.org.v2.OrganizationService.AddOrganizationDomain:output_type -> zitadel.org.v2.AddOrganizationDomainResponse
+	15, // 52: zitadel.org.v2.OrganizationService.ListOrganizationDomains:output_type -> zitadel.org.v2.ListOrganizationDomainsResponse
+	17, // 53: zitadel.org.v2.OrganizationService.DeleteOrganizationDomain:output_type -> zitadel.org.v2.DeleteOrganizationDomainResponse
+	19, // 54: zitadel.org.v2.OrganizationService.GenerateOrganizationDomainValidation:output_type -> zitadel.org.v2.GenerateOrganizationDomainValidationResponse
+	21, // 55: zitadel.org.v2.OrganizationService.VerifyOrganizationDomain:output_type -> zitadel.org.v2.VerifyOrganizationDomainResponse
+	9,  // 56: zitadel.org.v2.OrganizationService.DeactivateOrganization:output_type -> zitadel.org.v2.DeactivateOrganizationResponse
+	11, // 57: zitadel.org.v2.OrganizationService.ActivateOrganization:output_type -> zitadel.org.v2.ActivateOrganizationResponse
+	44, // [44:58] is the sub-list for method output_type
+	30, // [30:44] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_org_v2_org_service_proto_init() }
@@ -554,18 +2104,20 @@ func file_zitadel_org_v2_org_service_proto_init() {
 	file_zitadel_org_v2_org_proto_init()
 	file_zitadel_org_v2_query_proto_init()
 	file_zitadel_org_v2_org_service_proto_msgTypes[0].OneofWrappers = []any{}
-	file_zitadel_org_v2_org_service_proto_msgTypes[4].OneofWrappers = []any{
+	file_zitadel_org_v2_org_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_zitadel_org_v2_org_service_proto_msgTypes[25].OneofWrappers = []any{}
+	file_zitadel_org_v2_org_service_proto_msgTypes[29].OneofWrappers = []any{
 		(*AddOrganizationRequest_Admin_UserId)(nil),
 		(*AddOrganizationRequest_Admin_Human)(nil),
 	}
-	file_zitadel_org_v2_org_service_proto_msgTypes[5].OneofWrappers = []any{}
+	file_zitadel_org_v2_org_service_proto_msgTypes[30].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_org_v2_org_service_proto_rawDesc), len(file_zitadel_org_v2_org_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

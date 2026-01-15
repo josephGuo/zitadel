@@ -449,7 +449,7 @@ type UserServiceClient interface {
 	ListPersonalAccessTokens(context.Context, *connect.Request[v2.ListPersonalAccessTokensRequest]) (*connect.Response[v2.ListPersonalAccessTokensResponse], error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more..
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more..
 	ListAuthenticationMethodTypes(context.Context, *connect.Request[v2.ListAuthenticationMethodTypesRequest]) (*connect.Response[v2.ListAuthenticationMethodTypesResponse], error)
 	ListAuthenticationFactors(context.Context, *connect.Request[v2.ListAuthenticationFactorsRequest]) (*connect.Response[v2.ListAuthenticationFactorsResponse], error)
 	// Create an invite code for a user
@@ -1493,7 +1493,7 @@ type UserServiceHandler interface {
 	ListPersonalAccessTokens(context.Context, *connect.Request[v2.ListPersonalAccessTokensRequest]) (*connect.Response[v2.ListPersonalAccessTokensResponse], error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more..
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more..
 	ListAuthenticationMethodTypes(context.Context, *connect.Request[v2.ListAuthenticationMethodTypesRequest]) (*connect.Response[v2.ListAuthenticationMethodTypesResponse], error)
 	ListAuthenticationFactors(context.Context, *connect.Request[v2.ListAuthenticationFactorsRequest]) (*connect.Response[v2.ListAuthenticationFactorsResponse], error)
 	// Create an invite code for a user

@@ -151,6 +151,8 @@ func (m *Target) validate(all bool) error {
 
 	// no validation rules for SigningKey
 
+	// no validation rules for PayloadType
+
 	switch v := m.TargetType.(type) {
 	case *Target_RestWebhook:
 		if v == nil {
@@ -656,3 +658,197 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RESTAsyncValidationError{}
+
+// Validate checks the field values on PublicKey with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PublicKey) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PublicKey with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PublicKeyMultiError, or nil
+// if none found.
+func (m *PublicKey) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PublicKey) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for KeyId
+
+	// no validation rules for Active
+
+	// no validation rules for PublicKey
+
+	// no validation rules for Fingerprint
+
+	if all {
+		switch v := interface{}(m.GetExpirationDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "ExpirationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "ExpirationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetExpirationDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PublicKeyValidationError{
+				field:  "ExpirationDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetCreationDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "CreationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "CreationDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetCreationDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PublicKeyValidationError{
+				field:  "CreationDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetChangeDate()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PublicKeyValidationError{
+					field:  "ChangeDate",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetChangeDate()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PublicKeyValidationError{
+				field:  "ChangeDate",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return PublicKeyMultiError(errors)
+	}
+
+	return nil
+}
+
+// PublicKeyMultiError is an error wrapping multiple validation errors returned
+// by PublicKey.ValidateAll() if the designated constraints aren't met.
+type PublicKeyMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PublicKeyMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PublicKeyMultiError) AllErrors() []error { return m }
+
+// PublicKeyValidationError is the validation error returned by
+// PublicKey.Validate if the designated constraints aren't met.
+type PublicKeyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PublicKeyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PublicKeyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PublicKeyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PublicKeyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PublicKeyValidationError) ErrorName() string { return "PublicKeyValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PublicKeyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPublicKey.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PublicKeyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PublicKeyValidationError{}

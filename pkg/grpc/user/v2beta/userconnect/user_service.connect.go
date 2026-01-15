@@ -323,7 +323,7 @@ type UserServiceClient interface {
 	SetPassword(context.Context, *connect.Request[v2beta.SetPasswordRequest]) (*connect.Response[v2beta.SetPasswordResponse], error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more.
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	ListAuthenticationMethodTypes(context.Context, *connect.Request[v2beta.ListAuthenticationMethodTypesRequest]) (*connect.Response[v2beta.ListAuthenticationMethodTypesResponse], error)
@@ -960,7 +960,7 @@ type UserServiceHandler interface {
 	SetPassword(context.Context, *connect.Request[v2beta.SetPasswordRequest]) (*connect.Response[v2beta.SetPasswordResponse], error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more.
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	ListAuthenticationMethodTypes(context.Context, *connect.Request[v2beta.ListAuthenticationMethodTypesRequest]) (*connect.Response[v2beta.ListAuthenticationMethodTypesResponse], error)

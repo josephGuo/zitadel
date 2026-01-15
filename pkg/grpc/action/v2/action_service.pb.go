@@ -47,7 +47,16 @@ type CreateTargetRequest struct {
 	// The maximum timeout is 270 seconds or 4.5 minutes.
 	Timeout *durationpb.Duration `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	// The URL of the endpoint to call.
-	Endpoint      string `protobuf:"bytes,6,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	Endpoint string `protobuf:"bytes,6,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	// Payload type defines how the payload is formatted and secured.
+	// The default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.
+	// For integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.
+	// You can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends
+	// the payload as a signed JWT in the body of the request. This allows the receiver to verify
+	// the authenticity and integrity of the payload using the signing key.
+	// If you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload
+	// as an encrypted JWT in the body of the request. You can provide your own public key for encryption.
+	PayloadType   PayloadType `protobuf:"varint,7,opt,name=payload_type,json=payloadType,proto3,enum=zitadel.action.v2.PayloadType" json:"payload_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -135,6 +144,13 @@ func (x *CreateTargetRequest) GetEndpoint() string {
 		return x.Endpoint
 	}
 	return ""
+}
+
+func (x *CreateTargetRequest) GetPayloadType() PayloadType {
+	if x != nil {
+		return x.PayloadType
+	}
+	return PayloadType_PAYLOAD_TYPE_UNSPECIFIED
 }
 
 type isCreateTargetRequest_TargetType interface {
@@ -274,8 +290,18 @@ type UpdateTargetRequest struct {
 	// Note that we currently only allow an immediate rotation ("0s") and will support
 	// longer expirations in the future.
 	ExpirationSigningKey *durationpb.Duration `protobuf:"bytes,8,opt,name=expiration_signing_key,json=expirationSigningKey,proto3,oneof" json:"expiration_signing_key,omitempty"`
-	unknownFields        protoimpl.UnknownFields
-	sizeCache            protoimpl.SizeCache
+	// Payload type defines how the payload is formatted and secured.
+	// The default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.
+	// For integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.
+	// You can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends
+	// the payload as a signed JWT in the body of the request. This allows the receiver to verify
+	// the authenticity and integrity of the payload using the signing key.
+	// If you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload
+	// as an encrypted JWT in the body of the request. You can provide your own public key for encryption.
+	// If unspecified, the payload type will not be changed.
+	PayloadType   PayloadType `protobuf:"varint,9,opt,name=payload_type,json=payloadType,proto3,enum=zitadel.action.v2.PayloadType" json:"payload_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateTargetRequest) Reset() {
@@ -375,6 +401,13 @@ func (x *UpdateTargetRequest) GetExpirationSigningKey() *durationpb.Duration {
 		return x.ExpirationSigningKey
 	}
 	return nil
+}
+
+func (x *UpdateTargetRequest) GetPayloadType() PayloadType {
+	if x != nil {
+		return x.PayloadType
+	}
+	return PayloadType_PAYLOAD_TYPE_UNSPECIFIED
 }
 
 type isUpdateTargetRequest_TargetType interface {
@@ -770,6 +803,552 @@ func (x *ListTargetsResponse) GetTargets() []*Target {
 	return nil
 }
 
+type AddPublicKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The unique identifier of the target to add the public key to.
+	TargetId string `protobuf:"bytes,1,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	// The public key in PEM format. It must be either an RSA or an EC public key.
+	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	// Optional expiration date of the public key.
+	// After the expiration date, the key will be automatically deactivated and no longer used for payload encryption.
+	// Be sure to activate a new key before the current active key expires to avoid interruptions.
+	// If not set, the key will not expire.
+	ExpirationDate *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expiration_date,json=expirationDate,proto3,oneof" json:"expiration_date,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *AddPublicKeyRequest) Reset() {
+	*x = AddPublicKeyRequest{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddPublicKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddPublicKeyRequest) ProtoMessage() {}
+
+func (x *AddPublicKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddPublicKeyRequest.ProtoReflect.Descriptor instead.
+func (*AddPublicKeyRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *AddPublicKeyRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *AddPublicKeyRequest) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *AddPublicKeyRequest) GetExpirationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpirationDate
+	}
+	return nil
+}
+
+type AddPublicKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The KeyID is the unique identifier of the newly added public key.
+	// The ID is also used a `kid` in the JWT header for payload encryption.
+	// This allows the target to identify the correct key to use for decryption.
+	KeyId string `protobuf:"bytes,1,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	// CreationDate represents the timestamp of the public key addition.
+	CreationDate  *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=creation_date,json=creationDate,proto3" json:"creation_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddPublicKeyResponse) Reset() {
+	*x = AddPublicKeyResponse{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddPublicKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddPublicKeyResponse) ProtoMessage() {}
+
+func (x *AddPublicKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddPublicKeyResponse.ProtoReflect.Descriptor instead.
+func (*AddPublicKeyResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *AddPublicKeyResponse) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+func (x *AddPublicKeyResponse) GetCreationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreationDate
+	}
+	return nil
+}
+
+type ActivatePublicKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// TargetID is the unique identifier of the target to activate the public key for.
+	TargetId string `protobuf:"bytes,1,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	// KeyID is the unique identifier of the public key to activate.
+	KeyId         string `protobuf:"bytes,2,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivatePublicKeyRequest) Reset() {
+	*x = ActivatePublicKeyRequest{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivatePublicKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivatePublicKeyRequest) ProtoMessage() {}
+
+func (x *ActivatePublicKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivatePublicKeyRequest.ProtoReflect.Descriptor instead.
+func (*ActivatePublicKeyRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ActivatePublicKeyRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *ActivatePublicKeyRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+type ActivatePublicKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the public key's activation.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivatePublicKeyResponse) Reset() {
+	*x = ActivatePublicKeyResponse{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivatePublicKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivatePublicKeyResponse) ProtoMessage() {}
+
+func (x *ActivatePublicKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivatePublicKeyResponse.ProtoReflect.Descriptor instead.
+func (*ActivatePublicKeyResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ActivatePublicKeyResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
+type DeactivatePublicKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// TargetID is the unique identifier of the target to deactivate the public key for.
+	TargetId string `protobuf:"bytes,1,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	// KeyID is the unique identifier of the public key to deactivate.
+	KeyId         string `protobuf:"bytes,2,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeactivatePublicKeyRequest) Reset() {
+	*x = DeactivatePublicKeyRequest{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeactivatePublicKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeactivatePublicKeyRequest) ProtoMessage() {}
+
+func (x *DeactivatePublicKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeactivatePublicKeyRequest.ProtoReflect.Descriptor instead.
+func (*DeactivatePublicKeyRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *DeactivatePublicKeyRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *DeactivatePublicKeyRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+type DeactivatePublicKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ChangeDate is the timestamp of the public key's deactivation.
+	ChangeDate    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeactivatePublicKeyResponse) Reset() {
+	*x = DeactivatePublicKeyResponse{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeactivatePublicKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeactivatePublicKeyResponse) ProtoMessage() {}
+
+func (x *DeactivatePublicKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeactivatePublicKeyResponse.ProtoReflect.Descriptor instead.
+func (*DeactivatePublicKeyResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeactivatePublicKeyResponse) GetChangeDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ChangeDate
+	}
+	return nil
+}
+
+type RemovePublicKeyRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// TargetID is the unique identifier of the target to remove the public key from.
+	TargetId string `protobuf:"bytes,1,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	// KeyID is the unique identifier of the public key to remove.
+	KeyId         string `protobuf:"bytes,2,opt,name=key_id,json=keyId,proto3" json:"key_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemovePublicKeyRequest) Reset() {
+	*x = RemovePublicKeyRequest{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemovePublicKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemovePublicKeyRequest) ProtoMessage() {}
+
+func (x *RemovePublicKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemovePublicKeyRequest.ProtoReflect.Descriptor instead.
+func (*RemovePublicKeyRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *RemovePublicKeyRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *RemovePublicKeyRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+type RemovePublicKeyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// DeletionDate is the timestamp of the public key removal.
+	DeletionDate  *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=deletion_date,json=deletionDate,proto3" json:"deletion_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemovePublicKeyResponse) Reset() {
+	*x = RemovePublicKeyResponse{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemovePublicKeyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemovePublicKeyResponse) ProtoMessage() {}
+
+func (x *RemovePublicKeyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemovePublicKeyResponse.ProtoReflect.Descriptor instead.
+func (*RemovePublicKeyResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *RemovePublicKeyResponse) GetDeletionDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletionDate
+	}
+	return nil
+}
+
+type ListPublicKeysRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// TargetID is the unique identifier of the target to list the public keys for.
+	TargetId string `protobuf:"bytes,1,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
+	// List limitations and ordering.
+	Pagination *v2.PaginationRequest `protobuf:"bytes,2,opt,name=pagination,proto3,oneof" json:"pagination,omitempty"`
+	// The field the result is sorted by. The default is the creation date.
+	// Beware that if you change this, your result pagination might be inconsistent.
+	SortingColumn PublicKeyFieldName `protobuf:"varint,3,opt,name=sorting_column,json=sortingColumn,proto3,enum=zitadel.action.v2.PublicKeyFieldName" json:"sorting_column,omitempty"`
+	// Define the criteria to query for.
+	Filters       []*PublicKeySearchFilter `protobuf:"bytes,4,rep,name=filters,proto3" json:"filters,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPublicKeysRequest) Reset() {
+	*x = ListPublicKeysRequest{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPublicKeysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublicKeysRequest) ProtoMessage() {}
+
+func (x *ListPublicKeysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublicKeysRequest.ProtoReflect.Descriptor instead.
+func (*ListPublicKeysRequest) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ListPublicKeysRequest) GetTargetId() string {
+	if x != nil {
+		return x.TargetId
+	}
+	return ""
+}
+
+func (x *ListPublicKeysRequest) GetPagination() *v2.PaginationRequest {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListPublicKeysRequest) GetSortingColumn() PublicKeyFieldName {
+	if x != nil {
+		return x.SortingColumn
+	}
+	return PublicKeyFieldName_PUBLIC_KEY_FIELD_NAME_UNSPECIFIED
+}
+
+func (x *ListPublicKeysRequest) GetFilters() []*PublicKeySearchFilter {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+type ListPublicKeysResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List limitations and ordering.
+	Pagination *v2.PaginationResponse `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// List of all public keys for the target.
+	PublicKeys    []*PublicKey `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPublicKeysResponse) Reset() {
+	*x = ListPublicKeysResponse{}
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPublicKeysResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublicKeysResponse) ProtoMessage() {}
+
+func (x *ListPublicKeysResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublicKeysResponse.ProtoReflect.Descriptor instead.
+func (*ListPublicKeysResponse) Descriptor() ([]byte, []int) {
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ListPublicKeysResponse) GetPagination() *v2.PaginationResponse {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListPublicKeysResponse) GetPublicKeys() []*PublicKey {
+	if x != nil {
+		return x.PublicKeys
+	}
+	return nil
+}
+
 type SetExecutionRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Condition defining when the execution should be used.
@@ -782,7 +1361,7 @@ type SetExecutionRequest struct {
 
 func (x *SetExecutionRequest) Reset() {
 	*x = SetExecutionRequest{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[10]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -794,7 +1373,7 @@ func (x *SetExecutionRequest) String() string {
 func (*SetExecutionRequest) ProtoMessage() {}
 
 func (x *SetExecutionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[10]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -807,7 +1386,7 @@ func (x *SetExecutionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetExecutionRequest.ProtoReflect.Descriptor instead.
 func (*SetExecutionRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{10}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SetExecutionRequest) GetCondition() *Condition {
@@ -834,7 +1413,7 @@ type SetExecutionResponse struct {
 
 func (x *SetExecutionResponse) Reset() {
 	*x = SetExecutionResponse{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[11]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -846,7 +1425,7 @@ func (x *SetExecutionResponse) String() string {
 func (*SetExecutionResponse) ProtoMessage() {}
 
 func (x *SetExecutionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[11]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -859,7 +1438,7 @@ func (x *SetExecutionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetExecutionResponse.ProtoReflect.Descriptor instead.
 func (*SetExecutionResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{11}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *SetExecutionResponse) GetSetDate() *timestamppb.Timestamp {
@@ -884,7 +1463,7 @@ type ListExecutionsRequest struct {
 
 func (x *ListExecutionsRequest) Reset() {
 	*x = ListExecutionsRequest{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[12]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -896,7 +1475,7 @@ func (x *ListExecutionsRequest) String() string {
 func (*ListExecutionsRequest) ProtoMessage() {}
 
 func (x *ListExecutionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[12]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -909,7 +1488,7 @@ func (x *ListExecutionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionsRequest.ProtoReflect.Descriptor instead.
 func (*ListExecutionsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{12}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListExecutionsRequest) GetPagination() *v2.PaginationRequest {
@@ -944,7 +1523,7 @@ type ListExecutionsResponse struct {
 
 func (x *ListExecutionsResponse) Reset() {
 	*x = ListExecutionsResponse{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[13]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -956,7 +1535,7 @@ func (x *ListExecutionsResponse) String() string {
 func (*ListExecutionsResponse) ProtoMessage() {}
 
 func (x *ListExecutionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[13]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -969,7 +1548,7 @@ func (x *ListExecutionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionsResponse.ProtoReflect.Descriptor instead.
 func (*ListExecutionsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{13}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListExecutionsResponse) GetPagination() *v2.PaginationResponse {
@@ -994,7 +1573,7 @@ type ListExecutionFunctionsRequest struct {
 
 func (x *ListExecutionFunctionsRequest) Reset() {
 	*x = ListExecutionFunctionsRequest{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[14]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1006,7 +1585,7 @@ func (x *ListExecutionFunctionsRequest) String() string {
 func (*ListExecutionFunctionsRequest) ProtoMessage() {}
 
 func (x *ListExecutionFunctionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[14]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1019,7 +1598,7 @@ func (x *ListExecutionFunctionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionFunctionsRequest.ProtoReflect.Descriptor instead.
 func (*ListExecutionFunctionsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{14}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{24}
 }
 
 type ListExecutionFunctionsResponse struct {
@@ -1032,7 +1611,7 @@ type ListExecutionFunctionsResponse struct {
 
 func (x *ListExecutionFunctionsResponse) Reset() {
 	*x = ListExecutionFunctionsResponse{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[15]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1044,7 +1623,7 @@ func (x *ListExecutionFunctionsResponse) String() string {
 func (*ListExecutionFunctionsResponse) ProtoMessage() {}
 
 func (x *ListExecutionFunctionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[15]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1057,7 +1636,7 @@ func (x *ListExecutionFunctionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionFunctionsResponse.ProtoReflect.Descriptor instead.
 func (*ListExecutionFunctionsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{15}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ListExecutionFunctionsResponse) GetFunctions() []string {
@@ -1075,7 +1654,7 @@ type ListExecutionMethodsRequest struct {
 
 func (x *ListExecutionMethodsRequest) Reset() {
 	*x = ListExecutionMethodsRequest{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[16]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1087,7 +1666,7 @@ func (x *ListExecutionMethodsRequest) String() string {
 func (*ListExecutionMethodsRequest) ProtoMessage() {}
 
 func (x *ListExecutionMethodsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[16]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1100,7 +1679,7 @@ func (x *ListExecutionMethodsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionMethodsRequest.ProtoReflect.Descriptor instead.
 func (*ListExecutionMethodsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{16}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{26}
 }
 
 type ListExecutionMethodsResponse struct {
@@ -1113,7 +1692,7 @@ type ListExecutionMethodsResponse struct {
 
 func (x *ListExecutionMethodsResponse) Reset() {
 	*x = ListExecutionMethodsResponse{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[17]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1125,7 +1704,7 @@ func (x *ListExecutionMethodsResponse) String() string {
 func (*ListExecutionMethodsResponse) ProtoMessage() {}
 
 func (x *ListExecutionMethodsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[17]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1138,7 +1717,7 @@ func (x *ListExecutionMethodsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionMethodsResponse.ProtoReflect.Descriptor instead.
 func (*ListExecutionMethodsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{17}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ListExecutionMethodsResponse) GetMethods() []string {
@@ -1156,7 +1735,7 @@ type ListExecutionServicesRequest struct {
 
 func (x *ListExecutionServicesRequest) Reset() {
 	*x = ListExecutionServicesRequest{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[18]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1168,7 +1747,7 @@ func (x *ListExecutionServicesRequest) String() string {
 func (*ListExecutionServicesRequest) ProtoMessage() {}
 
 func (x *ListExecutionServicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[18]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1181,7 +1760,7 @@ func (x *ListExecutionServicesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionServicesRequest.ProtoReflect.Descriptor instead.
 func (*ListExecutionServicesRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{18}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{28}
 }
 
 type ListExecutionServicesResponse struct {
@@ -1194,7 +1773,7 @@ type ListExecutionServicesResponse struct {
 
 func (x *ListExecutionServicesResponse) Reset() {
 	*x = ListExecutionServicesResponse{}
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[19]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1206,7 +1785,7 @@ func (x *ListExecutionServicesResponse) String() string {
 func (*ListExecutionServicesResponse) ProtoMessage() {}
 
 func (x *ListExecutionServicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[19]
+	mi := &file_zitadel_action_v2_action_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1219,7 +1798,7 @@ func (x *ListExecutionServicesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListExecutionServicesResponse.ProtoReflect.Descriptor instead.
 func (*ListExecutionServicesResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{19}
+	return file_zitadel_action_v2_action_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *ListExecutionServicesResponse) GetServices() []string {
@@ -1233,7 +1812,7 @@ var File_zitadel_action_v2_action_service_proto protoreflect.FileDescriptor
 
 const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\n" +
-	"&zitadel/action/v2/action_service.proto\x12\x11zitadel.action.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1ezitadel/action/v2/target.proto\x1a!zitadel/action/v2/execution.proto\x1a\x1dzitadel/action/v2/query.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1ezitadel/filter/v2/filter.proto\"\xdb\x04\n" +
+	"&zitadel/action/v2/action_service.proto\x12\x11zitadel.action.v2\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a+zitadel/protoc_gen_zitadel/v2/options.proto\x1a\x1ezitadel/action/v2/target.proto\x1a!zitadel/action/v2/execution.proto\x1a\x1dzitadel/action/v2/query.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1ezitadel/filter/v2/filter.proto\"\xb8\x05\n" +
 	"\x13CreateTargetRequest\x12<\n" +
 	"\x04name\x18\x01 \x01(\tB(\x92A\x17J\x0f\"ip_allow_list\"x\xe8\a\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xe8\aR\x04name\x12C\n" +
 	"\frest_webhook\x18\x02 \x01(\v2\x1e.zitadel.action.v2.RESTWebhookH\x00R\vrestWebhook\x12:\n" +
@@ -1242,14 +1821,15 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"rest_async\x18\x04 \x01(\v2\x1c.zitadel.action.v2.RESTAsyncH\x00R\trestAsync\x12L\n" +
 	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationB\x17\x92A\aJ\x05\"10s\"\xfaB\n" +
 	"\xaa\x01\a\"\x03\b\x8e\x022\x00R\atimeout\x12Y\n" +
-	"\bendpoint\x18\x06 \x01(\tB=\x92A,J$\"https://example.com/hooks/ip_check\"x\x80\x10\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\x80\x10R\bendpoint:\x88\x01\x92A\x84\x012\x81\x01{\"name\": \"ip_allow_list\",\"restWebhook\":{\"interruptOnError\":true},\"timeout\":\"10s\",\"endpoint\":\"https://example.com/hooks/ip_check\"}B\x12\n" +
+	"\bendpoint\x18\x06 \x01(\tB=\x92A,J$\"https://example.com/hooks/ip_check\"x\x80\x10\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\x80\x10R\bendpoint\x12[\n" +
+	"\fpayload_type\x18\a \x01(\x0e2\x1e.zitadel.action.v2.PayloadTypeB\x18\x92A\x15:\x13\"PAYLOAD_TYPE_JSON\"R\vpayloadType:\x88\x01\x92A\x84\x012\x81\x01{\"name\": \"ip_allow_list\",\"restWebhook\":{\"interruptOnError\":true},\"timeout\":\"10s\",\"endpoint\":\"https://example.com/hooks/ip_check\"}B\x12\n" +
 	"\vtarget_type\x12\x03\xf8B\x01\"\xd4\x01\n" +
 	"\x14CreateTargetResponse\x12(\n" +
 	"\x02id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629012906488334\"R\x02id\x12`\n" +
 	"\rcreation_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\x120\n" +
 	"\vsigning_key\x18\x03 \x01(\tB\x0f\x92A\fJ\n" +
 	"\"98KmsU67\"R\n" +
-	"signingKey\"\xda\x06\n" +
+	"signingKey\"\xb7\a\n" +
 	"\x13UpdateTargetRequest\x12<\n" +
 	"\x02id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x02id\x12=\n" +
 	"\x04name\x18\x02 \x01(\tB$\x92A\x17J\x0f\"ip_allow_list\"x\xe8\a\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xe8\aH\x01R\x04name\x88\x01\x01\x12C\n" +
@@ -1260,7 +1840,8 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\atimeout\x18\x06 \x01(\v2\x19.google.protobuf.DurationB\x17\x92A\aJ\x05\"10s\"\xfaB\n" +
 	"\xaa\x01\a\"\x03\b\x8e\x022\x00H\x02R\atimeout\x88\x01\x01\x12Z\n" +
 	"\bendpoint\x18\a \x01(\tB9\x92A,J$\"https://example.com/hooks/ip_check\"x\x80\x10\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\x80\x10H\x03R\bendpoint\x88\x01\x01\x12g\n" +
-	"\x16expiration_signing_key\x18\b \x01(\v2\x19.google.protobuf.DurationB\x11\x92A\x06J\x04\"0s\"\xfaB\x05\xaa\x01\x02\x12\x00H\x04R\x14expirationSigningKey\x88\x01\x01:\xa1\x01\x92A\x9d\x012\x9a\x01{\"name\": \"ip_allow_list\",\"restCall\":{\"interruptOnError\":true},\"timeout\":\"10s\",\"endpoint\":\"https://example.com/hooks/ip_check\",\"expirationSigningKey\":\"0s\"}B\r\n" +
+	"\x16expiration_signing_key\x18\b \x01(\v2\x19.google.protobuf.DurationB\x11\x92A\x06J\x04\"0s\"\xfaB\x05\xaa\x01\x02\x12\x00H\x04R\x14expirationSigningKey\x88\x01\x01\x12[\n" +
+	"\fpayload_type\x18\t \x01(\x0e2\x1e.zitadel.action.v2.PayloadTypeB\x18\x92A\x15:\x13\"PAYLOAD_TYPE_JSON\"R\vpayloadType:\xa1\x01\x92A\x9d\x012\x9a\x01{\"name\": \"ip_allow_list\",\"restCall\":{\"interruptOnError\":true},\"timeout\":\"10s\",\"endpoint\":\"https://example.com/hooks/ip_check\",\"expirationSigningKey\":\"0s\"}B\r\n" +
 	"\vtarget_typeB\a\n" +
 	"\x05_nameB\n" +
 	"\n" +
@@ -1294,7 +1875,47 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2%.zitadel.filter.v2.PaginationResponseR\n" +
 	"pagination\x123\n" +
-	"\atargets\x18\x02 \x03(\v2\x19.zitadel.action.v2.TargetR\atargetsR\x06result\"\xf5\x01\n" +
+	"\atargets\x18\x02 \x03(\v2\x19.zitadel.action.v2.TargetR\atargetsR\x06result\"\xe3\x02\n" +
+	"\x13AddPublicKeyRequest\x12I\n" +
+	"\ttarget_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\btargetId\x12\x81\x01\n" +
+	"\n" +
+	"public_key\x18\x02 \x01(\fBb\x92AQJO\"LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUJJakFOQmdrcWhraUc5dzBCQVFzRkFEQV...\"\xe2A\x01\x02\xfaB\az\x05\x10\x01\x18\x80@R\tpublicKey\x12i\n" +
+	"\x0fexpiration_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2025-12-18T07:50:47.492Z\"H\x00R\x0eexpirationDate\x88\x01\x01B\x12\n" +
+	"\x10_expiration_date\"\xa9\x01\n" +
+	"\x14AddPublicKeyResponse\x12/\n" +
+	"\x06key_id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629032906489576\"R\x05keyId\x12`\n" +
+	"\rcreation_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\"\xaa\x01\n" +
+	"\x18ActivatePublicKeyRequest\x12I\n" +
+	"\ttarget_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\btargetId\x12C\n" +
+	"\x06key_id\x18\x02 \x01(\tB,\x92A\x1bJ\x13\"69629032906489576\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x05keyId\"y\n" +
+	"\x19ActivatePublicKeyResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\n" +
+	"changeDate\"\xac\x01\n" +
+	"\x1aDeactivatePublicKeyRequest\x12I\n" +
+	"\ttarget_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\btargetId\x12C\n" +
+	"\x06key_id\x18\x02 \x01(\tB,\x92A\x1bJ\x13\"69629032906489576\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x05keyId\"{\n" +
+	"\x1bDeactivatePublicKeyResponse\x12\\\n" +
+	"\vchange_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\n" +
+	"changeDate\"\xa8\x01\n" +
+	"\x16RemovePublicKeyRequest\x12I\n" +
+	"\ttarget_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\btargetId\x12C\n" +
+	"\x06key_id\x18\x02 \x01(\tB,\x92A\x1bJ\x13\"69629032906489576\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x05keyId\"{\n" +
+	"\x17RemovePublicKeyResponse\x12`\n" +
+	"\rdeletion_date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fdeletionDate\"\xf9\x02\n" +
+	"\x15ListPublicKeysRequest\x12I\n" +
+	"\ttarget_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\btargetId\x12I\n" +
+	"\n" +
+	"pagination\x18\x02 \x01(\v2$.zitadel.filter.v2.PaginationRequestH\x00R\n" +
+	"pagination\x88\x01\x01\x12w\n" +
+	"\x0esorting_column\x18\x03 \x01(\x0e2%.zitadel.action.v2.PublicKeyFieldNameB)\x92A&:$\"EXECUTION_FIELD_NAME_CREATION_DATE\"R\rsortingColumn\x12B\n" +
+	"\afilters\x18\x04 \x03(\v2(.zitadel.action.v2.PublicKeySearchFilterR\afiltersB\r\n" +
+	"\v_pagination\"\x9e\x01\n" +
+	"\x16ListPublicKeysResponse\x12E\n" +
+	"\n" +
+	"pagination\x18\x01 \x01(\v2%.zitadel.filter.v2.PaginationResponseR\n" +
+	"pagination\x12=\n" +
+	"\vpublic_keys\x18\x02 \x03(\v2\x1c.zitadel.action.v2.PublicKeyR\n" +
+	"publicKeys\"\xf5\x01\n" +
 	"\x13SetExecutionRequest\x12:\n" +
 	"\tcondition\x18\x01 \x01(\v2\x1c.zitadel.action.v2.ConditionR\tcondition\x12\x18\n" +
 	"\atargets\x18\x02 \x03(\tR\atargets:\x87\x01\x92A\x83\x012\x80\x01{\"condition\":{\"request\":{\"method\":\"zitadel.session.v2.SessionService/ListSessions\"}},\"targets\":[{\"target\":\"69629026806489455\"}]}\"n\n" +
@@ -1323,7 +1944,7 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\amethods\x18\x01 \x03(\tR\amethods\"\x1e\n" +
 	"\x1cListExecutionServicesRequest\";\n" +
 	"\x1dListExecutionServicesResponse\x12\x1a\n" +
-	"\bservices\x18\x01 \x03(\tR\bservices2\xe7\x15\n" +
+	"\bservices\x18\x01 \x03(\tR\bservices2\x9c \n" +
 	"\rActionService\x12\xa9\x02\n" +
 	"\fCreateTarget\x12&.zitadel.action.v2.CreateTargetRequest\x1a'.zitadel.action.v2.CreateTargetResponse\"\xc7\x01\x92A\x8a\x01J$\n" +
 	"\x03200\x12\x1d\n" +
@@ -1365,7 +1986,36 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\x03400\x12,\n" +
 	"*The feature flag `actions` is not enabled.\x8a\xb5\x18\x16\n" +
 	"\x14\n" +
-	"\x12action.target.read\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/v2/actions/targets/search\x12\xc2\x02\n" +
+	"\x12action.target.read\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/v2/actions/targets/search\x12\xdc\x01\n" +
+	"\fAddPublicKey\x12&.zitadel.action.v2.AddPublicKeyRequest\x1a'.zitadel.action.v2.AddPublicKeyResponse\"{\x92A(J&\n" +
+	"\x03200\x12\x1f\n" +
+	"\x1dPublic key added successfully\x8a\xb5\x18\x17\n" +
+	"\x15\n" +
+	"\x13action.target.write\x82\xd3\xe4\x93\x02/:\x01*\"*/v2/actions/targets/{target_id}/publickeys\x12\xad\x02\n" +
+	"\x11ActivatePublicKey\x12+.zitadel.action.v2.ActivatePublicKeyRequest\x1a,.zitadel.action.v2.ActivatePublicKeyResponse\"\xbc\x01\x92AZJ*\n" +
+	"\x03200\x12#\n" +
+	"!Public key activated successfullyJ,\n" +
+	"\x03404\x12%\n" +
+	"#The key to activate does not exist.\x8a\xb5\x18\x17\n" +
+	"\x15\n" +
+	"\x13action.target.write\x82\xd3\xe4\x93\x02>\"</v2/actions/targets/{target_id}/publickeys/{key_id}/activate\x12\xb9\x02\n" +
+	"\x13DeactivatePublicKey\x12-.zitadel.action.v2.DeactivatePublicKeyRequest\x1a..zitadel.action.v2.DeactivatePublicKeyResponse\"\xc2\x01\x92A^J,\n" +
+	"\x03200\x12%\n" +
+	"#Public key deactivated successfullyJ.\n" +
+	"\x03404\x12'\n" +
+	"%The key to deactivate does not exist.\x8a\xb5\x18\x17\n" +
+	"\x15\n" +
+	"\x13action.target.write\x82\xd3\xe4\x93\x02@\">/v2/actions/targets/{target_id}/publickeys/{key_id}/deactivate\x12\xee\x01\n" +
+	"\x0fRemovePublicKey\x12).zitadel.action.v2.RemovePublicKeyRequest\x1a*.zitadel.action.v2.RemovePublicKeyResponse\"\x83\x01\x92A*J(\n" +
+	"\x03200\x12!\n" +
+	"\x1fPublic key removed successfully\x8a\xb5\x18\x17\n" +
+	"\x15\n" +
+	"\x13action.target.write\x82\xd3\xe4\x93\x025*3/v2/actions/targets/{target_id}/publickeys/{key_id}\x12\xf6\x01\n" +
+	"\x0eListPublicKeys\x12(.zitadel.action.v2.ListPublicKeysRequest\x1a).zitadel.action.v2.ListPublicKeysResponse\"\x8e\x01\x92A5J3\n" +
+	"\x03200\x12,\n" +
+	"*List of public keys retrieved successfully\x8a\xb5\x18\x16\n" +
+	"\x14\n" +
+	"\x12action.target.read\x82\xd3\xe4\x93\x026:\x01*\"1/v2/actions/targets/{target_id}/publickeys/search\x12\xc2\x02\n" +
 	"\fSetExecution\x12&.zitadel.action.v2.SetExecutionRequest\x1a'.zitadel.action.v2.SetExecutionResponse\"\xe0\x01\x92A\x9d\x01J9\n" +
 	"\x03200\x122\n" +
 	"0Execution successfully updated or left unchangedJ`\n" +
@@ -1429,7 +2079,7 @@ func file_zitadel_action_v2_action_service_proto_rawDescGZIP() []byte {
 	return file_zitadel_action_v2_action_service_proto_rawDescData
 }
 
-var file_zitadel_action_v2_action_service_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_zitadel_action_v2_action_service_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_zitadel_action_v2_action_service_proto_goTypes = []any{
 	(*CreateTargetRequest)(nil),            // 0: zitadel.action.v2.CreateTargetRequest
 	(*CreateTargetResponse)(nil),           // 1: zitadel.action.v2.CreateTargetResponse
@@ -1441,82 +2091,118 @@ var file_zitadel_action_v2_action_service_proto_goTypes = []any{
 	(*GetTargetResponse)(nil),              // 7: zitadel.action.v2.GetTargetResponse
 	(*ListTargetsRequest)(nil),             // 8: zitadel.action.v2.ListTargetsRequest
 	(*ListTargetsResponse)(nil),            // 9: zitadel.action.v2.ListTargetsResponse
-	(*SetExecutionRequest)(nil),            // 10: zitadel.action.v2.SetExecutionRequest
-	(*SetExecutionResponse)(nil),           // 11: zitadel.action.v2.SetExecutionResponse
-	(*ListExecutionsRequest)(nil),          // 12: zitadel.action.v2.ListExecutionsRequest
-	(*ListExecutionsResponse)(nil),         // 13: zitadel.action.v2.ListExecutionsResponse
-	(*ListExecutionFunctionsRequest)(nil),  // 14: zitadel.action.v2.ListExecutionFunctionsRequest
-	(*ListExecutionFunctionsResponse)(nil), // 15: zitadel.action.v2.ListExecutionFunctionsResponse
-	(*ListExecutionMethodsRequest)(nil),    // 16: zitadel.action.v2.ListExecutionMethodsRequest
-	(*ListExecutionMethodsResponse)(nil),   // 17: zitadel.action.v2.ListExecutionMethodsResponse
-	(*ListExecutionServicesRequest)(nil),   // 18: zitadel.action.v2.ListExecutionServicesRequest
-	(*ListExecutionServicesResponse)(nil),  // 19: zitadel.action.v2.ListExecutionServicesResponse
-	(*RESTWebhook)(nil),                    // 20: zitadel.action.v2.RESTWebhook
-	(*RESTCall)(nil),                       // 21: zitadel.action.v2.RESTCall
-	(*RESTAsync)(nil),                      // 22: zitadel.action.v2.RESTAsync
-	(*durationpb.Duration)(nil),            // 23: google.protobuf.Duration
-	(*timestamppb.Timestamp)(nil),          // 24: google.protobuf.Timestamp
-	(*Target)(nil),                         // 25: zitadel.action.v2.Target
-	(*v2.PaginationRequest)(nil),           // 26: zitadel.filter.v2.PaginationRequest
-	(TargetFieldName)(0),                   // 27: zitadel.action.v2.TargetFieldName
-	(*TargetSearchFilter)(nil),             // 28: zitadel.action.v2.TargetSearchFilter
-	(*v2.PaginationResponse)(nil),          // 29: zitadel.filter.v2.PaginationResponse
-	(*Condition)(nil),                      // 30: zitadel.action.v2.Condition
-	(ExecutionFieldName)(0),                // 31: zitadel.action.v2.ExecutionFieldName
-	(*ExecutionSearchFilter)(nil),          // 32: zitadel.action.v2.ExecutionSearchFilter
-	(*Execution)(nil),                      // 33: zitadel.action.v2.Execution
+	(*AddPublicKeyRequest)(nil),            // 10: zitadel.action.v2.AddPublicKeyRequest
+	(*AddPublicKeyResponse)(nil),           // 11: zitadel.action.v2.AddPublicKeyResponse
+	(*ActivatePublicKeyRequest)(nil),       // 12: zitadel.action.v2.ActivatePublicKeyRequest
+	(*ActivatePublicKeyResponse)(nil),      // 13: zitadel.action.v2.ActivatePublicKeyResponse
+	(*DeactivatePublicKeyRequest)(nil),     // 14: zitadel.action.v2.DeactivatePublicKeyRequest
+	(*DeactivatePublicKeyResponse)(nil),    // 15: zitadel.action.v2.DeactivatePublicKeyResponse
+	(*RemovePublicKeyRequest)(nil),         // 16: zitadel.action.v2.RemovePublicKeyRequest
+	(*RemovePublicKeyResponse)(nil),        // 17: zitadel.action.v2.RemovePublicKeyResponse
+	(*ListPublicKeysRequest)(nil),          // 18: zitadel.action.v2.ListPublicKeysRequest
+	(*ListPublicKeysResponse)(nil),         // 19: zitadel.action.v2.ListPublicKeysResponse
+	(*SetExecutionRequest)(nil),            // 20: zitadel.action.v2.SetExecutionRequest
+	(*SetExecutionResponse)(nil),           // 21: zitadel.action.v2.SetExecutionResponse
+	(*ListExecutionsRequest)(nil),          // 22: zitadel.action.v2.ListExecutionsRequest
+	(*ListExecutionsResponse)(nil),         // 23: zitadel.action.v2.ListExecutionsResponse
+	(*ListExecutionFunctionsRequest)(nil),  // 24: zitadel.action.v2.ListExecutionFunctionsRequest
+	(*ListExecutionFunctionsResponse)(nil), // 25: zitadel.action.v2.ListExecutionFunctionsResponse
+	(*ListExecutionMethodsRequest)(nil),    // 26: zitadel.action.v2.ListExecutionMethodsRequest
+	(*ListExecutionMethodsResponse)(nil),   // 27: zitadel.action.v2.ListExecutionMethodsResponse
+	(*ListExecutionServicesRequest)(nil),   // 28: zitadel.action.v2.ListExecutionServicesRequest
+	(*ListExecutionServicesResponse)(nil),  // 29: zitadel.action.v2.ListExecutionServicesResponse
+	(*RESTWebhook)(nil),                    // 30: zitadel.action.v2.RESTWebhook
+	(*RESTCall)(nil),                       // 31: zitadel.action.v2.RESTCall
+	(*RESTAsync)(nil),                      // 32: zitadel.action.v2.RESTAsync
+	(*durationpb.Duration)(nil),            // 33: google.protobuf.Duration
+	(PayloadType)(0),                       // 34: zitadel.action.v2.PayloadType
+	(*timestamppb.Timestamp)(nil),          // 35: google.protobuf.Timestamp
+	(*Target)(nil),                         // 36: zitadel.action.v2.Target
+	(*v2.PaginationRequest)(nil),           // 37: zitadel.filter.v2.PaginationRequest
+	(TargetFieldName)(0),                   // 38: zitadel.action.v2.TargetFieldName
+	(*TargetSearchFilter)(nil),             // 39: zitadel.action.v2.TargetSearchFilter
+	(*v2.PaginationResponse)(nil),          // 40: zitadel.filter.v2.PaginationResponse
+	(PublicKeyFieldName)(0),                // 41: zitadel.action.v2.PublicKeyFieldName
+	(*PublicKeySearchFilter)(nil),          // 42: zitadel.action.v2.PublicKeySearchFilter
+	(*PublicKey)(nil),                      // 43: zitadel.action.v2.PublicKey
+	(*Condition)(nil),                      // 44: zitadel.action.v2.Condition
+	(ExecutionFieldName)(0),                // 45: zitadel.action.v2.ExecutionFieldName
+	(*ExecutionSearchFilter)(nil),          // 46: zitadel.action.v2.ExecutionSearchFilter
+	(*Execution)(nil),                      // 47: zitadel.action.v2.Execution
 }
 var file_zitadel_action_v2_action_service_proto_depIdxs = []int32{
-	20, // 0: zitadel.action.v2.CreateTargetRequest.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
-	21, // 1: zitadel.action.v2.CreateTargetRequest.rest_call:type_name -> zitadel.action.v2.RESTCall
-	22, // 2: zitadel.action.v2.CreateTargetRequest.rest_async:type_name -> zitadel.action.v2.RESTAsync
-	23, // 3: zitadel.action.v2.CreateTargetRequest.timeout:type_name -> google.protobuf.Duration
-	24, // 4: zitadel.action.v2.CreateTargetResponse.creation_date:type_name -> google.protobuf.Timestamp
-	20, // 5: zitadel.action.v2.UpdateTargetRequest.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
-	21, // 6: zitadel.action.v2.UpdateTargetRequest.rest_call:type_name -> zitadel.action.v2.RESTCall
-	22, // 7: zitadel.action.v2.UpdateTargetRequest.rest_async:type_name -> zitadel.action.v2.RESTAsync
-	23, // 8: zitadel.action.v2.UpdateTargetRequest.timeout:type_name -> google.protobuf.Duration
-	23, // 9: zitadel.action.v2.UpdateTargetRequest.expiration_signing_key:type_name -> google.protobuf.Duration
-	24, // 10: zitadel.action.v2.UpdateTargetResponse.change_date:type_name -> google.protobuf.Timestamp
-	24, // 11: zitadel.action.v2.DeleteTargetResponse.deletion_date:type_name -> google.protobuf.Timestamp
-	25, // 12: zitadel.action.v2.GetTargetResponse.target:type_name -> zitadel.action.v2.Target
-	26, // 13: zitadel.action.v2.ListTargetsRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
-	27, // 14: zitadel.action.v2.ListTargetsRequest.sorting_column:type_name -> zitadel.action.v2.TargetFieldName
-	28, // 15: zitadel.action.v2.ListTargetsRequest.filters:type_name -> zitadel.action.v2.TargetSearchFilter
-	29, // 16: zitadel.action.v2.ListTargetsResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
-	25, // 17: zitadel.action.v2.ListTargetsResponse.targets:type_name -> zitadel.action.v2.Target
-	30, // 18: zitadel.action.v2.SetExecutionRequest.condition:type_name -> zitadel.action.v2.Condition
-	24, // 19: zitadel.action.v2.SetExecutionResponse.set_date:type_name -> google.protobuf.Timestamp
-	26, // 20: zitadel.action.v2.ListExecutionsRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
-	31, // 21: zitadel.action.v2.ListExecutionsRequest.sorting_column:type_name -> zitadel.action.v2.ExecutionFieldName
-	32, // 22: zitadel.action.v2.ListExecutionsRequest.filters:type_name -> zitadel.action.v2.ExecutionSearchFilter
-	29, // 23: zitadel.action.v2.ListExecutionsResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
-	33, // 24: zitadel.action.v2.ListExecutionsResponse.executions:type_name -> zitadel.action.v2.Execution
-	0,  // 25: zitadel.action.v2.ActionService.CreateTarget:input_type -> zitadel.action.v2.CreateTargetRequest
-	2,  // 26: zitadel.action.v2.ActionService.UpdateTarget:input_type -> zitadel.action.v2.UpdateTargetRequest
-	4,  // 27: zitadel.action.v2.ActionService.DeleteTarget:input_type -> zitadel.action.v2.DeleteTargetRequest
-	6,  // 28: zitadel.action.v2.ActionService.GetTarget:input_type -> zitadel.action.v2.GetTargetRequest
-	8,  // 29: zitadel.action.v2.ActionService.ListTargets:input_type -> zitadel.action.v2.ListTargetsRequest
-	10, // 30: zitadel.action.v2.ActionService.SetExecution:input_type -> zitadel.action.v2.SetExecutionRequest
-	12, // 31: zitadel.action.v2.ActionService.ListExecutions:input_type -> zitadel.action.v2.ListExecutionsRequest
-	14, // 32: zitadel.action.v2.ActionService.ListExecutionFunctions:input_type -> zitadel.action.v2.ListExecutionFunctionsRequest
-	16, // 33: zitadel.action.v2.ActionService.ListExecutionMethods:input_type -> zitadel.action.v2.ListExecutionMethodsRequest
-	18, // 34: zitadel.action.v2.ActionService.ListExecutionServices:input_type -> zitadel.action.v2.ListExecutionServicesRequest
-	1,  // 35: zitadel.action.v2.ActionService.CreateTarget:output_type -> zitadel.action.v2.CreateTargetResponse
-	3,  // 36: zitadel.action.v2.ActionService.UpdateTarget:output_type -> zitadel.action.v2.UpdateTargetResponse
-	5,  // 37: zitadel.action.v2.ActionService.DeleteTarget:output_type -> zitadel.action.v2.DeleteTargetResponse
-	7,  // 38: zitadel.action.v2.ActionService.GetTarget:output_type -> zitadel.action.v2.GetTargetResponse
-	9,  // 39: zitadel.action.v2.ActionService.ListTargets:output_type -> zitadel.action.v2.ListTargetsResponse
-	11, // 40: zitadel.action.v2.ActionService.SetExecution:output_type -> zitadel.action.v2.SetExecutionResponse
-	13, // 41: zitadel.action.v2.ActionService.ListExecutions:output_type -> zitadel.action.v2.ListExecutionsResponse
-	15, // 42: zitadel.action.v2.ActionService.ListExecutionFunctions:output_type -> zitadel.action.v2.ListExecutionFunctionsResponse
-	17, // 43: zitadel.action.v2.ActionService.ListExecutionMethods:output_type -> zitadel.action.v2.ListExecutionMethodsResponse
-	19, // 44: zitadel.action.v2.ActionService.ListExecutionServices:output_type -> zitadel.action.v2.ListExecutionServicesResponse
-	35, // [35:45] is the sub-list for method output_type
-	25, // [25:35] is the sub-list for method input_type
-	25, // [25:25] is the sub-list for extension type_name
-	25, // [25:25] is the sub-list for extension extendee
-	0,  // [0:25] is the sub-list for field type_name
+	30, // 0: zitadel.action.v2.CreateTargetRequest.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
+	31, // 1: zitadel.action.v2.CreateTargetRequest.rest_call:type_name -> zitadel.action.v2.RESTCall
+	32, // 2: zitadel.action.v2.CreateTargetRequest.rest_async:type_name -> zitadel.action.v2.RESTAsync
+	33, // 3: zitadel.action.v2.CreateTargetRequest.timeout:type_name -> google.protobuf.Duration
+	34, // 4: zitadel.action.v2.CreateTargetRequest.payload_type:type_name -> zitadel.action.v2.PayloadType
+	35, // 5: zitadel.action.v2.CreateTargetResponse.creation_date:type_name -> google.protobuf.Timestamp
+	30, // 6: zitadel.action.v2.UpdateTargetRequest.rest_webhook:type_name -> zitadel.action.v2.RESTWebhook
+	31, // 7: zitadel.action.v2.UpdateTargetRequest.rest_call:type_name -> zitadel.action.v2.RESTCall
+	32, // 8: zitadel.action.v2.UpdateTargetRequest.rest_async:type_name -> zitadel.action.v2.RESTAsync
+	33, // 9: zitadel.action.v2.UpdateTargetRequest.timeout:type_name -> google.protobuf.Duration
+	33, // 10: zitadel.action.v2.UpdateTargetRequest.expiration_signing_key:type_name -> google.protobuf.Duration
+	34, // 11: zitadel.action.v2.UpdateTargetRequest.payload_type:type_name -> zitadel.action.v2.PayloadType
+	35, // 12: zitadel.action.v2.UpdateTargetResponse.change_date:type_name -> google.protobuf.Timestamp
+	35, // 13: zitadel.action.v2.DeleteTargetResponse.deletion_date:type_name -> google.protobuf.Timestamp
+	36, // 14: zitadel.action.v2.GetTargetResponse.target:type_name -> zitadel.action.v2.Target
+	37, // 15: zitadel.action.v2.ListTargetsRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
+	38, // 16: zitadel.action.v2.ListTargetsRequest.sorting_column:type_name -> zitadel.action.v2.TargetFieldName
+	39, // 17: zitadel.action.v2.ListTargetsRequest.filters:type_name -> zitadel.action.v2.TargetSearchFilter
+	40, // 18: zitadel.action.v2.ListTargetsResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
+	36, // 19: zitadel.action.v2.ListTargetsResponse.targets:type_name -> zitadel.action.v2.Target
+	35, // 20: zitadel.action.v2.AddPublicKeyRequest.expiration_date:type_name -> google.protobuf.Timestamp
+	35, // 21: zitadel.action.v2.AddPublicKeyResponse.creation_date:type_name -> google.protobuf.Timestamp
+	35, // 22: zitadel.action.v2.ActivatePublicKeyResponse.change_date:type_name -> google.protobuf.Timestamp
+	35, // 23: zitadel.action.v2.DeactivatePublicKeyResponse.change_date:type_name -> google.protobuf.Timestamp
+	35, // 24: zitadel.action.v2.RemovePublicKeyResponse.deletion_date:type_name -> google.protobuf.Timestamp
+	37, // 25: zitadel.action.v2.ListPublicKeysRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
+	41, // 26: zitadel.action.v2.ListPublicKeysRequest.sorting_column:type_name -> zitadel.action.v2.PublicKeyFieldName
+	42, // 27: zitadel.action.v2.ListPublicKeysRequest.filters:type_name -> zitadel.action.v2.PublicKeySearchFilter
+	40, // 28: zitadel.action.v2.ListPublicKeysResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
+	43, // 29: zitadel.action.v2.ListPublicKeysResponse.public_keys:type_name -> zitadel.action.v2.PublicKey
+	44, // 30: zitadel.action.v2.SetExecutionRequest.condition:type_name -> zitadel.action.v2.Condition
+	35, // 31: zitadel.action.v2.SetExecutionResponse.set_date:type_name -> google.protobuf.Timestamp
+	37, // 32: zitadel.action.v2.ListExecutionsRequest.pagination:type_name -> zitadel.filter.v2.PaginationRequest
+	45, // 33: zitadel.action.v2.ListExecutionsRequest.sorting_column:type_name -> zitadel.action.v2.ExecutionFieldName
+	46, // 34: zitadel.action.v2.ListExecutionsRequest.filters:type_name -> zitadel.action.v2.ExecutionSearchFilter
+	40, // 35: zitadel.action.v2.ListExecutionsResponse.pagination:type_name -> zitadel.filter.v2.PaginationResponse
+	47, // 36: zitadel.action.v2.ListExecutionsResponse.executions:type_name -> zitadel.action.v2.Execution
+	0,  // 37: zitadel.action.v2.ActionService.CreateTarget:input_type -> zitadel.action.v2.CreateTargetRequest
+	2,  // 38: zitadel.action.v2.ActionService.UpdateTarget:input_type -> zitadel.action.v2.UpdateTargetRequest
+	4,  // 39: zitadel.action.v2.ActionService.DeleteTarget:input_type -> zitadel.action.v2.DeleteTargetRequest
+	6,  // 40: zitadel.action.v2.ActionService.GetTarget:input_type -> zitadel.action.v2.GetTargetRequest
+	8,  // 41: zitadel.action.v2.ActionService.ListTargets:input_type -> zitadel.action.v2.ListTargetsRequest
+	10, // 42: zitadel.action.v2.ActionService.AddPublicKey:input_type -> zitadel.action.v2.AddPublicKeyRequest
+	12, // 43: zitadel.action.v2.ActionService.ActivatePublicKey:input_type -> zitadel.action.v2.ActivatePublicKeyRequest
+	14, // 44: zitadel.action.v2.ActionService.DeactivatePublicKey:input_type -> zitadel.action.v2.DeactivatePublicKeyRequest
+	16, // 45: zitadel.action.v2.ActionService.RemovePublicKey:input_type -> zitadel.action.v2.RemovePublicKeyRequest
+	18, // 46: zitadel.action.v2.ActionService.ListPublicKeys:input_type -> zitadel.action.v2.ListPublicKeysRequest
+	20, // 47: zitadel.action.v2.ActionService.SetExecution:input_type -> zitadel.action.v2.SetExecutionRequest
+	22, // 48: zitadel.action.v2.ActionService.ListExecutions:input_type -> zitadel.action.v2.ListExecutionsRequest
+	24, // 49: zitadel.action.v2.ActionService.ListExecutionFunctions:input_type -> zitadel.action.v2.ListExecutionFunctionsRequest
+	26, // 50: zitadel.action.v2.ActionService.ListExecutionMethods:input_type -> zitadel.action.v2.ListExecutionMethodsRequest
+	28, // 51: zitadel.action.v2.ActionService.ListExecutionServices:input_type -> zitadel.action.v2.ListExecutionServicesRequest
+	1,  // 52: zitadel.action.v2.ActionService.CreateTarget:output_type -> zitadel.action.v2.CreateTargetResponse
+	3,  // 53: zitadel.action.v2.ActionService.UpdateTarget:output_type -> zitadel.action.v2.UpdateTargetResponse
+	5,  // 54: zitadel.action.v2.ActionService.DeleteTarget:output_type -> zitadel.action.v2.DeleteTargetResponse
+	7,  // 55: zitadel.action.v2.ActionService.GetTarget:output_type -> zitadel.action.v2.GetTargetResponse
+	9,  // 56: zitadel.action.v2.ActionService.ListTargets:output_type -> zitadel.action.v2.ListTargetsResponse
+	11, // 57: zitadel.action.v2.ActionService.AddPublicKey:output_type -> zitadel.action.v2.AddPublicKeyResponse
+	13, // 58: zitadel.action.v2.ActionService.ActivatePublicKey:output_type -> zitadel.action.v2.ActivatePublicKeyResponse
+	15, // 59: zitadel.action.v2.ActionService.DeactivatePublicKey:output_type -> zitadel.action.v2.DeactivatePublicKeyResponse
+	17, // 60: zitadel.action.v2.ActionService.RemovePublicKey:output_type -> zitadel.action.v2.RemovePublicKeyResponse
+	19, // 61: zitadel.action.v2.ActionService.ListPublicKeys:output_type -> zitadel.action.v2.ListPublicKeysResponse
+	21, // 62: zitadel.action.v2.ActionService.SetExecution:output_type -> zitadel.action.v2.SetExecutionResponse
+	23, // 63: zitadel.action.v2.ActionService.ListExecutions:output_type -> zitadel.action.v2.ListExecutionsResponse
+	25, // 64: zitadel.action.v2.ActionService.ListExecutionFunctions:output_type -> zitadel.action.v2.ListExecutionFunctionsResponse
+	27, // 65: zitadel.action.v2.ActionService.ListExecutionMethods:output_type -> zitadel.action.v2.ListExecutionMethodsResponse
+	29, // 66: zitadel.action.v2.ActionService.ListExecutionServices:output_type -> zitadel.action.v2.ListExecutionServicesResponse
+	52, // [52:67] is the sub-list for method output_type
+	37, // [37:52] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_action_v2_action_service_proto_init() }
@@ -1539,14 +2225,16 @@ func file_zitadel_action_v2_action_service_proto_init() {
 	}
 	file_zitadel_action_v2_action_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_zitadel_action_v2_action_service_proto_msgTypes[8].OneofWrappers = []any{}
-	file_zitadel_action_v2_action_service_proto_msgTypes[12].OneofWrappers = []any{}
+	file_zitadel_action_v2_action_service_proto_msgTypes[10].OneofWrappers = []any{}
+	file_zitadel_action_v2_action_service_proto_msgTypes[18].OneofWrappers = []any{}
+	file_zitadel_action_v2_action_service_proto_msgTypes[22].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_action_v2_action_service_proto_rawDesc), len(file_zitadel_action_v2_action_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

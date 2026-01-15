@@ -26127,7 +26127,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x17GetRestrictionsResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12\x8a\x02\n" +
 	" disallow_public_org_registration\x18\x02 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if ZITADEL should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.R\x1ddisallowPublicOrgRegistration\x12\xdd\x01\n" +
-	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xb6\xa4\x05\n" +
+	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xf8\xa2\x05\n" +
 	"\fAdminService\x12\xb7\x02\n" +
 	"\aHealthz\x12 .zitadel.admin.v1.HealthzRequest\x1a!.zitadel.admin.v1.HealthzResponse\"\xe6\x01\x92A\xd2\x01\n" +
 	"\aGeneral\x12\aHealthz\x1a~The health endpoint allows an external system to probe if ZITADEL system API is alive. Response as soon as ZITADEL is running.J\x18\n" +
@@ -26712,18 +26712,18 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x03400\x129\n" +
 	"\x1aInvalid second factor type\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatus\x82\xb5\x18\x12\n" +
-	"\x10iam.policy.write\x82\xd3\xe4\x93\x02'*%/policies/login/second_factors/{type}\x12\xbe\x06\n" +
-	"\x1bListLoginPolicyMultiFactors\x124.zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest\x1a5.zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse\"\xb1\x05\x92A\xeb\x04\n" +
+	"\x10iam.policy.write\x82\xd3\xe4\x93\x02'*%/policies/login/second_factors/{type}\x12\xdf\x05\n" +
+	"\x1bListLoginPolicyMultiFactors\x124.zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest\x1a5.zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse\"\xd2\x04\x92A\x8c\x04\n" +
 	"\bSettings\n" +
 	"\x0eLogin Settings\n" +
-	"\x16Authentication Methods\x12\x18List Multi-factors (MFA)\x1a\xec\x03Returns a list of multi-factors (MFA) configured on the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  Per definition, it is called multifactor factor or passwordless as it is used as first and second authentication and a password is not necessary. In the UI we generalize it as passwordless or passkey.J.\n" +
+	"\x16Authentication Methods\x12\x18List Multi-factors (MFA)\x1a\x8d\x03Returns a list of multi-factors (MFA) configured on the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  They are called passkeys and are used as first and second authentication and a password is not necessary.J.\n" +
 	"\x03200\x12'\n" +
 	"%multi-factors of default login policy\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02'\"%/policies/login/multi_factors/_search\x12\xe7\x06\n" +
-	"\x1bAddMultiFactorToLoginPolicy\x124.zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest\x1a5.zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse\"\xda\x05\x92A\x98\x05\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02'\"%/policies/login/multi_factors/_search\x12\x86\x06\n" +
+	"\x1bAddMultiFactorToLoginPolicy\x124.zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest\x1a5.zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse\"\xf9\x04\x92A\xb7\x04\n" +
 	"\bSettings\n" +
 	"\x0eLogin Settings\n" +
-	"\x16Authentication Methods\x12\x16Add Multi-Factor (MFA)\x1a\xd5\x03Add a multi-factor (MFA) to the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  Per definition, it is called multi-factor factor or passwordless as it is used as first and second authentication and a password is not necessary. In the UI we generalize it as passwordless or passkey.J3\n" +
+	"\x16Authentication Methods\x12\x16Add Multi-Factor (MFA)\x1a\xf4\x02Add a multi-factor (MFA) to the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc). They are called passkeys and are used as first and second authentication and a password is not necessary.J3\n" +
 	"\x03200\x12,\n" +
 	"*multi-factor added to default login policyJ?\n" +
 	"\x03400\x128\n" +
@@ -26911,12 +26911,12 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x027:\x01*\x1a2/text/message/passwordless_registration/{language}\x12\xa3\x05\n" +
 	"7ResetCustomPasswordlessRegistrationMessageTextToDefault\x12P.zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest\x1aQ.zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse\"\xc2\x03\x92A\xed\x02\n" +
 	"\rMessage Texts\x12>Reset Custom Passwordless Registration Message Text to Default\x1a\x9b\x02Removes the custom text of the passwordless/passkey registration message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
-	"\x11iam.policy.delete\x82\xd3\xe4\x93\x024*2/text/message/passwordless_registration/{language}\x12\xc9\x04\n" +
-	"#GetDefaultPasswordChangeMessageText\x12<.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse\"\xa4\x03\x92A\xd3\x02\n" +
-	"\rMessage Texts\x12(Get Default Password Change Message Text\x1a\x97\x02Get the default text of the password-changed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x022\x120/text/default/message/password_change/{language}\x12\xbf\x04\n" +
-	"\"GetCustomPasswordChangeMessageText\x12;.zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse\"\x9d\x03\x92A\xd4\x02\n" +
-	"\rMessage Texts\x12'Get Custom Password Change Message Text\x1a\x99\x02Get the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
+	"\x11iam.policy.delete\x82\xd3\xe4\x93\x024*2/text/message/passwordless_registration/{language}\x12\xca\x04\n" +
+	"#GetDefaultPasswordChangeMessageText\x12<.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse\"\xa5\x03\x92A\xd4\x02\n" +
+	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\x97\x02Get the default text of the password-changed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x022\x120/text/default/message/password_change/{language}\x12\xc0\x04\n" +
+	"\"GetCustomPasswordChangeMessageText\x12;.zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse\"\x9e\x03\x92A\xd5\x02\n" +
+	"\rMessage Texts\x12(Get Custom Password Changed Message Text\x1a\x99\x02Get the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02*\x12(/text/message/password_change/{language}\x12\xcc\x06\n" +
 	"#SetDefaultPasswordChangeMessageText\x12<.zitadel.admin.v1.SetDefaultPasswordChangeMessageTextRequest\x1a=.zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse\"\xa7\x05\x92A\xda\x04\n" +
 	"\rMessage Texts\x12)Set Default Password Changed Message Text\x1a\x9d\x04Set the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message/email is sent when the password of a user has been changed.  The Following Variables can be used: {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +

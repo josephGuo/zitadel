@@ -3699,7 +3699,7 @@
     "/orgs/_is_unique": {
       "get": {
         "summary": "Is Organization Unique",
-        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.\n\nChecks if an organization with the searched parameters already exists or not.",
+        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nChecks if an organization with the searched parameters already exists or not.",
         "operationId": "AdminService_IsOrgUnique",
         "responses": {
           "200": {
@@ -3750,7 +3750,7 @@
     "/orgs/_search": {
       "post": {
         "summary": "Search Organizations",
-        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.\n\nReturns a list of organizations that match the requesting filters. All filters are applied with an AND condition.",
+        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nReturns a list of organizations that match the requesting filters. All filters are applied with an AND condition.",
         "operationId": "AdminService_ListOrgs",
         "responses": {
           "200": {
@@ -3804,7 +3804,7 @@
     "/orgs/_setup": {
       "post": {
         "summary": "Setup Organization",
-        "description": "Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-create-organization.api.mdx) instead.\n\nCreate a new organization with an administrative user. If no specific roles are sent for the first user, the user will get the role ORG_OWNER.",
+        "description": "Deprecated: use [organization service v2 AddOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead.\n\nCreate a new organization with an administrative user. If no specific roles are sent for the first user, the user will get the role ORG_OWNER.",
         "operationId": "AdminService_SetUpOrg",
         "responses": {
           "200": {
@@ -3858,7 +3858,7 @@
     "/orgs/default": {
       "get": {
         "summary": "Get Default Organization",
-        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.\n\nGet the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
+        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nGet the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
         "operationId": "AdminService_GetDefaultOrg",
         "responses": {
           "200": {
@@ -3941,7 +3941,7 @@
     "/orgs/{id}": {
       "get": {
         "summary": "Get Organization By ID",
-        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.\n\nReturns an organization by its ID. Make sure the user has the permissions to access the organization.",
+        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nReturns an organization by its ID. Make sure the user has the permissions to access the organization.",
         "operationId": "AdminService_GetOrgByID",
         "responses": {
           "200": {
@@ -3986,7 +3986,7 @@
     "/orgs/{orgId}": {
       "delete": {
         "summary": "Remove Organization",
-        "description": "Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization.api.mdx) instead.\n\nDeletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.",
+        "description": "Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization.api.mdx) instead.\n\nDeletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.",
         "operationId": "AdminService_RemoveOrg",
         "responses": {
           "200": {
@@ -5119,7 +5119,7 @@
     "/policies/login/multi_factors": {
       "post": {
         "summary": "Add Multi-Factor (MFA)",
-        "description": "Add a multi-factor (MFA) to the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  Per definition, it is called multi-factor factor or passwordless as it is used as first and second authentication and a password is not necessary. In the UI we generalize it as passwordless or passkey.",
+        "description": "Add a multi-factor (MFA) to the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc). They are called passkeys and are used as first and second authentication and a password is not necessary.",
         "operationId": "AdminService_AddMultiFactorToLoginPolicy",
         "responses": {
           "200": {
@@ -5173,7 +5173,7 @@
     "/policies/login/multi_factors/_search": {
       "post": {
         "summary": "List Multi-factors (MFA)",
-        "description": "Returns a list of multi-factors (MFA) configured on the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  Per definition, it is called multifactor factor or passwordless as it is used as first and second authentication and a password is not necessary. In the UI we generalize it as passwordless or passkey.",
+        "description": "Returns a list of multi-factors (MFA) configured on the login settings of the instance. It affects all organizations, without custom login settings. Authentication factors are used as an additional layer of security for your users (e.g. Authentication App, FingerPrint, Windows Hello, etc).  They are called passkeys and are used as first and second authentication and a password is not necessary.",
         "operationId": "AdminService_ListLoginPolicyMultiFactors",
         "responses": {
           "200": {
@@ -7627,7 +7627,7 @@
     },
     "/text/default/message/password_change/{language}": {
       "get": {
-        "summary": "Get Default Password Change Message Text",
+        "summary": "Get Default Password Changed Message Text",
         "description": "Get the default text of the password-changed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.",
         "operationId": "AdminService_GetDefaultPasswordChangeMessageText",
         "responses": {
@@ -8479,7 +8479,7 @@
     },
     "/text/message/password_change/{language}": {
       "get": {
-        "summary": "Get Custom Password Change Message Text",
+        "summary": "Get Custom Password Changed Message Text",
         "description": "Get the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.",
         "operationId": "AdminService_GetCustomPasswordChangeMessageText",
         "responses": {

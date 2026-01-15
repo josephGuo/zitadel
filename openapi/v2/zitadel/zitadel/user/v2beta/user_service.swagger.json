@@ -490,7 +490,7 @@
     "/v2beta/users/{userId}/authentication_methods": {
       "get": {
         "summary": "List all possible authentication methods of a user",
-        "description": "List all possible authentication methods of a user like password, passwordless, (T)OTP and more.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "description": "List all possible authentication methods of a user like password, passkey, (T)OTP and more.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_ListAuthenticationMethodTypes",
         "responses": {
           "200": {

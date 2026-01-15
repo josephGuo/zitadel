@@ -9,72 +9,72 @@ import (
 var OrganizationService_AuthMethods = authz.MethodMapping{
 
 	OrganizationService_CreateOrganization_FullMethodName: authz.Option{
-		Permission: "org.create",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_UpdateOrganization_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_ListOrganizations_FullMethodName: authz.Option{
-		Permission: "iam.read",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_DeleteOrganization_FullMethodName: authz.Option{
-		Permission: "org.delete",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_SetOrganizationMetadata_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_ListOrganizationMetadata_FullMethodName: authz.Option{
-		Permission: "org.read",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_DeleteOrganizationMetadata_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_AddOrganizationDomain_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_ListOrganizationDomains_FullMethodName: authz.Option{
-		Permission: "org.read",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_DeleteOrganizationDomain_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_GenerateOrganizationDomainValidation_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_VerifyOrganizationDomain_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_DeactivateOrganization_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 
 	OrganizationService_ActivateOrganization_FullMethodName: authz.Option{
-		Permission: "org.write",
+		Permission: "authenticated",
 		CheckParam: "",
 	},
 }

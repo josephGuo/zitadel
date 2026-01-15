@@ -33,6 +33,31 @@ var ActionService_AuthMethods = authz.MethodMapping{
 		CheckParam: "",
 	},
 
+	ActionService_AddPublicKey_FullMethodName: authz.Option{
+		Permission: "action.target.write",
+		CheckParam: "",
+	},
+
+	ActionService_ActivatePublicKey_FullMethodName: authz.Option{
+		Permission: "action.target.write",
+		CheckParam: "",
+	},
+
+	ActionService_DeactivatePublicKey_FullMethodName: authz.Option{
+		Permission: "action.target.write",
+		CheckParam: "",
+	},
+
+	ActionService_RemovePublicKey_FullMethodName: authz.Option{
+		Permission: "action.target.write",
+		CheckParam: "",
+	},
+
+	ActionService_ListPublicKeys_FullMethodName: authz.Option{
+		Permission: "action.target.read",
+		CheckParam: "",
+	},
+
 	ActionService_SetExecution_FullMethodName: authz.Option{
 		Permission: "action.execution.write",
 		CheckParam: "",

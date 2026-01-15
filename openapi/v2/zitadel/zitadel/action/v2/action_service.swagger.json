@@ -494,9 +494,309 @@
           "ActionService"
         ]
       }
+    },
+    "/v2/actions/targets/{targetId}/publickeys": {
+      "post": {
+        "summary": "Add Public Key",
+        "description": "Adds a public key to the target for payload encryption.\nThe public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.\nThe public key must be in PEM format and be either an RSA or an EC key.\nOn a successful addition, a key ID is returned which can not only be used to manage the key (activate, remove),\nbut also will be used as the `kid` header in the JWE token sent to the target to indicate which key was used for encryption.\nNote that newly added keys are inactive by default. You must activate the key to use it for payload encryption.\nProviding an optional expiration date allows you to set a validity period for the key.\nAfter the expiration date, the key will be automatically deactivated and no longer used for payload encryption.\nBe sure to activate a new key before the current active key expires to avoid interruptions in your target executions.\nYou can have multiple inactive keys for rotation purposes, but only one active key at a time.\n\nRequired permission:\n  - `action.target.write`",
+        "operationId": "ActionService_AddPublicKey",
+        "responses": {
+          "200": {
+            "description": "Public key added successfully",
+            "schema": {
+              "$ref": "#/definitions/v2AddPublicKeyResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "targetId",
+            "description": "The unique identifier of the target to add the public key to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ActionServiceAddPublicKeyBody"
+            }
+          }
+        ],
+        "tags": [
+          "ActionService"
+        ]
+      }
+    },
+    "/v2/actions/targets/{targetId}/publickeys/search": {
+      "post": {
+        "summary": "List Public Keys",
+        "description": "Lists all public keys of a target.\nThe response includes which key is active and the key's expiration dates.\nThis allows you to manage key rotations and ensure that your target always has an active key for payload encryption.\n\nRequired permission:\n  - `action.target.read`",
+        "operationId": "ActionService_ListPublicKeys",
+        "responses": {
+          "200": {
+            "description": "List of public keys retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/v2ListPublicKeysResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "targetId",
+            "description": "TargetID is the unique identifier of the target to list the public keys for.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ActionServiceListPublicKeysBody"
+            }
+          }
+        ],
+        "tags": [
+          "ActionService"
+        ]
+      }
+    },
+    "/v2/actions/targets/{targetId}/publickeys/{keyId}": {
+      "delete": {
+        "summary": "Remove Public Key",
+        "description": "Removes the public key from the target. This is a permanent action and can not be undone.\nNote that you can only remove inactive keys. Attempting to remove an active key will result in an error.\nFor break glass scenarios, deactivate the key first and then remove it.\nRemoving a non-existing key is a no-op.\n\nRequired permission:\n  - `action.target.write`",
+        "operationId": "ActionService_RemovePublicKey",
+        "responses": {
+          "200": {
+            "description": "Public key removed successfully",
+            "schema": {
+              "$ref": "#/definitions/v2RemovePublicKeyResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "targetId",
+            "description": "TargetID is the unique identifier of the target to remove the public key from.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keyId",
+            "description": "KeyID is the unique identifier of the public key to remove.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ActionService"
+        ]
+      }
+    },
+    "/v2/actions/targets/{targetId}/publickeys/{keyId}/activate": {
+      "post": {
+        "summary": "Activate Public Key",
+        "description": "Activates the public key for payload encryption.\nThe public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.\nActivating a new key will deactivate the current active key. Only one key can be active at a time.\nThe active key is indicated in the `kid` header in the JWE token sent to the target.\nActivating a key that is already active is a no-op.\n\nRequired permission:\n  - `action.target.write`",
+        "operationId": "ActionService_ActivatePublicKey",
+        "responses": {
+          "200": {
+            "description": "Public key activated successfully",
+            "schema": {
+              "$ref": "#/definitions/v2ActivatePublicKeyResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "The key to activate does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "targetId",
+            "description": "TargetID is the unique identifier of the target to activate the public key for.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keyId",
+            "description": "KeyID is the unique identifier of the public key to activate.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ActionService"
+        ]
+      }
+    },
+    "/v2/actions/targets/{targetId}/publickeys/{keyId}/deactivate": {
+      "post": {
+        "summary": "Deactivate Public Key",
+        "description": "Deactivates the public key for payload encryption.\nThe public key will no longer be used to encrypt payloads sent to the target.\nBe aware that deactivating the active key will leave the target without an active key.\nSubsequent calls to the target with payload type `PAYLOAD_TYPE_JWE` will fail until a new key is activated.\nThis endpoint can be used in break glass scenarios to quickly disable a compromised key.\nDeactivating a key that is already inactive is a no-op.\n\nRequired permission:\n  - `action.target.write`",
+        "operationId": "ActionService_DeactivatePublicKey",
+        "responses": {
+          "200": {
+            "description": "Public key deactivated successfully",
+            "schema": {
+              "$ref": "#/definitions/v2DeactivatePublicKeyResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "The key to deactivate does not exist.",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "targetId",
+            "description": "TargetID is the unique identifier of the target to deactivate the public key for.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keyId",
+            "description": "KeyID is the unique identifier of the public key to deactivate.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ActionService"
+        ]
+      }
     }
   },
   "definitions": {
+    "ActionServiceAddPublicKeyBody": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "string",
+          "format": "byte",
+          "example": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUJJakFOQmdrcWhraUc5dzBCQVFzRkFEQV...",
+          "description": "The public key in PEM format. It must be either an RSA or an EC public key."
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2025-12-18T07:50:47.492Z",
+          "description": "Optional expiration date of the public key.\nAfter the expiration date, the key will be automatically deactivated and no longer used for payload encryption.\nBe sure to activate a new key before the current active key expires to avoid interruptions.\nIf not set, the key will not expire."
+        }
+      },
+      "required": [
+        "publicKey"
+      ]
+    },
+    "ActionServiceListPublicKeysBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v2PaginationRequest",
+          "description": "List limitations and ordering."
+        },
+        "sortingColumn": {
+          "$ref": "#/definitions/v2PublicKeyFieldName",
+          "default": "\"EXECUTION_FIELD_NAME_CREATION_DATE\"",
+          "description": "The field the result is sorted by. The default is the creation date.\nBeware that if you change this, your result pagination might be inconsistent."
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v2PublicKeySearchFilter"
+          },
+          "description": "Define the criteria to query for."
+        }
+      }
+    },
     "ActionServiceUpdateTargetBody": {
       "type": "object",
       "example": {
@@ -544,6 +844,11 @@
           "type": "string",
           "example": "0s",
           "description": "Regenerate the key used for signing and checking the payload sent to the target.\nSet the graceful period for the existing key. During that time, the previous\nsigning key and the new one will be used to sign the request to allow you a smooth\ntransition onf your API.\n\nNote that we currently only allow an immediate rotation (\"0s\") and will support\nlonger expirations in the future."
+        },
+        "payloadType": {
+          "$ref": "#/definitions/v2PayloadType",
+          "default": "\"PAYLOAD_TYPE_JSON\"",
+          "description": "Payload type defines how the payload is formatted and secured.\nThe default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.\nFor integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.\nYou can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends\nthe payload as a signed JWT in the body of the request. This allows the receiver to verify\nthe authenticity and integrity of the payload using the signing key.\nIf you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload\nas an encrypted JWT in the body of the request. You can provide your own public key for encryption.\nIf unspecified, the payload type will not be changed."
         }
       }
     },
@@ -572,6 +877,33 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v2ActivatePublicKeyResponse": {
+      "type": "object",
+      "properties": {
+        "changeDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "ChangeDate is the timestamp of the public key's activation."
+        }
+      }
+    },
+    "v2AddPublicKeyResponse": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "example": "69629032906489576",
+          "description": "The KeyID is the unique identifier of the newly added public key.\nThe ID is also used a `kid` in the JWT header for payload encryption.\nThis allows the target to identify the correct key to use for decryption."
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "CreationDate represents the timestamp of the public key addition."
         }
       }
     },
@@ -636,6 +968,11 @@
           "description": "The URL of the endpoint to call.",
           "maxLength": 2048,
           "minLength": 1
+        },
+        "payloadType": {
+          "$ref": "#/definitions/v2PayloadType",
+          "default": "\"PAYLOAD_TYPE_JSON\"",
+          "description": "Payload type defines how the payload is formatted and secured.\nThe default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.\nFor integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.\nYou can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends\nthe payload as a signed JWT in the body of the request. This allows the receiver to verify\nthe authenticity and integrity of the payload using the signing key.\nIf you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload\nas an encrypted JWT in the body of the request. You can provide your own public key for encryption."
         }
       },
       "required": [
@@ -661,6 +998,17 @@
           "type": "string",
           "example": "98KmsU67",
           "description": "Key used to sign and check payload sent to the target.\nThe key can be used to verify the integrity and authenticity of the request\non the receiver side. The key should be treated as a secret and only known to ZITADEL and the receiver.\nThe signature is included in the request header `X-ZITADEL-Signature`\nand calculated over the raw body of the request using HMAC with SHA256."
+        }
+      }
+    },
+    "v2DeactivatePublicKeyResponse": {
+      "type": "object",
+      "properties": {
+        "changeDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "ChangeDate is the timestamp of the public key's deactivation."
         }
       }
     },
@@ -803,6 +1151,24 @@
         }
       }
     },
+    "v2InIDsFilter": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "example": [
+            "69629023906488334",
+            "69622366012355662"
+          ],
+          "items": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1
+          },
+          "description": "Defines the ids to query for."
+        }
+      }
+    },
     "v2InTargetIDsFilter": {
       "type": "object",
       "properties": {
@@ -908,6 +1274,23 @@
         }
       }
     },
+    "v2ListPublicKeysResponse": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v2PaginationResponse",
+          "description": "List limitations and ordering."
+        },
+        "publicKeys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v2PublicKey"
+          },
+          "description": "List of all public keys for the target."
+        }
+      }
+    },
     "v2ListTargetsRequest": {
       "type": "object",
       "example": {
@@ -1009,6 +1392,89 @@
         }
       }
     },
+    "v2PayloadType": {
+      "type": "string",
+      "enum": [
+        "PAYLOAD_TYPE_UNSPECIFIED",
+        "PAYLOAD_TYPE_JSON",
+        "PAYLOAD_TYPE_JWT",
+        "PAYLOAD_TYPE_JWE"
+      ],
+      "default": "PAYLOAD_TYPE_UNSPECIFIED",
+      "description": " - PAYLOAD_TYPE_JSON: PAYLOAD_TYPE_JSON will send the payload as JSON in the body of the request.\nFor integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.\nThis is the current default, for backwards compatibility reasons.\n - PAYLOAD_TYPE_JWT: PAYLOAD_TYPE_JWT will send the payload as JSON Web Token (JWT) in the body of the request.\nThis allows the receiver to verify the authenticity and integrity of the payload\nusing the signing key (published on the JWKS URL).\n - PAYLOAD_TYPE_JWE: PAYLOAD_TYPE_JWE will send the payload as Encrypted JWT (JWE) in the body of the request.\nThis allows additional security, e.g when passing sensitive information.\nYou can provide your own public key for encryption."
+    },
+    "v2PublicKey": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "example": "69629032906489576",
+          "description": "KeyID is the unique identifier of the public key.\nIt's also used as the `kid` field in the JWE header when the payload type is set to `PAYLOAD_TYPE_JWE`."
+        },
+        "active": {
+          "type": "boolean",
+          "example": true,
+          "description": "Active indicates whether the public key is active and used for payload encryption.\nOnly one public key can be active at a time."
+        },
+        "publicKey": {
+          "type": "string",
+          "format": "byte",
+          "example": "-----BEGIN PUBLIC KEY-----...",
+          "description": "The public key in PEM format."
+        },
+        "fingerprint": {
+          "type": "string",
+          "example": "SHA256:STqK+Sd4qgdu+UjiwI8NBjOD6P7UqQ42EZYIdySEyTw",
+          "description": "Fingerprint is the fingerprint of the public key. It's prefixed with the hashing algorithm used\nand base64 encoded without padding, e.g. `SHA256:STqK+Sd4qgdu+UjiwI8NBjOD6P7UqQ42EZYIdySEyTw`.\nThe fingerprint can be used to easily compare the public key with other sources."
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "ExpirationDate is the timestamp when the public key automatically expires and\nno longer will be used for payload encryption, even when active.\nBe sure to upload and activate a new public key before the expiration date\nto avoid failed executions."
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "CreationDate is the timestamp when the the public key was uploaded."
+        },
+        "changeDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "ChangeDate is the timestamp when the public key was last changed, e.g. activated or deactivated."
+        }
+      }
+    },
+    "v2PublicKeyFieldName": {
+      "type": "string",
+      "enum": [
+        "PUBLIC_KEY_FIELD_NAME_UNSPECIFIED",
+        "PUBLIC_KEY_FIELD_NAME_CREATION_DATE",
+        "PUBLIC_KEY_FIELD_NAME_CHANGE_DATE",
+        "PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE"
+      ],
+      "default": "PUBLIC_KEY_FIELD_NAME_UNSPECIFIED",
+      "description": " - PUBLIC_KEY_FIELD_NAME_UNSPECIFIED: Unspecified field name.\n - PUBLIC_KEY_FIELD_NAME_CREATION_DATE: Sort by creation date.\n - PUBLIC_KEY_FIELD_NAME_CHANGE_DATE: Sort by change date.\n - PUBLIC_KEY_FIELD_NAME_EXPIRATION_DATE: Sort by expiration date."
+    },
+    "v2PublicKeySearchFilter": {
+      "type": "object",
+      "properties": {
+        "keyIdsFilter": {
+          "$ref": "#/definitions/v2InIDsFilter",
+          "description": "Filter the keys by one or multiple ids."
+        },
+        "activeFilter": {
+          "type": "boolean",
+          "description": "Filter the keys by their active status."
+        },
+        "expirationDateFilter": {
+          "$ref": "#/definitions/v2TimestampFilter",
+          "description": "Filter the keys by their expiration status."
+        }
+      }
+    },
     "v2RESTAsync": {
       "type": "object"
     },
@@ -1027,6 +1493,17 @@
         "interruptOnError": {
           "type": "boolean",
           "description": "Define if any error stops the whole execution. By default the process continues as normal."
+        }
+      }
+    },
+    "v2RemovePublicKeyResponse": {
+      "type": "object",
+      "properties": {
+        "deletionDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "DeletionDate is the timestamp of the public key removal."
         }
       }
     },
@@ -1163,6 +1640,11 @@
           "type": "string",
           "example": "98KmsU67",
           "description": "The current signing key used to sign the request sent to the target.\nThe key can be used to verify the integrity and authenticity of the request\non the receiver side. The key should be treated as a secret and only known to ZITADEL and the receiver.\nThe signature is included in the request header `X-ZITADEL-Signature`\nand calculated over the raw body of the request using HMAC with SHA256."
+        },
+        "payloadType": {
+          "$ref": "#/definitions/v2PayloadType",
+          "example": "PAYLOAD_TYPE_JSON",
+          "description": "Payload type defines how the payload is formatted and secured.\nThe default is `PAYLOAD_TYPE_JSON`, which sends the payload as JSON in the body of the request.\nFor integrity and authenticity a signature is included in the header `X-ZITADEL-Signature`.\nYou can also choose to send the payload as a JWT (`PAYLOAD_TYPE_JWT`), which sends\nthe payload as a signed JWT in the body of the request. This allows the receiver to verify\nthe authenticity and integrity of the payload using the signing key (published on the JWKS URL).\nIf you need encryption as well, you can choose `PAYLOAD_TYPE_JWE`, which sends the payload\nas an encrypted JWT in the body of the request. You can provide your own public key for encryption."
         }
       }
     },
@@ -1232,6 +1714,32 @@
         "TEXT_FILTER_METHOD_ENDS_WITH_IGNORE_CASE"
       ],
       "default": "TEXT_FILTER_METHOD_EQUALS"
+    },
+    "v2TimestampFilter": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-18T07:50:47.492Z",
+          "description": "Filter resources by timestamp."
+        },
+        "method": {
+          "$ref": "#/definitions/v2TimestampFilterMethod",
+          "description": "Defines the condition (e.g., equals, before, after) that the timestamp of the retrieved resources should match."
+        }
+      }
+    },
+    "v2TimestampFilterMethod": {
+      "type": "string",
+      "enum": [
+        "TIMESTAMP_FILTER_METHOD_EQUALS",
+        "TIMESTAMP_FILTER_METHOD_AFTER",
+        "TIMESTAMP_FILTER_METHOD_AFTER_OR_EQUALS",
+        "TIMESTAMP_FILTER_METHOD_BEFORE",
+        "TIMESTAMP_FILTER_METHOD_BEFORE_OR_EQUALS"
+      ],
+      "default": "TIMESTAMP_FILTER_METHOD_EQUALS"
     },
     "v2UpdateTargetResponse": {
       "type": "object",

@@ -1160,29 +1160,29 @@ type ManagementServiceClient interface {
 	//
 	// Remove the configured One-Time Password (OTP) Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	RemoveHumanAuthFactorOTPEmail(context.Context, *connect.Request[management.RemoveHumanAuthFactorOTPEmailRequest]) (*connect.Response[management.RemoveHumanAuthFactorOTPEmailResponse], error)
-	// Search Passwordless/Passkey authentication
+	// Search Passkey authentication
 	//
 	// Deprecated: use [user service v2 ListPasskeys](apis/resources/user_service_v2/user-service-list-passkeys.api.mdx) instead.
 	//
-	// Get a list of configured passwordless/passkey authentication methods from the user. Passwordless/passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.
+	// Get a list of configured passkey authentication methods from the user. Passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.
 	ListHumanPasswordless(context.Context, *connect.Request[management.ListHumanPasswordlessRequest]) (*connect.Response[management.ListHumanPasswordlessResponse], error)
-	// Add Passwordless/Passkey Registration Link
+	// Add Passkey Registration Link
 	//
 	// Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.
 	//
-	// Adds a new passwordless/passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
+	// Adds a new passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
 	AddPasswordlessRegistration(context.Context, *connect.Request[management.AddPasswordlessRegistrationRequest]) (*connect.Response[management.AddPasswordlessRegistrationResponse], error)
-	// Send Passwordless/Passkey Registration Link
+	// Send Passkey Registration Link
 	//
 	// Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.
 	//
-	// Adds a new passwordless/passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
+	// Adds a new passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
 	SendPasswordlessRegistration(context.Context, *connect.Request[management.SendPasswordlessRegistrationRequest]) (*connect.Response[management.SendPasswordlessRegistrationResponse], error)
-	// Delete Passwordless/Passkey
+	// Delete Passkey
 	//
 	// Deprecated: use [user service v2 RemovePasskey](apis/resources/user_service_v2/user-service-remove-passkey.api.mdx) instead.
 	//
-	// Remove a configured passwordless/passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).
+	// Remove a configured passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).
 	RemoveHumanPasswordless(context.Context, *connect.Request[management.RemoveHumanPasswordlessRequest]) (*connect.Response[management.RemoveHumanPasswordlessResponse], error)
 	// Update Machine User
 	//
@@ -1277,104 +1277,104 @@ type ManagementServiceClient interface {
 	GetMyOrg(context.Context, *connect.Request[management.GetMyOrgRequest]) (*connect.Response[management.GetMyOrgResponse], error)
 	// Get Organization By Domain
 	//
-	// Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.
+	// Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.
 	//
 	// Search an organization by the domain, overall organizations. The domain must match exactly.
 	GetOrgByDomainGlobal(context.Context, *connect.Request[management.GetOrgByDomainGlobalRequest]) (*connect.Response[management.GetOrgByDomainGlobalResponse], error)
 	ListOrgChanges(context.Context, *connect.Request[management.ListOrgChangesRequest]) (*connect.Response[management.ListOrgChangesResponse], error)
 	// Create Organization
 	//
-	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-create-organization.api.mdx) instead
+	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead
 	//
 	// Create a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.
 	AddOrg(context.Context, *connect.Request[management.AddOrgRequest]) (*connect.Response[management.AddOrgResponse], error)
 	// Update Organization
 	//
-	// Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-update-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-update-organization.api.mdx) instead.
 	//
 	// Change the name of the organization.
 	UpdateOrg(context.Context, *connect.Request[management.UpdateOrgRequest]) (*connect.Response[management.UpdateOrgResponse], error)
 	// Deactivate Organization
 	//
-	// Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-deactivate-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-deactivate-organization.api.mdx) instead.
 	//
 	// Sets the state of my organization to deactivated. Users of this organization will not be able to log in.
 	DeactivateOrg(context.Context, *connect.Request[management.DeactivateOrgRequest]) (*connect.Response[management.DeactivateOrgResponse], error)
 	// Reactivate Organization
 	//
-	// Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-activate-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-activate-organization.api.mdx) instead.
 	//
 	// Set the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.
 	ReactivateOrg(context.Context, *connect.Request[management.ReactivateOrgRequest]) (*connect.Response[management.ReactivateOrgResponse], error)
 	// Delete Organization
 	//
-	// Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization.api.mdx) instead.
 	//
 	// Deletes my organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.
 	RemoveOrg(context.Context, *connect.Request[management.RemoveOrgRequest]) (*connect.Response[management.RemoveOrgResponse], error)
 	// Set Organization Metadata
 	//
-	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.
 	//
 	// This endpoint either adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.
 	SetOrgMetadata(context.Context, *connect.Request[management.SetOrgMetadataRequest]) (*connect.Response[management.SetOrgMetadataResponse], error)
 	// Bulk Set Organization Metadata
 	//
-	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.
 	//
 	// This endpoint sets a list of metadata to the organization. Make sure the values are base64 encoded.
 	BulkSetOrgMetadata(context.Context, *connect.Request[management.BulkSetOrgMetadataRequest]) (*connect.Response[management.BulkSetOrgMetadataResponse], error)
 	// Search Organization Metadata
 	//
-	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.
 	//
 	// Get the metadata of an organization filtered by your query.
 	ListOrgMetadata(context.Context, *connect.Request[management.ListOrgMetadataRequest]) (*connect.Response[management.ListOrgMetadataResponse], error)
 	// Get Organization Metadata By Key
 	//
-	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.
 	//
 	// Get a metadata object from an organization by a specific key.
 	GetOrgMetadata(context.Context, *connect.Request[management.GetOrgMetadataRequest]) (*connect.Response[management.GetOrgMetadataResponse], error)
 	// Delete Organization Metadata By Key
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.
 	//
 	// Remove a metadata object from an organization with a specific key.
 	RemoveOrgMetadata(context.Context, *connect.Request[management.RemoveOrgMetadataRequest]) (*connect.Response[management.RemoveOrgMetadataResponse], error)
 	// Bulk Delete Metadata
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.
 	//
 	// Remove a list of metadata objects from an organization with a list of keys.
 	BulkRemoveOrgMetadata(context.Context, *connect.Request[management.BulkRemoveOrgMetadataRequest]) (*connect.Response[management.BulkRemoveOrgMetadataResponse], error)
 	// Add Domain
 	//
-	// Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-add-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization-domain.api.mdx) instead.
 	//
 	// Add a new domain to an organization. The domains are used to identify to which organization a user belongs.
 	AddOrgDomain(context.Context, *connect.Request[management.AddOrgDomainRequest]) (*connect.Response[management.AddOrgDomainResponse], error)
 	// Search Domains
 	//
-	// Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-domains.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-domains.api.mdx) instead.
 	//
 	// Returns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.
 	ListOrgDomains(context.Context, *connect.Request[management.ListOrgDomainsRequest]) (*connect.Response[management.ListOrgDomainsResponse], error)
 	// Remove Domain
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-domain.api.mdx) instead.
 	//
 	// Delete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.
 	RemoveOrgDomain(context.Context, *connect.Request[management.RemoveOrgDomainRequest]) (*connect.Response[management.RemoveOrgDomainResponse], error)
 	// Generate Domain Verification
 	//
-	// Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-generate-organization-domain-validation.api.mdx) instead.
+	// Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-generate-organization-domain-validation.api.mdx) instead.
 	//
 	// Generate a new file to be able to verify your domain with DNS or HTTP challenge.
 	GenerateOrgDomainValidation(context.Context, *connect.Request[management.GenerateOrgDomainValidationRequest]) (*connect.Response[management.GenerateOrgDomainValidationResponse], error)
 	// Verify Domain
 	//
-	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-verify-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.
 	//
 	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	ValidateOrgDomain(context.Context, *connect.Request[management.ValidateOrgDomainRequest]) (*connect.Response[management.ValidateOrgDomainResponse], error)
@@ -5832,29 +5832,29 @@ type ManagementServiceHandler interface {
 	//
 	// Remove the configured One-Time Password (OTP) Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	RemoveHumanAuthFactorOTPEmail(context.Context, *connect.Request[management.RemoveHumanAuthFactorOTPEmailRequest]) (*connect.Response[management.RemoveHumanAuthFactorOTPEmailResponse], error)
-	// Search Passwordless/Passkey authentication
+	// Search Passkey authentication
 	//
 	// Deprecated: use [user service v2 ListPasskeys](apis/resources/user_service_v2/user-service-list-passkeys.api.mdx) instead.
 	//
-	// Get a list of configured passwordless/passkey authentication methods from the user. Passwordless/passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.
+	// Get a list of configured passkey authentication methods from the user. Passkey is a device-dependent authentication like FingerScan, WindowsHello or a Hardware Token.
 	ListHumanPasswordless(context.Context, *connect.Request[management.ListHumanPasswordlessRequest]) (*connect.Response[management.ListHumanPasswordlessResponse], error)
-	// Add Passwordless/Passkey Registration Link
+	// Add Passkey Registration Link
 	//
 	// Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.
 	//
-	// Adds a new passwordless/passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
+	// Adds a new passkey authenticator link to the user and returns it in the response. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
 	AddPasswordlessRegistration(context.Context, *connect.Request[management.AddPasswordlessRegistrationRequest]) (*connect.Response[management.AddPasswordlessRegistrationResponse], error)
-	// Send Passwordless/Passkey Registration Link
+	// Send Passkey Registration Link
 	//
 	// Deprecated: use [user service v2 RegisterPasskey](apis/resources/user_service_v2/user-service-register-passkey.api.mdx) instead.
 	//
-	// Adds a new passwordless/passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passwordless/passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
+	// Adds a new passkey authenticator link to the user and sends it to the user per email. The link enables the user to register a new device if current passkey devices are all platform authenticators. e.g. User has already registered Windows Hello and wants to register FaceID on the iPhone.
 	SendPasswordlessRegistration(context.Context, *connect.Request[management.SendPasswordlessRegistrationRequest]) (*connect.Response[management.SendPasswordlessRegistrationResponse], error)
-	// Delete Passwordless/Passkey
+	// Delete Passkey
 	//
 	// Deprecated: use [user service v2 RemovePasskey](apis/resources/user_service_v2/user-service-remove-passkey.api.mdx) instead.
 	//
-	// Remove a configured passwordless/passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).
+	// Remove a configured passkey authentication method from the user. (e.g FaceID, FingerScane, WindowsHello, etc.).
 	RemoveHumanPasswordless(context.Context, *connect.Request[management.RemoveHumanPasswordlessRequest]) (*connect.Response[management.RemoveHumanPasswordlessResponse], error)
 	// Update Machine User
 	//
@@ -5949,104 +5949,104 @@ type ManagementServiceHandler interface {
 	GetMyOrg(context.Context, *connect.Request[management.GetMyOrgRequest]) (*connect.Response[management.GetMyOrgResponse], error)
 	// Get Organization By Domain
 	//
-	// Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead.
+	// Deprecated: use [organization v2 service ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.
 	//
 	// Search an organization by the domain, overall organizations. The domain must match exactly.
 	GetOrgByDomainGlobal(context.Context, *connect.Request[management.GetOrgByDomainGlobalRequest]) (*connect.Response[management.GetOrgByDomainGlobalResponse], error)
 	ListOrgChanges(context.Context, *connect.Request[management.ListOrgChangesRequest]) (*connect.Response[management.ListOrgChangesResponse], error)
 	// Create Organization
 	//
-	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-create-organization.api.mdx) instead
+	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead
 	//
 	// Create a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.
 	AddOrg(context.Context, *connect.Request[management.AddOrgRequest]) (*connect.Response[management.AddOrgResponse], error)
 	// Update Organization
 	//
-	// Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-update-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 UpdateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-update-organization.api.mdx) instead.
 	//
 	// Change the name of the organization.
 	UpdateOrg(context.Context, *connect.Request[management.UpdateOrgRequest]) (*connect.Response[management.UpdateOrgResponse], error)
 	// Deactivate Organization
 	//
-	// Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-deactivate-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeactivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-deactivate-organization.api.mdx) instead.
 	//
 	// Sets the state of my organization to deactivated. Users of this organization will not be able to log in.
 	DeactivateOrg(context.Context, *connect.Request[management.DeactivateOrgRequest]) (*connect.Response[management.DeactivateOrgResponse], error)
 	// Reactivate Organization
 	//
-	// Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-activate-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 ActivateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-activate-organization.api.mdx) instead.
 	//
 	// Set the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.
 	ReactivateOrg(context.Context, *connect.Request[management.ReactivateOrgRequest]) (*connect.Response[management.ReactivateOrgResponse], error)
 	// Delete Organization
 	//
-	// Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization.api.mdx) instead.
 	//
 	// Deletes my organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.
 	RemoveOrg(context.Context, *connect.Request[management.RemoveOrgRequest]) (*connect.Response[management.RemoveOrgResponse], error)
 	// Set Organization Metadata
 	//
-	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.
 	//
 	// This endpoint either adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.
 	SetOrgMetadata(context.Context, *connect.Request[management.SetOrgMetadataRequest]) (*connect.Response[management.SetOrgMetadataResponse], error)
 	// Bulk Set Organization Metadata
 	//
-	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-set-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 SetOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-set-organization-metadata.api.mdx) instead.
 	//
 	// This endpoint sets a list of metadata to the organization. Make sure the values are base64 encoded.
 	BulkSetOrgMetadata(context.Context, *connect.Request[management.BulkSetOrgMetadataRequest]) (*connect.Response[management.BulkSetOrgMetadataResponse], error)
 	// Search Organization Metadata
 	//
-	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.
 	//
 	// Get the metadata of an organization filtered by your query.
 	ListOrgMetadata(context.Context, *connect.Request[management.ListOrgMetadataRequest]) (*connect.Response[management.ListOrgMetadataResponse], error)
 	// Get Organization Metadata By Key
 	//
-	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-metadata.api.mdx) instead.
 	//
 	// Get a metadata object from an organization by a specific key.
 	GetOrgMetadata(context.Context, *connect.Request[management.GetOrgMetadataRequest]) (*connect.Response[management.GetOrgMetadataResponse], error)
 	// Delete Organization Metadata By Key
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.
 	//
 	// Remove a metadata object from an organization with a specific key.
 	RemoveOrgMetadata(context.Context, *connect.Request[management.RemoveOrgMetadataRequest]) (*connect.Response[management.RemoveOrgMetadataResponse], error)
 	// Bulk Delete Metadata
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-metadata.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationMetadata](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-metadata.api.mdx) instead.
 	//
 	// Remove a list of metadata objects from an organization with a list of keys.
 	BulkRemoveOrgMetadata(context.Context, *connect.Request[management.BulkRemoveOrgMetadataRequest]) (*connect.Response[management.BulkRemoveOrgMetadataResponse], error)
 	// Add Domain
 	//
-	// Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-add-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 AddOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization-domain.api.mdx) instead.
 	//
 	// Add a new domain to an organization. The domains are used to identify to which organization a user belongs.
 	AddOrgDomain(context.Context, *connect.Request[management.AddOrgDomainRequest]) (*connect.Response[management.AddOrgDomainResponse], error)
 	// Search Domains
 	//
-	// Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-list-organization-domains.api.mdx) instead.
+	// Deprecated: use [organization service v2 ListOrganizationDomains](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organization-domains.api.mdx) instead.
 	//
 	// Returns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs.
 	ListOrgDomains(context.Context, *connect.Request[management.ListOrgDomainsRequest]) (*connect.Response[management.ListOrgDomainsResponse], error)
 	// Remove Domain
 	//
-	// Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-delete-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 DeleteOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-delete-organization-domain.api.mdx) instead.
 	//
 	// Delete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.
 	RemoveOrgDomain(context.Context, *connect.Request[management.RemoveOrgDomainRequest]) (*connect.Response[management.RemoveOrgDomainResponse], error)
 	// Generate Domain Verification
 	//
-	// Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-generate-organization-domain-validation.api.mdx) instead.
+	// Deprecated: use [organization service v2 GenerateOrganizationDomainValidation](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-generate-organization-domain-validation.api.mdx) instead.
 	//
 	// Generate a new file to be able to verify your domain with DNS or HTTP challenge.
 	GenerateOrgDomainValidation(context.Context, *connect.Request[management.GenerateOrgDomainValidationRequest]) (*connect.Response[management.GenerateOrgDomainValidationResponse], error)
 	// Verify Domain
 	//
-	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2beta/zitadel-org-v-2-beta-organization-service-verify-organization-domain.api.mdx) instead.
+	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.
 	//
 	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	ValidateOrgDomain(context.Context, *connect.Request[management.ValidateOrgDomainRequest]) (*connect.Response[management.ValidateOrgDomainResponse], error)

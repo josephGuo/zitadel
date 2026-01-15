@@ -90,7 +90,7 @@
     "/v2beta/organizations/search": {
       "post": {
         "summary": "List Organizations",
-        "description": "Returns a list of organizations that match the requesting filters. All filters are applied with an AND condition.\n\nRequired permission:\n - `iam.read`\n\nDeprecated: Use [ListOrganizations](/apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead to list organizations.",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nReturns a list of organizations that match the requesting filters. All filters are applied with an AND condition.\n\nRequired permission:\n - `org.read`\n\nDeprecated: Use [ListOrganizations](/apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead to list organizations.",
         "operationId": "OrganizationService_ListOrganizations",
         "responses": {
           "200": {
@@ -137,7 +137,7 @@
     "/v2beta/organizations/{id}": {
       "delete": {
         "summary": "Delete Organization",
-        "description": "Deletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.\n\nRequired permission:\n - `org.delete`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nDeletes the organization and all its resources (Users, Projects, Grants to and from the org). Users of this organization will not be able to log in.\n\nRequired permission:\n - `org.delete`",
         "operationId": "OrganizationService_DeleteOrganization",
         "responses": {
           "200": {
@@ -178,7 +178,7 @@
       },
       "post": {
         "summary": "Update Organization",
-        "description": "Change the name of the organization.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nChange the name of the organization.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_UpdateOrganization",
         "responses": {
           "200": {
@@ -233,7 +233,7 @@
     "/v2beta/organizations/{id}/activate": {
       "post": {
         "summary": "Activate Organization",
-        "description": "Set the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nSet the state of my organization to active. The state of the organization has to be deactivated to perform the request. Users of this organization will be able to log in again.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_ActivateOrganization",
         "responses": {
           "200": {
@@ -286,7 +286,7 @@
     "/v2beta/organizations/{id}/deactivate": {
       "post": {
         "summary": "Deactivate Organization",
-        "description": "Sets the state of my organization to deactivated. Users of this organization will not be able to log in.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nSets the state of my organization to deactivated. Users of this organization will not be able to log in.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_DeactivateOrganization",
         "responses": {
           "200": {
@@ -339,7 +339,7 @@
     "/v2beta/organizations/{organizationId}/domains": {
       "delete": {
         "summary": "Delete Organization Domain",
-        "description": "Delete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nDelete a new domain from an organization. The domains are used to identify to which organization a user belongs. If the uses use the domain for login, this will not be possible afterwards. They have to use another domain instead.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_DeleteOrganizationDomain",
         "responses": {
           "200": {
@@ -388,7 +388,7 @@
       },
       "post": {
         "summary": "Add Organization Domain",
-        "description": "Add a new domain to an organization. The domains are used to identify to which organization a user belongs.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nAdd a new domain to an organization. The domains are used to identify to which organization a user belongs.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_AddOrganizationDomain",
         "responses": {
           "200": {
@@ -445,7 +445,7 @@
     "/v2beta/organizations/{organizationId}/domains/search": {
       "post": {
         "summary": "List Organization Domains",
-        "description": "Returns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs. \n\nRequired permission:\n - `org.read`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nReturns the list of registered domains of an organization. The domains are used to identify to which organization a user belongs. \n\nRequired permission:\n - `org.read`",
         "operationId": "OrganizationService_ListOrganizationDomains",
         "responses": {
           "200": {
@@ -498,7 +498,7 @@
     "/v2beta/organizations/{organizationId}/domains/validation/generate": {
       "post": {
         "summary": "Generate Organization Domain Validation",
-        "description": "Generate a new file to be able to verify your domain with DNS or HTTP challenge.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nGenerate a new file to be able to verify your domain with DNS or HTTP challenge.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_GenerateOrganizationDomainValidation",
         "responses": {
           "200": {
@@ -549,7 +549,7 @@
     "/v2beta/organizations/{organizationId}/domains/validation/verify": {
       "post": {
         "summary": "Verify Organization Domain",
-        "description": "Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_VerifyOrganizationDomain",
         "responses": {
           "200": {
@@ -602,7 +602,7 @@
     "/v2beta/organizations/{organizationId}/metadata": {
       "delete": {
         "summary": "Delete Organization Metadata",
-        "description": "Delete metadata objects from an organization with a specific key.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nDelete metadata objects from an organization with a specific key.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_DeleteOrganizationMetadata",
         "responses": {
           "200": {
@@ -656,7 +656,7 @@
       },
       "post": {
         "summary": "Set Organization Metadata",
-        "description": "Adds or updates a metadata value for the requested key. Make sure the value is base64 encoded.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nAdds or updates a metadata value for the requested key. Make sure the value is base64 encoded.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_SetOrganizationMetadata",
         "responses": {
           "200": {
@@ -713,7 +713,7 @@
     "/v2beta/organizations/{organizationId}/metadata/search": {
       "post": {
         "summary": "List Organization Metadata",
-        "description": "List metadata of an organization filtered by query.\n\nRequired permission:\n - `org.read`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nList metadata of an organization filtered by query.\n\nRequired permission:\n - `org.read`",
         "operationId": "OrganizationService_ListOrganizationMetadata",
         "responses": {
           "200": {

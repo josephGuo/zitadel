@@ -47,6 +47,21 @@ const (
 	// ActionServiceListTargetsProcedure is the fully-qualified name of the ActionService's ListTargets
 	// RPC.
 	ActionServiceListTargetsProcedure = "/zitadel.action.v2.ActionService/ListTargets"
+	// ActionServiceAddPublicKeyProcedure is the fully-qualified name of the ActionService's
+	// AddPublicKey RPC.
+	ActionServiceAddPublicKeyProcedure = "/zitadel.action.v2.ActionService/AddPublicKey"
+	// ActionServiceActivatePublicKeyProcedure is the fully-qualified name of the ActionService's
+	// ActivatePublicKey RPC.
+	ActionServiceActivatePublicKeyProcedure = "/zitadel.action.v2.ActionService/ActivatePublicKey"
+	// ActionServiceDeactivatePublicKeyProcedure is the fully-qualified name of the ActionService's
+	// DeactivatePublicKey RPC.
+	ActionServiceDeactivatePublicKeyProcedure = "/zitadel.action.v2.ActionService/DeactivatePublicKey"
+	// ActionServiceRemovePublicKeyProcedure is the fully-qualified name of the ActionService's
+	// RemovePublicKey RPC.
+	ActionServiceRemovePublicKeyProcedure = "/zitadel.action.v2.ActionService/RemovePublicKey"
+	// ActionServiceListPublicKeysProcedure is the fully-qualified name of the ActionService's
+	// ListPublicKeys RPC.
+	ActionServiceListPublicKeysProcedure = "/zitadel.action.v2.ActionService/ListPublicKeys"
 	// ActionServiceSetExecutionProcedure is the fully-qualified name of the ActionService's
 	// SetExecution RPC.
 	ActionServiceSetExecutionProcedure = "/zitadel.action.v2.ActionService/SetExecution"
@@ -105,6 +120,64 @@ type ActionServiceClient interface {
 	// Required permission:
 	//   - `action.target.read`
 	ListTargets(context.Context, *connect.Request[v2.ListTargetsRequest]) (*connect.Response[v2.ListTargetsResponse], error)
+	// Add Public Key
+	//
+	// Adds a public key to the target for payload encryption.
+	// The public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.
+	// The public key must be in PEM format and be either an RSA or an EC key.
+	// On a successful addition, a key ID is returned which can not only be used to manage the key (activate, remove),
+	// but also will be used as the `kid` header in the JWE token sent to the target to indicate which key was used for encryption.
+	// Note that newly added keys are inactive by default. You must activate the key to use it for payload encryption.
+	// Providing an optional expiration date allows you to set a validity period for the key.
+	// After the expiration date, the key will be automatically deactivated and no longer used for payload encryption.
+	// Be sure to activate a new key before the current active key expires to avoid interruptions in your target executions.
+	// You can have multiple inactive keys for rotation purposes, but only one active key at a time.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	AddPublicKey(context.Context, *connect.Request[v2.AddPublicKeyRequest]) (*connect.Response[v2.AddPublicKeyResponse], error)
+	// Activate Public Key
+	//
+	// Activates the public key for payload encryption.
+	// The public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.
+	// Activating a new key will deactivate the current active key. Only one key can be active at a time.
+	// The active key is indicated in the `kid` header in the JWE token sent to the target.
+	// Activating a key that is already active is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	ActivatePublicKey(context.Context, *connect.Request[v2.ActivatePublicKeyRequest]) (*connect.Response[v2.ActivatePublicKeyResponse], error)
+	// Deactivate Public Key
+	//
+	// Deactivates the public key for payload encryption.
+	// The public key will no longer be used to encrypt payloads sent to the target.
+	// Be aware that deactivating the active key will leave the target without an active key.
+	// Subsequent calls to the target with payload type `PAYLOAD_TYPE_JWE` will fail until a new key is activated.
+	// This endpoint can be used in break glass scenarios to quickly disable a compromised key.
+	// Deactivating a key that is already inactive is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	DeactivatePublicKey(context.Context, *connect.Request[v2.DeactivatePublicKeyRequest]) (*connect.Response[v2.DeactivatePublicKeyResponse], error)
+	// Remove Public Key
+	//
+	// Removes the public key from the target. This is a permanent action and can not be undone.
+	// Note that you can only remove inactive keys. Attempting to remove an active key will result in an error.
+	// For break glass scenarios, deactivate the key first and then remove it.
+	// Removing a non-existing key is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	RemovePublicKey(context.Context, *connect.Request[v2.RemovePublicKeyRequest]) (*connect.Response[v2.RemovePublicKeyResponse], error)
+	// List Public Keys
+	//
+	// Lists all public keys of a target.
+	// The response includes which key is active and the key's expiration dates.
+	// This allows you to manage key rotations and ensure that your target always has an active key for payload encryption.
+	//
+	// Required permission:
+	//   - `action.target.read`
+	ListPublicKeys(context.Context, *connect.Request[v2.ListPublicKeysRequest]) (*connect.Response[v2.ListPublicKeysResponse], error)
 	// Set Execution
 	//
 	// Sets an execution to call a target or include the targets of another execution.
@@ -176,6 +249,36 @@ func NewActionServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 			connect.WithSchema(actionServiceMethods.ByName("ListTargets")),
 			connect.WithClientOptions(opts...),
 		),
+		addPublicKey: connect.NewClient[v2.AddPublicKeyRequest, v2.AddPublicKeyResponse](
+			httpClient,
+			baseURL+ActionServiceAddPublicKeyProcedure,
+			connect.WithSchema(actionServiceMethods.ByName("AddPublicKey")),
+			connect.WithClientOptions(opts...),
+		),
+		activatePublicKey: connect.NewClient[v2.ActivatePublicKeyRequest, v2.ActivatePublicKeyResponse](
+			httpClient,
+			baseURL+ActionServiceActivatePublicKeyProcedure,
+			connect.WithSchema(actionServiceMethods.ByName("ActivatePublicKey")),
+			connect.WithClientOptions(opts...),
+		),
+		deactivatePublicKey: connect.NewClient[v2.DeactivatePublicKeyRequest, v2.DeactivatePublicKeyResponse](
+			httpClient,
+			baseURL+ActionServiceDeactivatePublicKeyProcedure,
+			connect.WithSchema(actionServiceMethods.ByName("DeactivatePublicKey")),
+			connect.WithClientOptions(opts...),
+		),
+		removePublicKey: connect.NewClient[v2.RemovePublicKeyRequest, v2.RemovePublicKeyResponse](
+			httpClient,
+			baseURL+ActionServiceRemovePublicKeyProcedure,
+			connect.WithSchema(actionServiceMethods.ByName("RemovePublicKey")),
+			connect.WithClientOptions(opts...),
+		),
+		listPublicKeys: connect.NewClient[v2.ListPublicKeysRequest, v2.ListPublicKeysResponse](
+			httpClient,
+			baseURL+ActionServiceListPublicKeysProcedure,
+			connect.WithSchema(actionServiceMethods.ByName("ListPublicKeys")),
+			connect.WithClientOptions(opts...),
+		),
 		setExecution: connect.NewClient[v2.SetExecutionRequest, v2.SetExecutionResponse](
 			httpClient,
 			baseURL+ActionServiceSetExecutionProcedure,
@@ -216,6 +319,11 @@ type actionServiceClient struct {
 	deleteTarget           *connect.Client[v2.DeleteTargetRequest, v2.DeleteTargetResponse]
 	getTarget              *connect.Client[v2.GetTargetRequest, v2.GetTargetResponse]
 	listTargets            *connect.Client[v2.ListTargetsRequest, v2.ListTargetsResponse]
+	addPublicKey           *connect.Client[v2.AddPublicKeyRequest, v2.AddPublicKeyResponse]
+	activatePublicKey      *connect.Client[v2.ActivatePublicKeyRequest, v2.ActivatePublicKeyResponse]
+	deactivatePublicKey    *connect.Client[v2.DeactivatePublicKeyRequest, v2.DeactivatePublicKeyResponse]
+	removePublicKey        *connect.Client[v2.RemovePublicKeyRequest, v2.RemovePublicKeyResponse]
+	listPublicKeys         *connect.Client[v2.ListPublicKeysRequest, v2.ListPublicKeysResponse]
 	setExecution           *connect.Client[v2.SetExecutionRequest, v2.SetExecutionResponse]
 	listExecutions         *connect.Client[v2.ListExecutionsRequest, v2.ListExecutionsResponse]
 	listExecutionFunctions *connect.Client[v2.ListExecutionFunctionsRequest, v2.ListExecutionFunctionsResponse]
@@ -246,6 +354,31 @@ func (c *actionServiceClient) GetTarget(ctx context.Context, req *connect.Reques
 // ListTargets calls zitadel.action.v2.ActionService.ListTargets.
 func (c *actionServiceClient) ListTargets(ctx context.Context, req *connect.Request[v2.ListTargetsRequest]) (*connect.Response[v2.ListTargetsResponse], error) {
 	return c.listTargets.CallUnary(ctx, req)
+}
+
+// AddPublicKey calls zitadel.action.v2.ActionService.AddPublicKey.
+func (c *actionServiceClient) AddPublicKey(ctx context.Context, req *connect.Request[v2.AddPublicKeyRequest]) (*connect.Response[v2.AddPublicKeyResponse], error) {
+	return c.addPublicKey.CallUnary(ctx, req)
+}
+
+// ActivatePublicKey calls zitadel.action.v2.ActionService.ActivatePublicKey.
+func (c *actionServiceClient) ActivatePublicKey(ctx context.Context, req *connect.Request[v2.ActivatePublicKeyRequest]) (*connect.Response[v2.ActivatePublicKeyResponse], error) {
+	return c.activatePublicKey.CallUnary(ctx, req)
+}
+
+// DeactivatePublicKey calls zitadel.action.v2.ActionService.DeactivatePublicKey.
+func (c *actionServiceClient) DeactivatePublicKey(ctx context.Context, req *connect.Request[v2.DeactivatePublicKeyRequest]) (*connect.Response[v2.DeactivatePublicKeyResponse], error) {
+	return c.deactivatePublicKey.CallUnary(ctx, req)
+}
+
+// RemovePublicKey calls zitadel.action.v2.ActionService.RemovePublicKey.
+func (c *actionServiceClient) RemovePublicKey(ctx context.Context, req *connect.Request[v2.RemovePublicKeyRequest]) (*connect.Response[v2.RemovePublicKeyResponse], error) {
+	return c.removePublicKey.CallUnary(ctx, req)
+}
+
+// ListPublicKeys calls zitadel.action.v2.ActionService.ListPublicKeys.
+func (c *actionServiceClient) ListPublicKeys(ctx context.Context, req *connect.Request[v2.ListPublicKeysRequest]) (*connect.Response[v2.ListPublicKeysResponse], error) {
+	return c.listPublicKeys.CallUnary(ctx, req)
 }
 
 // SetExecution calls zitadel.action.v2.ActionService.SetExecution.
@@ -314,6 +447,64 @@ type ActionServiceHandler interface {
 	// Required permission:
 	//   - `action.target.read`
 	ListTargets(context.Context, *connect.Request[v2.ListTargetsRequest]) (*connect.Response[v2.ListTargetsResponse], error)
+	// Add Public Key
+	//
+	// Adds a public key to the target for payload encryption.
+	// The public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.
+	// The public key must be in PEM format and be either an RSA or an EC key.
+	// On a successful addition, a key ID is returned which can not only be used to manage the key (activate, remove),
+	// but also will be used as the `kid` header in the JWE token sent to the target to indicate which key was used for encryption.
+	// Note that newly added keys are inactive by default. You must activate the key to use it for payload encryption.
+	// Providing an optional expiration date allows you to set a validity period for the key.
+	// After the expiration date, the key will be automatically deactivated and no longer used for payload encryption.
+	// Be sure to activate a new key before the current active key expires to avoid interruptions in your target executions.
+	// You can have multiple inactive keys for rotation purposes, but only one active key at a time.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	AddPublicKey(context.Context, *connect.Request[v2.AddPublicKeyRequest]) (*connect.Response[v2.AddPublicKeyResponse], error)
+	// Activate Public Key
+	//
+	// Activates the public key for payload encryption.
+	// The public key is used to encrypt the payload sent to the target when the payload type is set to `PAYLOAD_TYPE_JWE`.
+	// Activating a new key will deactivate the current active key. Only one key can be active at a time.
+	// The active key is indicated in the `kid` header in the JWE token sent to the target.
+	// Activating a key that is already active is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	ActivatePublicKey(context.Context, *connect.Request[v2.ActivatePublicKeyRequest]) (*connect.Response[v2.ActivatePublicKeyResponse], error)
+	// Deactivate Public Key
+	//
+	// Deactivates the public key for payload encryption.
+	// The public key will no longer be used to encrypt payloads sent to the target.
+	// Be aware that deactivating the active key will leave the target without an active key.
+	// Subsequent calls to the target with payload type `PAYLOAD_TYPE_JWE` will fail until a new key is activated.
+	// This endpoint can be used in break glass scenarios to quickly disable a compromised key.
+	// Deactivating a key that is already inactive is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	DeactivatePublicKey(context.Context, *connect.Request[v2.DeactivatePublicKeyRequest]) (*connect.Response[v2.DeactivatePublicKeyResponse], error)
+	// Remove Public Key
+	//
+	// Removes the public key from the target. This is a permanent action and can not be undone.
+	// Note that you can only remove inactive keys. Attempting to remove an active key will result in an error.
+	// For break glass scenarios, deactivate the key first and then remove it.
+	// Removing a non-existing key is a no-op.
+	//
+	// Required permission:
+	//   - `action.target.write`
+	RemovePublicKey(context.Context, *connect.Request[v2.RemovePublicKeyRequest]) (*connect.Response[v2.RemovePublicKeyResponse], error)
+	// List Public Keys
+	//
+	// Lists all public keys of a target.
+	// The response includes which key is active and the key's expiration dates.
+	// This allows you to manage key rotations and ensure that your target always has an active key for payload encryption.
+	//
+	// Required permission:
+	//   - `action.target.read`
+	ListPublicKeys(context.Context, *connect.Request[v2.ListPublicKeysRequest]) (*connect.Response[v2.ListPublicKeysResponse], error)
 	// Set Execution
 	//
 	// Sets an execution to call a target or include the targets of another execution.
@@ -381,6 +572,36 @@ func NewActionServiceHandler(svc ActionServiceHandler, opts ...connect.HandlerOp
 		connect.WithSchema(actionServiceMethods.ByName("ListTargets")),
 		connect.WithHandlerOptions(opts...),
 	)
+	actionServiceAddPublicKeyHandler := connect.NewUnaryHandler(
+		ActionServiceAddPublicKeyProcedure,
+		svc.AddPublicKey,
+		connect.WithSchema(actionServiceMethods.ByName("AddPublicKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	actionServiceActivatePublicKeyHandler := connect.NewUnaryHandler(
+		ActionServiceActivatePublicKeyProcedure,
+		svc.ActivatePublicKey,
+		connect.WithSchema(actionServiceMethods.ByName("ActivatePublicKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	actionServiceDeactivatePublicKeyHandler := connect.NewUnaryHandler(
+		ActionServiceDeactivatePublicKeyProcedure,
+		svc.DeactivatePublicKey,
+		connect.WithSchema(actionServiceMethods.ByName("DeactivatePublicKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	actionServiceRemovePublicKeyHandler := connect.NewUnaryHandler(
+		ActionServiceRemovePublicKeyProcedure,
+		svc.RemovePublicKey,
+		connect.WithSchema(actionServiceMethods.ByName("RemovePublicKey")),
+		connect.WithHandlerOptions(opts...),
+	)
+	actionServiceListPublicKeysHandler := connect.NewUnaryHandler(
+		ActionServiceListPublicKeysProcedure,
+		svc.ListPublicKeys,
+		connect.WithSchema(actionServiceMethods.ByName("ListPublicKeys")),
+		connect.WithHandlerOptions(opts...),
+	)
 	actionServiceSetExecutionHandler := connect.NewUnaryHandler(
 		ActionServiceSetExecutionProcedure,
 		svc.SetExecution,
@@ -423,6 +644,16 @@ func NewActionServiceHandler(svc ActionServiceHandler, opts ...connect.HandlerOp
 			actionServiceGetTargetHandler.ServeHTTP(w, r)
 		case ActionServiceListTargetsProcedure:
 			actionServiceListTargetsHandler.ServeHTTP(w, r)
+		case ActionServiceAddPublicKeyProcedure:
+			actionServiceAddPublicKeyHandler.ServeHTTP(w, r)
+		case ActionServiceActivatePublicKeyProcedure:
+			actionServiceActivatePublicKeyHandler.ServeHTTP(w, r)
+		case ActionServiceDeactivatePublicKeyProcedure:
+			actionServiceDeactivatePublicKeyHandler.ServeHTTP(w, r)
+		case ActionServiceRemovePublicKeyProcedure:
+			actionServiceRemovePublicKeyHandler.ServeHTTP(w, r)
+		case ActionServiceListPublicKeysProcedure:
+			actionServiceListPublicKeysHandler.ServeHTTP(w, r)
 		case ActionServiceSetExecutionProcedure:
 			actionServiceSetExecutionHandler.ServeHTTP(w, r)
 		case ActionServiceListExecutionsProcedure:
@@ -460,6 +691,26 @@ func (UnimplementedActionServiceHandler) GetTarget(context.Context, *connect.Req
 
 func (UnimplementedActionServiceHandler) ListTargets(context.Context, *connect.Request[v2.ListTargetsRequest]) (*connect.Response[v2.ListTargetsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.ListTargets is not implemented"))
+}
+
+func (UnimplementedActionServiceHandler) AddPublicKey(context.Context, *connect.Request[v2.AddPublicKeyRequest]) (*connect.Response[v2.AddPublicKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.AddPublicKey is not implemented"))
+}
+
+func (UnimplementedActionServiceHandler) ActivatePublicKey(context.Context, *connect.Request[v2.ActivatePublicKeyRequest]) (*connect.Response[v2.ActivatePublicKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.ActivatePublicKey is not implemented"))
+}
+
+func (UnimplementedActionServiceHandler) DeactivatePublicKey(context.Context, *connect.Request[v2.DeactivatePublicKeyRequest]) (*connect.Response[v2.DeactivatePublicKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.DeactivatePublicKey is not implemented"))
+}
+
+func (UnimplementedActionServiceHandler) RemovePublicKey(context.Context, *connect.Request[v2.RemovePublicKeyRequest]) (*connect.Response[v2.RemovePublicKeyResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.RemovePublicKey is not implemented"))
+}
+
+func (UnimplementedActionServiceHandler) ListPublicKeys(context.Context, *connect.Request[v2.ListPublicKeysRequest]) (*connect.Response[v2.ListPublicKeysResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("zitadel.action.v2.ActionService.ListPublicKeys is not implemented"))
 }
 
 func (UnimplementedActionServiceHandler) SetExecution(context.Context, *connect.Request[v2.SetExecutionRequest]) (*connect.Response[v2.SetExecutionResponse], error) {

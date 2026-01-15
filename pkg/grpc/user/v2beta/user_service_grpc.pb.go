@@ -261,7 +261,7 @@ type UserServiceClient interface {
 	SetPassword(ctx context.Context, in *SetPasswordRequest, opts ...grpc.CallOption) (*SetPasswordResponse, error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more.
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	ListAuthenticationMethodTypes(ctx context.Context, in *ListAuthenticationMethodTypesRequest, opts ...grpc.CallOption) (*ListAuthenticationMethodTypesResponse, error)
@@ -821,7 +821,7 @@ type UserServiceServer interface {
 	SetPassword(context.Context, *SetPasswordRequest) (*SetPasswordResponse, error)
 	// List all possible authentication methods of a user
 	//
-	// List all possible authentication methods of a user like password, passwordless, (T)OTP and more.
+	// List all possible authentication methods of a user like password, passkey, (T)OTP and more.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	ListAuthenticationMethodTypes(context.Context, *ListAuthenticationMethodTypesRequest) (*ListAuthenticationMethodTypesResponse, error)
