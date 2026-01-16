@@ -183,13 +183,15 @@ func (UserState) EnumDescriptor() ([]byte, []int) {
 }
 
 type SetHumanProfile struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	GivenName         string                 `protobuf:"bytes,1,opt,name=given_name,json=givenName,proto3" json:"given_name,omitempty"`
-	FamilyName        string                 `protobuf:"bytes,2,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
-	NickName          *string                `protobuf:"bytes,3,opt,name=nick_name,json=nickName,proto3,oneof" json:"nick_name,omitempty"`
-	DisplayName       *string                `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
-	PreferredLanguage *string                `protobuf:"bytes,5,opt,name=preferred_language,json=preferredLanguage,proto3,oneof" json:"preferred_language,omitempty"`
-	Gender            *Gender                `protobuf:"varint,6,opt,name=gender,proto3,enum=zitadel.user.v2beta.Gender,oneof" json:"gender,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The given name is the first name of the user
+	GivenName string `protobuf:"bytes,1,opt,name=given_name,json=givenName,proto3" json:"given_name,omitempty"`
+	// The family name is the last name of the user
+	FamilyName        string  `protobuf:"bytes,2,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
+	NickName          *string `protobuf:"bytes,3,opt,name=nick_name,json=nickName,proto3,oneof" json:"nick_name,omitempty"`
+	DisplayName       *string `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
+	PreferredLanguage *string `protobuf:"bytes,5,opt,name=preferred_language,json=preferredLanguage,proto3,oneof" json:"preferred_language,omitempty"`
+	Gender            *Gender `protobuf:"varint,6,opt,name=gender,proto3,enum=zitadel.user.v2beta.Gender,oneof" json:"gender,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -267,14 +269,16 @@ func (x *SetHumanProfile) GetGender() Gender {
 }
 
 type HumanProfile struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	GivenName         string                 `protobuf:"bytes,1,opt,name=given_name,json=givenName,proto3" json:"given_name,omitempty"`
-	FamilyName        string                 `protobuf:"bytes,2,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
-	NickName          *string                `protobuf:"bytes,3,opt,name=nick_name,json=nickName,proto3,oneof" json:"nick_name,omitempty"`
-	DisplayName       *string                `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
-	PreferredLanguage *string                `protobuf:"bytes,5,opt,name=preferred_language,json=preferredLanguage,proto3,oneof" json:"preferred_language,omitempty"`
-	Gender            *Gender                `protobuf:"varint,6,opt,name=gender,proto3,enum=zitadel.user.v2beta.Gender,oneof" json:"gender,omitempty"`
-	AvatarUrl         string                 `protobuf:"bytes,7,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The given name is the first name of the user
+	GivenName string `protobuf:"bytes,1,opt,name=given_name,json=givenName,proto3" json:"given_name,omitempty"`
+	// The family name is the last name of the user
+	FamilyName        string  `protobuf:"bytes,2,opt,name=family_name,json=familyName,proto3" json:"family_name,omitempty"`
+	NickName          *string `protobuf:"bytes,3,opt,name=nick_name,json=nickName,proto3,oneof" json:"nick_name,omitempty"`
+	DisplayName       *string `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
+	PreferredLanguage *string `protobuf:"bytes,5,opt,name=preferred_language,json=preferredLanguage,proto3,oneof" json:"preferred_language,omitempty"`
+	Gender            *Gender `protobuf:"varint,6,opt,name=gender,proto3,enum=zitadel.user.v2beta.Gender,oneof" json:"gender,omitempty"`
+	AvatarUrl         string  `protobuf:"bytes,7,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }

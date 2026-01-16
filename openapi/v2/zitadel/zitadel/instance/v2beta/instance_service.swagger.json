@@ -172,7 +172,7 @@
       },
       "put": {
         "summary": "Update Instance",
-        "description": "Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nUpdates instance in context with the given name.\n\nThe instance_id in the input message will be used in the future.\n\nRequired permissions:\n  - `iam.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nUpdates instance in context with the provided name.\n\nThe instance_id in the input message will be used in the future.\n\nRequired permissions:\n  - `iam.write`",
         "operationId": "InstanceService_UpdateInstance",
         "responses": {
           "200": {

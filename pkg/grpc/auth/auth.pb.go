@@ -5502,7 +5502,7 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\x19\n" +
 	"\x17GetMyLoginPolicyRequest\"R\n" +
 	"\x18GetMyLoginPolicyResponse\x126\n" +
-	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xf5\x92\x01\n" +
+	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xf0\x92\x01\n" +
 	"\vAuthService\x12\xd3\x01\n" +
 	"\aHealthz\x12\x1f.zitadel.auth.v1.HealthzRequest\x1a .zitadel.auth.v1.HealthzResponse\"\x84\x01\x92Aq\n" +
 	"\aGeneral\x12\aHealthz\x1a]The health endpoint allows an external system to probe if ZITADEL authentication API is alive\x82\xd3\xe4\x93\x02\n" +
@@ -5547,12 +5547,12 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02 \x12\x1e/policies/passwords/complexity\x12\xae\x02\n" +
 	"\x10UpdateMyPassword\x12(.zitadel.auth.v1.UpdateMyPasswordRequest\x1a).zitadel.auth.v1.UpdateMyPasswordResponse\"\xc4\x01\x92A\x90\x01\n" +
 	"\rUser Password\x12\x0fChange Password\x1anChanges the password of the authenticated user. Make sure the password follows the password complexity policy.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/users/me/password\x12\x94\x02\n" +
-	"\fGetMyProfile\x12$.zitadel.auth.v1.GetMyProfileRequest\x1a%.zitadel.auth.v1.GetMyProfileResponse\"\xb6\x01\x92A\x86\x01\n" +
-	"\fUser Profile\x12\x0eGet My Profile\x1afReturns the profile information of the authenticated user, this includes given name, family name, etc.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x13\x12\x11/users/me/profile\x12\xbe\x02\n" +
-	"\x0fUpdateMyProfile\x12'.zitadel.auth.v1.UpdateMyProfileRequest\x1a(.zitadel.auth.v1.UpdateMyProfileResponse\"\xd7\x01\x92A\xa4\x01\n" +
-	"\fUser Profile\x12\x11Update My Profile\x1a\x80\x01Change the profile information of the authenticated user. This includes information like given name, family name, language, etc.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/users/me/password\x12\x92\x02\n" +
+	"\fGetMyProfile\x12$.zitadel.auth.v1.GetMyProfileRequest\x1a%.zitadel.auth.v1.GetMyProfileResponse\"\xb4\x01\x92A\x84\x01\n" +
+	"\fUser Profile\x12\x0eGet My Profile\x1adReturns the profile information of the authenticated user, this includes first name, last name, etc.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x13\x12\x11/users/me/profile\x12\xbb\x02\n" +
+	"\x0fUpdateMyProfile\x12'.zitadel.auth.v1.UpdateMyProfileRequest\x1a(.zitadel.auth.v1.UpdateMyProfileResponse\"\xd4\x01\x92A\xa1\x01\n" +
+	"\fUser Profile\x12\x11Update My Profile\x1a~Change the profile information of the authenticated user. This includes information like first name, last name, language, etc.\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x16:\x01*\x1a\x11/users/me/profile\x12\xeb\x01\n" +
 	"\n" +
 	"GetMyEmail\x12\".zitadel.auth.v1.GetMyEmailRequest\x1a#.zitadel.auth.v1.GetMyEmailResponse\"\x93\x01\x92Af\n" +

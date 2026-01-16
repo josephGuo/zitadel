@@ -680,7 +680,7 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead
 	//
-	// Create a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.
+	// Create a new organization. Based on the provided name a domain will be generated to be able to identify users within an organization.
 	AddOrg(ctx context.Context, in *AddOrgRequest, opts ...grpc.CallOption) (*AddOrgResponse, error)
 	// Update Organization
 	//
@@ -4659,7 +4659,7 @@ type ManagementServiceServer interface {
 	//
 	// Deprecated: use [organization service v2 CreateOrganization](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-add-organization.api.mdx) instead
 	//
-	// Create a new organization. Based on the given name a domain will be generated to be able to identify users within an organization.
+	// Create a new organization. Based on the provided name a domain will be generated to be able to identify users within an organization.
 	AddOrg(context.Context, *AddOrgRequest) (*AddOrgResponse, error)
 	// Update Organization
 	//

@@ -1635,12 +1635,14 @@
         "givenName": {
           "type": "string",
           "example": "Minnie",
+          "title": "The given name is the first name of the user",
           "maxLength": 200,
           "minLength": 1
         },
         "familyName": {
           "type": "string",
           "example": "Mouse",
+          "title": "The family name is the last name of the user",
           "maxLength": 200,
           "minLength": 1
         },

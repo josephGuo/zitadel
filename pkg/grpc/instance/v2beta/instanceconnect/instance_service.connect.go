@@ -91,7 +91,7 @@ type InstanceServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Updates instance in context with the given name.
+	// Updates instance in context with the provided name.
 	//
 	// The instance_id in the input message will be used in the future.
 	//
@@ -342,7 +342,7 @@ type InstanceServiceHandler interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Updates instance in context with the given name.
+	// Updates instance in context with the provided name.
 	//
 	// The instance_id in the input message will be used in the future.
 	//

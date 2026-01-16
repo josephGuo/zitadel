@@ -1434,7 +1434,7 @@
     "/users/me/profile": {
       "get": {
         "summary": "Get My Profile",
-        "description": "Returns the profile information of the authenticated user, this includes given name, family name, etc.",
+        "description": "Returns the profile information of the authenticated user, this includes first name, last name, etc.",
         "operationId": "AuthService_GetMyProfile",
         "responses": {
           "200": {
@@ -1456,7 +1456,7 @@
       },
       "put": {
         "summary": "Update My Profile",
-        "description": "Change the profile information of the authenticated user. This includes information like given name, family name, language, etc.",
+        "description": "Change the profile information of the authenticated user. This includes information like first name, last name, language, etc.",
         "operationId": "AuthService_UpdateMyProfile",
         "responses": {
           "200": {

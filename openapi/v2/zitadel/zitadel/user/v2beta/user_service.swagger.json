@@ -370,12 +370,14 @@
           },
           {
             "name": "profile.givenName",
+            "description": "The given name is the first name of the user",
             "in": "query",
             "required": true,
             "type": "string"
           },
           {
             "name": "profile.familyName",
+            "description": "The family name is the last name of the user",
             "in": "query",
             "required": true,
             "type": "string"
@@ -2575,12 +2577,14 @@
         "givenName": {
           "type": "string",
           "example": "Minnie",
+          "title": "The given name is the first name of the user",
           "maxLength": 200,
           "minLength": 1
         },
         "familyName": {
           "type": "string",
           "example": "Mouse",
+          "title": "The family name is the last name of the user",
           "maxLength": 200,
           "minLength": 1
         },
@@ -3529,12 +3533,14 @@
         "givenName": {
           "type": "string",
           "example": "Minnie",
+          "title": "The given name is the first name of the user",
           "maxLength": 200,
           "minLength": 1
         },
         "familyName": {
           "type": "string",
           "example": "Mouse",
+          "title": "The family name is the last name of the user",
           "maxLength": 200,
           "minLength": 1
         },

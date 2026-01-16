@@ -772,7 +772,7 @@
         },
         "displayName": {
           "type": "string",
-          "description": "DisplayName is the public display name of the user.\nBy default it's the user's given name and family name, their username or their email address."
+          "description": "DisplayName is the public display name of the user.\nBy default it's the user's first name and last name, their username or their email address."
         },
         "organizationId": {
           "type": "string",
