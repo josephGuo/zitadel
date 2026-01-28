@@ -63,7 +63,7 @@
           "type": "string",
           "format": "date-time",
           "example": "2025-01-23T10:34:18.051Z",
-          "description": "CreationDate is the timestamp when the trusted domain was added."
+          "description": "CreationDate is the timestamp when the Trusted Domain was added."
         }
       }
     },
@@ -100,7 +100,7 @@
       "properties": {
         "domainFilter": {
           "$ref": "#/definitions/v2DomainFilter",
-          "description": "Filter for a specific custom domain."
+          "description": "Filter for a specific Custom Domain."
         },
         "generatedFilter": {
           "type": "boolean",
@@ -185,7 +185,7 @@
         },
         "customDomainsFilter": {
           "$ref": "#/definitions/v2CustomDomainsFilter",
-          "description": "Filter for instances that have at least one of the specified custom domains."
+          "description": "Filter for instances that have at least one of the specified Custom Domains."
         }
       }
     },
@@ -269,7 +269,7 @@
             "type": "object",
             "$ref": "#/definitions/v2CustomDomain"
           },
-          "description": "The list of custom domains matching the query."
+          "description": "The list of Custom Domains matching the query."
         },
         "pagination": {
           "$ref": "#/definitions/v2PaginationResponse",
@@ -303,7 +303,7 @@
             "type": "object",
             "$ref": "#/definitions/v2TrustedDomain"
           },
-          "description": "The list of trusted domains matching the query."
+          "description": "The list of Trusted Domains matching the query."
         },
         "pagination": {
           "$ref": "#/definitions/v2PaginationResponse",
@@ -368,7 +368,7 @@
           "type": "string",
           "format": "date-time",
           "example": "2025-01-23T10:34:18.051Z",
-          "description": "DeletionDate is the timestamp when the trusted domain was removed."
+          "description": "DeletionDate is the timestamp when the Trusted Domain was removed."
         }
       }
     },
@@ -431,7 +431,7 @@
       "properties": {
         "domainFilter": {
           "$ref": "#/definitions/v2DomainFilter",
-          "description": "Filter for a specific trusted domain."
+          "description": "Filter for a specific Trusted Domain."
         }
       }
     },

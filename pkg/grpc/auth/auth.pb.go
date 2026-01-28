@@ -5502,7 +5502,7 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\x19\n" +
 	"\x17GetMyLoginPolicyRequest\"R\n" +
 	"\x18GetMyLoginPolicyResponse\x126\n" +
-	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xf0\x92\x01\n" +
+	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xfd\x92\x01\n" +
 	"\vAuthService\x12\xd3\x01\n" +
 	"\aHealthz\x12\x1f.zitadel.auth.v1.HealthzRequest\x1a .zitadel.auth.v1.HealthzResponse\"\x84\x01\x92Aq\n" +
 	"\aGeneral\x12\aHealthz\x1a]The health endpoint allows an external system to probe if ZITADEL authentication API is alive\x82\xd3\xe4\x93\x02\n" +
@@ -5659,15 +5659,15 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/usergrants/me/_search\x12\xdc\x03\n" +
 	"\x11ListMyProjectOrgs\x12).zitadel.auth.v1.ListMyProjectOrgsRequest\x1a*.zitadel.auth.v1.ListMyProjectOrgsResponse\"\xef\x02\x92A\xb2\x02\n" +
 	"\x1aUser Authorizations/Grants\x12\x15List My Organizations\x1a\xfc\x01Returns a list of the organizations where the authenticated user has any authorizations/user grants. The request is made in the context of the requested project. This request can be used in multi-tenancy applications to show the user a tenant switcher.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/global/projectorgs/_search\x12\x95\x03\n" +
-	"\x18ListMyZitadelPermissions\x120.zitadel.auth.v1.ListMyZitadelPermissionsRequest\x1a1.zitadel.auth.v1.ListMyZitadelPermissionsResponse\"\x93\x02\x92A\xd5\x01\n" +
-	"\x1aUser Authorizations/Grants\x12\x1bList My ZITADEL Permissions\x1a\x99\x01Returns a list of permissions the authenticated user has in ZITADEL based on the manager roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/global/projectorgs/_search\x12\x9b\x03\n" +
+	"\x18ListMyZitadelPermissions\x120.zitadel.auth.v1.ListMyZitadelPermissionsRequest\x1a1.zitadel.auth.v1.ListMyZitadelPermissionsResponse\"\x99\x02\x92A\xdb\x01\n" +
+	"\x1aUser Authorizations/Grants\x12\x1bList My ZITADEL Permissions\x1a\x9f\x01Returns a list of permissions the authenticated user has in ZITADEL based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02!\"\x1f/permissions/zitadel/me/_search\x12\xd4\x01\n" +
 	"\x18ListMyProjectPermissions\x120.zitadel.auth.v1.ListMyProjectPermissionsRequest\x1a1.zitadel.auth.v1.ListMyProjectPermissionsResponse\"S\x92A\x1e\n" +
 	"\x1aUser Authorizations/GrantsX\x01\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x19\"\x17/permissions/me/_search\x12\x9f\x02\n" +
-	"\x11ListMyMemberships\x12).zitadel.auth.v1.ListMyMembershipsRequest\x1a*.zitadel.auth.v1.ListMyMembershipsResponse\"\xb2\x01\x92Az\n" +
-	"\x10User Memberships\x12\x1dList My ZITADEL Manager Roles\x1aGShow all the management roles my user has in ZITADEL (ZITADEL Manager).\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x19\"\x17/permissions/me/_search\x12\xa6\x02\n" +
+	"\x11ListMyMemberships\x12).zitadel.auth.v1.ListMyMembershipsRequest\x1a*.zitadel.auth.v1.ListMyMembershipsResponse\"\xb9\x01\x92A\x80\x01\n" +
+	"\x10User Memberships\x12#List My ZITADEL Administrator Roles\x1aGShow all the management roles my user has in ZITADEL (ZITADEL Manager).\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/memberships/me/_search\x12\xf6\x02\n" +
 	"\x10GetMyLabelPolicy\x12(.zitadel.auth.v1.GetMyLabelPolicyRequest\x1a).zitadel.auth.v1.GetMyLabelPolicyResponse\"\x8c\x02\x92A\xde\x01\n" +
 	"\bPolicies\x12\x10Get Label Policy\x1a\xbf\x01Returns the label settings that should be used for the authenticated user. It is set either on an instance or organization level. This policy defines the branding, colors, fonts, images, etc.\x82\xb5\x18\x0f\n" +
@@ -5680,11 +5680,11 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x11\x12\x0f/policies/loginB\x94\b\x92A\xe6\a\x12\xf6\x01\n" +
 	"\x1bAuthentication API aka Auth\x12VThe authentication API is used for all operations on the currently authenticated user.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*J\n" +
-	"\x12Apache License 2.0\x124https://github.com/zitadel/zitadel/blob/main/LICENSE2\x031.0\x1a\x0e$CUSTOM-DOMAIN\"\b/auth/v1*\x01\x022\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoZw\n" +
+	"\x12Apache License 2.0\x124https://github.com/zitadel/zitadel/blob/main/LICENSE2\x031.0\x1a\x0e$CUSTOM_DOMAIN\"\b/auth/v1*\x01\x022\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoZw\n" +
 	"\x0f\n" +
 	"\tBasicAuth\x12\x02\b\x01\n" +
 	"d\n" +
-	"\x06OAuth2\x12Z\b\x03(\x042!$CUSTOM-DOMAIN/oauth/v2/authorize:\x1d$CUSTOM-DOMAIN/oauth/v2/tokenB\x12\n" +
+	"\x06OAuth2\x12Z\b\x03(\x042!$CUSTOM_DOMAIN/oauth/v2/authorize:\x1d$CUSTOM_DOMAIN/oauth/v2/tokenB\x12\n" +
 	"\x10\n" +
 	"\x06openid\x12\x06openidb\x14\n" +
 	"\x12\n" +

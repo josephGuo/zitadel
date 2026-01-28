@@ -88,15 +88,15 @@ type SystemServiceClient interface {
 	//
 	// Deprecated: use [instance service v2 ListCustomDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-custom-domains.api.mdx) instead.
 	//
-	// Returns the custom domains of an instance.
+	// Returns the Custom Domains of an instance.
 	ListDomains(ctx context.Context, in *ListDomainsRequest, opts ...grpc.CallOption) (*ListDomainsResponse, error)
 	// Adds a domain to an instance
 	//
-	// Deprecated: Use [AddCustomDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-custom-domain.api.mdx) instead to add a custom domain to the instance in context
+	// Deprecated: Use [AddCustomDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-custom-domain.api.mdx) instead to add a Custom Domain to the instance in context
 	AddDomain(ctx context.Context, in *AddDomainRequest, opts ...grpc.CallOption) (*AddDomainResponse, error)
 	// Removes the domain of an instance
 	//
-	// Deprecated: Use [RemoveDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-custom-domain.api.mdx) instead to remove a custom domain from the instance in context
+	// Deprecated: Use [RemoveDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-custom-domain.api.mdx) instead to remove a Custom Domain from the instance in context
 	RemoveDomain(ctx context.Context, in *RemoveDomainRequest, opts ...grpc.CallOption) (*RemoveDomainResponse, error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(ctx context.Context, in *SetPrimaryDomainRequest, opts ...grpc.CallOption) (*SetPrimaryDomainResponse, error)
@@ -429,15 +429,15 @@ type SystemServiceServer interface {
 	//
 	// Deprecated: use [instance service v2 ListCustomDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-custom-domains.api.mdx) instead.
 	//
-	// Returns the custom domains of an instance.
+	// Returns the Custom Domains of an instance.
 	ListDomains(context.Context, *ListDomainsRequest) (*ListDomainsResponse, error)
 	// Adds a domain to an instance
 	//
-	// Deprecated: Use [AddCustomDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-custom-domain.api.mdx) instead to add a custom domain to the instance in context
+	// Deprecated: Use [AddCustomDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-custom-domain.api.mdx) instead to add a Custom Domain to the instance in context
 	AddDomain(context.Context, *AddDomainRequest) (*AddDomainResponse, error)
 	// Removes the domain of an instance
 	//
-	// Deprecated: Use [RemoveDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-custom-domain.api.mdx) instead to remove a custom domain from the instance in context
+	// Deprecated: Use [RemoveDomain](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-custom-domain.api.mdx) instead to remove a Custom Domain from the instance in context
 	RemoveDomain(context.Context, *RemoveDomainRequest) (*RemoveDomainResponse, error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(context.Context, *SetPrimaryDomainRequest) (*SetPrimaryDomainResponse, error)

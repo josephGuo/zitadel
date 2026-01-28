@@ -268,6 +268,8 @@ type Application struct {
 	//	*Application_ApiConfiguration
 	//	*Application_SamlConfiguration
 	Configuration isApplication_Configuration `protobuf_oneof:"configuration"`
+	// The ProjectID represents the ID of the project the application belongs to.
+	ProjectId     string `protobuf:"bytes,9,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -371,6 +373,13 @@ func (x *Application) GetSamlConfiguration() *SAMLConfiguration {
 	return nil
 }
 
+func (x *Application) GetProjectId() string {
+	if x != nil {
+		return x.ProjectId
+	}
+	return ""
+}
+
 type isApplication_Configuration interface {
 	isApplication_Configuration()
 }
@@ -401,6 +410,8 @@ type ApplicationSearchFilter struct {
 	//	*ApplicationSearchFilter_NameFilter
 	//	*ApplicationSearchFilter_StateFilter
 	//	*ApplicationSearchFilter_TypeFilter
+	//	*ApplicationSearchFilter_ClientIdFilter
+	//	*ApplicationSearchFilter_EntityIdFilter
 	Filter        isApplicationSearchFilter_Filter `protobuf_oneof:"filter"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -479,6 +490,24 @@ func (x *ApplicationSearchFilter) GetTypeFilter() ApplicationType {
 	return ApplicationType_APPLICATION_TYPE_UNSPECIFIED
 }
 
+func (x *ApplicationSearchFilter) GetClientIdFilter() *ClientIDFilter {
+	if x != nil {
+		if x, ok := x.Filter.(*ApplicationSearchFilter_ClientIdFilter); ok {
+			return x.ClientIdFilter
+		}
+	}
+	return nil
+}
+
+func (x *ApplicationSearchFilter) GetEntityIdFilter() *EntityIDFilter {
+	if x != nil {
+		if x, ok := x.Filter.(*ApplicationSearchFilter_EntityIdFilter); ok {
+			return x.EntityIdFilter
+		}
+	}
+	return nil
+}
+
 type isApplicationSearchFilter_Filter interface {
 	isApplicationSearchFilter_Filter()
 }
@@ -503,6 +532,18 @@ type ApplicationSearchFilter_TypeFilter struct {
 	TypeFilter ApplicationType `protobuf:"varint,4,opt,name=type_filter,json=typeFilter,proto3,enum=zitadel.application.v2.ApplicationType,oneof"`
 }
 
+type ApplicationSearchFilter_ClientIdFilter struct {
+	// Filter the applications by the clientID
+	// This is only applicable for OIDC and API applications.
+	ClientIdFilter *ClientIDFilter `protobuf:"bytes,5,opt,name=client_id_filter,json=clientIdFilter,proto3,oneof"`
+}
+
+type ApplicationSearchFilter_EntityIdFilter struct {
+	// Filter the applications by their entityID
+	// This is only applicable for SAML applications.
+	EntityIdFilter *EntityIDFilter `protobuf:"bytes,6,opt,name=entity_id_filter,json=entityIdFilter,proto3,oneof"`
+}
+
 func (*ApplicationSearchFilter_ProjectIdFilter) isApplicationSearchFilter_Filter() {}
 
 func (*ApplicationSearchFilter_NameFilter) isApplicationSearchFilter_Filter() {}
@@ -510,6 +551,10 @@ func (*ApplicationSearchFilter_NameFilter) isApplicationSearchFilter_Filter() {}
 func (*ApplicationSearchFilter_StateFilter) isApplicationSearchFilter_Filter() {}
 
 func (*ApplicationSearchFilter_TypeFilter) isApplicationSearchFilter_Filter() {}
+
+func (*ApplicationSearchFilter_ClientIdFilter) isApplicationSearchFilter_Filter() {}
+
+func (*ApplicationSearchFilter_EntityIdFilter) isApplicationSearchFilter_Filter() {}
 
 type ProjectIDFilter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -610,6 +655,96 @@ func (x *ApplicationNameFilter) GetMethod() v2.TextFilterMethod {
 	return v2.TextFilterMethod(0)
 }
 
+type ClientIDFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The clientID to search for. The search is performed as an exact match.
+	ClientId      string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ClientIDFilter) Reset() {
+	*x = ClientIDFilter{}
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ClientIDFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClientIDFilter) ProtoMessage() {}
+
+func (x *ClientIDFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClientIDFilter.ProtoReflect.Descriptor instead.
+func (*ClientIDFilter) Descriptor() ([]byte, []int) {
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ClientIDFilter) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+type EntityIDFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The entityID to search for. The search is performed as an exact match.
+	EntityId      string `protobuf:"bytes,1,opt,name=entity_id,json=entityId,proto3" json:"entity_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EntityIDFilter) Reset() {
+	*x = EntityIDFilter{}
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EntityIDFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EntityIDFilter) ProtoMessage() {}
+
+func (x *EntityIDFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EntityIDFilter.ProtoReflect.Descriptor instead.
+func (*EntityIDFilter) Descriptor() ([]byte, []int) {
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *EntityIDFilter) GetEntityId() string {
+	if x != nil {
+		return x.EntityId
+	}
+	return ""
+}
+
 type ApplicationKeySearchFilter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Filter:
@@ -624,7 +759,7 @@ type ApplicationKeySearchFilter struct {
 
 func (x *ApplicationKeySearchFilter) Reset() {
 	*x = ApplicationKeySearchFilter{}
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[4]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -636,7 +771,7 @@ func (x *ApplicationKeySearchFilter) String() string {
 func (*ApplicationKeySearchFilter) ProtoMessage() {}
 
 func (x *ApplicationKeySearchFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[4]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -649,7 +784,7 @@ func (x *ApplicationKeySearchFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplicationKeySearchFilter.ProtoReflect.Descriptor instead.
 func (*ApplicationKeySearchFilter) Descriptor() ([]byte, []int) {
-	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{4}
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ApplicationKeySearchFilter) GetFilter() isApplicationKeySearchFilter_Filter {
@@ -721,7 +856,7 @@ type ApplicationKeyApplicationIDFilter struct {
 
 func (x *ApplicationKeyApplicationIDFilter) Reset() {
 	*x = ApplicationKeyApplicationIDFilter{}
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[5]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -733,7 +868,7 @@ func (x *ApplicationKeyApplicationIDFilter) String() string {
 func (*ApplicationKeyApplicationIDFilter) ProtoMessage() {}
 
 func (x *ApplicationKeyApplicationIDFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[5]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -746,7 +881,7 @@ func (x *ApplicationKeyApplicationIDFilter) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use ApplicationKeyApplicationIDFilter.ProtoReflect.Descriptor instead.
 func (*ApplicationKeyApplicationIDFilter) Descriptor() ([]byte, []int) {
-	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{5}
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ApplicationKeyApplicationIDFilter) GetApplicationId() string {
@@ -766,7 +901,7 @@ type ApplicationKeyProjectIDFilter struct {
 
 func (x *ApplicationKeyProjectIDFilter) Reset() {
 	*x = ApplicationKeyProjectIDFilter{}
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[6]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -778,7 +913,7 @@ func (x *ApplicationKeyProjectIDFilter) String() string {
 func (*ApplicationKeyProjectIDFilter) ProtoMessage() {}
 
 func (x *ApplicationKeyProjectIDFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[6]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +926,7 @@ func (x *ApplicationKeyProjectIDFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplicationKeyProjectIDFilter.ProtoReflect.Descriptor instead.
 func (*ApplicationKeyProjectIDFilter) Descriptor() ([]byte, []int) {
-	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{6}
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ApplicationKeyProjectIDFilter) GetProjectId() string {
@@ -811,7 +946,7 @@ type ApplicationKeyOrganizationIDFilter struct {
 
 func (x *ApplicationKeyOrganizationIDFilter) Reset() {
 	*x = ApplicationKeyOrganizationIDFilter{}
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[7]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -823,7 +958,7 @@ func (x *ApplicationKeyOrganizationIDFilter) String() string {
 func (*ApplicationKeyOrganizationIDFilter) ProtoMessage() {}
 
 func (x *ApplicationKeyOrganizationIDFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[7]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -836,7 +971,7 @@ func (x *ApplicationKeyOrganizationIDFilter) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ApplicationKeyOrganizationIDFilter.ProtoReflect.Descriptor instead.
 func (*ApplicationKeyOrganizationIDFilter) Descriptor() ([]byte, []int) {
-	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{7}
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ApplicationKeyOrganizationIDFilter) GetOrganizationId() string {
@@ -866,7 +1001,7 @@ type ApplicationKey struct {
 
 func (x *ApplicationKey) Reset() {
 	*x = ApplicationKey{}
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[8]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -878,7 +1013,7 @@ func (x *ApplicationKey) String() string {
 func (*ApplicationKey) ProtoMessage() {}
 
 func (x *ApplicationKey) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_application_v2_application_proto_msgTypes[8]
+	mi := &file_zitadel_application_v2_application_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -891,7 +1026,7 @@ func (x *ApplicationKey) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplicationKey.ProtoReflect.Descriptor instead.
 func (*ApplicationKey) Descriptor() ([]byte, []int) {
-	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{8}
+	return file_zitadel_application_v2_application_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ApplicationKey) GetKeyId() string {
@@ -940,7 +1075,7 @@ var File_zitadel_application_v2_application_proto protoreflect.FileDescriptor
 
 const file_zitadel_application_v2_application_proto_rawDesc = "" +
 	"\n" +
-	"(zitadel/application/v2/application.proto\x12\x16zitadel.application.v2\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a zitadel/application/v2/api.proto\x1a!zitadel/application/v2/oidc.proto\x1a!zitadel/application/v2/saml.proto\x1a\x1ezitadel/filter/v2/filter.proto\"\x94\x05\n" +
+	"(zitadel/application/v2/application.proto\x12\x16zitadel.application.v2\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a zitadel/application/v2/api.proto\x1a!zitadel/application/v2/oidc.proto\x1a!zitadel/application/v2/saml.proto\x1a\x1ezitadel/filter/v2/filter.proto\"\xb3\x05\n" +
 	"\vApplication\x12?\n" +
 	"\x0eapplication_id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629023906488334\"R\rapplicationId\x12`\n" +
 	"\rcreation_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB\x1f\x92A\x1cJ\x1a\"2024-12-18T07:50:47.492Z\"R\fcreationDate\x12\\\n" +
@@ -950,8 +1085,10 @@ const file_zitadel_application_v2_application_proto_rawDesc = "" +
 	"\x04name\x18\x05 \x01(\tB\x0e\x92A\vJ\t\"Console\"R\x04name\x12Z\n" +
 	"\x12oidc_configuration\x18\x06 \x01(\v2).zitadel.application.v2.OIDCConfigurationH\x00R\x11oidcConfiguration\x12W\n" +
 	"\x11api_configuration\x18\a \x01(\v2(.zitadel.application.v2.APIConfigurationH\x00R\x10apiConfiguration\x12Z\n" +
-	"\x12saml_configuration\x18\b \x01(\v2).zitadel.application.v2.SAMLConfigurationH\x00R\x11samlConfigurationB\x0f\n" +
-	"\rconfiguration\"\xf8\x02\n" +
+	"\x12saml_configuration\x18\b \x01(\v2).zitadel.application.v2.SAMLConfigurationH\x00R\x11samlConfiguration\x12\x1d\n" +
+	"\n" +
+	"project_id\x18\t \x01(\tR\tprojectIdB\x0f\n" +
+	"\rconfiguration\"\xa0\x04\n" +
 	"\x17ApplicationSearchFilter\x12U\n" +
 	"\x11project_id_filter\x18\x01 \x01(\v2'.zitadel.application.v2.ProjectIDFilterH\x00R\x0fprojectIdFilter\x12P\n" +
 	"\vname_filter\x18\x02 \x01(\v2-.zitadel.application.v2.ApplicationNameFilterH\x00R\n" +
@@ -959,14 +1096,20 @@ const file_zitadel_application_v2_application_proto_rawDesc = "" +
 	"\fstate_filter\x18\x03 \x01(\x0e2(.zitadel.application.v2.ApplicationStateH\x00R\vstateFilter\x12V\n" +
 	"\vtype_filter\x18\x04 \x01(\x0e2'.zitadel.application.v2.ApplicationTypeB\n" +
 	"\xfaB\a\x82\x01\x04\x10\x01 \x00H\x00R\n" +
-	"typeFilterB\r\n" +
+	"typeFilter\x12R\n" +
+	"\x10client_id_filter\x18\x05 \x01(\v2&.zitadel.application.v2.ClientIDFilterH\x00R\x0eclientIdFilter\x12R\n" +
+	"\x10entity_id_filter\x18\x06 \x01(\v2&.zitadel.application.v2.EntityIDFilterH\x00R\x0eentityIdFilterB\r\n" +
 	"\x06filter\x12\x03\xf8B\x01\"X\n" +
 	"\x0fProjectIDFilter\x12E\n" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tB&\x92A\x15J\x13\"69629023906488334\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\tprojectId\"\x88\x01\n" +
 	"\x15ApplicationNameFilter\x12(\n" +
 	"\x04name\x18\x01 \x01(\tB\x14\x92A\tJ\a\"Conso\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12E\n" +
-	"\x06method\x18\x02 \x01(\x0e2#.zitadel.filter.v2.TextFilterMethodB\b\xfaB\x05\x82\x01\x02\x10\x01R\x06method\"\xf5\x02\n" +
+	"\x06method\x18\x02 \x01(\x0e2#.zitadel.filter.v2.TextFilterMethodB\b\xfaB\x05\x82\x01\x02\x10\x01R\x06method\"P\n" +
+	"\x0eClientIDFilter\x12>\n" +
+	"\tclient_id\x18\x01 \x01(\tB!\x92A\x10J\x0e\"client-12345\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\"h\n" +
+	"\x0eEntityIDFilter\x12V\n" +
+	"\tentity_id\x18\x01 \x01(\tB9\x92A(J&\"https://example.com/saml/v2/metadata\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bentityId\"\xf5\x02\n" +
 	"\x1aApplicationKeySearchFilter\x12o\n" +
 	"\x15application_id_filter\x18\x01 \x01(\v29.zitadel.application.v2.ApplicationKeyApplicationIDFilterH\x00R\x13applicationIdFilter\x12c\n" +
 	"\x11project_id_filter\x18\x02 \x01(\v25.zitadel.application.v2.ApplicationKeyProjectIDFilterH\x00R\x0fprojectIdFilter\x12r\n" +
@@ -1025,7 +1168,7 @@ func file_zitadel_application_v2_application_proto_rawDescGZIP() []byte {
 }
 
 var file_zitadel_application_v2_application_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_zitadel_application_v2_application_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_zitadel_application_v2_application_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_zitadel_application_v2_application_proto_goTypes = []any{
 	(ApplicationState)(0),                      // 0: zitadel.application.v2.ApplicationState
 	(ApplicationSorting)(0),                    // 1: zitadel.application.v2.ApplicationSorting
@@ -1035,39 +1178,43 @@ var file_zitadel_application_v2_application_proto_goTypes = []any{
 	(*ApplicationSearchFilter)(nil),            // 5: zitadel.application.v2.ApplicationSearchFilter
 	(*ProjectIDFilter)(nil),                    // 6: zitadel.application.v2.ProjectIDFilter
 	(*ApplicationNameFilter)(nil),              // 7: zitadel.application.v2.ApplicationNameFilter
-	(*ApplicationKeySearchFilter)(nil),         // 8: zitadel.application.v2.ApplicationKeySearchFilter
-	(*ApplicationKeyApplicationIDFilter)(nil),  // 9: zitadel.application.v2.ApplicationKeyApplicationIDFilter
-	(*ApplicationKeyProjectIDFilter)(nil),      // 10: zitadel.application.v2.ApplicationKeyProjectIDFilter
-	(*ApplicationKeyOrganizationIDFilter)(nil), // 11: zitadel.application.v2.ApplicationKeyOrganizationIDFilter
-	(*ApplicationKey)(nil),                     // 12: zitadel.application.v2.ApplicationKey
-	(*timestamppb.Timestamp)(nil),              // 13: google.protobuf.Timestamp
-	(*OIDCConfiguration)(nil),                  // 14: zitadel.application.v2.OIDCConfiguration
-	(*APIConfiguration)(nil),                   // 15: zitadel.application.v2.APIConfiguration
-	(*SAMLConfiguration)(nil),                  // 16: zitadel.application.v2.SAMLConfiguration
-	(v2.TextFilterMethod)(0),                   // 17: zitadel.filter.v2.TextFilterMethod
+	(*ClientIDFilter)(nil),                     // 8: zitadel.application.v2.ClientIDFilter
+	(*EntityIDFilter)(nil),                     // 9: zitadel.application.v2.EntityIDFilter
+	(*ApplicationKeySearchFilter)(nil),         // 10: zitadel.application.v2.ApplicationKeySearchFilter
+	(*ApplicationKeyApplicationIDFilter)(nil),  // 11: zitadel.application.v2.ApplicationKeyApplicationIDFilter
+	(*ApplicationKeyProjectIDFilter)(nil),      // 12: zitadel.application.v2.ApplicationKeyProjectIDFilter
+	(*ApplicationKeyOrganizationIDFilter)(nil), // 13: zitadel.application.v2.ApplicationKeyOrganizationIDFilter
+	(*ApplicationKey)(nil),                     // 14: zitadel.application.v2.ApplicationKey
+	(*timestamppb.Timestamp)(nil),              // 15: google.protobuf.Timestamp
+	(*OIDCConfiguration)(nil),                  // 16: zitadel.application.v2.OIDCConfiguration
+	(*APIConfiguration)(nil),                   // 17: zitadel.application.v2.APIConfiguration
+	(*SAMLConfiguration)(nil),                  // 18: zitadel.application.v2.SAMLConfiguration
+	(v2.TextFilterMethod)(0),                   // 19: zitadel.filter.v2.TextFilterMethod
 }
 var file_zitadel_application_v2_application_proto_depIdxs = []int32{
-	13, // 0: zitadel.application.v2.Application.creation_date:type_name -> google.protobuf.Timestamp
-	13, // 1: zitadel.application.v2.Application.change_date:type_name -> google.protobuf.Timestamp
+	15, // 0: zitadel.application.v2.Application.creation_date:type_name -> google.protobuf.Timestamp
+	15, // 1: zitadel.application.v2.Application.change_date:type_name -> google.protobuf.Timestamp
 	0,  // 2: zitadel.application.v2.Application.state:type_name -> zitadel.application.v2.ApplicationState
-	14, // 3: zitadel.application.v2.Application.oidc_configuration:type_name -> zitadel.application.v2.OIDCConfiguration
-	15, // 4: zitadel.application.v2.Application.api_configuration:type_name -> zitadel.application.v2.APIConfiguration
-	16, // 5: zitadel.application.v2.Application.saml_configuration:type_name -> zitadel.application.v2.SAMLConfiguration
+	16, // 3: zitadel.application.v2.Application.oidc_configuration:type_name -> zitadel.application.v2.OIDCConfiguration
+	17, // 4: zitadel.application.v2.Application.api_configuration:type_name -> zitadel.application.v2.APIConfiguration
+	18, // 5: zitadel.application.v2.Application.saml_configuration:type_name -> zitadel.application.v2.SAMLConfiguration
 	6,  // 6: zitadel.application.v2.ApplicationSearchFilter.project_id_filter:type_name -> zitadel.application.v2.ProjectIDFilter
 	7,  // 7: zitadel.application.v2.ApplicationSearchFilter.name_filter:type_name -> zitadel.application.v2.ApplicationNameFilter
 	0,  // 8: zitadel.application.v2.ApplicationSearchFilter.state_filter:type_name -> zitadel.application.v2.ApplicationState
 	2,  // 9: zitadel.application.v2.ApplicationSearchFilter.type_filter:type_name -> zitadel.application.v2.ApplicationType
-	17, // 10: zitadel.application.v2.ApplicationNameFilter.method:type_name -> zitadel.filter.v2.TextFilterMethod
-	9,  // 11: zitadel.application.v2.ApplicationKeySearchFilter.application_id_filter:type_name -> zitadel.application.v2.ApplicationKeyApplicationIDFilter
-	10, // 12: zitadel.application.v2.ApplicationKeySearchFilter.project_id_filter:type_name -> zitadel.application.v2.ApplicationKeyProjectIDFilter
-	11, // 13: zitadel.application.v2.ApplicationKeySearchFilter.organization_id_filter:type_name -> zitadel.application.v2.ApplicationKeyOrganizationIDFilter
-	13, // 14: zitadel.application.v2.ApplicationKey.creation_date:type_name -> google.protobuf.Timestamp
-	13, // 15: zitadel.application.v2.ApplicationKey.expiration_date:type_name -> google.protobuf.Timestamp
-	16, // [16:16] is the sub-list for method output_type
-	16, // [16:16] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	8,  // 10: zitadel.application.v2.ApplicationSearchFilter.client_id_filter:type_name -> zitadel.application.v2.ClientIDFilter
+	9,  // 11: zitadel.application.v2.ApplicationSearchFilter.entity_id_filter:type_name -> zitadel.application.v2.EntityIDFilter
+	19, // 12: zitadel.application.v2.ApplicationNameFilter.method:type_name -> zitadel.filter.v2.TextFilterMethod
+	11, // 13: zitadel.application.v2.ApplicationKeySearchFilter.application_id_filter:type_name -> zitadel.application.v2.ApplicationKeyApplicationIDFilter
+	12, // 14: zitadel.application.v2.ApplicationKeySearchFilter.project_id_filter:type_name -> zitadel.application.v2.ApplicationKeyProjectIDFilter
+	13, // 15: zitadel.application.v2.ApplicationKeySearchFilter.organization_id_filter:type_name -> zitadel.application.v2.ApplicationKeyOrganizationIDFilter
+	15, // 16: zitadel.application.v2.ApplicationKey.creation_date:type_name -> google.protobuf.Timestamp
+	15, // 17: zitadel.application.v2.ApplicationKey.expiration_date:type_name -> google.protobuf.Timestamp
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_application_v2_application_proto_init() }
@@ -1088,8 +1235,10 @@ func file_zitadel_application_v2_application_proto_init() {
 		(*ApplicationSearchFilter_NameFilter)(nil),
 		(*ApplicationSearchFilter_StateFilter)(nil),
 		(*ApplicationSearchFilter_TypeFilter)(nil),
+		(*ApplicationSearchFilter_ClientIdFilter)(nil),
+		(*ApplicationSearchFilter_EntityIdFilter)(nil),
 	}
-	file_zitadel_application_v2_application_proto_msgTypes[4].OneofWrappers = []any{
+	file_zitadel_application_v2_application_proto_msgTypes[6].OneofWrappers = []any{
 		(*ApplicationKeySearchFilter_ApplicationIdFilter)(nil),
 		(*ApplicationKeySearchFilter_ProjectIdFilter)(nil),
 		(*ApplicationKeySearchFilter_OrganizationIdFilter)(nil),
@@ -1100,7 +1249,7 @@ func file_zitadel_application_v2_application_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_application_v2_application_proto_rawDesc), len(file_zitadel_application_v2_application_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -53,7 +53,7 @@
       "name": "AuthService"
     }
   ],
-  "host": "$CUSTOM-DOMAIN",
+  "host": "$CUSTOM_DOMAIN",
   "basePath": "/auth/v1",
   "schemes": [
     "https"
@@ -154,7 +154,7 @@
     },
     "/memberships/me/_search": {
       "post": {
-        "summary": "List My ZITADEL Manager Roles",
+        "summary": "List My ZITADEL Administrator Roles",
         "description": "Show all the management roles my user has in ZITADEL (ZITADEL Manager).",
         "operationId": "AuthService_ListMyMemberships",
         "responses": {
@@ -214,7 +214,7 @@
     "/permissions/zitadel/me/_search": {
       "post": {
         "summary": "List My ZITADEL Permissions",
-        "description": "Returns a list of permissions the authenticated user has in ZITADEL based on the manager roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).",
+        "description": "Returns a list of permissions the authenticated user has in ZITADEL based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).",
         "operationId": "AuthService_ListMyZitadelPermissions",
         "responses": {
           "200": {
@@ -3764,8 +3764,8 @@
     "OAuth2": {
       "type": "oauth2",
       "flow": "accessCode",
-      "authorizationUrl": "$CUSTOM-DOMAIN/oauth/v2/authorize",
-      "tokenUrl": "$CUSTOM-DOMAIN/oauth/v2/token",
+      "authorizationUrl": "$CUSTOM_DOMAIN/oauth/v2/authorize",
+      "tokenUrl": "$CUSTOM_DOMAIN/oauth/v2/token",
       "scopes": {
         "openid": "openid"
       }

@@ -66,7 +66,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The custom domains (incl. generated ones) of the instance."
+          "description": "The Custom Domains (incl. generated ones) of the instance."
         },
         "createdAt": {
           "type": "string",

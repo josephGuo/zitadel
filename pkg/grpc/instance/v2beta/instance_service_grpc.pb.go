@@ -86,7 +86,7 @@ type InstanceServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Adds a custom domain to the instance in context.
+	// Adds a Custom Domain to the instance in context.
 	//
 	// The instance_id in the input message will be used in the future
 	//
@@ -97,7 +97,7 @@ type InstanceServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Removes a custom domain from the instance.
+	// Removes a Custom Domain from the instance.
 	//
 	// The instance_id in the input message will be used in the future.
 	//
@@ -108,7 +108,7 @@ type InstanceServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Lists custom domains of the instance.
+	// Lists Custom Domains of the instance.
 	//
 	// The instance_id in the input message will be used in the future.
 	//
@@ -313,7 +313,7 @@ type InstanceServiceServer interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Adds a custom domain to the instance in context.
+	// Adds a Custom Domain to the instance in context.
 	//
 	// The instance_id in the input message will be used in the future
 	//
@@ -324,7 +324,7 @@ type InstanceServiceServer interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Removes a custom domain from the instance.
+	// Removes a Custom Domain from the instance.
 	//
 	// The instance_id in the input message will be used in the future.
 	//
@@ -335,7 +335,7 @@ type InstanceServiceServer interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under instance service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Lists custom domains of the instance.
+	// Lists Custom Domains of the instance.
 	//
 	// The instance_id in the input message will be used in the future.
 	//

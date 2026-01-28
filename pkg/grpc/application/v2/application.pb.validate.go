@@ -125,6 +125,8 @@ func (m *Application) validate(all bool) error {
 
 	// no validation rules for Name
 
+	// no validation rules for ProjectId
+
 	switch v := m.Configuration.(type) {
 	case *Application_OidcConfiguration:
 		if v == nil {
@@ -486,6 +488,90 @@ func (m *ApplicationSearchFilter) validate(all bool) error {
 			errors = append(errors, err)
 		}
 
+	case *ApplicationSearchFilter_ClientIdFilter:
+		if v == nil {
+			err := ApplicationSearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofFilterPresent = true
+
+		if all {
+			switch v := interface{}(m.GetClientIdFilter()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ApplicationSearchFilterValidationError{
+						field:  "ClientIdFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ApplicationSearchFilterValidationError{
+						field:  "ClientIdFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetClientIdFilter()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationSearchFilterValidationError{
+					field:  "ClientIdFilter",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *ApplicationSearchFilter_EntityIdFilter:
+		if v == nil {
+			err := ApplicationSearchFilterValidationError{
+				field:  "Filter",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofFilterPresent = true
+
+		if all {
+			switch v := interface{}(m.GetEntityIdFilter()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ApplicationSearchFilterValidationError{
+						field:  "EntityIdFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ApplicationSearchFilterValidationError{
+						field:  "EntityIdFilter",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetEntityIdFilter()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationSearchFilterValidationError{
+					field:  "EntityIdFilter",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	default:
 		_ = v // ensures v is used
 	}
@@ -818,6 +904,228 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ApplicationNameFilterValidationError{}
+
+// Validate checks the field values on ClientIDFilter with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ClientIDFilter) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ClientIDFilter with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ClientIDFilterMultiError,
+// or nil if none found.
+func (m *ClientIDFilter) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ClientIDFilter) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetClientId()); l < 1 || l > 200 {
+		err := ClientIDFilterValidationError{
+			field:  "ClientId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ClientIDFilterMultiError(errors)
+	}
+
+	return nil
+}
+
+// ClientIDFilterMultiError is an error wrapping multiple validation errors
+// returned by ClientIDFilter.ValidateAll() if the designated constraints
+// aren't met.
+type ClientIDFilterMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ClientIDFilterMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ClientIDFilterMultiError) AllErrors() []error { return m }
+
+// ClientIDFilterValidationError is the validation error returned by
+// ClientIDFilter.Validate if the designated constraints aren't met.
+type ClientIDFilterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ClientIDFilterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ClientIDFilterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ClientIDFilterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ClientIDFilterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ClientIDFilterValidationError) ErrorName() string { return "ClientIDFilterValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ClientIDFilterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sClientIDFilter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ClientIDFilterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ClientIDFilterValidationError{}
+
+// Validate checks the field values on EntityIDFilter with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *EntityIDFilter) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on EntityIDFilter with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in EntityIDFilterMultiError,
+// or nil if none found.
+func (m *EntityIDFilter) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *EntityIDFilter) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetEntityId()); l < 1 || l > 200 {
+		err := EntityIDFilterValidationError{
+			field:  "EntityId",
+			reason: "value length must be between 1 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return EntityIDFilterMultiError(errors)
+	}
+
+	return nil
+}
+
+// EntityIDFilterMultiError is an error wrapping multiple validation errors
+// returned by EntityIDFilter.ValidateAll() if the designated constraints
+// aren't met.
+type EntityIDFilterMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m EntityIDFilterMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m EntityIDFilterMultiError) AllErrors() []error { return m }
+
+// EntityIDFilterValidationError is the validation error returned by
+// EntityIDFilter.Validate if the designated constraints aren't met.
+type EntityIDFilterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EntityIDFilterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EntityIDFilterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EntityIDFilterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EntityIDFilterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EntityIDFilterValidationError) ErrorName() string { return "EntityIDFilterValidationError" }
+
+// Error satisfies the builtin error interface
+func (e EntityIDFilterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEntityIDFilter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EntityIDFilterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EntityIDFilterValidationError{}
 
 // Validate checks the field values on ApplicationKeySearchFilter with the
 // rules defined in the proto definition for this message. If any rules are

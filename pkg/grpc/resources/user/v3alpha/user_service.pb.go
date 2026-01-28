@@ -5218,7 +5218,7 @@ const file_zitadel_resources_user_v3alpha_user_service_proto_rawDesc = "" +
 	"\fUser Service\x12\xeb\x01This API is intended to manage users with your own data schema in a ZITADEL instance. This project is in preview state. It can AND will continue breaking until the service provides the same functionality as the v1 and v2 user services.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
-	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\t3.0-alpha\x1a\x0e$CUSTOM-DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
+	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\t3.0-alpha\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
 	"\x03403\x12f\n" +
 	"GReturned when the user does not have permission to access the resource.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusRP\n" +
@@ -5226,7 +5226,7 @@ const file_zitadel_resources_user_v3alpha_user_service_proto_rawDesc = "" +
 	"*Returned when the resource does not exist.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusZ\xc2\x01\n" +
 	"\xbf\x01\n" +
-	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM-DOMAIN/oauth/v2/authorize:\x1d$CUSTOM-DOMAIN/oauth/v2/tokenBl\n" +
+	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM_DOMAIN/oauth/v2/authorize:\x1d$CUSTOM_DOMAIN/oauth/v2/tokenBl\n" +
 	"\x10\n" +
 	"\x06openid\x12\x06openid\n" +
 	"X\n" +

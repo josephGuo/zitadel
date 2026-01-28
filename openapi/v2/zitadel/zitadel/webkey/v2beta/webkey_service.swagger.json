@@ -19,7 +19,7 @@
       "name": "WebKeyService"
     }
   ],
-  "host": "$CUSTOM-DOMAIN",
+  "host": "$CUSTOM_DOMAIN",
   "basePath": "/",
   "schemes": [
     "https",
@@ -446,8 +446,8 @@
     "OAuth2": {
       "type": "oauth2",
       "flow": "accessCode",
-      "authorizationUrl": "$CUSTOM-DOMAIN/oauth/v2/authorize",
-      "tokenUrl": "$CUSTOM-DOMAIN/oauth/v2/token",
+      "authorizationUrl": "$CUSTOM_DOMAIN/oauth/v2/authorize",
+      "tokenUrl": "$CUSTOM_DOMAIN/oauth/v2/token",
       "scopes": {
         "openid": "openid",
         "urn:zitadel:iam:org:project:id:zitadel:aud": "urn:zitadel:iam:org:project:id:zitadel:aud"

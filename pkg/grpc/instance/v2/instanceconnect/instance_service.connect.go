@@ -111,8 +111,8 @@ type InstanceServiceClient interface {
 	ListInstances(context.Context, *connect.Request[v2.ListInstancesRequest]) (*connect.Response[v2.ListInstancesResponse], error)
 	// Add Custom Domain
 	//
-	// Adds a custom domain to the instance.
-	// The custom domain must be unique across all instances.
+	// Adds a Custom Domain to the instance.
+	// The Custom Domain must be unique across all instances.
 	// Once the domain is added, it will be used to route requests to this instance.
 	// This method requires system level permissions and cannot be called from an instance context.
 	//
@@ -121,7 +121,7 @@ type InstanceServiceClient interface {
 	AddCustomDomain(context.Context, *connect.Request[v2.AddCustomDomainRequest]) (*connect.Response[v2.AddCustomDomainResponse], error)
 	// Remove Custom Domain
 	//
-	// Removes a custom domain from the instance.
+	// Removes a Custom Domain from the instance.
 	// Be aware that this will stop routing requests from this domain to the instance and
 	// might break existing setups or integrations.
 	// This method requires system level permissions and cannot be called from an instance context.
@@ -131,7 +131,7 @@ type InstanceServiceClient interface {
 	RemoveCustomDomain(context.Context, *connect.Request[v2.RemoveCustomDomainRequest]) (*connect.Response[v2.RemoveCustomDomainResponse], error)
 	// List Custom Domains
 	//
-	// Lists custom domains of the instance.
+	// Lists Custom Domains of the instance.
 	//
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
@@ -144,7 +144,7 @@ type InstanceServiceClient interface {
 	ListCustomDomains(context.Context, *connect.Request[v2.ListCustomDomainsRequest]) (*connect.Response[v2.ListCustomDomainsResponse], error)
 	// Add Trusted Domain
 	//
-	// Adds a trusted domain to the instance.
+	// Adds a Trusted Domain to the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.
@@ -154,8 +154,8 @@ type InstanceServiceClient interface {
 	// Once the domain is added, it can be used in API responses like OIDC discovery,
 	// email templates, and more.
 	// This can be used in cases where the API is accessed through a different domain
-	// than the instance domain, e.g. proxy setups and custom login UIs.
-	// Unlike custom domain, trusted domains are not used to route requests to this instance
+	// than the Custom Domain, e.g. proxy setups and custom login UIs.
+	// Unlike Custom Domains, Trusted Domains are not used to route requests to this instance
 	// and therefore do not need to be uniquely assigned to an instance.
 	//
 	// Required permissions:
@@ -164,7 +164,7 @@ type InstanceServiceClient interface {
 	AddTrustedDomain(context.Context, *connect.Request[v2.AddTrustedDomainRequest]) (*connect.Response[v2.AddTrustedDomainResponse], error)
 	// Remove Trusted Domain
 	//
-	// Removes a trusted domain from the instance.
+	// Removes a Trusted Domain from the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.
@@ -176,7 +176,7 @@ type InstanceServiceClient interface {
 	RemoveTrustedDomain(context.Context, *connect.Request[v2.RemoveTrustedDomainRequest]) (*connect.Response[v2.RemoveTrustedDomainResponse], error)
 	// List Trusted Domains
 	//
-	// Lists trusted domains of the instance.
+	// Lists Trusted Domains of the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.
@@ -372,8 +372,8 @@ type InstanceServiceHandler interface {
 	ListInstances(context.Context, *connect.Request[v2.ListInstancesRequest]) (*connect.Response[v2.ListInstancesResponse], error)
 	// Add Custom Domain
 	//
-	// Adds a custom domain to the instance.
-	// The custom domain must be unique across all instances.
+	// Adds a Custom Domain to the instance.
+	// The Custom Domain must be unique across all instances.
 	// Once the domain is added, it will be used to route requests to this instance.
 	// This method requires system level permissions and cannot be called from an instance context.
 	//
@@ -382,7 +382,7 @@ type InstanceServiceHandler interface {
 	AddCustomDomain(context.Context, *connect.Request[v2.AddCustomDomainRequest]) (*connect.Response[v2.AddCustomDomainResponse], error)
 	// Remove Custom Domain
 	//
-	// Removes a custom domain from the instance.
+	// Removes a Custom Domain from the instance.
 	// Be aware that this will stop routing requests from this domain to the instance and
 	// might break existing setups or integrations.
 	// This method requires system level permissions and cannot be called from an instance context.
@@ -392,7 +392,7 @@ type InstanceServiceHandler interface {
 	RemoveCustomDomain(context.Context, *connect.Request[v2.RemoveCustomDomainRequest]) (*connect.Response[v2.RemoveCustomDomainResponse], error)
 	// List Custom Domains
 	//
-	// Lists custom domains of the instance.
+	// Lists Custom Domains of the instance.
 	//
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
@@ -405,7 +405,7 @@ type InstanceServiceHandler interface {
 	ListCustomDomains(context.Context, *connect.Request[v2.ListCustomDomainsRequest]) (*connect.Response[v2.ListCustomDomainsResponse], error)
 	// Add Trusted Domain
 	//
-	// Adds a trusted domain to the instance.
+	// Adds a Trusted Domain to the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.
@@ -415,8 +415,8 @@ type InstanceServiceHandler interface {
 	// Once the domain is added, it can be used in API responses like OIDC discovery,
 	// email templates, and more.
 	// This can be used in cases where the API is accessed through a different domain
-	// than the instance domain, e.g. proxy setups and custom login UIs.
-	// Unlike custom domain, trusted domains are not used to route requests to this instance
+	// than the Custom Domain, e.g. proxy setups and custom login UIs.
+	// Unlike Custom Domains, Trusted Domains are not used to route requests to this instance
 	// and therefore do not need to be uniquely assigned to an instance.
 	//
 	// Required permissions:
@@ -425,7 +425,7 @@ type InstanceServiceHandler interface {
 	AddTrustedDomain(context.Context, *connect.Request[v2.AddTrustedDomainRequest]) (*connect.Response[v2.AddTrustedDomainResponse], error)
 	// Remove Trusted Domain
 	//
-	// Removes a trusted domain from the instance.
+	// Removes a Trusted Domain from the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.
@@ -437,7 +437,7 @@ type InstanceServiceHandler interface {
 	RemoveTrustedDomain(context.Context, *connect.Request[v2.RemoveTrustedDomainRequest]) (*connect.Response[v2.RemoveTrustedDomainResponse], error)
 	// List Trusted Domains
 	//
-	// Lists trusted domains of the instance.
+	// Lists Trusted Domains of the instance.
 	// By default the instance will be determined by the context of the request,
 	// e.g. the host header.
 	// You can optionally pass an InstanceID to list the domains of a specific instance.

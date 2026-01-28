@@ -104,6 +104,10 @@
         },
         "samlConfiguration": {
           "$ref": "#/definitions/v2SAMLConfiguration"
+        },
+        "projectId": {
+          "type": "string",
+          "description": "The ProjectID represents the ID of the project the application belongs to."
         }
       }
     },
@@ -241,6 +245,14 @@
         "typeFilter": {
           "$ref": "#/definitions/v2ApplicationType",
           "description": "Filter for specific application types."
+        },
+        "clientIdFilter": {
+          "$ref": "#/definitions/v2ClientIDFilter",
+          "description": "Filter the applications by the clientID\nThis is only applicable for OIDC and API applications."
+        },
+        "entityIdFilter": {
+          "$ref": "#/definitions/v2EntityIDFilter",
+          "description": "Filter the applications by their entityID\nThis is only applicable for SAML applications."
         }
       }
     },
@@ -274,6 +286,19 @@
         "APPLICATION_TYPE_SAML"
       ],
       "default": "APPLICATION_TYPE_UNSPECIFIED"
+    },
+    "v2ClientIDFilter": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "example": "client-12345",
+          "description": "The clientID to search for. The search is performed as an exact match."
+        }
+      },
+      "required": [
+        "clientId"
+      ]
     },
     "v2CreateAPIApplicationRequest": {
       "type": "object",
@@ -524,6 +549,19 @@
           "description": "The timestamp of the application deletion. In case the application was already deleted,\nthe previous deletion date is returned. This can be used to check if the application was\nactually deleted."
         }
       }
+    },
+    "v2EntityIDFilter": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "string",
+          "example": "https://example.com/saml/v2/metadata",
+          "description": "The entityID to search for. The search is performed as an exact match."
+        }
+      },
+      "required": [
+        "entityId"
+      ]
     },
     "v2GenerateClientSecretResponse": {
       "type": "object",

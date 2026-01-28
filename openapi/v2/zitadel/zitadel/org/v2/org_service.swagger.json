@@ -19,7 +19,7 @@
       "name": "OrganizationService"
     }
   ],
-  "host": "$CUSTOM-DOMAIN",
+  "host": "$CUSTOM_DOMAIN",
   "basePath": "/",
   "schemes": [
     "https",
@@ -905,7 +905,7 @@
         "name": {
           "type": "string",
           "example": "Customer 1",
-          "description": "Name is the new name for the organization to be set.\nNote that since the name is used to generate the organization's default domain,\nchanging the name will also change the domain.\nAdditionally, if the domain is used as suffix for user logins,\ntheir login names will also change accordingly.\nIt will not affect any custom domains added to the organization.",
+          "description": "Name is the new name for the organization to be set.\nNote that since the name is used to generate the organization's default domain,\nchanging the name will also change the domain.\nAdditionally, if the domain is used as suffix for user logins,\ntheir login names will also change accordingly.\nIt will not affect any organization domains added to the organization.",
           "maxLength": 200,
           "minLength": 1
         }
@@ -1065,7 +1065,7 @@
         "orgId": {
           "type": "string",
           "example": "d654e6ba-70a3-48ef-a95d-37c8d8a7901a",
-          "description": "Optionally, set a unique id for the organization. If omitted, the system will generate one,\nwhich is the recommended way. The generated ID will be returned in the response.\n\nDeprecated: use 'organization_id' field instead.",
+          "description": "Optionally, set a unique id for the organization. If omitted, the system will generate one,\nwhich is the recommended way. The generated ID will be returned in the response.\n\nDeprecated: use 'organization_id' field instead.\nIf both org_id and organization_id are set, organization_id will take precedence.",
           "maxLength": 200
         }
       },
@@ -1864,8 +1864,8 @@
     "OAuth2": {
       "type": "oauth2",
       "flow": "accessCode",
-      "authorizationUrl": "$CUSTOM-DOMAIN/oauth/v2/authorize",
-      "tokenUrl": "$CUSTOM-DOMAIN/oauth/v2/token",
+      "authorizationUrl": "$CUSTOM_DOMAIN/oauth/v2/authorize",
+      "tokenUrl": "$CUSTOM_DOMAIN/oauth/v2/token",
       "scopes": {
         "openid": "openid",
         "urn:zitadel:iam:org:project:id:zitadel:aud": "urn:zitadel:iam:org:project:id:zitadel:aud"

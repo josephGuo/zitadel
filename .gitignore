@@ -103,3 +103,7 @@ CLAUDE.md
 AGENTS.md
 .mcp.json
 .gemini/*
+
+
+
+.github/instructions/nx.instructions.md

@@ -92,7 +92,7 @@ const file_zitadel_feature_v2beta_feature_service_proto_rawDesc = "" +
 	"\x0fFeature Service\x12\xad\x06This API is intended to manage features for ZITADEL. Feature settings that are available on multiple \"levels\", such as instance and organization. The higher level instance acts as a default for the lower level. When a feature is set on multiple levels, the lower level takes precedence. Features can be experimental where ZITADEL will assume a sane default, such as disabled. When over time confidence in such a feature grows, ZITADEL can default to enabling the feature. As a final step we might choose to always enable a feature and remove the setting from this API, reserving the proto field number. Such removal is not considered a breaking change. Setting a removed field will effectively result in a no-op. This project is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
-	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM-DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
+	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
 	"\x03403\x12f\n" +
 	"GReturned when the user does not have permission to access the resource.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusR\x8b\x01\n" +
@@ -100,7 +100,7 @@ const file_zitadel_feature_v2beta_feature_service_proto_rawDesc = "" +
 	"dReturned when the resource has no feature flag settings and inheritance from the parent is disabled.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusZ\xc2\x01\n" +
 	"\xbf\x01\n" +
-	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM-DOMAIN/oauth/v2/authorize:\x1d$CUSTOM-DOMAIN/oauth/v2/tokenBl\n" +
+	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM_DOMAIN/oauth/v2/authorize:\x1d$CUSTOM_DOMAIN/oauth/v2/tokenBl\n" +
 	"\x10\n" +
 	"\x06openid\x12\x06openid\n" +
 	"X\n" +

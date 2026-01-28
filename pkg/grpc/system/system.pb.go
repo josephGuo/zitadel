@@ -3875,7 +3875,7 @@ const file_zitadel_system_proto_rawDesc = "" +
 	"System API\x12SThis API is intended to configure and manage the different tenants whithin ZITADEL.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
-	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x031.0\x1a\x0e$CUSTOM-DOMAIN\"\n" +
+	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x031.0\x1a\x0e$CUSTOM_DOMAIN\"\n" +
 	"/system/v1*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
 	"\x03403\x12f\n" +
 	"GReturned when the user does not have permission to access the resource.\x12\x1b\n" +

@@ -30,7 +30,7 @@ type DomainSettings struct {
 	// If enabled, organization domains must be verified (through an DNS or HTTP challenge) upon creation.
 	// If disabled, organization domains will be created as already verified automatically.
 	RequireOrgDomainVerification bool `protobuf:"varint,2,opt,name=require_org_domain_verification,json=requireOrgDomainVerification,proto3" json:"require_org_domain_verification,omitempty"`
-	// If enabled, the SMTP sender address domain must match custom domain on the instance.
+	// If enabled, the SMTP sender address domain must match Custom Domain on the instance.
 	SmtpSenderAddressMatchesInstanceDomain bool `protobuf:"varint,3,opt,name=smtp_sender_address_matches_instance_domain,json=smtpSenderAddressMatchesInstanceDomain,proto3" json:"smtp_sender_address_matches_instance_domain,omitempty"`
 	// ResourceOwnerType returns if the setting is managed on the organization explicitly or
 	// fell back on the instance settings.

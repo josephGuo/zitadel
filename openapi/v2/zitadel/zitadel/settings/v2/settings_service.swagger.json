@@ -19,7 +19,7 @@
       "name": "SettingsService"
     }
   ],
-  "host": "$CUSTOM-DOMAIN",
+  "host": "$CUSTOM_DOMAIN",
   "basePath": "/",
   "schemes": [
     "https",
@@ -975,7 +975,7 @@
         },
         "smtpSenderAddressMatchesInstanceDomain": {
           "type": "boolean",
-          "description": "If enabled, the SMTP sender address domain must match custom domain on the instance."
+          "description": "If enabled, the SMTP sender address domain must match Custom Domain on the instance."
         },
         "resourceOwnerType": {
           "$ref": "#/definitions/v2ResourceOwnerType",
@@ -1827,8 +1827,8 @@
     "OAuth2": {
       "type": "oauth2",
       "flow": "accessCode",
-      "authorizationUrl": "$CUSTOM-DOMAIN/oauth/v2/authorize",
-      "tokenUrl": "$CUSTOM-DOMAIN/oauth/v2/token",
+      "authorizationUrl": "$CUSTOM_DOMAIN/oauth/v2/authorize",
+      "tokenUrl": "$CUSTOM_DOMAIN/oauth/v2/token",
       "scopes": {
         "openid": "openid",
         "urn:zitadel:iam:org:project:id:zitadel:aud": "urn:zitadel:iam:org:project:id:zitadel:aud"

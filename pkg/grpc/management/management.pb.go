@@ -36894,11 +36894,11 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0eorg.flow.write\x82\xd3\xe4\x93\x02.:\x01*\")/flows/{flow_type}/trigger/{trigger_type}B\x89\x11\x92A\xd5\x10\x12\xd0\x02\n" +
 	"\x0eManagement API\x12\xbc\x01The management API is as the name states the interface where systems can mutate IAM objects like organizations, projects, clients, users and so on if they have the necessary access rights.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*J\n" +
-	"\x12Apache License 2.0\x124https://github.com/zitadel/zitadel/blob/main/LICENSE2\x031.0\x1a\x0e$CUSTOM-DOMAIN\"\x0e/management/v1*\x01\x022\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoZ\xd3\x01\n" +
+	"\x12Apache License 2.0\x124https://github.com/zitadel/zitadel/blob/main/LICENSE2\x031.0\x1a\x0e$CUSTOM_DOMAIN\"\x0e/management/v1*\x01\x022\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoZ\xd3\x01\n" +
 	"\x0f\n" +
 	"\tBasicAuth\x12\x02\b\x01\n" +
 	"\xbf\x01\n" +
-	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM-DOMAIN/oauth/v2/authorize:\x1d$CUSTOM-DOMAIN/oauth/v2/tokenBl\n" +
+	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM_DOMAIN/oauth/v2/authorize:\x1d$CUSTOM_DOMAIN/oauth/v2/tokenBl\n" +
 	"\x10\n" +
 	"\x06openid\x12\x06openid\n" +
 	"X\n" +
@@ -36939,7 +36939,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\rUser Metadata\x12{Metadata is a key/value list to enrich the user object with any data needed. The data is not interpreted by ZITADEL itself.j\x18\n" +
 	"\x16ZITADEL Administratorsr>\n" +
 	"\"Detailed information about ZITADEL\x12\x18https://zitadel.com/docsz'\n" +
-	"\x0fx-zitadel-orgid\x12\x14\x1a\x12$YOUR-ORGANIZATIONZ.github.com/zitadel/zitadel/pkg/grpc/managementb\x06proto3"
+	"\x0fx-zitadel-orgid\x12\x14\x1a\x12$YOUR_ORGANIZATIONZ.github.com/zitadel/zitadel/pkg/grpc/managementb\x06proto3"
 
 var (
 	file_zitadel_management_proto_rawDescOnce sync.Once

@@ -357,7 +357,7 @@ const file_zitadel_resources_debug_events_v3alpha_debug_events_service_proto_raw
 	"\rDebug Service\x12UThis API is intended to push specific debug payload through ZITADEL's storage system.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
-	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\v3.0-preview\x1a\x0e$CUSTOM-DOMAIN\"\x18/resources/v3alpha/debug*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
+	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\v3.0-preview\x1a\x0e$CUSTOM_DOMAIN\"\x18/resources/v3alpha/debug*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +
 	"\x03403\x12f\n" +
 	"GReturned when the user does not have permission to access the resource.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusRP\n" +
@@ -365,7 +365,7 @@ const file_zitadel_resources_debug_events_v3alpha_debug_events_service_proto_raw
 	"*Returned when the resource does not exist.\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusZ\xc2\x01\n" +
 	"\xbf\x01\n" +
-	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM-DOMAIN/oauth/v2/authorize:\x1d$CUSTOM-DOMAIN/oauth/v2/tokenBl\n" +
+	"\x06OAuth2\x12\xb4\x01\b\x03(\x042!$CUSTOM_DOMAIN/oauth/v2/authorize:\x1d$CUSTOM_DOMAIN/oauth/v2/tokenBl\n" +
 	"\x10\n" +
 	"\x06openid\x12\x06openid\n" +
 	"X\n" +
