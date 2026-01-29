@@ -452,7 +452,7 @@ var File_zitadel_feature_v2_instance_proto protoreflect.FileDescriptor
 
 const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	"\n" +
-	"!zitadel/feature/v2/instance.proto\x12\x12zitadel.feature.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1ezitadel/object/v2/object.proto\x1a zitadel/feature/v2/feature.proto\"\x91\x18\n" +
+	"!zitadel/feature/v2/instance.proto\x12\x12zitadel.feature.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1ezitadel/object/v2/object.proto\x1a zitadel/feature/v2/feature.proto\"\x9c\x18\n" +
 	"\x1aSetInstanceFeaturesRequest\x12\xaf\x01\n" +
 	"\x11login_default_org\x18\x01 \x01(\bB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueH\x00R\x0floginDefaultOrg\x88\x01\x01\x12\xdb\x01\n" +
 	"\vuser_schema\x18\x04 \x01(\bB\xb4\x01\x92A\xb0\x012\xa7\x01User Schemas allow to manage data schemas of user. If the flag is enabled, you'll be able to use the new API and its features. Note that it is still in an early stage.J\x04trueH\x01R\n" +
@@ -464,8 +464,8 @@ const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	" \x01(\bB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueH\x04R\x1eoidcSingleV1SessionTermination\x88\x01\x01\x12\xdd\x01\n" +
 	"\x1aenable_back_channel_logout\x18\f \x01(\bB\x9a\x01\x92A\x96\x012\x8d\x01If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions.J\x04trueH\x05R\x17enableBackChannelLogout\x88\x01\x01\x12\x95\x01\n" +
 	"\blogin_v2\x18\r \x01(\v2\x1b.zitadel.feature.v2.LoginV2BX\x92AU2SSpecify the login UI for all users and applications regardless of their preference.H\x06R\aloginV2\x88\x01\x01\x12\x99\x01\n" +
-	"\x13permission_check_v2\x18\x0e \x01(\bBd\x92Aa2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.J\x04trueH\aR\x11permissionCheckV2\x88\x01\x01\x12\x9e\x01\n" +
-	"\x17console_use_v2_user_api\x18\x0f \x01(\bBc\x92A`2XIf this is enabled the console web client will use the new User v2 API for certain callsJ\x04trueH\bR\x13consoleUseV2UserApi\x88\x01\x01\x12\xca\x02\n" +
+	"\x13permission_check_v2\x18\x0e \x01(\bBd\x92Aa2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.J\x04trueH\aR\x11permissionCheckV2\x88\x01\x01\x12\xa9\x01\n" +
+	"\x17console_use_v2_user_api\x18\x0f \x01(\bBn\x92Ak2cIf this is enabled the management console web client will use the new User v2 API for certain callsJ\x04trueH\bR\x13consoleUseV2UserApi\x88\x01\x01\x12\xca\x02\n" +
 	"\x18enable_relational_tables\x18\x10 \x01(\bB\x8a\x02\x92A\x86\x022\xfd\x01If this is enabled Zitadel will use the relational tables instead of the projections as the main source to store the data. Regardless of the flag state, both the relational table and the projections are kept up to date. Currently the flag has no effect.J\x04trueH\tR\x16enableRelationalTables\x88\x01\x01B\x14\n" +
 	"\x12_login_default_orgB\x0e\n" +
 	"\f_user_schemaB\x16\n" +
@@ -483,7 +483,7 @@ const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	"\x1dResetInstanceFeaturesResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\"\xa0\x03\n" +
 	"\x1aGetInstanceFeaturesRequest\x12\x81\x03\n" +
-	"\vinheritance\x18\x01 \x01(\bB\xde\x02\x92A\xda\x022\xd1\x02Inherit unset features from the resource owners. This option is recursive: if the flag is set, the resource's ancestors are consulted up to system defaults. If this option is disabled and the feature is not set on the instance, it will be omitted from the response or Not Found is returned when the instance has no features flags at all.J\x04trueR\vinheritance\"\xdf\x18\n" +
+	"\vinheritance\x18\x01 \x01(\bB\xde\x02\x92A\xda\x022\xd1\x02Inherit unset features from the resource owners. This option is recursive: if the flag is set, the resource's ancestors are consulted up to system defaults. If this option is disabled and the feature is not set on the instance, it will be omitted from the response or Not Found is returned when the instance has no features flags at all.J\x04trueR\vinheritance\"\xea\x18\n" +
 	"\x1bGetInstanceFeaturesResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\x12\xcb\x01\n" +
 	"\x11login_default_org\x18\x02 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueR\x0floginDefaultOrg\x12\xf7\x01\n" +
@@ -496,8 +496,8 @@ const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	"\"oidc_single_v1_session_termination\x18\v \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueR\x1eoidcSingleV1SessionTermination\x12\xf9\x01\n" +
 	"\x1aenable_back_channel_logout\x18\r \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x9a\x01\x92A\x96\x012\x8d\x01If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions.J\x04trueR\x17enableBackChannelLogout\x12\xba\x01\n" +
 	"\blogin_v2\x18\x0e \x01(\v2&.zitadel.feature.v2.LoginV2FeatureFlagBw\x92At2lIf the flag is set, all users will be redirected to the login V2 regardless of the application's preference.J\x04trueR\aloginV2\x12\xaf\x01\n" +
-	"\x13permission_check_v2\x18\x0f \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB^\x92A[2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.R\x11permissionCheckV2\x12\xba\x01\n" +
-	"\x17console_use_v2_user_api\x18\x10 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagBc\x92A`2XIf this is enabled the console web client will use the new User v2 API for certain callsJ\x04trueR\x13consoleUseV2UserApi\x12\xe6\x02\n" +
+	"\x13permission_check_v2\x18\x0f \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB^\x92A[2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.R\x11permissionCheckV2\x12\xc5\x01\n" +
+	"\x17console_use_v2_user_api\x18\x10 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagBn\x92Ak2cIf this is enabled the management console web client will use the new User v2 API for certain callsJ\x04trueR\x13consoleUseV2UserApi\x12\xe6\x02\n" +
 	"\x18enable_relational_tables\x18\x11 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x8a\x02\x92A\x86\x022\xfd\x01If this is enabled Zitadel will use the relational tables instead of the projections as the main source to store the data. Regardless of the flag state, both the relational table and the projections are kept up to date. Currently the flag has no effect.J\x04trueR\x16enableRelationalTablesJ\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\a\x10\bJ\x04\b\t\x10\n" +
 	"J\x04\b\f\x10\rR&oidc_trigger_introspection_projectionsR\x19oidc_legacy_introspectionR\aactionsR\aweb_keyR\x18disable_user_token_eventB8Z6github.com/zitadel/zitadel/pkg/grpc/feature/v2;featureb\x06proto3"
 

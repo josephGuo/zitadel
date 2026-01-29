@@ -33,7 +33,7 @@ const (
 	// An active authorization grants the user access with the roles specified on the project.
 	State_STATE_ACTIVE State = 1
 	// An inactive authorization temporarily deactivates the granted access and roles.
-	// ZITADEL will not include the specific authorization in any authorization information like an access token.
+	// Zitadel will not include the specific authorization in any authorization information like an access token.
 	// But the information can still be accessed using the API.
 	State_STATE_INACTIVE State = 2
 )
@@ -459,7 +459,7 @@ func (x *User) GetOrganizationId() string {
 
 type Role struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Key is the unique key of the role. It's the only relevant attribute for ZITADEL and
+	// Key is the unique key of the role. It's the only relevant attribute for Zitadel and
 	// will be used for authorization checks and as claim in tokens and user info responses.
 	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	// Human readable name for the role, which might be displayed to users.

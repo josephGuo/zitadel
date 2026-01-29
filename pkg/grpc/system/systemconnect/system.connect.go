@@ -102,10 +102,10 @@ const (
 
 // SystemServiceClient is a client for the zitadel.system.v1.SystemService service.
 type SystemServiceClient interface {
-	// Indicates if ZITADEL is running.
-	// It respondes as soon as ZITADEL started
+	// Indicates if Zitadel is running.
+	// It respondes as soon as Zitadel started
 	Healthz(context.Context, *connect.Request[system.HealthzRequest]) (*connect.Response[system.HealthzResponse], error)
-	// Returns a list of ZITADEL instances
+	// Returns a list of Zitadel instances
 	//
 	// Deprecated: Use [ListInstances](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-instances.api.mdx) instead to list instances
 	ListInstances(context.Context, *connect.Request[system.ListInstancesRequest]) (*connect.Response[system.ListInstancesResponse], error)
@@ -153,12 +153,12 @@ type SystemServiceClient interface {
 	RemoveDomain(context.Context, *connect.Request[system.RemoveDomainRequest]) (*connect.Response[system.RemoveDomainResponse], error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(context.Context, *connect.Request[system.SetPrimaryDomainRequest]) (*connect.Response[system.SetPrimaryDomainResponse], error)
-	// Returns all stored read models of ZITADEL
+	// Returns all stored read models of Zitadel
 	// views are used for search optimisation and optimise request latencies
 	// they represent the delta of the event happend on the objects
 	ListViews(context.Context, *connect.Request[system.ListViewsRequest]) (*connect.Response[system.ListViewsResponse], error)
 	// Truncates the delta of the change stream
-	// be carefull with this function because ZITADEL has to
+	// be carefull with this function because Zitadel has to
 	// recompute the deltas after they got cleared.
 	// Search requests will return wrong results until all deltas are recomputed
 	ClearView(context.Context, *connect.Request[system.ClearViewRequest]) (*connect.Response[system.ClearViewResponse], error)
@@ -499,10 +499,10 @@ func (c *systemServiceClient) ResetLimits(ctx context.Context, req *connect.Requ
 
 // SystemServiceHandler is an implementation of the zitadel.system.v1.SystemService service.
 type SystemServiceHandler interface {
-	// Indicates if ZITADEL is running.
-	// It respondes as soon as ZITADEL started
+	// Indicates if Zitadel is running.
+	// It respondes as soon as Zitadel started
 	Healthz(context.Context, *connect.Request[system.HealthzRequest]) (*connect.Response[system.HealthzResponse], error)
-	// Returns a list of ZITADEL instances
+	// Returns a list of Zitadel instances
 	//
 	// Deprecated: Use [ListInstances](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-instances.api.mdx) instead to list instances
 	ListInstances(context.Context, *connect.Request[system.ListInstancesRequest]) (*connect.Response[system.ListInstancesResponse], error)
@@ -550,12 +550,12 @@ type SystemServiceHandler interface {
 	RemoveDomain(context.Context, *connect.Request[system.RemoveDomainRequest]) (*connect.Response[system.RemoveDomainResponse], error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(context.Context, *connect.Request[system.SetPrimaryDomainRequest]) (*connect.Response[system.SetPrimaryDomainResponse], error)
-	// Returns all stored read models of ZITADEL
+	// Returns all stored read models of Zitadel
 	// views are used for search optimisation and optimise request latencies
 	// they represent the delta of the event happend on the objects
 	ListViews(context.Context, *connect.Request[system.ListViewsRequest]) (*connect.Response[system.ListViewsResponse], error)
 	// Truncates the delta of the change stream
-	// be carefull with this function because ZITADEL has to
+	// be carefull with this function because Zitadel has to
 	// recompute the deltas after they got cleared.
 	// Search requests will return wrong results until all deltas are recomputed
 	ClearView(context.Context, *connect.Request[system.ClearViewRequest]) (*connect.Response[system.ClearViewResponse], error)

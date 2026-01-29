@@ -399,8 +399,8 @@ func (*RequestChallenges_OTPEmail_ReturnCode_) isRequestChallenges_OTPEmail_Deli
 
 type RequestChallenges_OTPEmail_SendCode struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optionally set a url_template, which will be used in the mail sent by ZITADEL to guide the user to your verification page.
-	// If no template is set, the default ZITADEL url will be used.
+	// Optionally set a url_template, which will be used in the mail sent by Zitadel to guide the user to your verification page.
+	// If no template is set, the default Zitadel url will be used.
 	//
 	// The following placeholders can be used: Code, UserID, LoginName, DisplayName, PreferredLanguage, SessionID
 	UrlTemplate   *string `protobuf:"bytes,1,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`

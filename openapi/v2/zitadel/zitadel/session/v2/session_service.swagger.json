@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Session Service",
-    "description": "This API is intended to manage sessions in a ZITADEL instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API.",
+    "description": "This API is intended to manage sessions in a Zitadel instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API.",
     "version": "2.0",
     "contact": {
       "name": "ZITADEL",
@@ -39,7 +39,7 @@
     "/v2/sessions": {
       "post": {
         "summary": "Create Session",
-        "description": "Create a new session with initial checks, metadata and challenges for further verification.\nA token will be returned, which is required for using the session as authentication, e.g.\nwhen authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe ZITADEL APIs.\n\nRequired permissions:\n  - `session.write`",
+        "description": "Create a new session with initial checks, metadata and challenges for further verification.\nA token will be returned, which is required for using the session as authentication, e.g.\nwhen authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe Zitadel APIs.\n\nRequired permissions:\n  - `session.write`",
         "operationId": "SessionService_CreateSession",
         "responses": {
           "200": {
@@ -187,7 +187,7 @@
       },
       "delete": {
         "summary": "DeleteSession",
-        "description": "Terminate an existing session. This invalidates the session and its token.\nThe session can no longer be used for the authentication of other resources\nor to authenticate against the ZITADEL APIs.\n\nYou can only terminate your own session, unless you are granted the `session.delete` permission.\n\nRequired permissions:\n  - `session.delete`\n  - no permission required for own sessions or when providing the current session token",
+        "description": "Terminate an existing session. This invalidates the session and its token.\nThe session can no longer be used for the authentication of other resources\nor to authenticate against the Zitadel APIs.\n\nYou can only terminate your own session, unless you are granted the `session.delete` permission.\n\nRequired permissions:\n  - `session.delete`\n  - no permission required for own sessions or when providing the current session token",
         "operationId": "SessionService_DeleteSession",
         "responses": {
           "200": {
@@ -299,7 +299,7 @@
         "urlTemplate": {
           "type": "string",
           "example": "https://example.com/otp/verify?userID={{.UserID}}\u0026code={{.Code}}",
-          "description": "Optionally set a url_template, which will be used in the mail sent by ZITADEL to guide the user to your verification page.\nIf no template is set, the default ZITADEL url will be used.\n\nThe following placeholders can be used: Code, UserID, LoginName, DisplayName, PreferredLanguage, SessionID",
+          "description": "Optionally set a url_template, which will be used in the mail sent by Zitadel to guide the user to your verification page.\nIf no template is set, the default Zitadel url will be used.\n\nThe following placeholders can be used: Code, UserID, LoginName, DisplayName, PreferredLanguage, SessionID",
           "maxLength": 200,
           "minLength": 1
         }
@@ -408,7 +408,7 @@
           "type": "integer",
           "format": "int64",
           "example": 100,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -687,7 +687,7 @@
         },
         "sessionToken": {
           "type": "string",
-          "description": "The current token of the session, which is required for using the session as authentication,\ne.g.when authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe ZITADEL APIs."
+          "description": "The current token of the session, which is required for using the session as authentication,\ne.g.when authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe Zitadel APIs."
         },
         "challenges": {
           "$ref": "#/definitions/v2Challenges",
@@ -992,7 +992,7 @@
             "type": "string",
             "format": "byte"
           },
-          "description": "Metadata contains custom key value pairs set by the user.\nThe metadata is not interpreted by ZITADEL and can be used to store any information\nrelevant to the session."
+          "description": "Metadata contains custom key value pairs set by the user.\nThe metadata is not interpreted by Zitadel and can be used to store any information\nrelevant to the session."
         },
         "userAgent": {
           "$ref": "#/definitions/v2UserAgent",
@@ -1021,7 +1021,7 @@
         },
         "sessionToken": {
           "type": "string",
-          "description": "The current token of the session, which is required for using the session as authentication,\ne.g.when authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe ZITADEL APIs.\nThe previous token was invalidated and can no longer be used."
+          "description": "The current token of the session, which is required for using the session as authentication,\ne.g.when authenticating an OIDC auth request or SAML request.\nAdditionally, the session token can be used as OAuth2 access token to authenticate against\nthe Zitadel APIs.\nThe previous token was invalidated and can no longer be used."
         },
         "challenges": {
           "$ref": "#/definitions/v2Challenges",

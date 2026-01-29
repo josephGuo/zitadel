@@ -654,7 +654,7 @@ const file_zitadel_object_v2beta_object_proto_rawDesc = "" +
 	"\x0eresource_owner\"\xe4\x03\n" +
 	"\tListQuery\x12 \n" +
 	"\x06offset\x18\x01 \x01(\x04B\b\x92A\x05J\x03\"0\"R\x06offset\x12\xaa\x02\n" +
-	"\x05limit\x18\x02 \x01(\rB\x93\x02\x92A\x8f\x022\x87\x02Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.J\x03100R\x05limit\x12,\n" +
+	"\x05limit\x18\x02 \x01(\rB\x93\x02\x92A\x8f\x022\x87\x02Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.J\x03100R\x05limit\x12,\n" +
 	"\x03asc\x18\x03 \x01(\bB\x1a\x92A\x172\x15default is descendingR\x03asc:Z\x92AW\n" +
 	"U*\x12General List Query2?Object unspecific list filters like offset, limit and asc/desc.\"\xee\x01\n" +
 	"\aDetails\x12$\n" +

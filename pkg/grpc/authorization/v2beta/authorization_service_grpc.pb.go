@@ -33,7 +33,7 @@ const (
 //
 // AuthorizationService provides methods to manage authorizations for users within your projects and applications.
 //
-// For managing permissions and roles for ZITADEL internal resources, like organizations, projects,
+// For managing permissions and roles for Zitadel internal resources, like organizations, projects,
 // users, etc., please use the InternalPermissionService.
 //
 // Deprecated: use authorization service v2 instead. This service will be removed in the next major version of ZITADEL.
@@ -183,7 +183,7 @@ func (c *authorizationServiceClient) DeactivateAuthorization(ctx context.Context
 //
 // AuthorizationService provides methods to manage authorizations for users within your projects and applications.
 //
-// For managing permissions and roles for ZITADEL internal resources, like organizations, projects,
+// For managing permissions and roles for Zitadel internal resources, like organizations, projects,
 // users, etc., please use the InternalPermissionService.
 //
 // Deprecated: use authorization service v2 instead. This service will be removed in the next major version of ZITADEL.

@@ -353,7 +353,7 @@ type CreateSessionResponse struct {
 	// The current token of the session, which is required for using the session as authentication,
 	// e.g.when authenticating an OIDC auth request or SAML request.
 	// Additionally, the session token can be used as OAuth2 access token to authenticate against
-	// the ZITADEL APIs.
+	// the Zitadel APIs.
 	SessionToken string `protobuf:"bytes,3,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
 	// The challenges that were requested for the session.
 	// The challenges can be used for further checks with the SetSession method.
@@ -538,7 +538,7 @@ type SetSessionResponse struct {
 	// The current token of the session, which is required for using the session as authentication,
 	// e.g.when authenticating an OIDC auth request or SAML request.
 	// Additionally, the session token can be used as OAuth2 access token to authenticate against
-	// the ZITADEL APIs.
+	// the Zitadel APIs.
 	// The previous token was invalidated and can no longer be used.
 	SessionToken string `protobuf:"bytes,2,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"`
 	// The challenges that were requested for the session.
@@ -1353,7 +1353,7 @@ const file_zitadel_session_v2_session_service_proto_rawDesc = "" +
 	"\x02OK\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x1e:\x01**\x19/v2/sessions/{session_id}B\xab\b\x92A\xef\a\x12\xcd\x02\n" +
-	"\x0fSession Service\x12\xbb\x01This API is intended to manage sessions in a ZITADEL instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API.\".\n" +
+	"\x0fSession Service\x12\xbb\x01This API is intended to manage sessions in a Zitadel instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

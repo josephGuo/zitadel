@@ -87,7 +87,7 @@ type Session struct {
 	// If a factor is set, the verified_at timestamp indicates when it was last checked.
 	Factors *Factors `protobuf:"bytes,5,opt,name=factors,proto3" json:"factors,omitempty"`
 	// Metadata contains custom key value pairs set by the user.
-	// The metadata is not interpreted by ZITADEL and can be used to store any information
+	// The metadata is not interpreted by Zitadel and can be used to store any information
 	// relevant to the session.
 	Metadata map[string][]byte `protobuf:"bytes,6,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// UserAgent contains information about the user agent used to create the session.

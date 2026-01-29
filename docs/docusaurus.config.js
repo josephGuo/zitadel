@@ -23,7 +23,7 @@ module.exports = {
   ],
   customFields: {
     description:
-      "Documentation for ZITADEL - Identity infrastructure, simplified for you.",
+      "Documentation for ZITADEL - Identity infrastructure, simplified for you.",
   },
 
   themeConfig: {

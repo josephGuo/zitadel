@@ -819,7 +819,7 @@ type AddProjectRoleRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ProjectID is the unique identifier of the project.
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// RoleKey identifies the role. It's the only relevant attribute for ZITADEL and
+	// RoleKey identifies the role. It's the only relevant attribute for Zitadel and
 	// will be used for authorization checks and as claim in tokens and user info responses.
 	RoleKey string `protobuf:"bytes,2,opt,name=role_key,json=roleKey,proto3" json:"role_key,omitempty"`
 	// DisplayName is a human readable name for the role, which might be displayed to users.
@@ -939,7 +939,7 @@ type UpdateProjectRoleRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ProjectID is the unique identifier of the project.
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// RoleKey identifies the role. It's the only relevant attribute for ZITADEL and
+	// RoleKey identifies the role. It's the only relevant attribute for Zitadel and
 	// will be used for authorization checks and as claim in tokens and user info responses.
 	// It cannot be changed. If you need a different key, remove the role and create a new one.
 	RoleKey string `protobuf:"bytes,2,opt,name=role_key,json=roleKey,proto3" json:"role_key,omitempty"`

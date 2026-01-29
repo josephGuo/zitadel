@@ -40,7 +40,7 @@ type CreateTargetRequest struct {
 	//	*CreateTargetRequest_RestCall
 	//	*CreateTargetRequest_RestAsync
 	TargetType isCreateTargetRequest_TargetType `protobuf_oneof:"target_type"`
-	// Timeout defines the duration until ZITADEL cancels the execution.
+	// Timeout defines the duration until Zitadel cancels the execution.
 	// If the target doesn't respond before this timeout expires, then the connection is closed and the action fails.
 	// Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called.
 	// In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution.
@@ -178,7 +178,7 @@ type CreateTargetRequest_RestCall struct {
 
 type CreateTargetRequest_RestAsync struct {
 	// The HTTP call to this target will be a POST request.
-	// The call is sent asynchronously and ZITADEL does not wait for the response.
+	// The call is sent asynchronously and Zitadel does not wait for the response.
 	// The response of the target is ignored, no status or body is checked.
 	// This is typically used for executions of type "events".
 	RestAsync *RESTAsync `protobuf:"bytes,4,opt,name=rest_async,json=restAsync,proto3,oneof"`
@@ -198,7 +198,7 @@ type CreateTargetResponse struct {
 	CreationDate *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=creation_date,json=creationDate,proto3" json:"creation_date,omitempty"`
 	// Key used to sign and check payload sent to the target.
 	// The key can be used to verify the integrity and authenticity of the request
-	// on the receiver side. The key should be treated as a secret and only known to ZITADEL and the receiver.
+	// on the receiver side. The key should be treated as a secret and only known to Zitadel and the receiver.
 	// The signature is included in the request header `X-ZITADEL-Signature`
 	// and calculated over the raw body of the request using HMAC with SHA256.
 	SigningKey    string `protobuf:"bytes,3,opt,name=signing_key,json=signingKey,proto3" json:"signing_key,omitempty"`
@@ -272,7 +272,7 @@ type UpdateTargetRequest struct {
 	//	*UpdateTargetRequest_RestCall
 	//	*UpdateTargetRequest_RestAsync
 	TargetType isUpdateTargetRequest_TargetType `protobuf_oneof:"target_type"`
-	// Timeout defines the duration until ZITADEL cancels the execution.
+	// Timeout defines the duration until Zitadel cancels the execution.
 	// If the target doesn't respond before this timeout expires, then the connection is closed and the action fails.
 	// Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called.
 	// In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution.
@@ -435,7 +435,7 @@ type UpdateTargetRequest_RestCall struct {
 
 type UpdateTargetRequest_RestAsync struct {
 	// The HTTP call to this target will be a POST request.
-	// The call is sent asynchronously and ZITADEL does not wait for the response.
+	// The call is sent asynchronously and Zitadel does not wait for the response.
 	// The response of the target is ignored, no status or body is checked.
 	// This is typically used for executions of type "events".
 	RestAsync *RESTAsync `protobuf:"bytes,5,opt,name=rest_async,json=restAsync,proto3,oneof"`
@@ -453,7 +453,7 @@ type UpdateTargetResponse struct {
 	ChangeDate *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=change_date,json=changeDate,proto3" json:"change_date,omitempty"`
 	// Key used to sign and check payload sent to the target.
 	// The key can be used to verify the integrity and authenticity of the request
-	// on the receiver side. The key should be treated as a secret and only known to ZITADEL and the receiver.
+	// on the receiver side. The key should be treated as a secret and only known to Zitadel and the receiver.
 	// The signature is included in the request header `X-ZITADEL-Signature`
 	// and calculated over the raw body of the request using HMAC with SHA256.
 	// The key is only returned if expirationSigningKey was set in the request.
@@ -2045,7 +2045,7 @@ const file_zitadel_action_v2_action_service_proto_rawDesc = "" +
 	"\x1eList all services successfully\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02!\x12\x1f/v2/actions/executions/servicesB\xd1\a\x92A\x97\a\x12\xf5\x01\n" +
-	"\x0eAction Service\x12eThis API is intended to manage custom executions (previously known as actions) in a ZITADEL instance.\".\n" +
+	"\x0eAction Service\x12eThis API is intended to manage custom executions (previously known as actions) in a Zitadel instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

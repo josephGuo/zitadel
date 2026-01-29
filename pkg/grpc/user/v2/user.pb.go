@@ -1143,13 +1143,13 @@ func (x *AuthFactorU2F) GetName() string {
 
 type SendInviteCode struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optionally set a url_template, which will be used in the invite mail sent by ZITADEL to guide the user to your invitation page.
-	// If no template is set and no previous code was created, the default ZITADEL url will be used.
+	// Optionally set a url_template, which will be used in the invite mail sent by Zitadel to guide the user to your invitation page.
+	// If no template is set and no previous code was created, the default Zitadel url will be used.
 	//
 	// The following placeholders can be used: UserID, OrgID, Code
 	UrlTemplate *string `protobuf:"bytes,1,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`
 	// Optionally set an application name, which will be used in the invite mail sent by ZITADEL.
-	// If no application name is set and no previous code was created, ZITADEL will be used as default.
+	// If no application name is set and no previous code was created, Zitadel will be used as default.
 	ApplicationName *string `protobuf:"bytes,2,opt,name=application_name,json=applicationName,proto3,oneof" json:"application_name,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

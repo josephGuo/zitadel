@@ -1012,9 +1012,9 @@ type AddQuotaRequest struct {
 	ResetInterval *durationpb.Duration `protobuf:"bytes,4,opt,name=reset_interval,json=resetInterval,proto3" json:"reset_interval,omitempty"`
 	// the quota amount of units
 	Amount uint64 `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	// whether ZITADEL should block further usage when the configured amount is used
+	// whether Zitadel should block further usage when the configured amount is used
 	Limit bool `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
-	// the handlers, ZITADEL executes when certain quota percentages are reached
+	// the handlers, Zitadel executes when certain quota percentages are reached
 	Notifications []*quota.Notification `protobuf:"bytes,7,rep,name=notifications,proto3" json:"notifications,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1154,9 +1154,9 @@ type SetQuotaRequest struct {
 	ResetInterval *durationpb.Duration `protobuf:"bytes,4,opt,name=reset_interval,json=resetInterval,proto3" json:"reset_interval,omitempty"`
 	// the quota amount of units
 	Amount uint64 `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	// whether ZITADEL should block further usage when the configured amount is used
+	// whether Zitadel should block further usage when the configured amount is used
 	Limit bool `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
-	// the handlers, ZITADEL executes when certain quota percentages are reached
+	// the handlers, Zitadel executes when certain quota percentages are reached
 	Notifications []*quota.Notification `protobuf:"bytes,7,rep,name=notifications,proto3" json:"notifications,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -3633,8 +3633,8 @@ const file_zitadel_system_proto_rawDesc = "" +
 	"\x04from\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\xa7\x01\x92A\x9b\x012zthe starting time from which the current quota period is calculated from. This is relevant for querying the current usage.J\x1d\"2019-04-01T08:45:00.000000Z\"\xfaB\x05\xb2\x01\x02\b\x01R\x04from\x12i\n" +
 	"\x0ereset_interval\x18\x04 \x01(\v2\x19.google.protobuf.DurationB'\x92A\x1c2\x1athe quota periods duration\xfaB\x05\xaa\x01\x02\b\x01R\rresetInterval\x12=\n" +
 	"\x06amount\x18\x05 \x01(\x04B%\x92A\x1b2\x19the quota amount of units\xfaB\x042\x02 \x00R\x06amount\x12h\n" +
-	"\x05limit\x18\x06 \x01(\bBR\x92AO2Mwhether ZITADEL should block further usage when the configured amount is usedR\x05limit\x12\x94\x01\n" +
-	"\rnotifications\x18\a \x03(\v2\x1e.zitadel.quota.v1.NotificationBN\x92AK2Ithe handlers, ZITADEL executes when certain quota percentages are reachedR\rnotifications\"G\n" +
+	"\x05limit\x18\x06 \x01(\bBR\x92AO2Mwhether Zitadel should block further usage when the configured amount is usedR\x05limit\x12\x94\x01\n" +
+	"\rnotifications\x18\a \x03(\v2\x1e.zitadel.quota.v1.NotificationBN\x92AK2Ithe handlers, Zitadel executes when certain quota percentages are reachedR\rnotifications\"G\n" +
 	"\x10AddQuotaResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\x9f\x06\n" +
 	"\x0fSetQuotaRequest\x12+\n" +
@@ -3645,8 +3645,8 @@ const file_zitadel_system_proto_rawDesc = "" +
 	"\x04from\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampB\xa7\x01\x92A\x9b\x012zthe starting time from which the current quota period is calculated from. This is relevant for querying the current usage.J\x1d\"2019-04-01T08:45:00.000000Z\"\xfaB\x05\xb2\x01\x02\b\x01R\x04from\x12i\n" +
 	"\x0ereset_interval\x18\x04 \x01(\v2\x19.google.protobuf.DurationB'\x92A\x1c2\x1athe quota periods duration\xfaB\x05\xaa\x01\x02\b\x01R\rresetInterval\x126\n" +
 	"\x06amount\x18\x05 \x01(\x04B\x1e\x92A\x1b2\x19the quota amount of unitsR\x06amount\x12h\n" +
-	"\x05limit\x18\x06 \x01(\bBR\x92AO2Mwhether ZITADEL should block further usage when the configured amount is usedR\x05limit\x12\x94\x01\n" +
-	"\rnotifications\x18\a \x03(\v2\x1e.zitadel.quota.v1.NotificationBN\x92AK2Ithe handlers, ZITADEL executes when certain quota percentages are reachedR\rnotifications\"G\n" +
+	"\x05limit\x18\x06 \x01(\bBR\x92AO2Mwhether Zitadel should block further usage when the configured amount is usedR\x05limit\x12\x94\x01\n" +
+	"\rnotifications\x18\a \x03(\v2\x1e.zitadel.quota.v1.NotificationBN\x92AK2Ithe handlers, Zitadel executes when certain quota percentages are reachedR\rnotifications\"G\n" +
 	"\x10SetQuotaResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"m\n" +
 	"\x12RemoveQuotaRequest\x12+\n" +

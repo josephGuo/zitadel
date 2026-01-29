@@ -100,7 +100,7 @@
     },
     {
       "name": "User Metadata",
-      "description": "Metadata is a key/value list to enrich the user object with any data needed. The data is not interpreted by ZITADEL itself."
+      "description": "Metadata is a key/value list to enrich the user object with any data needed. The data is not interpreted by Zitadel itself."
     },
     {
       "name": "ZITADEL Administrators"
@@ -128,7 +128,7 @@
     "/actions": {
       "post": {
         "summary": "Create Action",
-        "description": "Create a new ZITADEL action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.",
+        "description": "Create a new Zitadel action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.",
         "operationId": "ManagementService_CreateAction",
         "responses": {
           "200": {
@@ -292,7 +292,7 @@
       },
       "put": {
         "summary": "Update Action",
-        "description": "Update an existing ZITADEL action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.",
+        "description": "Update an existing Zitadel action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.",
         "operationId": "ManagementService_UpdateAction",
         "responses": {
           "200": {
@@ -829,7 +829,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -859,7 +859,7 @@
     "/healthz": {
       "get": {
         "summary": "Healthz",
-        "description": "The health endpoint allows an external system to probe if ZITADEL management API is alive",
+        "description": "The health endpoint allows an external system to probe if Zitadel management API is alive",
         "operationId": "ManagementService_Healthz",
         "responses": {
           "200": {
@@ -883,7 +883,7 @@
     "/iam": {
       "get": {
         "summary": "Instance information",
-        "description": "Some needed settings made in ZITADEL like the global organization id or ZITADEL project ID ",
+        "description": "Some needed settings made in Zitadel like the global organization id or Zitadel project ID ",
         "operationId": "ManagementService_GetIAM",
         "responses": {
           "200": {
@@ -1769,7 +1769,7 @@
     "/idps/jwt": {
       "post": {
         "summary": "Deprecated: Add JWT Identity Provider (IDP)",
-        "description": "Create a new identity provider configuration on the organization to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where ZITADEL can get the existing JWT token.",
+        "description": "Create a new identity provider configuration on the organization to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where Zitadel can get the existing JWT token.",
         "operationId": "ManagementService_AddOrgJWTIDP",
         "responses": {
           "200": {
@@ -3351,7 +3351,7 @@
     "/orgs/me/domains/{domain}/validation/_validate": {
       "post": {
         "summary": "Verify Domain",
-        "description": "Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.",
+        "description": "Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.",
         "operationId": "ManagementService_ValidateOrgDomain",
         "responses": {
           "200": {
@@ -3399,7 +3399,7 @@
     "/orgs/me/members": {
       "post": {
         "summary": "Add Organization Member",
-        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.",
+        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.",
         "operationId": "ManagementService_AddOrgMember",
         "responses": {
           "200": {
@@ -3443,7 +3443,7 @@
     "/orgs/me/members/_search": {
       "post": {
         "summary": "List Organization Members",
-        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.",
+        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.",
         "operationId": "ManagementService_ListOrgMembers",
         "responses": {
           "200": {
@@ -3487,7 +3487,7 @@
     "/orgs/me/members/{userId}": {
       "delete": {
         "summary": "Remove Organization Member",
-        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).",
+        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).",
         "operationId": "ManagementService_RemoveOrgMember",
         "responses": {
           "200": {
@@ -3527,7 +3527,7 @@
       },
       "put": {
         "summary": "Update Organization Member",
-        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
+        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
         "operationId": "ManagementService_UpdateOrgMember",
         "responses": {
           "200": {
@@ -3577,7 +3577,7 @@
     "/orgs/members/roles/_search": {
       "post": {
         "summary": "List Organization Member Roles",
-        "description": "Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the organization level.",
+        "description": "Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the organization level.",
         "operationId": "ManagementService_ListOrgMemberRoles",
         "responses": {
           "200": {
@@ -3612,7 +3612,7 @@
     "/policies/default/label": {
       "get": {
         "summary": "Get Default Private Labeling/Branding Settings",
-        "description": "Returns the default private labeling/branding configured on the instance. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Returns the default private labeling/branding configured on the instance. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_GetDefaultLabelPolicy",
         "responses": {
           "200": {
@@ -3884,7 +3884,7 @@
     "/policies/label": {
       "get": {
         "summary": "Get Private Labeling/Branding Settings",
-        "description": "Returns the currently active private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Returns the currently active private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_GetLabelPolicy",
         "responses": {
           "200": {
@@ -3948,7 +3948,7 @@
       },
       "post": {
         "summary": "Create Labeling/Branding Settings",
-        "description": "Create the private labeling/branding configured on the organization. Make sure to activate it so it will be shown to the users. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Create the private labeling/branding configured on the organization. Make sure to activate it so it will be shown to the users. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_AddCustomLabelPolicy",
         "responses": {
           "200": {
@@ -3988,7 +3988,7 @@
       },
       "put": {
         "summary": "Update Labeling/Branding Settings",
-        "description": "Update the preview private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Update the preview private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_UpdateCustomLabelPolicy",
         "responses": {
           "200": {
@@ -4030,7 +4030,7 @@
     "/policies/label/_activate": {
       "post": {
         "summary": "Activate Labeling/Branding Settings",
-        "description": "Activates the preview private labeling/branding configured on the organization. It will be shown to the users afterward. The settings will trigger if the organization has been identified (organization scope, user). Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Activates the preview private labeling/branding configured on the organization. It will be shown to the users afterward. The settings will trigger if the organization has been identified (organization scope, user). Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_ActivateCustomLabelPolicy",
         "responses": {
           "200": {
@@ -4072,7 +4072,7 @@
     "/policies/label/_preview": {
       "get": {
         "summary": "Get Preview Private Labeling/Branding Settings",
-        "description": "Returns the preview private labeling/branding configured on the organization. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Returns the preview private labeling/branding configured on the organization. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "ManagementService_GetPreviewLabelPolicy",
         "responses": {
           "200": {
@@ -5690,7 +5690,7 @@
     "/projects/grants/members/roles/_search": {
       "post": {
         "summary": "List Project Grant Member Roles",
-        "description": "Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the project grant level.",
+        "description": "Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the project grant level.",
         "operationId": "ManagementService_ListProjectGrantMemberRoles",
         "responses": {
           "200": {
@@ -5716,7 +5716,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -5757,7 +5757,7 @@
     "/projects/members/roles/_search": {
       "post": {
         "summary": "List Project Member Roles",
-        "description": "Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the project level.",
+        "description": "Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the project level.",
         "operationId": "ManagementService_ListProjectMemberRoles",
         "responses": {
           "200": {
@@ -6601,7 +6601,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -7035,7 +7035,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -7449,7 +7449,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -7478,7 +7478,7 @@
     "/projects/{projectId}/grants/{grantId}/members": {
       "post": {
         "summary": "Add Project Grant Member",
-        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.",
+        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.",
         "operationId": "ManagementService_AddProjectGrantMember",
         "responses": {
           "200": {
@@ -7534,7 +7534,7 @@
     "/projects/{projectId}/grants/{grantId}/members/_search": {
       "post": {
         "summary": "List Project Grant Members",
-        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.",
+        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.",
         "operationId": "ManagementService_ListProjectGrantMembers",
         "responses": {
           "200": {
@@ -7590,7 +7590,7 @@
     "/projects/{projectId}/grants/{grantId}/members/{userId}": {
       "delete": {
         "summary": "Remove Project Grant Member",
-        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).",
+        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).",
         "operationId": "ManagementService_RemoveProjectGrantMember",
         "responses": {
           "200": {
@@ -7642,7 +7642,7 @@
       },
       "put": {
         "summary": "Update Project Grant Member",
-        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
+        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
         "operationId": "ManagementService_UpdateProjectGrantMember",
         "responses": {
           "200": {
@@ -7704,7 +7704,7 @@
     "/projects/{projectId}/members": {
       "post": {
         "summary": "Add Project Member",
-        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the project level with one or multiple roles.",
+        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the project level with one or multiple roles.",
         "operationId": "ManagementService_AddProjectMember",
         "responses": {
           "200": {
@@ -7754,7 +7754,7 @@
     "/projects/{projectId}/members/_search": {
       "post": {
         "summary": "List Project Members",
-        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.",
+        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.",
         "operationId": "ManagementService_ListProjectMembers",
         "responses": {
           "200": {
@@ -7804,7 +7804,7 @@
     "/projects/{projectId}/members/{userId}": {
       "delete": {
         "summary": "Remove Project Member",
-        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).",
+        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).",
         "operationId": "ManagementService_RemoveProjectMember",
         "responses": {
           "200": {
@@ -7850,7 +7850,7 @@
       },
       "put": {
         "summary": "Update Project Member",
-        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
+        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
         "operationId": "ManagementService_UpdateProjectMember",
         "responses": {
           "200": {
@@ -8120,7 +8120,7 @@
           },
           {
             "name": "roleKey",
-            "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+            "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
             "in": "path",
             "required": true,
             "type": "string",
@@ -8151,7 +8151,7 @@
     "/text/default/login/{language}": {
       "get": {
         "summary": "Get Default Login Text",
-        "description": "Get the default texts for the login and register UI of ZITADEL, which are configured on the instance or as translation files in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured. Or if the organization context is not given.",
+        "description": "Get the default texts for the login and register UI of ZITADEL, which are configured on the instance or as translation files in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured. Or if the organization context is not given.",
         "operationId": "ManagementService_GetDefaultLoginTexts",
         "responses": {
           "200": {
@@ -8190,7 +8190,7 @@
     "/text/default/message/domainclaimed/{language}": {
       "get": {
         "summary": "Get Default Domain Claimed Message Text",
-        "description": "Get the default text of the domain claimed message/email that is set on the instance or as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.",
+        "description": "Get the default text of the domain claimed message/email that is set on the instance or as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.",
         "operationId": "ManagementService_GetDefaultDomainClaimedMessageText",
         "responses": {
           "200": {
@@ -8268,7 +8268,7 @@
     "/text/default/message/invite_user/{language}": {
       "get": {
         "summary": "Get Default Invite User Message Text",
-        "description": "Get the default text of the invite user message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when an invite code email is requested.",
+        "description": "Get the default text of the invite user message/email that is configured on the instance or as translation files in Zitadel itself. The message is sent when an invite code email is requested.",
         "operationId": "ManagementService_GetDefaultInviteUserMessageText",
         "responses": {
           "200": {
@@ -8307,7 +8307,7 @@
     "/text/default/message/password_change/{language}": {
       "get": {
         "summary": "Get Default Password Changed Message Text",
-        "description": "Get the default text of the password-changed message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when the password of a user has been changed.",
+        "description": "Get the default text of the password-changed message/email that is configured on the instance or as translation files in Zitadel itself. The message is sent when the password of a user has been changed.",
         "operationId": "ManagementService_GetDefaultPasswordChangeMessageText",
         "responses": {
           "200": {
@@ -8424,7 +8424,7 @@
     "/text/default/message/verifyemail/{language}": {
       "get": {
         "summary": "Get Default Verify Email Message Text",
-        "description": "Get the default text of the verify-email message/email that is set on the instance or as translation files in ZITADEL itself. The email is sent when a user adds a new non-verified email address.",
+        "description": "Get the default text of the verify-email message/email that is set on the instance or as translation files in Zitadel itself. The email is sent when a user adds a new non-verified email address.",
         "operationId": "ManagementService_GetDefaultVerifyEmailMessageText",
         "responses": {
           "200": {
@@ -8463,7 +8463,7 @@
     "/text/default/message/verifyemailotp/{language}": {
       "get": {
         "summary": "Get Default Verify Email OTP Message Text",
-        "description": "Get the default text of the verify Email OTP message that is set on the instance or as translation files in ZITADEL itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.",
+        "description": "Get the default text of the verify Email OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetDefaultVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -8502,7 +8502,7 @@
     "/text/default/message/verifyphone/{language}": {
       "get": {
         "summary": "Get Default Verify Phone Message Text",
-        "description": "Get the default text of the verify-phone message that is set on the instance or as translation files in ZITADEL itself. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.",
+        "description": "Get the default text of the verify-phone message that is set on the instance or as translation files in Zitadel itself. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.",
         "operationId": "ManagementService_GetDefaultVerifyPhoneMessageText",
         "responses": {
           "200": {
@@ -8541,7 +8541,7 @@
     "/text/default/message/verifysmsotp/{language}": {
       "get": {
         "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify SMS OTP message that is set on the instance or as translation files in ZITADEL itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "description": "Get the default text of the verify SMS OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetDefaultVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -8617,7 +8617,7 @@
       },
       "delete": {
         "summary": "Reset Custom Login Text to Default",
-        "description": "Removes the custom texts for the login and register UI from the organization and therefore the configuration of the instance or the translation files in ZITADEL itself will trigger.",
+        "description": "Removes the custom texts for the login and register UI from the organization and therefore the configuration of the instance or the translation files in Zitadel itself will trigger.",
         "operationId": "ManagementService_ResetCustomLoginTextToDefault",
         "responses": {
           "200": {
@@ -8654,7 +8654,7 @@
       },
       "put": {
         "summary": "Set Default Login Text",
-        "description": "Set the custom texts for the login and register UI of ZITADEL for the organization.",
+        "description": "Set the custom texts for the login and register UI of Zitadel for the organization.",
         "operationId": "ManagementService_SetCustomLoginText",
         "responses": {
           "200": {
@@ -11898,8 +11898,8 @@
     },
     "/users/{userId}/memberships/_search": {
       "post": {
-        "summary": "List ZITADEL Permissions",
-        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nShow all the permissions the user has in ZITADEL (ZITADEL Manager).",
+        "summary": "List Zitadel Permissions",
+        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nShow all the permissions the user has in Zitadel (ZITADEL Manager).",
         "operationId": "ManagementService_ListUserMemberships",
         "responses": {
           "200": {
@@ -12863,7 +12863,7 @@
     "/zitadel/docs": {
       "get": {
         "summary": "ZITADEL documentation",
-        "description": "This endpoint returns some general needed (OIDC) information about ZITADEL like the issuer or discovery endpoint.",
+        "description": "This endpoint returns some general needed (OIDC) information about Zitadel like the issuer or discovery endpoint.",
         "operationId": "ManagementService_GetOIDCInformation",
         "responses": {
           "200": {
@@ -13165,7 +13165,7 @@
         "roleKey": {
           "type": "string",
           "example": "ADMIN",
-          "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+          "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
           "maxLength": 200,
           "minLength": 1
         },
@@ -13855,7 +13855,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -13911,7 +13911,7 @@
       "properties": {
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }
@@ -14298,7 +14298,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -14344,11 +14344,11 @@
         },
         "projectRoleCheck": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if a user has a role of this project assigned when login into an application of this project."
+          "description": "When enabled Zitadel will check if a user has a role of this project assigned when login into an application of this project."
         },
         "hasProjectCheck": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if the organization of the user, that is trying to log in, has a grant to this project."
+          "description": "When enabled Zitadel will check if the organization of the user, that is trying to log in, has a grant to this project."
         },
         "privateLabelingSetting": {
           "$ref": "#/definitions/v1PrivateLabelingSetting",
@@ -14738,7 +14738,7 @@
         "displayName": {
           "type": "string",
           "example": "Gigi Giraffe",
-          "description": "a user can set the display name, if nothing is set ZITADEL computes \"first_name last_name\""
+          "description": "a user can set the display name, if nothing is set Zitadel computes \"first_name last_name\""
         },
         "preferredLanguage": {
           "type": "string",
@@ -15167,7 +15167,7 @@
         "expireWarnDays": {
           "type": "integer",
           "format": "int64",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         }
       }
     },
@@ -15239,17 +15239,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -15583,7 +15583,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -15886,7 +15886,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Apple"
+          "description": "the scopes requested by Zitadel during the request to Apple"
         }
       }
     },
@@ -15955,7 +15955,7 @@
         "AUTO_LINKING_OPTION_EMAIL"
       ],
       "default": "AUTO_LINKING_OPTION_UNSPECIFIED",
-      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to check for a corresponding ZITADEL user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check for a corresponding ZITADEL user with the same verified email\nNote that in case multiple users match, no prompt will be shown."
+      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to check for a corresponding Zitadel user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check for a corresponding Zitadel user with the same verified email\nNote that in case multiple users match, no prompt will be shown."
     },
     "v1AzureADConfig": {
       "type": "object",
@@ -15971,7 +15971,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -15984,7 +15984,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         }
       }
     },
@@ -16196,7 +16196,7 @@
           "type": "integer",
           "format": "int64",
           "example": 20,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -16597,7 +16597,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "isIdTokenMapping": {
           "type": "boolean",
@@ -16880,7 +16880,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitHub"
+          "description": "the scopes requested by Zitadel during the request to GitHub"
         }
       }
     },
@@ -16911,7 +16911,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitHub"
+          "description": "the scopes requested by Zitadel during the request to GitHub"
         }
       }
     },
@@ -16933,7 +16933,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitLab"
+          "description": "the scopes requested by Zitadel during the request to GitLab"
         }
       }
     },
@@ -16958,7 +16958,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitLab"
+          "description": "the scopes requested by Zitadel during the request to GitLab"
         }
       }
     },
@@ -16980,7 +16980,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Google"
+          "description": "the scopes requested by Zitadel during the request to Google"
         }
       }
     },
@@ -17128,7 +17128,7 @@
         "IDP_OWNER_TYPE_ORG"
       ],
       "default": "IDP_OWNER_TYPE_UNSPECIFIED",
-      "description": "the owner of the identity provider.\n\n - IDP_OWNER_TYPE_SYSTEM: system is managed by the ZITADEL administrators\n - IDP_OWNER_TYPE_ORG: org is managed by de organization administrators"
+      "description": "the owner of the identity provider.\n\n - IDP_OWNER_TYPE_SYSTEM: system is managed by the Zitadel administrators\n - IDP_OWNER_TYPE_ORG: org is managed by de organization administrators"
     },
     "v1IDPOwnerTypeQuery": {
       "type": "object",
@@ -17310,7 +17310,7 @@
         "displayName": {
           "type": "string",
           "example": "minnie.mouse@gmail.com",
-          "description": "A display name ZITADEL can show on the linked provider.",
+          "description": "A display name Zitadel can show on the linked provider.",
           "maxLength": 200
         }
       }
@@ -18494,7 +18494,7 @@
           "type": "integer",
           "format": "int64",
           "example": 100,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -19152,7 +19152,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Apple",
+          "description": "The scopes requested by Zitadel during the request to Apple",
           "maxItems": 20
         },
         "providerOptions": {
@@ -19190,7 +19190,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -19203,7 +19203,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19231,17 +19231,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "The endpoint where ZITADEL send the user to authenticate"
+          "description": "The endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "The endpoint where ZITADEL can get the token"
+          "description": "The endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "The endpoint where ZITADEL can get the user information"
+          "description": "The endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -19253,7 +19253,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity provider"
+          "description": "The scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
@@ -19303,7 +19303,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19354,7 +19354,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19389,7 +19389,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19425,7 +19425,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19463,7 +19463,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19498,7 +19498,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Google"
+          "description": "The scopes requested by Zitadel during the request to Google"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19620,7 +19620,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",
@@ -19909,17 +19909,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "the endpoint where ZITADEL send the user to authenticate"
+          "description": "the endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "the endpoint where ZITADEL can get the token"
+          "description": "the endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "the endpoint where ZITADEL can get the user information"
+          "description": "the endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -19931,12 +19931,12 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
           "example": "user_id",
-          "description": "defines how the attribute is called where ZITADEL can get the id of the user"
+          "description": "defines how the attribute is called where Zitadel can get the id of the user"
         },
         "usePkce": {
           "type": "boolean",
@@ -20041,23 +20041,23 @@
       "properties": {
         "isLinkingAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to manually link an existing ZITADEL user with an external account. Disable if users should only be allowed to link the proposed account in case of active auto_linking."
+          "description": "Enable if users should be able to manually link an existing Zitadel user with an external account. Disable if users should only be allowed to link the proposed account in case of active auto_linking."
         },
         "isCreationAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to manually create a new account in ZITADEL when using an external account. Disable if users should not be able to edit account information when auto_creation is enabled."
+          "description": "Enable if users should be able to manually create a new account in Zitadel when using an external account. Disable if users should not be able to edit account information when auto_creation is enabled."
         },
         "isAutoCreation": {
           "type": "boolean",
-          "description": "Enable if a new account in ZITADEL should be created automatically when login with an external account."
+          "description": "Enable if a new account in Zitadel should be created automatically when login with an external account."
         },
         "isAutoUpdate": {
           "type": "boolean",
-          "description": "Enable if a the ZITADEL account fields should be updated automatically on each login."
+          "description": "Enable if a the Zitadel account fields should be updated automatically on each login."
         },
         "autoLinking": {
           "$ref": "#/definitions/v1AutoLinkingOption",
-          "description": "Enable if users should get prompted to link an existing ZITADEL user to an external account if the selected attribute matches."
+          "description": "Enable if users should get prompted to link an existing Zitadel user to an external account if the selected attribute matches."
         }
       }
     },
@@ -20117,7 +20117,7 @@
           "type": "string",
           "format": "uint64",
           "example": "10",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         },
         "isDefault": {
           "type": "boolean",
@@ -20383,17 +20383,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -20430,11 +20430,11 @@
         },
         "projectRoleCheck": {
           "type": "boolean",
-          "title": "ZITADEL checks if the user has at least one on this project"
+          "title": "Zitadel checks if the user has at least one on this project"
         },
         "hasProjectCheck": {
           "type": "boolean",
-          "title": "ZITADEL checks if the org of the user has permission for this project"
+          "title": "Zitadel checks if the org of the user has permission for this project"
         },
         "privateLabelingSetting": {
           "$ref": "#/definitions/v1PrivateLabelingSetting",
@@ -21709,7 +21709,7 @@
         "expireWarnDays": {
           "type": "integer",
           "format": "int64",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         }
       }
     },
@@ -21781,17 +21781,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in management console pointing to custom link."
         }
       }
     },
@@ -22584,7 +22584,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -22622,7 +22622,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Boolean value to indicate whether federated logout is enabled. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Boolean value to indicate whether federated logout is enabled. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",
@@ -22678,7 +22678,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Apple",
+          "description": "The scopes requested by Zitadel during the request to Apple",
           "maxItems": 20
         },
         "providerOptions": {
@@ -22727,7 +22727,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -22740,7 +22740,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -22778,17 +22778,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "The endpoint where ZITADEL send the user to authenticate"
+          "description": "The endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "The endpoint where ZITADEL can get the token"
+          "description": "The endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "The endpoint where ZITADEL can get the user information"
+          "description": "The endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -22800,7 +22800,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity provider"
+          "description": "The scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
@@ -22860,7 +22860,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -22921,7 +22921,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -22968,7 +22968,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -23015,7 +23015,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -23063,7 +23063,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -23110,7 +23110,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Google"
+          "description": "The scopes requested by Zitadel during the request to Google"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -23306,7 +23306,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",

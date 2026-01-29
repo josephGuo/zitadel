@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Action Service",
-    "description": "This API is intended to manage custom executions (previously known as actions) in a ZITADEL instance. This service is in beta state. It can AND will continue breaking until a stable version is released.",
+    "description": "This API is intended to manage custom executions (previously known as actions) in a Zitadel instance. This service is in beta state. It can AND will continue breaking until a stable version is released.",
     "version": "2.0-beta",
     "contact": {
       "name": "ZITADEL",
@@ -532,12 +532,12 @@
         },
         "restAsync": {
           "$ref": "#/definitions/v2betaRESTAsync",
-          "description": "Call is executed in parallel to others, ZITADEL does not wait until the call is finished. The state is ignored, call is sent as post."
+          "description": "Call is executed in parallel to others, Zitadel does not wait until the call is finished. The state is ignored, call is sent as post."
         },
         "timeout": {
           "type": "string",
           "example": "10s",
-          "description": "Timeout defines the duration until ZITADEL cancels the execution.\nIf the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
+          "description": "Timeout defines the duration until Zitadel cancels the execution.\nIf the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
         },
         "endpoint": {
           "type": "string",
@@ -628,12 +628,12 @@
         },
         "restAsync": {
           "$ref": "#/definitions/v2betaRESTAsync",
-          "description": "Call is executed in parallel to others, ZITADEL does not wait until the call is finished. The state is ignored, call is sent as post."
+          "description": "Call is executed in parallel to others, Zitadel does not wait until the call is finished. The state is ignored, call is sent as post."
         },
         "timeout": {
           "type": "string",
           "example": "10s",
-          "description": "Timeout defines the duration until ZITADEL cancels the execution.\nIf the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
+          "description": "Timeout defines the duration until Zitadel cancels the execution.\nIf the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
         },
         "endpoint": {
           "type": "string",
@@ -975,7 +975,7 @@
         "limit": {
           "type": "integer",
           "format": "int64",
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1140,7 +1140,7 @@
         "timeout": {
           "type": "string",
           "example": "10s",
-          "description": "Timeout defines the duration until ZITADEL cancels the execution.\nIf the target doesn't respond before this timeout expires, the the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
+          "description": "Timeout defines the duration until Zitadel cancels the execution.\nIf the target doesn't respond before this timeout expires, the the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution."
         },
         "endpoint": {
           "type": "string",

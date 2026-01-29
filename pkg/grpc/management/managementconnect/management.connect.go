@@ -1268,11 +1268,11 @@ type ManagementServiceClient interface {
 	//
 	// Remove a configured social logins/identity providers of the user (e.g. Google, Microsoft, AzureAD, etc.). The user will not be able to log in with the given provider afterward. Make sure the user does have other possibilities to authenticate.
 	RemoveHumanLinkedIDP(context.Context, *connect.Request[management.RemoveHumanLinkedIDPRequest]) (*connect.Response[management.RemoveHumanLinkedIDPResponse], error)
-	// List ZITADEL Permissions
+	// List Zitadel Permissions
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Show all the permissions the user has in ZITADEL (ZITADEL Manager).
+	// Show all the permissions the user has in Zitadel (ZITADEL Manager).
 	ListUserMemberships(context.Context, *connect.Request[management.ListUserMembershipsRequest]) (*connect.Response[management.ListUserMembershipsResponse], error)
 	GetMyOrg(context.Context, *connect.Request[management.GetMyOrgRequest]) (*connect.Response[management.GetMyOrgResponse], error)
 	// Get Organization By Domain
@@ -1376,7 +1376,7 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	ValidateOrgDomain(context.Context, *connect.Request[management.ValidateOrgDomainRequest]) (*connect.Response[management.ValidateOrgDomainResponse], error)
 	SetPrimaryOrgDomain(context.Context, *connect.Request[management.SetPrimaryOrgDomainRequest]) (*connect.Response[management.SetPrimaryOrgDomainResponse], error)
 	ListOrgMemberRoles(context.Context, *connect.Request[management.ListOrgMemberRolesRequest]) (*connect.Response[management.ListOrgMemberRolesResponse], error)
@@ -1384,25 +1384,25 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.
 	ListOrgMembers(context.Context, *connect.Request[management.ListOrgMembersRequest]) (*connect.Response[management.ListOrgMembersResponse], error)
 	// Add Organization Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.
 	AddOrgMember(context.Context, *connect.Request[management.AddOrgMemberRequest]) (*connect.Response[management.AddOrgMemberResponse], error)
 	// Update Organization Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateOrgMember(context.Context, *connect.Request[management.UpdateOrgMemberRequest]) (*connect.Response[management.UpdateOrgMemberResponse], error)
 	// Remove Organization Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).
 	RemoveOrgMember(context.Context, *connect.Request[management.RemoveOrgMemberRequest]) (*connect.Response[management.RemoveOrgMemberResponse], error)
 	// Get Project By ID
 	//
@@ -1500,25 +1500,25 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.
 	ListProjectMembers(context.Context, *connect.Request[management.ListProjectMembersRequest]) (*connect.Response[management.ListProjectMembersResponse], error)
 	// Add Project Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the project level with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the project level with one or multiple roles.
 	AddProjectMember(context.Context, *connect.Request[management.AddProjectMemberRequest]) (*connect.Response[management.AddProjectMemberResponse], error)
 	// Update Project Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateProjectMember(context.Context, *connect.Request[management.UpdateProjectMemberRequest]) (*connect.Response[management.UpdateProjectMemberResponse], error)
 	// Remove Project Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).
 	RemoveProjectMember(context.Context, *connect.Request[management.RemoveProjectMemberRequest]) (*connect.Response[management.RemoveProjectMemberResponse], error)
 	// Get Application By ID
 	//
@@ -1684,25 +1684,25 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
 	ListProjectGrantMembers(context.Context, *connect.Request[management.ListProjectGrantMembersRequest]) (*connect.Response[management.ListProjectGrantMembersResponse], error)
 	// Add Project Grant Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
 	AddProjectGrantMember(context.Context, *connect.Request[management.AddProjectGrantMemberRequest]) (*connect.Response[management.AddProjectGrantMemberResponse], error)
 	// Update Project Grant Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateProjectGrantMember(context.Context, *connect.Request[management.UpdateProjectGrantMemberRequest]) (*connect.Response[management.UpdateProjectGrantMemberResponse], error)
 	// Remove Project Grant Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).
 	RemoveProjectGrantMember(context.Context, *connect.Request[management.RemoveProjectGrantMemberRequest]) (*connect.Response[management.RemoveProjectGrantMemberResponse], error)
 	// Get User Grant By ID
 	//
@@ -5940,11 +5940,11 @@ type ManagementServiceHandler interface {
 	//
 	// Remove a configured social logins/identity providers of the user (e.g. Google, Microsoft, AzureAD, etc.). The user will not be able to log in with the given provider afterward. Make sure the user does have other possibilities to authenticate.
 	RemoveHumanLinkedIDP(context.Context, *connect.Request[management.RemoveHumanLinkedIDPRequest]) (*connect.Response[management.RemoveHumanLinkedIDPResponse], error)
-	// List ZITADEL Permissions
+	// List Zitadel Permissions
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Show all the permissions the user has in ZITADEL (ZITADEL Manager).
+	// Show all the permissions the user has in Zitadel (ZITADEL Manager).
 	ListUserMemberships(context.Context, *connect.Request[management.ListUserMembershipsRequest]) (*connect.Response[management.ListUserMembershipsResponse], error)
 	GetMyOrg(context.Context, *connect.Request[management.GetMyOrgRequest]) (*connect.Response[management.GetMyOrgResponse], error)
 	// Get Organization By Domain
@@ -6048,7 +6048,7 @@ type ManagementServiceHandler interface {
 	//
 	// Deprecated: use [organization service v2 VerifyOrganizationDomain](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-verify-organization-domain.api.mdx) instead.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	ValidateOrgDomain(context.Context, *connect.Request[management.ValidateOrgDomainRequest]) (*connect.Response[management.ValidateOrgDomainResponse], error)
 	SetPrimaryOrgDomain(context.Context, *connect.Request[management.SetPrimaryOrgDomainRequest]) (*connect.Response[management.SetPrimaryOrgDomainResponse], error)
 	ListOrgMemberRoles(context.Context, *connect.Request[management.ListOrgMemberRolesRequest]) (*connect.Response[management.ListOrgMemberRolesResponse], error)
@@ -6056,25 +6056,25 @@ type ManagementServiceHandler interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the organization level, matching the search queries. The search queries will be AND linked.
 	ListOrgMembers(context.Context, *connect.Request[management.ListOrgMembersRequest]) (*connect.Response[management.ListOrgMembersResponse], error)
 	// Add Organization Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the organization level with one or multiple roles.
 	AddOrgMember(context.Context, *connect.Request[management.AddOrgMemberRequest]) (*connect.Response[management.AddOrgMemberResponse], error)
 	// Update Organization Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateOrgMember(context.Context, *connect.Request[management.UpdateOrgMemberRequest]) (*connect.Response[management.UpdateOrgMemberResponse], error)
 	// Remove Organization Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (iam, project).
 	RemoveOrgMember(context.Context, *connect.Request[management.RemoveOrgMemberRequest]) (*connect.Response[management.RemoveOrgMemberResponse], error)
 	// Get Project By ID
 	//
@@ -6172,25 +6172,25 @@ type ManagementServiceHandler interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project level, matching the search queries. The search queries will be AND linked.
 	ListProjectMembers(context.Context, *connect.Request[management.ListProjectMembersRequest]) (*connect.Response[management.ListProjectMembersResponse], error)
 	// Add Project Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list on the project level with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list on the project level with one or multiple roles.
 	AddProjectMember(context.Context, *connect.Request[management.AddProjectMemberRequest]) (*connect.Response[management.AddProjectMemberResponse], error)
 	// Update Project Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateProjectMember(context.Context, *connect.Request[management.UpdateProjectMemberRequest]) (*connect.Response[management.UpdateProjectMemberResponse], error)
 	// Remove Project Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an project level. The user can still have roles on another level (iam, organization).
 	RemoveProjectMember(context.Context, *connect.Request[management.RemoveProjectMemberRequest]) (*connect.Response[management.RemoveProjectMemberResponse], error)
 	// Get Application By ID
 	//
@@ -6356,25 +6356,25 @@ type ManagementServiceHandler interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
 	ListProjectGrantMembers(context.Context, *connect.Request[management.ListProjectGrantMembersRequest]) (*connect.Response[management.ListProjectGrantMembersResponse], error)
 	// Add Project Grant Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the project grant level, matching the search queries. The search queries will be AND linked.
 	AddProjectGrantMember(context.Context, *connect.Request[management.AddProjectGrantMemberRequest]) (*connect.Response[management.AddProjectGrantMemberResponse], error)
 	// Update Project Grant Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateProjectGrantMember(context.Context, *connect.Request[management.UpdateProjectGrantMemberRequest]) (*connect.Response[management.UpdateProjectGrantMemberResponse], error)
 	// Remove Project Grant Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on a project grant level. The user can still have roles on another level (iam, organization, project).
 	RemoveProjectGrantMember(context.Context, *connect.Request[management.RemoveProjectGrantMemberRequest]) (*connect.Response[management.RemoveProjectGrantMemberResponse], error)
 	// Get User Grant By ID
 	//

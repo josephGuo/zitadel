@@ -522,7 +522,7 @@ const file_zitadel_session_v2beta_challenge_proto_rawDesc = "" +
 	"\vreturn_code\x18\x03 \x01(\v2=.zitadel.session.v2beta.RequestChallenges.OTPEmail.ReturnCodeH\x00R\n" +
 	"returnCode\x1a\xdb\x02\n" +
 	"\bSendCode\x12\xbd\x02\n" +
-	"\furl_template\x18\x01 \x01(\tB\x94\x02\x92A\x86\x022\xb9\x01\"Optionally set a url_template, which will be used in the mail sent by ZITADEL to guide the user to your verification page. If no template is set, the default ZITADEL url will be used.\"JB\"https://example.com/otp/verify?userID={{.UserID}}&code={{.Code}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
+	"\furl_template\x18\x01 \x01(\tB\x94\x02\x92A\x86\x022\xb9\x01\"Optionally set a url_template, which will be used in the mail sent by Zitadel to guide the user to your verification page. If no template is set, the default Zitadel url will be used.\"JB\"https://example.com/otp/verify?userID={{.UserID}}&code={{.Code}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
 	"\r_url_template\x1a\f\n" +
 	"\n" +
 	"ReturnCodeB\x0f\n" +

@@ -2867,17 +2867,24 @@ func (x *ListEmailProvidersResponse) GetResult() []*settings.EmailProvider {
 }
 
 type AddEmailProviderSMTPRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	SenderAddress  string                 `protobuf:"bytes,1,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
-	SenderName     string                 `protobuf:"bytes,2,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"`
-	Tls            bool                   `protobuf:"varint,3,opt,name=tls,proto3" json:"tls,omitempty"`
-	Host           string                 `protobuf:"bytes,4,opt,name=host,proto3" json:"host,omitempty"`
-	User           string                 `protobuf:"bytes,5,opt,name=user,proto3" json:"user,omitempty"`
-	Password       string                 `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`
-	ReplyToAddress string                 `protobuf:"bytes,7,opt,name=reply_to_address,json=replyToAddress,proto3" json:"reply_to_address,omitempty"`
-	Description    string                 `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SenderAddress string                 `protobuf:"bytes,1,opt,name=sender_address,json=senderAddress,proto3" json:"sender_address,omitempty"`
+	SenderName    string                 `protobuf:"bytes,2,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"`
+	Tls           bool                   `protobuf:"varint,3,opt,name=tls,proto3" json:"tls,omitempty"`
+	Host          string                 `protobuf:"bytes,4,opt,name=host,proto3" json:"host,omitempty"`
+	User          string                 `protobuf:"bytes,5,opt,name=user,proto3" json:"user,omitempty"`
+	// Deprecated: use [Auth] oneof instead.
+	Password       string `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`
+	ReplyToAddress string `protobuf:"bytes,7,opt,name=reply_to_address,json=replyToAddress,proto3" json:"reply_to_address,omitempty"`
+	Description    string `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
+	// Types that are valid to be assigned to Auth:
+	//
+	//	*AddEmailProviderSMTPRequest_None
+	//	*AddEmailProviderSMTPRequest_Plain
+	//	*AddEmailProviderSMTPRequest_Xoauth2
+	Auth          isAddEmailProviderSMTPRequest_Auth `protobuf_oneof:"Auth"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AddEmailProviderSMTPRequest) Reset() {
@@ -2966,6 +2973,235 @@ func (x *AddEmailProviderSMTPRequest) GetDescription() string {
 	return ""
 }
 
+func (x *AddEmailProviderSMTPRequest) GetAuth() isAddEmailProviderSMTPRequest_Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *AddEmailProviderSMTPRequest) GetNone() *SMTPNoAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*AddEmailProviderSMTPRequest_None); ok {
+			return x.None
+		}
+	}
+	return nil
+}
+
+func (x *AddEmailProviderSMTPRequest) GetPlain() *SMTPPlainAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*AddEmailProviderSMTPRequest_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *AddEmailProviderSMTPRequest) GetXoauth2() *SMTPXOAuth2Auth {
+	if x != nil {
+		if x, ok := x.Auth.(*AddEmailProviderSMTPRequest_Xoauth2); ok {
+			return x.Xoauth2
+		}
+	}
+	return nil
+}
+
+type isAddEmailProviderSMTPRequest_Auth interface {
+	isAddEmailProviderSMTPRequest_Auth()
+}
+
+type AddEmailProviderSMTPRequest_None struct {
+	None *SMTPNoAuth `protobuf:"bytes,9,opt,name=none,proto3,oneof"`
+}
+
+type AddEmailProviderSMTPRequest_Plain struct {
+	Plain *SMTPPlainAuth `protobuf:"bytes,10,opt,name=plain,proto3,oneof"`
+}
+
+type AddEmailProviderSMTPRequest_Xoauth2 struct {
+	Xoauth2 *SMTPXOAuth2Auth `protobuf:"bytes,11,opt,name=xoauth2,proto3,oneof"`
+}
+
+func (*AddEmailProviderSMTPRequest_None) isAddEmailProviderSMTPRequest_Auth() {}
+
+func (*AddEmailProviderSMTPRequest_Plain) isAddEmailProviderSMTPRequest_Auth() {}
+
+func (*AddEmailProviderSMTPRequest_Xoauth2) isAddEmailProviderSMTPRequest_Auth() {}
+
+// SMTPNoAuth can be used when no authentication is required for the SMTP connection.
+type SMTPNoAuth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPNoAuth) Reset() {
+	*x = SMTPNoAuth{}
+	mi := &file_zitadel_admin_proto_msgTypes[59]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPNoAuth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPNoAuth) ProtoMessage() {}
+
+func (x *SMTPNoAuth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_admin_proto_msgTypes[59]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPNoAuth.ProtoReflect.Descriptor instead.
+func (*SMTPNoAuth) Descriptor() ([]byte, []int) {
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{59}
+}
+
+// SMTPPlainAuth adds plain authentication to the smtp connection. The username of the parent configuration is used in
+// combination with the password in this message.
+type SMTPPlainAuth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPPlainAuth) Reset() {
+	*x = SMTPPlainAuth{}
+	mi := &file_zitadel_admin_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPPlainAuth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPPlainAuth) ProtoMessage() {}
+
+func (x *SMTPPlainAuth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_admin_proto_msgTypes[60]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPPlainAuth.ProtoReflect.Descriptor instead.
+func (*SMTPPlainAuth) Descriptor() ([]byte, []int) {
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *SMTPPlainAuth) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+// SMTPXOAuth2Auth adds XOAut2 authentication to the smtp connection. The username of the parent configuration is used
+// in combination with the other parameters of this message.
+type SMTPXOAuth2Auth struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// token_endpoint is the endpoint from which a token will be requested according to the oauth2 specification.
+	TokenEndpoint string `protobuf:"bytes,1,opt,name=token_endpoint,json=tokenEndpoint,proto3" json:"token_endpoint,omitempty"`
+	// scopes is a list of scopes which should be requested from the authorization service. To authorize a token to
+	// use the smtp functionality, the server requires a specific scope. These scopes can be found in the documentation
+	// of the provider.
+	Scopes []string `protobuf:"bytes,2,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	// OAuth2Type is a oneof used to switch between the different types of oauth2 authorization flows.
+	//
+	// Types that are valid to be assigned to OAuth2Type:
+	//
+	//	*SMTPXOAuth2Auth_ClientCredentials_
+	OAuth2Type    isSMTPXOAuth2Auth_OAuth2Type `protobuf_oneof:"OAuth2Type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPXOAuth2Auth) Reset() {
+	*x = SMTPXOAuth2Auth{}
+	mi := &file_zitadel_admin_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPXOAuth2Auth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPXOAuth2Auth) ProtoMessage() {}
+
+func (x *SMTPXOAuth2Auth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_admin_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPXOAuth2Auth.ProtoReflect.Descriptor instead.
+func (*SMTPXOAuth2Auth) Descriptor() ([]byte, []int) {
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *SMTPXOAuth2Auth) GetTokenEndpoint() string {
+	if x != nil {
+		return x.TokenEndpoint
+	}
+	return ""
+}
+
+func (x *SMTPXOAuth2Auth) GetScopes() []string {
+	if x != nil {
+		return x.Scopes
+	}
+	return nil
+}
+
+func (x *SMTPXOAuth2Auth) GetOAuth2Type() isSMTPXOAuth2Auth_OAuth2Type {
+	if x != nil {
+		return x.OAuth2Type
+	}
+	return nil
+}
+
+func (x *SMTPXOAuth2Auth) GetClientCredentials() *SMTPXOAuth2Auth_ClientCredentials {
+	if x != nil {
+		if x, ok := x.OAuth2Type.(*SMTPXOAuth2Auth_ClientCredentials_); ok {
+			return x.ClientCredentials
+		}
+	}
+	return nil
+}
+
+type isSMTPXOAuth2Auth_OAuth2Type interface {
+	isSMTPXOAuth2Auth_OAuth2Type()
+}
+
+type SMTPXOAuth2Auth_ClientCredentials_ struct {
+	ClientCredentials *SMTPXOAuth2Auth_ClientCredentials `protobuf:"bytes,3,opt,name=client_credentials,json=clientCredentials,proto3,oneof"`
+}
+
+func (*SMTPXOAuth2Auth_ClientCredentials_) isSMTPXOAuth2Auth_OAuth2Type() {}
+
 type AddEmailProviderSMTPResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Details       *object.ObjectDetails  `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
@@ -2976,7 +3212,7 @@ type AddEmailProviderSMTPResponse struct {
 
 func (x *AddEmailProviderSMTPResponse) Reset() {
 	*x = AddEmailProviderSMTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[59]
+	mi := &file_zitadel_admin_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2988,7 +3224,7 @@ func (x *AddEmailProviderSMTPResponse) String() string {
 func (*AddEmailProviderSMTPResponse) ProtoMessage() {}
 
 func (x *AddEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[59]
+	mi := &file_zitadel_admin_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3001,7 +3237,7 @@ func (x *AddEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddEmailProviderSMTPResponse.ProtoReflect.Descriptor instead.
 func (*AddEmailProviderSMTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{59}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *AddEmailProviderSMTPResponse) GetDetails() *object.ObjectDetails {
@@ -3029,13 +3265,19 @@ type UpdateEmailProviderSMTPRequest struct {
 	Password       string                 `protobuf:"bytes,7,opt,name=password,proto3" json:"password,omitempty"`
 	Description    string                 `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
 	Id             string                 `protobuf:"bytes,9,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Types that are valid to be assigned to Auth:
+	//
+	//	*UpdateEmailProviderSMTPRequest_None
+	//	*UpdateEmailProviderSMTPRequest_Plain
+	//	*UpdateEmailProviderSMTPRequest_Xoauth2
+	Auth          isUpdateEmailProviderSMTPRequest_Auth `protobuf_oneof:"Auth"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateEmailProviderSMTPRequest) Reset() {
 	*x = UpdateEmailProviderSMTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[60]
+	mi := &file_zitadel_admin_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3047,7 +3289,7 @@ func (x *UpdateEmailProviderSMTPRequest) String() string {
 func (*UpdateEmailProviderSMTPRequest) ProtoMessage() {}
 
 func (x *UpdateEmailProviderSMTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[60]
+	mi := &file_zitadel_admin_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3060,7 +3302,7 @@ func (x *UpdateEmailProviderSMTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEmailProviderSMTPRequest.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderSMTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{60}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *UpdateEmailProviderSMTPRequest) GetSenderAddress() string {
@@ -3126,6 +3368,62 @@ func (x *UpdateEmailProviderSMTPRequest) GetId() string {
 	return ""
 }
 
+func (x *UpdateEmailProviderSMTPRequest) GetAuth() isUpdateEmailProviderSMTPRequest_Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *UpdateEmailProviderSMTPRequest) GetNone() *SMTPNoAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*UpdateEmailProviderSMTPRequest_None); ok {
+			return x.None
+		}
+	}
+	return nil
+}
+
+func (x *UpdateEmailProviderSMTPRequest) GetPlain() *SMTPPlainAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*UpdateEmailProviderSMTPRequest_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *UpdateEmailProviderSMTPRequest) GetXoauth2() *SMTPXOAuth2Auth {
+	if x != nil {
+		if x, ok := x.Auth.(*UpdateEmailProviderSMTPRequest_Xoauth2); ok {
+			return x.Xoauth2
+		}
+	}
+	return nil
+}
+
+type isUpdateEmailProviderSMTPRequest_Auth interface {
+	isUpdateEmailProviderSMTPRequest_Auth()
+}
+
+type UpdateEmailProviderSMTPRequest_None struct {
+	None *SMTPNoAuth `protobuf:"bytes,10,opt,name=none,proto3,oneof"`
+}
+
+type UpdateEmailProviderSMTPRequest_Plain struct {
+	Plain *SMTPPlainAuth `protobuf:"bytes,11,opt,name=plain,proto3,oneof"`
+}
+
+type UpdateEmailProviderSMTPRequest_Xoauth2 struct {
+	Xoauth2 *SMTPXOAuth2Auth `protobuf:"bytes,12,opt,name=xoauth2,proto3,oneof"`
+}
+
+func (*UpdateEmailProviderSMTPRequest_None) isUpdateEmailProviderSMTPRequest_Auth() {}
+
+func (*UpdateEmailProviderSMTPRequest_Plain) isUpdateEmailProviderSMTPRequest_Auth() {}
+
+func (*UpdateEmailProviderSMTPRequest_Xoauth2) isUpdateEmailProviderSMTPRequest_Auth() {}
+
 type UpdateEmailProviderSMTPResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Details       *object.ObjectDetails  `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
@@ -3135,7 +3433,7 @@ type UpdateEmailProviderSMTPResponse struct {
 
 func (x *UpdateEmailProviderSMTPResponse) Reset() {
 	*x = UpdateEmailProviderSMTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[61]
+	mi := &file_zitadel_admin_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3147,7 +3445,7 @@ func (x *UpdateEmailProviderSMTPResponse) String() string {
 func (*UpdateEmailProviderSMTPResponse) ProtoMessage() {}
 
 func (x *UpdateEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[61]
+	mi := &file_zitadel_admin_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3160,7 +3458,7 @@ func (x *UpdateEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEmailProviderSMTPResponse.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderSMTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{61}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *UpdateEmailProviderSMTPResponse) GetDetails() *object.ObjectDetails {
@@ -3180,7 +3478,7 @@ type UpdateEmailProviderSMTPPasswordRequest struct {
 
 func (x *UpdateEmailProviderSMTPPasswordRequest) Reset() {
 	*x = UpdateEmailProviderSMTPPasswordRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[62]
+	mi := &file_zitadel_admin_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3192,7 +3490,7 @@ func (x *UpdateEmailProviderSMTPPasswordRequest) String() string {
 func (*UpdateEmailProviderSMTPPasswordRequest) ProtoMessage() {}
 
 func (x *UpdateEmailProviderSMTPPasswordRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[62]
+	mi := &file_zitadel_admin_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3205,7 +3503,7 @@ func (x *UpdateEmailProviderSMTPPasswordRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use UpdateEmailProviderSMTPPasswordRequest.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderSMTPPasswordRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{62}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *UpdateEmailProviderSMTPPasswordRequest) GetPassword() string {
@@ -3231,7 +3529,7 @@ type UpdateEmailProviderSMTPPasswordResponse struct {
 
 func (x *UpdateEmailProviderSMTPPasswordResponse) Reset() {
 	*x = UpdateEmailProviderSMTPPasswordResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[63]
+	mi := &file_zitadel_admin_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3243,7 +3541,7 @@ func (x *UpdateEmailProviderSMTPPasswordResponse) String() string {
 func (*UpdateEmailProviderSMTPPasswordResponse) ProtoMessage() {}
 
 func (x *UpdateEmailProviderSMTPPasswordResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[63]
+	mi := &file_zitadel_admin_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3256,7 +3554,7 @@ func (x *UpdateEmailProviderSMTPPasswordResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use UpdateEmailProviderSMTPPasswordResponse.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderSMTPPasswordResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{63}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *UpdateEmailProviderSMTPPasswordResponse) GetDetails() *object.ObjectDetails {
@@ -3276,7 +3574,7 @@ type AddEmailProviderHTTPRequest struct {
 
 func (x *AddEmailProviderHTTPRequest) Reset() {
 	*x = AddEmailProviderHTTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[64]
+	mi := &file_zitadel_admin_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3288,7 +3586,7 @@ func (x *AddEmailProviderHTTPRequest) String() string {
 func (*AddEmailProviderHTTPRequest) ProtoMessage() {}
 
 func (x *AddEmailProviderHTTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[64]
+	mi := &file_zitadel_admin_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3301,7 +3599,7 @@ func (x *AddEmailProviderHTTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddEmailProviderHTTPRequest.ProtoReflect.Descriptor instead.
 func (*AddEmailProviderHTTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{64}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *AddEmailProviderHTTPRequest) GetEndpoint() string {
@@ -3330,7 +3628,7 @@ type AddEmailProviderHTTPResponse struct {
 
 func (x *AddEmailProviderHTTPResponse) Reset() {
 	*x = AddEmailProviderHTTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[65]
+	mi := &file_zitadel_admin_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3342,7 +3640,7 @@ func (x *AddEmailProviderHTTPResponse) String() string {
 func (*AddEmailProviderHTTPResponse) ProtoMessage() {}
 
 func (x *AddEmailProviderHTTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[65]
+	mi := &file_zitadel_admin_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3355,7 +3653,7 @@ func (x *AddEmailProviderHTTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddEmailProviderHTTPResponse.ProtoReflect.Descriptor instead.
 func (*AddEmailProviderHTTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{65}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *AddEmailProviderHTTPResponse) GetDetails() *object.ObjectDetails {
@@ -3398,7 +3696,7 @@ type UpdateEmailProviderHTTPRequest struct {
 
 func (x *UpdateEmailProviderHTTPRequest) Reset() {
 	*x = UpdateEmailProviderHTTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[66]
+	mi := &file_zitadel_admin_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3410,7 +3708,7 @@ func (x *UpdateEmailProviderHTTPRequest) String() string {
 func (*UpdateEmailProviderHTTPRequest) ProtoMessage() {}
 
 func (x *UpdateEmailProviderHTTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[66]
+	mi := &file_zitadel_admin_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3423,7 +3721,7 @@ func (x *UpdateEmailProviderHTTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEmailProviderHTTPRequest.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderHTTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{66}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *UpdateEmailProviderHTTPRequest) GetId() string {
@@ -3465,7 +3763,7 @@ type UpdateEmailProviderHTTPResponse struct {
 
 func (x *UpdateEmailProviderHTTPResponse) Reset() {
 	*x = UpdateEmailProviderHTTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[67]
+	mi := &file_zitadel_admin_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3477,7 +3775,7 @@ func (x *UpdateEmailProviderHTTPResponse) String() string {
 func (*UpdateEmailProviderHTTPResponse) ProtoMessage() {}
 
 func (x *UpdateEmailProviderHTTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[67]
+	mi := &file_zitadel_admin_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3490,7 +3788,7 @@ func (x *UpdateEmailProviderHTTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateEmailProviderHTTPResponse.ProtoReflect.Descriptor instead.
 func (*UpdateEmailProviderHTTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{67}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *UpdateEmailProviderHTTPResponse) GetDetails() *object.ObjectDetails {
@@ -3516,7 +3814,7 @@ type ActivateEmailProviderRequest struct {
 
 func (x *ActivateEmailProviderRequest) Reset() {
 	*x = ActivateEmailProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[68]
+	mi := &file_zitadel_admin_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3528,7 +3826,7 @@ func (x *ActivateEmailProviderRequest) String() string {
 func (*ActivateEmailProviderRequest) ProtoMessage() {}
 
 func (x *ActivateEmailProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[68]
+	mi := &file_zitadel_admin_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3541,7 +3839,7 @@ func (x *ActivateEmailProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateEmailProviderRequest.ProtoReflect.Descriptor instead.
 func (*ActivateEmailProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{68}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *ActivateEmailProviderRequest) GetId() string {
@@ -3560,7 +3858,7 @@ type ActivateEmailProviderResponse struct {
 
 func (x *ActivateEmailProviderResponse) Reset() {
 	*x = ActivateEmailProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[69]
+	mi := &file_zitadel_admin_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3572,7 +3870,7 @@ func (x *ActivateEmailProviderResponse) String() string {
 func (*ActivateEmailProviderResponse) ProtoMessage() {}
 
 func (x *ActivateEmailProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[69]
+	mi := &file_zitadel_admin_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3585,7 +3883,7 @@ func (x *ActivateEmailProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateEmailProviderResponse.ProtoReflect.Descriptor instead.
 func (*ActivateEmailProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{69}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *ActivateEmailProviderResponse) GetDetails() *object.ObjectDetails {
@@ -3604,7 +3902,7 @@ type DeactivateEmailProviderRequest struct {
 
 func (x *DeactivateEmailProviderRequest) Reset() {
 	*x = DeactivateEmailProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[70]
+	mi := &file_zitadel_admin_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3616,7 +3914,7 @@ func (x *DeactivateEmailProviderRequest) String() string {
 func (*DeactivateEmailProviderRequest) ProtoMessage() {}
 
 func (x *DeactivateEmailProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[70]
+	mi := &file_zitadel_admin_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3629,7 +3927,7 @@ func (x *DeactivateEmailProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateEmailProviderRequest.ProtoReflect.Descriptor instead.
 func (*DeactivateEmailProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{70}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *DeactivateEmailProviderRequest) GetId() string {
@@ -3648,7 +3946,7 @@ type DeactivateEmailProviderResponse struct {
 
 func (x *DeactivateEmailProviderResponse) Reset() {
 	*x = DeactivateEmailProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[71]
+	mi := &file_zitadel_admin_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3660,7 +3958,7 @@ func (x *DeactivateEmailProviderResponse) String() string {
 func (*DeactivateEmailProviderResponse) ProtoMessage() {}
 
 func (x *DeactivateEmailProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[71]
+	mi := &file_zitadel_admin_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3673,7 +3971,7 @@ func (x *DeactivateEmailProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateEmailProviderResponse.ProtoReflect.Descriptor instead.
 func (*DeactivateEmailProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{71}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *DeactivateEmailProviderResponse) GetDetails() *object.ObjectDetails {
@@ -3692,7 +3990,7 @@ type RemoveEmailProviderRequest struct {
 
 func (x *RemoveEmailProviderRequest) Reset() {
 	*x = RemoveEmailProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[72]
+	mi := &file_zitadel_admin_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3704,7 +4002,7 @@ func (x *RemoveEmailProviderRequest) String() string {
 func (*RemoveEmailProviderRequest) ProtoMessage() {}
 
 func (x *RemoveEmailProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[72]
+	mi := &file_zitadel_admin_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3717,7 +4015,7 @@ func (x *RemoveEmailProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveEmailProviderRequest.ProtoReflect.Descriptor instead.
 func (*RemoveEmailProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{72}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *RemoveEmailProviderRequest) GetId() string {
@@ -3736,7 +4034,7 @@ type RemoveEmailProviderResponse struct {
 
 func (x *RemoveEmailProviderResponse) Reset() {
 	*x = RemoveEmailProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[73]
+	mi := &file_zitadel_admin_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3748,7 +4046,7 @@ func (x *RemoveEmailProviderResponse) String() string {
 func (*RemoveEmailProviderResponse) ProtoMessage() {}
 
 func (x *RemoveEmailProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[73]
+	mi := &file_zitadel_admin_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3761,7 +4059,7 @@ func (x *RemoveEmailProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveEmailProviderResponse.ProtoReflect.Descriptor instead.
 func (*RemoveEmailProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{73}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *RemoveEmailProviderResponse) GetDetails() *object.ObjectDetails {
@@ -3781,7 +4079,7 @@ type TestEmailProviderSMTPByIdRequest struct {
 
 func (x *TestEmailProviderSMTPByIdRequest) Reset() {
 	*x = TestEmailProviderSMTPByIdRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[74]
+	mi := &file_zitadel_admin_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3793,7 +4091,7 @@ func (x *TestEmailProviderSMTPByIdRequest) String() string {
 func (*TestEmailProviderSMTPByIdRequest) ProtoMessage() {}
 
 func (x *TestEmailProviderSMTPByIdRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[74]
+	mi := &file_zitadel_admin_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3806,7 +4104,7 @@ func (x *TestEmailProviderSMTPByIdRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestEmailProviderSMTPByIdRequest.ProtoReflect.Descriptor instead.
 func (*TestEmailProviderSMTPByIdRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{74}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *TestEmailProviderSMTPByIdRequest) GetId() string {
@@ -3832,7 +4130,7 @@ type TestEmailProviderSMTPByIdResponse struct {
 
 func (x *TestEmailProviderSMTPByIdResponse) Reset() {
 	*x = TestEmailProviderSMTPByIdResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[75]
+	mi := &file_zitadel_admin_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3844,7 +4142,7 @@ func (x *TestEmailProviderSMTPByIdResponse) String() string {
 func (*TestEmailProviderSMTPByIdResponse) ProtoMessage() {}
 
 func (x *TestEmailProviderSMTPByIdResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[75]
+	mi := &file_zitadel_admin_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3857,7 +4155,7 @@ func (x *TestEmailProviderSMTPByIdResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use TestEmailProviderSMTPByIdResponse.ProtoReflect.Descriptor instead.
 func (*TestEmailProviderSMTPByIdResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{75}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{78}
 }
 
 type TestEmailProviderSMTPRequest struct {
@@ -3870,13 +4168,19 @@ type TestEmailProviderSMTPRequest struct {
 	Password        string                 `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`
 	ReceiverAddress string                 `protobuf:"bytes,7,opt,name=receiver_address,json=receiverAddress,proto3" json:"receiver_address,omitempty"`
 	Id              string                 `protobuf:"bytes,8,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Types that are valid to be assigned to Auth:
+	//
+	//	*TestEmailProviderSMTPRequest_None
+	//	*TestEmailProviderSMTPRequest_Plain
+	//	*TestEmailProviderSMTPRequest_Xoauth2
+	Auth          isTestEmailProviderSMTPRequest_Auth `protobuf_oneof:"Auth"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TestEmailProviderSMTPRequest) Reset() {
 	*x = TestEmailProviderSMTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[76]
+	mi := &file_zitadel_admin_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3888,7 +4192,7 @@ func (x *TestEmailProviderSMTPRequest) String() string {
 func (*TestEmailProviderSMTPRequest) ProtoMessage() {}
 
 func (x *TestEmailProviderSMTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[76]
+	mi := &file_zitadel_admin_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3901,7 +4205,7 @@ func (x *TestEmailProviderSMTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestEmailProviderSMTPRequest.ProtoReflect.Descriptor instead.
 func (*TestEmailProviderSMTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{76}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *TestEmailProviderSMTPRequest) GetSenderAddress() string {
@@ -3960,6 +4264,62 @@ func (x *TestEmailProviderSMTPRequest) GetId() string {
 	return ""
 }
 
+func (x *TestEmailProviderSMTPRequest) GetAuth() isTestEmailProviderSMTPRequest_Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *TestEmailProviderSMTPRequest) GetNone() *SMTPNoAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*TestEmailProviderSMTPRequest_None); ok {
+			return x.None
+		}
+	}
+	return nil
+}
+
+func (x *TestEmailProviderSMTPRequest) GetPlain() *SMTPPlainAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*TestEmailProviderSMTPRequest_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *TestEmailProviderSMTPRequest) GetXoauth2() *SMTPXOAuth2Auth {
+	if x != nil {
+		if x, ok := x.Auth.(*TestEmailProviderSMTPRequest_Xoauth2); ok {
+			return x.Xoauth2
+		}
+	}
+	return nil
+}
+
+type isTestEmailProviderSMTPRequest_Auth interface {
+	isTestEmailProviderSMTPRequest_Auth()
+}
+
+type TestEmailProviderSMTPRequest_None struct {
+	None *SMTPNoAuth `protobuf:"bytes,9,opt,name=none,proto3,oneof"`
+}
+
+type TestEmailProviderSMTPRequest_Plain struct {
+	Plain *SMTPPlainAuth `protobuf:"bytes,10,opt,name=plain,proto3,oneof"`
+}
+
+type TestEmailProviderSMTPRequest_Xoauth2 struct {
+	Xoauth2 *SMTPXOAuth2Auth `protobuf:"bytes,11,opt,name=xoauth2,proto3,oneof"`
+}
+
+func (*TestEmailProviderSMTPRequest_None) isTestEmailProviderSMTPRequest_Auth() {}
+
+func (*TestEmailProviderSMTPRequest_Plain) isTestEmailProviderSMTPRequest_Auth() {}
+
+func (*TestEmailProviderSMTPRequest_Xoauth2) isTestEmailProviderSMTPRequest_Auth() {}
+
 // This is an empty response
 type TestEmailProviderSMTPResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -3969,7 +4329,7 @@ type TestEmailProviderSMTPResponse struct {
 
 func (x *TestEmailProviderSMTPResponse) Reset() {
 	*x = TestEmailProviderSMTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[77]
+	mi := &file_zitadel_admin_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3981,7 +4341,7 @@ func (x *TestEmailProviderSMTPResponse) String() string {
 func (*TestEmailProviderSMTPResponse) ProtoMessage() {}
 
 func (x *TestEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[77]
+	mi := &file_zitadel_admin_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3994,7 +4354,7 @@ func (x *TestEmailProviderSMTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestEmailProviderSMTPResponse.ProtoReflect.Descriptor instead.
 func (*TestEmailProviderSMTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{77}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{80}
 }
 
 type ListSMSProvidersRequest struct {
@@ -4007,7 +4367,7 @@ type ListSMSProvidersRequest struct {
 
 func (x *ListSMSProvidersRequest) Reset() {
 	*x = ListSMSProvidersRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[78]
+	mi := &file_zitadel_admin_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4019,7 +4379,7 @@ func (x *ListSMSProvidersRequest) String() string {
 func (*ListSMSProvidersRequest) ProtoMessage() {}
 
 func (x *ListSMSProvidersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[78]
+	mi := &file_zitadel_admin_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4032,7 +4392,7 @@ func (x *ListSMSProvidersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSMSProvidersRequest.ProtoReflect.Descriptor instead.
 func (*ListSMSProvidersRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{78}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *ListSMSProvidersRequest) GetQuery() *object.ListQuery {
@@ -4052,7 +4412,7 @@ type ListSMSProvidersResponse struct {
 
 func (x *ListSMSProvidersResponse) Reset() {
 	*x = ListSMSProvidersResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[79]
+	mi := &file_zitadel_admin_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4064,7 +4424,7 @@ func (x *ListSMSProvidersResponse) String() string {
 func (*ListSMSProvidersResponse) ProtoMessage() {}
 
 func (x *ListSMSProvidersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[79]
+	mi := &file_zitadel_admin_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4077,7 +4437,7 @@ func (x *ListSMSProvidersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSMSProvidersResponse.ProtoReflect.Descriptor instead.
 func (*ListSMSProvidersResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{79}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *ListSMSProvidersResponse) GetDetails() *object.ListDetails {
@@ -4103,7 +4463,7 @@ type GetSMSProviderRequest struct {
 
 func (x *GetSMSProviderRequest) Reset() {
 	*x = GetSMSProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[80]
+	mi := &file_zitadel_admin_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4115,7 +4475,7 @@ func (x *GetSMSProviderRequest) String() string {
 func (*GetSMSProviderRequest) ProtoMessage() {}
 
 func (x *GetSMSProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[80]
+	mi := &file_zitadel_admin_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4128,7 +4488,7 @@ func (x *GetSMSProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSMSProviderRequest.ProtoReflect.Descriptor instead.
 func (*GetSMSProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{80}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *GetSMSProviderRequest) GetId() string {
@@ -4147,7 +4507,7 @@ type GetSMSProviderResponse struct {
 
 func (x *GetSMSProviderResponse) Reset() {
 	*x = GetSMSProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[81]
+	mi := &file_zitadel_admin_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4159,7 +4519,7 @@ func (x *GetSMSProviderResponse) String() string {
 func (*GetSMSProviderResponse) ProtoMessage() {}
 
 func (x *GetSMSProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[81]
+	mi := &file_zitadel_admin_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4172,7 +4532,7 @@ func (x *GetSMSProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSMSProviderResponse.ProtoReflect.Descriptor instead.
 func (*GetSMSProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{81}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *GetSMSProviderResponse) GetConfig() *settings.SMSProvider {
@@ -4195,7 +4555,7 @@ type AddSMSProviderTwilioRequest struct {
 
 func (x *AddSMSProviderTwilioRequest) Reset() {
 	*x = AddSMSProviderTwilioRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[82]
+	mi := &file_zitadel_admin_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4207,7 +4567,7 @@ func (x *AddSMSProviderTwilioRequest) String() string {
 func (*AddSMSProviderTwilioRequest) ProtoMessage() {}
 
 func (x *AddSMSProviderTwilioRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[82]
+	mi := &file_zitadel_admin_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4220,7 +4580,7 @@ func (x *AddSMSProviderTwilioRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSMSProviderTwilioRequest.ProtoReflect.Descriptor instead.
 func (*AddSMSProviderTwilioRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{82}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *AddSMSProviderTwilioRequest) GetSid() string {
@@ -4268,7 +4628,7 @@ type AddSMSProviderTwilioResponse struct {
 
 func (x *AddSMSProviderTwilioResponse) Reset() {
 	*x = AddSMSProviderTwilioResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[83]
+	mi := &file_zitadel_admin_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4280,7 +4640,7 @@ func (x *AddSMSProviderTwilioResponse) String() string {
 func (*AddSMSProviderTwilioResponse) ProtoMessage() {}
 
 func (x *AddSMSProviderTwilioResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[83]
+	mi := &file_zitadel_admin_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4293,7 +4653,7 @@ func (x *AddSMSProviderTwilioResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSMSProviderTwilioResponse.ProtoReflect.Descriptor instead.
 func (*AddSMSProviderTwilioResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{83}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *AddSMSProviderTwilioResponse) GetDetails() *object.ObjectDetails {
@@ -4323,7 +4683,7 @@ type UpdateSMSProviderTwilioRequest struct {
 
 func (x *UpdateSMSProviderTwilioRequest) Reset() {
 	*x = UpdateSMSProviderTwilioRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[84]
+	mi := &file_zitadel_admin_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4335,7 +4695,7 @@ func (x *UpdateSMSProviderTwilioRequest) String() string {
 func (*UpdateSMSProviderTwilioRequest) ProtoMessage() {}
 
 func (x *UpdateSMSProviderTwilioRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[84]
+	mi := &file_zitadel_admin_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4348,7 +4708,7 @@ func (x *UpdateSMSProviderTwilioRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSMSProviderTwilioRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderTwilioRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{84}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *UpdateSMSProviderTwilioRequest) GetId() string {
@@ -4395,7 +4755,7 @@ type UpdateSMSProviderTwilioResponse struct {
 
 func (x *UpdateSMSProviderTwilioResponse) Reset() {
 	*x = UpdateSMSProviderTwilioResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[85]
+	mi := &file_zitadel_admin_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4407,7 +4767,7 @@ func (x *UpdateSMSProviderTwilioResponse) String() string {
 func (*UpdateSMSProviderTwilioResponse) ProtoMessage() {}
 
 func (x *UpdateSMSProviderTwilioResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[85]
+	mi := &file_zitadel_admin_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4420,7 +4780,7 @@ func (x *UpdateSMSProviderTwilioResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSMSProviderTwilioResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderTwilioResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{85}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *UpdateSMSProviderTwilioResponse) GetDetails() *object.ObjectDetails {
@@ -4440,7 +4800,7 @@ type UpdateSMSProviderTwilioTokenRequest struct {
 
 func (x *UpdateSMSProviderTwilioTokenRequest) Reset() {
 	*x = UpdateSMSProviderTwilioTokenRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[86]
+	mi := &file_zitadel_admin_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4452,7 +4812,7 @@ func (x *UpdateSMSProviderTwilioTokenRequest) String() string {
 func (*UpdateSMSProviderTwilioTokenRequest) ProtoMessage() {}
 
 func (x *UpdateSMSProviderTwilioTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[86]
+	mi := &file_zitadel_admin_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4465,7 +4825,7 @@ func (x *UpdateSMSProviderTwilioTokenRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use UpdateSMSProviderTwilioTokenRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderTwilioTokenRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{86}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *UpdateSMSProviderTwilioTokenRequest) GetId() string {
@@ -4491,7 +4851,7 @@ type UpdateSMSProviderTwilioTokenResponse struct {
 
 func (x *UpdateSMSProviderTwilioTokenResponse) Reset() {
 	*x = UpdateSMSProviderTwilioTokenResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[87]
+	mi := &file_zitadel_admin_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4503,7 +4863,7 @@ func (x *UpdateSMSProviderTwilioTokenResponse) String() string {
 func (*UpdateSMSProviderTwilioTokenResponse) ProtoMessage() {}
 
 func (x *UpdateSMSProviderTwilioTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[87]
+	mi := &file_zitadel_admin_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4516,7 +4876,7 @@ func (x *UpdateSMSProviderTwilioTokenResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use UpdateSMSProviderTwilioTokenResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderTwilioTokenResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{87}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *UpdateSMSProviderTwilioTokenResponse) GetDetails() *object.ObjectDetails {
@@ -4536,7 +4896,7 @@ type AddSMSProviderHTTPRequest struct {
 
 func (x *AddSMSProviderHTTPRequest) Reset() {
 	*x = AddSMSProviderHTTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[88]
+	mi := &file_zitadel_admin_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4548,7 +4908,7 @@ func (x *AddSMSProviderHTTPRequest) String() string {
 func (*AddSMSProviderHTTPRequest) ProtoMessage() {}
 
 func (x *AddSMSProviderHTTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[88]
+	mi := &file_zitadel_admin_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4561,7 +4921,7 @@ func (x *AddSMSProviderHTTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSMSProviderHTTPRequest.ProtoReflect.Descriptor instead.
 func (*AddSMSProviderHTTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{88}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *AddSMSProviderHTTPRequest) GetEndpoint() string {
@@ -4590,7 +4950,7 @@ type AddSMSProviderHTTPResponse struct {
 
 func (x *AddSMSProviderHTTPResponse) Reset() {
 	*x = AddSMSProviderHTTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[89]
+	mi := &file_zitadel_admin_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4602,7 +4962,7 @@ func (x *AddSMSProviderHTTPResponse) String() string {
 func (*AddSMSProviderHTTPResponse) ProtoMessage() {}
 
 func (x *AddSMSProviderHTTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[89]
+	mi := &file_zitadel_admin_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4615,7 +4975,7 @@ func (x *AddSMSProviderHTTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSMSProviderHTTPResponse.ProtoReflect.Descriptor instead.
 func (*AddSMSProviderHTTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{89}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *AddSMSProviderHTTPResponse) GetDetails() *object.ObjectDetails {
@@ -4658,7 +5018,7 @@ type UpdateSMSProviderHTTPRequest struct {
 
 func (x *UpdateSMSProviderHTTPRequest) Reset() {
 	*x = UpdateSMSProviderHTTPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[90]
+	mi := &file_zitadel_admin_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4670,7 +5030,7 @@ func (x *UpdateSMSProviderHTTPRequest) String() string {
 func (*UpdateSMSProviderHTTPRequest) ProtoMessage() {}
 
 func (x *UpdateSMSProviderHTTPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[90]
+	mi := &file_zitadel_admin_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4683,7 +5043,7 @@ func (x *UpdateSMSProviderHTTPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSMSProviderHTTPRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderHTTPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{90}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *UpdateSMSProviderHTTPRequest) GetId() string {
@@ -4724,7 +5084,7 @@ type UpdateSMSProviderHTTPResponse struct {
 
 func (x *UpdateSMSProviderHTTPResponse) Reset() {
 	*x = UpdateSMSProviderHTTPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[91]
+	mi := &file_zitadel_admin_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4736,7 +5096,7 @@ func (x *UpdateSMSProviderHTTPResponse) String() string {
 func (*UpdateSMSProviderHTTPResponse) ProtoMessage() {}
 
 func (x *UpdateSMSProviderHTTPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[91]
+	mi := &file_zitadel_admin_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4749,7 +5109,7 @@ func (x *UpdateSMSProviderHTTPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSMSProviderHTTPResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSMSProviderHTTPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{91}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *UpdateSMSProviderHTTPResponse) GetDetails() *object.ObjectDetails {
@@ -4775,7 +5135,7 @@ type ActivateSMSProviderRequest struct {
 
 func (x *ActivateSMSProviderRequest) Reset() {
 	*x = ActivateSMSProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[92]
+	mi := &file_zitadel_admin_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4787,7 +5147,7 @@ func (x *ActivateSMSProviderRequest) String() string {
 func (*ActivateSMSProviderRequest) ProtoMessage() {}
 
 func (x *ActivateSMSProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[92]
+	mi := &file_zitadel_admin_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4800,7 +5160,7 @@ func (x *ActivateSMSProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateSMSProviderRequest.ProtoReflect.Descriptor instead.
 func (*ActivateSMSProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{92}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *ActivateSMSProviderRequest) GetId() string {
@@ -4819,7 +5179,7 @@ type ActivateSMSProviderResponse struct {
 
 func (x *ActivateSMSProviderResponse) Reset() {
 	*x = ActivateSMSProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[93]
+	mi := &file_zitadel_admin_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4831,7 +5191,7 @@ func (x *ActivateSMSProviderResponse) String() string {
 func (*ActivateSMSProviderResponse) ProtoMessage() {}
 
 func (x *ActivateSMSProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[93]
+	mi := &file_zitadel_admin_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4844,7 +5204,7 @@ func (x *ActivateSMSProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateSMSProviderResponse.ProtoReflect.Descriptor instead.
 func (*ActivateSMSProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{93}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *ActivateSMSProviderResponse) GetDetails() *object.ObjectDetails {
@@ -4863,7 +5223,7 @@ type DeactivateSMSProviderRequest struct {
 
 func (x *DeactivateSMSProviderRequest) Reset() {
 	*x = DeactivateSMSProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[94]
+	mi := &file_zitadel_admin_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4875,7 +5235,7 @@ func (x *DeactivateSMSProviderRequest) String() string {
 func (*DeactivateSMSProviderRequest) ProtoMessage() {}
 
 func (x *DeactivateSMSProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[94]
+	mi := &file_zitadel_admin_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4888,7 +5248,7 @@ func (x *DeactivateSMSProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateSMSProviderRequest.ProtoReflect.Descriptor instead.
 func (*DeactivateSMSProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{94}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *DeactivateSMSProviderRequest) GetId() string {
@@ -4907,7 +5267,7 @@ type DeactivateSMSProviderResponse struct {
 
 func (x *DeactivateSMSProviderResponse) Reset() {
 	*x = DeactivateSMSProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[95]
+	mi := &file_zitadel_admin_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4919,7 +5279,7 @@ func (x *DeactivateSMSProviderResponse) String() string {
 func (*DeactivateSMSProviderResponse) ProtoMessage() {}
 
 func (x *DeactivateSMSProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[95]
+	mi := &file_zitadel_admin_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4932,7 +5292,7 @@ func (x *DeactivateSMSProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateSMSProviderResponse.ProtoReflect.Descriptor instead.
 func (*DeactivateSMSProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{95}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *DeactivateSMSProviderResponse) GetDetails() *object.ObjectDetails {
@@ -4951,7 +5311,7 @@ type RemoveSMSProviderRequest struct {
 
 func (x *RemoveSMSProviderRequest) Reset() {
 	*x = RemoveSMSProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[96]
+	mi := &file_zitadel_admin_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4963,7 +5323,7 @@ func (x *RemoveSMSProviderRequest) String() string {
 func (*RemoveSMSProviderRequest) ProtoMessage() {}
 
 func (x *RemoveSMSProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[96]
+	mi := &file_zitadel_admin_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4976,7 +5336,7 @@ func (x *RemoveSMSProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveSMSProviderRequest.ProtoReflect.Descriptor instead.
 func (*RemoveSMSProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{96}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *RemoveSMSProviderRequest) GetId() string {
@@ -4995,7 +5355,7 @@ type RemoveSMSProviderResponse struct {
 
 func (x *RemoveSMSProviderResponse) Reset() {
 	*x = RemoveSMSProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[97]
+	mi := &file_zitadel_admin_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5007,7 +5367,7 @@ func (x *RemoveSMSProviderResponse) String() string {
 func (*RemoveSMSProviderResponse) ProtoMessage() {}
 
 func (x *RemoveSMSProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[97]
+	mi := &file_zitadel_admin_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5020,7 +5380,7 @@ func (x *RemoveSMSProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveSMSProviderResponse.ProtoReflect.Descriptor instead.
 func (*RemoveSMSProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{97}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *RemoveSMSProviderResponse) GetDetails() *object.ObjectDetails {
@@ -5039,7 +5399,7 @@ type GetFileSystemNotificationProviderRequest struct {
 
 func (x *GetFileSystemNotificationProviderRequest) Reset() {
 	*x = GetFileSystemNotificationProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[98]
+	mi := &file_zitadel_admin_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5051,7 +5411,7 @@ func (x *GetFileSystemNotificationProviderRequest) String() string {
 func (*GetFileSystemNotificationProviderRequest) ProtoMessage() {}
 
 func (x *GetFileSystemNotificationProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[98]
+	mi := &file_zitadel_admin_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5064,7 +5424,7 @@ func (x *GetFileSystemNotificationProviderRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetFileSystemNotificationProviderRequest.ProtoReflect.Descriptor instead.
 func (*GetFileSystemNotificationProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{98}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{101}
 }
 
 type GetFileSystemNotificationProviderResponse struct {
@@ -5076,7 +5436,7 @@ type GetFileSystemNotificationProviderResponse struct {
 
 func (x *GetFileSystemNotificationProviderResponse) Reset() {
 	*x = GetFileSystemNotificationProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[99]
+	mi := &file_zitadel_admin_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5088,7 +5448,7 @@ func (x *GetFileSystemNotificationProviderResponse) String() string {
 func (*GetFileSystemNotificationProviderResponse) ProtoMessage() {}
 
 func (x *GetFileSystemNotificationProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[99]
+	mi := &file_zitadel_admin_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5101,7 +5461,7 @@ func (x *GetFileSystemNotificationProviderResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetFileSystemNotificationProviderResponse.ProtoReflect.Descriptor instead.
 func (*GetFileSystemNotificationProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{99}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *GetFileSystemNotificationProviderResponse) GetProvider() *settings.DebugNotificationProvider {
@@ -5120,7 +5480,7 @@ type GetLogNotificationProviderRequest struct {
 
 func (x *GetLogNotificationProviderRequest) Reset() {
 	*x = GetLogNotificationProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[100]
+	mi := &file_zitadel_admin_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5132,7 +5492,7 @@ func (x *GetLogNotificationProviderRequest) String() string {
 func (*GetLogNotificationProviderRequest) ProtoMessage() {}
 
 func (x *GetLogNotificationProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[100]
+	mi := &file_zitadel_admin_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5145,7 +5505,7 @@ func (x *GetLogNotificationProviderRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetLogNotificationProviderRequest.ProtoReflect.Descriptor instead.
 func (*GetLogNotificationProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{100}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{103}
 }
 
 type GetLogNotificationProviderResponse struct {
@@ -5157,7 +5517,7 @@ type GetLogNotificationProviderResponse struct {
 
 func (x *GetLogNotificationProviderResponse) Reset() {
 	*x = GetLogNotificationProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[101]
+	mi := &file_zitadel_admin_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5169,7 +5529,7 @@ func (x *GetLogNotificationProviderResponse) String() string {
 func (*GetLogNotificationProviderResponse) ProtoMessage() {}
 
 func (x *GetLogNotificationProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[101]
+	mi := &file_zitadel_admin_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5182,7 +5542,7 @@ func (x *GetLogNotificationProviderResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetLogNotificationProviderResponse.ProtoReflect.Descriptor instead.
 func (*GetLogNotificationProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{101}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *GetLogNotificationProviderResponse) GetProvider() *settings.DebugNotificationProvider {
@@ -5201,7 +5561,7 @@ type GetOIDCSettingsRequest struct {
 
 func (x *GetOIDCSettingsRequest) Reset() {
 	*x = GetOIDCSettingsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[102]
+	mi := &file_zitadel_admin_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5213,7 +5573,7 @@ func (x *GetOIDCSettingsRequest) String() string {
 func (*GetOIDCSettingsRequest) ProtoMessage() {}
 
 func (x *GetOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[102]
+	mi := &file_zitadel_admin_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5226,7 +5586,7 @@ func (x *GetOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOIDCSettingsRequest.ProtoReflect.Descriptor instead.
 func (*GetOIDCSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{102}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{105}
 }
 
 type GetOIDCSettingsResponse struct {
@@ -5238,7 +5598,7 @@ type GetOIDCSettingsResponse struct {
 
 func (x *GetOIDCSettingsResponse) Reset() {
 	*x = GetOIDCSettingsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[103]
+	mi := &file_zitadel_admin_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5250,7 +5610,7 @@ func (x *GetOIDCSettingsResponse) String() string {
 func (*GetOIDCSettingsResponse) ProtoMessage() {}
 
 func (x *GetOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[103]
+	mi := &file_zitadel_admin_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5263,7 +5623,7 @@ func (x *GetOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOIDCSettingsResponse.ProtoReflect.Descriptor instead.
 func (*GetOIDCSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{103}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *GetOIDCSettingsResponse) GetSettings() *settings.OIDCSettings {
@@ -5285,7 +5645,7 @@ type AddOIDCSettingsRequest struct {
 
 func (x *AddOIDCSettingsRequest) Reset() {
 	*x = AddOIDCSettingsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[104]
+	mi := &file_zitadel_admin_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5297,7 +5657,7 @@ func (x *AddOIDCSettingsRequest) String() string {
 func (*AddOIDCSettingsRequest) ProtoMessage() {}
 
 func (x *AddOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[104]
+	mi := &file_zitadel_admin_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5310,7 +5670,7 @@ func (x *AddOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOIDCSettingsRequest.ProtoReflect.Descriptor instead.
 func (*AddOIDCSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{104}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *AddOIDCSettingsRequest) GetAccessTokenLifetime() *durationpb.Duration {
@@ -5350,7 +5710,7 @@ type AddOIDCSettingsResponse struct {
 
 func (x *AddOIDCSettingsResponse) Reset() {
 	*x = AddOIDCSettingsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[105]
+	mi := &file_zitadel_admin_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5362,7 +5722,7 @@ func (x *AddOIDCSettingsResponse) String() string {
 func (*AddOIDCSettingsResponse) ProtoMessage() {}
 
 func (x *AddOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[105]
+	mi := &file_zitadel_admin_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5375,7 +5735,7 @@ func (x *AddOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOIDCSettingsResponse.ProtoReflect.Descriptor instead.
 func (*AddOIDCSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{105}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *AddOIDCSettingsResponse) GetDetails() *object.ObjectDetails {
@@ -5397,7 +5757,7 @@ type UpdateOIDCSettingsRequest struct {
 
 func (x *UpdateOIDCSettingsRequest) Reset() {
 	*x = UpdateOIDCSettingsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[106]
+	mi := &file_zitadel_admin_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5409,7 +5769,7 @@ func (x *UpdateOIDCSettingsRequest) String() string {
 func (*UpdateOIDCSettingsRequest) ProtoMessage() {}
 
 func (x *UpdateOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[106]
+	mi := &file_zitadel_admin_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5422,7 +5782,7 @@ func (x *UpdateOIDCSettingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOIDCSettingsRequest.ProtoReflect.Descriptor instead.
 func (*UpdateOIDCSettingsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{106}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *UpdateOIDCSettingsRequest) GetAccessTokenLifetime() *durationpb.Duration {
@@ -5462,7 +5822,7 @@ type UpdateOIDCSettingsResponse struct {
 
 func (x *UpdateOIDCSettingsResponse) Reset() {
 	*x = UpdateOIDCSettingsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[107]
+	mi := &file_zitadel_admin_proto_msgTypes[110]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5474,7 +5834,7 @@ func (x *UpdateOIDCSettingsResponse) String() string {
 func (*UpdateOIDCSettingsResponse) ProtoMessage() {}
 
 func (x *UpdateOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[107]
+	mi := &file_zitadel_admin_proto_msgTypes[110]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5487,7 +5847,7 @@ func (x *UpdateOIDCSettingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOIDCSettingsResponse.ProtoReflect.Descriptor instead.
 func (*UpdateOIDCSettingsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{107}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *UpdateOIDCSettingsResponse) GetDetails() *object.ObjectDetails {
@@ -5506,7 +5866,7 @@ type GetSecurityPolicyRequest struct {
 
 func (x *GetSecurityPolicyRequest) Reset() {
 	*x = GetSecurityPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[108]
+	mi := &file_zitadel_admin_proto_msgTypes[111]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5518,7 +5878,7 @@ func (x *GetSecurityPolicyRequest) String() string {
 func (*GetSecurityPolicyRequest) ProtoMessage() {}
 
 func (x *GetSecurityPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[108]
+	mi := &file_zitadel_admin_proto_msgTypes[111]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5531,7 +5891,7 @@ func (x *GetSecurityPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSecurityPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetSecurityPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{108}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{111}
 }
 
 type GetSecurityPolicyResponse struct {
@@ -5543,7 +5903,7 @@ type GetSecurityPolicyResponse struct {
 
 func (x *GetSecurityPolicyResponse) Reset() {
 	*x = GetSecurityPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[109]
+	mi := &file_zitadel_admin_proto_msgTypes[112]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5555,7 +5915,7 @@ func (x *GetSecurityPolicyResponse) String() string {
 func (*GetSecurityPolicyResponse) ProtoMessage() {}
 
 func (x *GetSecurityPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[109]
+	mi := &file_zitadel_admin_proto_msgTypes[112]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5568,7 +5928,7 @@ func (x *GetSecurityPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSecurityPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetSecurityPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{109}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{112}
 }
 
 func (x *GetSecurityPolicyResponse) GetPolicy() *settings.SecurityPolicy {
@@ -5582,7 +5942,7 @@ type SetSecurityPolicyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// states if iframe embedding is enabled or disabled
 	EnableIframeEmbedding bool `protobuf:"varint,1,opt,name=enable_iframe_embedding,json=enableIframeEmbedding,proto3" json:"enable_iframe_embedding,omitempty"`
-	// origins allowed loading ZITADEL in an iframe if enable_iframe_embedding is true
+	// origins allowed loading Zitadel in an iframe if enable_iframe_embedding is true
 	AllowedOrigins []string `protobuf:"bytes,2,rep,name=allowed_origins,json=allowedOrigins,proto3" json:"allowed_origins,omitempty"`
 	// allows users to impersonate other users. The impersonator needs the appropriate `*_IMPERSONATOR` roles assigned as well"
 	EnableImpersonation bool `protobuf:"varint,3,opt,name=enable_impersonation,json=enableImpersonation,proto3" json:"enable_impersonation,omitempty"`
@@ -5592,7 +5952,7 @@ type SetSecurityPolicyRequest struct {
 
 func (x *SetSecurityPolicyRequest) Reset() {
 	*x = SetSecurityPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[110]
+	mi := &file_zitadel_admin_proto_msgTypes[113]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5604,7 +5964,7 @@ func (x *SetSecurityPolicyRequest) String() string {
 func (*SetSecurityPolicyRequest) ProtoMessage() {}
 
 func (x *SetSecurityPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[110]
+	mi := &file_zitadel_admin_proto_msgTypes[113]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5617,7 +5977,7 @@ func (x *SetSecurityPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSecurityPolicyRequest.ProtoReflect.Descriptor instead.
 func (*SetSecurityPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{110}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{113}
 }
 
 func (x *SetSecurityPolicyRequest) GetEnableIframeEmbedding() bool {
@@ -5650,7 +6010,7 @@ type SetSecurityPolicyResponse struct {
 
 func (x *SetSecurityPolicyResponse) Reset() {
 	*x = SetSecurityPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[111]
+	mi := &file_zitadel_admin_proto_msgTypes[114]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5662,7 +6022,7 @@ func (x *SetSecurityPolicyResponse) String() string {
 func (*SetSecurityPolicyResponse) ProtoMessage() {}
 
 func (x *SetSecurityPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[111]
+	mi := &file_zitadel_admin_proto_msgTypes[114]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5675,7 +6035,7 @@ func (x *SetSecurityPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetSecurityPolicyResponse.ProtoReflect.Descriptor instead.
 func (*SetSecurityPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{111}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{114}
 }
 
 func (x *SetSecurityPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -5697,7 +6057,7 @@ type IsOrgUniqueRequest struct {
 
 func (x *IsOrgUniqueRequest) Reset() {
 	*x = IsOrgUniqueRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[112]
+	mi := &file_zitadel_admin_proto_msgTypes[115]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5709,7 +6069,7 @@ func (x *IsOrgUniqueRequest) String() string {
 func (*IsOrgUniqueRequest) ProtoMessage() {}
 
 func (x *IsOrgUniqueRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[112]
+	mi := &file_zitadel_admin_proto_msgTypes[115]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5722,7 +6082,7 @@ func (x *IsOrgUniqueRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IsOrgUniqueRequest.ProtoReflect.Descriptor instead.
 func (*IsOrgUniqueRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{112}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{115}
 }
 
 func (x *IsOrgUniqueRequest) GetName() string {
@@ -5748,7 +6108,7 @@ type IsOrgUniqueResponse struct {
 
 func (x *IsOrgUniqueResponse) Reset() {
 	*x = IsOrgUniqueResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[113]
+	mi := &file_zitadel_admin_proto_msgTypes[116]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5760,7 +6120,7 @@ func (x *IsOrgUniqueResponse) String() string {
 func (*IsOrgUniqueResponse) ProtoMessage() {}
 
 func (x *IsOrgUniqueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[113]
+	mi := &file_zitadel_admin_proto_msgTypes[116]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5773,7 +6133,7 @@ func (x *IsOrgUniqueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IsOrgUniqueResponse.ProtoReflect.Descriptor instead.
 func (*IsOrgUniqueResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{113}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{116}
 }
 
 func (x *IsOrgUniqueResponse) GetIsUnique() bool {
@@ -5792,7 +6152,7 @@ type GetOrgByIDRequest struct {
 
 func (x *GetOrgByIDRequest) Reset() {
 	*x = GetOrgByIDRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[114]
+	mi := &file_zitadel_admin_proto_msgTypes[117]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5804,7 +6164,7 @@ func (x *GetOrgByIDRequest) String() string {
 func (*GetOrgByIDRequest) ProtoMessage() {}
 
 func (x *GetOrgByIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[114]
+	mi := &file_zitadel_admin_proto_msgTypes[117]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5817,7 +6177,7 @@ func (x *GetOrgByIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgByIDRequest.ProtoReflect.Descriptor instead.
 func (*GetOrgByIDRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{114}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{117}
 }
 
 func (x *GetOrgByIDRequest) GetId() string {
@@ -5836,7 +6196,7 @@ type GetOrgByIDResponse struct {
 
 func (x *GetOrgByIDResponse) Reset() {
 	*x = GetOrgByIDResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[115]
+	mi := &file_zitadel_admin_proto_msgTypes[118]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5848,7 +6208,7 @@ func (x *GetOrgByIDResponse) String() string {
 func (*GetOrgByIDResponse) ProtoMessage() {}
 
 func (x *GetOrgByIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[115]
+	mi := &file_zitadel_admin_proto_msgTypes[118]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5861,7 +6221,7 @@ func (x *GetOrgByIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgByIDResponse.ProtoReflect.Descriptor instead.
 func (*GetOrgByIDResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{115}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{118}
 }
 
 func (x *GetOrgByIDResponse) GetOrg() *org.Org {
@@ -5885,7 +6245,7 @@ type ListOrgsRequest struct {
 
 func (x *ListOrgsRequest) Reset() {
 	*x = ListOrgsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[116]
+	mi := &file_zitadel_admin_proto_msgTypes[119]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5897,7 +6257,7 @@ func (x *ListOrgsRequest) String() string {
 func (*ListOrgsRequest) ProtoMessage() {}
 
 func (x *ListOrgsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[116]
+	mi := &file_zitadel_admin_proto_msgTypes[119]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5910,7 +6270,7 @@ func (x *ListOrgsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrgsRequest.ProtoReflect.Descriptor instead.
 func (*ListOrgsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{116}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{119}
 }
 
 func (x *ListOrgsRequest) GetQuery() *object.ListQuery {
@@ -5945,7 +6305,7 @@ type ListOrgsResponse struct {
 
 func (x *ListOrgsResponse) Reset() {
 	*x = ListOrgsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[117]
+	mi := &file_zitadel_admin_proto_msgTypes[120]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5957,7 +6317,7 @@ func (x *ListOrgsResponse) String() string {
 func (*ListOrgsResponse) ProtoMessage() {}
 
 func (x *ListOrgsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[117]
+	mi := &file_zitadel_admin_proto_msgTypes[120]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5970,7 +6330,7 @@ func (x *ListOrgsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListOrgsResponse.ProtoReflect.Descriptor instead.
 func (*ListOrgsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{117}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{120}
 }
 
 func (x *ListOrgsResponse) GetDetails() *object.ListDetails {
@@ -6009,7 +6369,7 @@ type SetUpOrgRequest struct {
 
 func (x *SetUpOrgRequest) Reset() {
 	*x = SetUpOrgRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[118]
+	mi := &file_zitadel_admin_proto_msgTypes[121]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6021,7 +6381,7 @@ func (x *SetUpOrgRequest) String() string {
 func (*SetUpOrgRequest) ProtoMessage() {}
 
 func (x *SetUpOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[118]
+	mi := &file_zitadel_admin_proto_msgTypes[121]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6034,7 +6394,7 @@ func (x *SetUpOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121}
 }
 
 func (x *SetUpOrgRequest) GetOrg() *SetUpOrgRequest_Org {
@@ -6089,7 +6449,7 @@ type SetUpOrgResponse struct {
 
 func (x *SetUpOrgResponse) Reset() {
 	*x = SetUpOrgResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[119]
+	mi := &file_zitadel_admin_proto_msgTypes[122]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6101,7 +6461,7 @@ func (x *SetUpOrgResponse) String() string {
 func (*SetUpOrgResponse) ProtoMessage() {}
 
 func (x *SetUpOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[119]
+	mi := &file_zitadel_admin_proto_msgTypes[122]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6114,7 +6474,7 @@ func (x *SetUpOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgResponse.ProtoReflect.Descriptor instead.
 func (*SetUpOrgResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{119}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{122}
 }
 
 func (x *SetUpOrgResponse) GetDetails() *object.ObjectDetails {
@@ -6147,7 +6507,7 @@ type RemoveOrgRequest struct {
 
 func (x *RemoveOrgRequest) Reset() {
 	*x = RemoveOrgRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[120]
+	mi := &file_zitadel_admin_proto_msgTypes[123]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6159,7 +6519,7 @@ func (x *RemoveOrgRequest) String() string {
 func (*RemoveOrgRequest) ProtoMessage() {}
 
 func (x *RemoveOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[120]
+	mi := &file_zitadel_admin_proto_msgTypes[123]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6172,7 +6532,7 @@ func (x *RemoveOrgRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveOrgRequest.ProtoReflect.Descriptor instead.
 func (*RemoveOrgRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{120}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{123}
 }
 
 func (x *RemoveOrgRequest) GetOrgId() string {
@@ -6191,7 +6551,7 @@ type RemoveOrgResponse struct {
 
 func (x *RemoveOrgResponse) Reset() {
 	*x = RemoveOrgResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[121]
+	mi := &file_zitadel_admin_proto_msgTypes[124]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6203,7 +6563,7 @@ func (x *RemoveOrgResponse) String() string {
 func (*RemoveOrgResponse) ProtoMessage() {}
 
 func (x *RemoveOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[121]
+	mi := &file_zitadel_admin_proto_msgTypes[124]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6216,7 +6576,7 @@ func (x *RemoveOrgResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveOrgResponse.ProtoReflect.Descriptor instead.
 func (*RemoveOrgResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{121}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{124}
 }
 
 func (x *RemoveOrgResponse) GetDetails() *object.ObjectDetails {
@@ -6235,7 +6595,7 @@ type GetIDPByIDRequest struct {
 
 func (x *GetIDPByIDRequest) Reset() {
 	*x = GetIDPByIDRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[122]
+	mi := &file_zitadel_admin_proto_msgTypes[125]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6247,7 +6607,7 @@ func (x *GetIDPByIDRequest) String() string {
 func (*GetIDPByIDRequest) ProtoMessage() {}
 
 func (x *GetIDPByIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[122]
+	mi := &file_zitadel_admin_proto_msgTypes[125]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6260,7 +6620,7 @@ func (x *GetIDPByIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetIDPByIDRequest.ProtoReflect.Descriptor instead.
 func (*GetIDPByIDRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{122}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{125}
 }
 
 func (x *GetIDPByIDRequest) GetId() string {
@@ -6279,7 +6639,7 @@ type GetIDPByIDResponse struct {
 
 func (x *GetIDPByIDResponse) Reset() {
 	*x = GetIDPByIDResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[123]
+	mi := &file_zitadel_admin_proto_msgTypes[126]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6291,7 +6651,7 @@ func (x *GetIDPByIDResponse) String() string {
 func (*GetIDPByIDResponse) ProtoMessage() {}
 
 func (x *GetIDPByIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[123]
+	mi := &file_zitadel_admin_proto_msgTypes[126]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6304,7 +6664,7 @@ func (x *GetIDPByIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetIDPByIDResponse.ProtoReflect.Descriptor instead.
 func (*GetIDPByIDResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{123}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{126}
 }
 
 func (x *GetIDPByIDResponse) GetIdp() *idp.IDP {
@@ -6328,7 +6688,7 @@ type ListIDPsRequest struct {
 
 func (x *ListIDPsRequest) Reset() {
 	*x = ListIDPsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[124]
+	mi := &file_zitadel_admin_proto_msgTypes[127]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6340,7 +6700,7 @@ func (x *ListIDPsRequest) String() string {
 func (*ListIDPsRequest) ProtoMessage() {}
 
 func (x *ListIDPsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[124]
+	mi := &file_zitadel_admin_proto_msgTypes[127]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6353,7 +6713,7 @@ func (x *ListIDPsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIDPsRequest.ProtoReflect.Descriptor instead.
 func (*ListIDPsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{124}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{127}
 }
 
 func (x *ListIDPsRequest) GetQuery() *object.ListQuery {
@@ -6390,7 +6750,7 @@ type IDPQuery struct {
 
 func (x *IDPQuery) Reset() {
 	*x = IDPQuery{}
-	mi := &file_zitadel_admin_proto_msgTypes[125]
+	mi := &file_zitadel_admin_proto_msgTypes[128]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6402,7 +6762,7 @@ func (x *IDPQuery) String() string {
 func (*IDPQuery) ProtoMessage() {}
 
 func (x *IDPQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[125]
+	mi := &file_zitadel_admin_proto_msgTypes[128]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6415,7 +6775,7 @@ func (x *IDPQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IDPQuery.ProtoReflect.Descriptor instead.
 func (*IDPQuery) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{125}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{128}
 }
 
 func (x *IDPQuery) GetQuery() isIDPQuery_Query {
@@ -6470,7 +6830,7 @@ type ListIDPsResponse struct {
 
 func (x *ListIDPsResponse) Reset() {
 	*x = ListIDPsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[126]
+	mi := &file_zitadel_admin_proto_msgTypes[129]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6482,7 +6842,7 @@ func (x *ListIDPsResponse) String() string {
 func (*ListIDPsResponse) ProtoMessage() {}
 
 func (x *ListIDPsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[126]
+	mi := &file_zitadel_admin_proto_msgTypes[129]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6495,7 +6855,7 @@ func (x *ListIDPsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIDPsResponse.ProtoReflect.Descriptor instead.
 func (*ListIDPsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{126}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{129}
 }
 
 func (x *ListIDPsResponse) GetDetails() *object.ListDetails {
@@ -6536,7 +6896,7 @@ type AddOIDCIDPRequest struct {
 
 func (x *AddOIDCIDPRequest) Reset() {
 	*x = AddOIDCIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[127]
+	mi := &file_zitadel_admin_proto_msgTypes[130]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6548,7 +6908,7 @@ func (x *AddOIDCIDPRequest) String() string {
 func (*AddOIDCIDPRequest) ProtoMessage() {}
 
 func (x *AddOIDCIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[127]
+	mi := &file_zitadel_admin_proto_msgTypes[130]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6561,7 +6921,7 @@ func (x *AddOIDCIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOIDCIDPRequest.ProtoReflect.Descriptor instead.
 func (*AddOIDCIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{127}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{130}
 }
 
 func (x *AddOIDCIDPRequest) GetName() string {
@@ -6637,7 +6997,7 @@ type AddOIDCIDPResponse struct {
 
 func (x *AddOIDCIDPResponse) Reset() {
 	*x = AddOIDCIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[128]
+	mi := &file_zitadel_admin_proto_msgTypes[131]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6649,7 +7009,7 @@ func (x *AddOIDCIDPResponse) String() string {
 func (*AddOIDCIDPResponse) ProtoMessage() {}
 
 func (x *AddOIDCIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[128]
+	mi := &file_zitadel_admin_proto_msgTypes[131]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6662,7 +7022,7 @@ func (x *AddOIDCIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOIDCIDPResponse.ProtoReflect.Descriptor instead.
 func (*AddOIDCIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{128}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{131}
 }
 
 func (x *AddOIDCIDPResponse) GetDetails() *object.ObjectDetails {
@@ -6694,7 +7054,7 @@ type AddJWTIDPRequest struct {
 
 func (x *AddJWTIDPRequest) Reset() {
 	*x = AddJWTIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[129]
+	mi := &file_zitadel_admin_proto_msgTypes[132]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6706,7 +7066,7 @@ func (x *AddJWTIDPRequest) String() string {
 func (*AddJWTIDPRequest) ProtoMessage() {}
 
 func (x *AddJWTIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[129]
+	mi := &file_zitadel_admin_proto_msgTypes[132]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6719,7 +7079,7 @@ func (x *AddJWTIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJWTIDPRequest.ProtoReflect.Descriptor instead.
 func (*AddJWTIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{129}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{132}
 }
 
 func (x *AddJWTIDPRequest) GetName() string {
@@ -6781,7 +7141,7 @@ type AddJWTIDPResponse struct {
 
 func (x *AddJWTIDPResponse) Reset() {
 	*x = AddJWTIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[130]
+	mi := &file_zitadel_admin_proto_msgTypes[133]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6793,7 +7153,7 @@ func (x *AddJWTIDPResponse) String() string {
 func (*AddJWTIDPResponse) ProtoMessage() {}
 
 func (x *AddJWTIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[130]
+	mi := &file_zitadel_admin_proto_msgTypes[133]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6806,7 +7166,7 @@ func (x *AddJWTIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJWTIDPResponse.ProtoReflect.Descriptor instead.
 func (*AddJWTIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{130}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{133}
 }
 
 func (x *AddJWTIDPResponse) GetDetails() *object.ObjectDetails {
@@ -6835,7 +7195,7 @@ type UpdateIDPRequest struct {
 
 func (x *UpdateIDPRequest) Reset() {
 	*x = UpdateIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[131]
+	mi := &file_zitadel_admin_proto_msgTypes[134]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6847,7 +7207,7 @@ func (x *UpdateIDPRequest) String() string {
 func (*UpdateIDPRequest) ProtoMessage() {}
 
 func (x *UpdateIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[131]
+	mi := &file_zitadel_admin_proto_msgTypes[134]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6860,7 +7220,7 @@ func (x *UpdateIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPRequest.ProtoReflect.Descriptor instead.
 func (*UpdateIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{131}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{134}
 }
 
 func (x *UpdateIDPRequest) GetIdpId() string {
@@ -6900,7 +7260,7 @@ type UpdateIDPResponse struct {
 
 func (x *UpdateIDPResponse) Reset() {
 	*x = UpdateIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[132]
+	mi := &file_zitadel_admin_proto_msgTypes[135]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6912,7 +7272,7 @@ func (x *UpdateIDPResponse) String() string {
 func (*UpdateIDPResponse) ProtoMessage() {}
 
 func (x *UpdateIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[132]
+	mi := &file_zitadel_admin_proto_msgTypes[135]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6925,7 +7285,7 @@ func (x *UpdateIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPResponse.ProtoReflect.Descriptor instead.
 func (*UpdateIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{132}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{135}
 }
 
 func (x *UpdateIDPResponse) GetDetails() *object.ObjectDetails {
@@ -6944,7 +7304,7 @@ type DeactivateIDPRequest struct {
 
 func (x *DeactivateIDPRequest) Reset() {
 	*x = DeactivateIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[133]
+	mi := &file_zitadel_admin_proto_msgTypes[136]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6956,7 +7316,7 @@ func (x *DeactivateIDPRequest) String() string {
 func (*DeactivateIDPRequest) ProtoMessage() {}
 
 func (x *DeactivateIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[133]
+	mi := &file_zitadel_admin_proto_msgTypes[136]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6969,7 +7329,7 @@ func (x *DeactivateIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateIDPRequest.ProtoReflect.Descriptor instead.
 func (*DeactivateIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{133}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{136}
 }
 
 func (x *DeactivateIDPRequest) GetIdpId() string {
@@ -6988,7 +7348,7 @@ type DeactivateIDPResponse struct {
 
 func (x *DeactivateIDPResponse) Reset() {
 	*x = DeactivateIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[134]
+	mi := &file_zitadel_admin_proto_msgTypes[137]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7000,7 +7360,7 @@ func (x *DeactivateIDPResponse) String() string {
 func (*DeactivateIDPResponse) ProtoMessage() {}
 
 func (x *DeactivateIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[134]
+	mi := &file_zitadel_admin_proto_msgTypes[137]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7013,7 +7373,7 @@ func (x *DeactivateIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeactivateIDPResponse.ProtoReflect.Descriptor instead.
 func (*DeactivateIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{134}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{137}
 }
 
 func (x *DeactivateIDPResponse) GetDetails() *object.ObjectDetails {
@@ -7032,7 +7392,7 @@ type ReactivateIDPRequest struct {
 
 func (x *ReactivateIDPRequest) Reset() {
 	*x = ReactivateIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[135]
+	mi := &file_zitadel_admin_proto_msgTypes[138]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7044,7 +7404,7 @@ func (x *ReactivateIDPRequest) String() string {
 func (*ReactivateIDPRequest) ProtoMessage() {}
 
 func (x *ReactivateIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[135]
+	mi := &file_zitadel_admin_proto_msgTypes[138]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7057,7 +7417,7 @@ func (x *ReactivateIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReactivateIDPRequest.ProtoReflect.Descriptor instead.
 func (*ReactivateIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{135}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{138}
 }
 
 func (x *ReactivateIDPRequest) GetIdpId() string {
@@ -7076,7 +7436,7 @@ type ReactivateIDPResponse struct {
 
 func (x *ReactivateIDPResponse) Reset() {
 	*x = ReactivateIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[136]
+	mi := &file_zitadel_admin_proto_msgTypes[139]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7088,7 +7448,7 @@ func (x *ReactivateIDPResponse) String() string {
 func (*ReactivateIDPResponse) ProtoMessage() {}
 
 func (x *ReactivateIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[136]
+	mi := &file_zitadel_admin_proto_msgTypes[139]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7101,7 +7461,7 @@ func (x *ReactivateIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReactivateIDPResponse.ProtoReflect.Descriptor instead.
 func (*ReactivateIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{136}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{139}
 }
 
 func (x *ReactivateIDPResponse) GetDetails() *object.ObjectDetails {
@@ -7120,7 +7480,7 @@ type RemoveIDPRequest struct {
 
 func (x *RemoveIDPRequest) Reset() {
 	*x = RemoveIDPRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[137]
+	mi := &file_zitadel_admin_proto_msgTypes[140]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7132,7 +7492,7 @@ func (x *RemoveIDPRequest) String() string {
 func (*RemoveIDPRequest) ProtoMessage() {}
 
 func (x *RemoveIDPRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[137]
+	mi := &file_zitadel_admin_proto_msgTypes[140]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7145,7 +7505,7 @@ func (x *RemoveIDPRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIDPRequest.ProtoReflect.Descriptor instead.
 func (*RemoveIDPRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{137}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{140}
 }
 
 func (x *RemoveIDPRequest) GetIdpId() string {
@@ -7164,7 +7524,7 @@ type RemoveIDPResponse struct {
 
 func (x *RemoveIDPResponse) Reset() {
 	*x = RemoveIDPResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[138]
+	mi := &file_zitadel_admin_proto_msgTypes[141]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7176,7 +7536,7 @@ func (x *RemoveIDPResponse) String() string {
 func (*RemoveIDPResponse) ProtoMessage() {}
 
 func (x *RemoveIDPResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[138]
+	mi := &file_zitadel_admin_proto_msgTypes[141]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7189,7 +7549,7 @@ func (x *RemoveIDPResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIDPResponse.ProtoReflect.Descriptor instead.
 func (*RemoveIDPResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{138}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{141}
 }
 
 func (x *RemoveIDPResponse) GetDetails() *object.ObjectDetails {
@@ -7214,7 +7574,7 @@ type UpdateIDPOIDCConfigRequest struct {
 
 func (x *UpdateIDPOIDCConfigRequest) Reset() {
 	*x = UpdateIDPOIDCConfigRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[139]
+	mi := &file_zitadel_admin_proto_msgTypes[142]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7226,7 +7586,7 @@ func (x *UpdateIDPOIDCConfigRequest) String() string {
 func (*UpdateIDPOIDCConfigRequest) ProtoMessage() {}
 
 func (x *UpdateIDPOIDCConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[139]
+	mi := &file_zitadel_admin_proto_msgTypes[142]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7239,7 +7599,7 @@ func (x *UpdateIDPOIDCConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPOIDCConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateIDPOIDCConfigRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{139}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{142}
 }
 
 func (x *UpdateIDPOIDCConfigRequest) GetIdpId() string {
@@ -7300,7 +7660,7 @@ type UpdateIDPOIDCConfigResponse struct {
 
 func (x *UpdateIDPOIDCConfigResponse) Reset() {
 	*x = UpdateIDPOIDCConfigResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[140]
+	mi := &file_zitadel_admin_proto_msgTypes[143]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7312,7 +7672,7 @@ func (x *UpdateIDPOIDCConfigResponse) String() string {
 func (*UpdateIDPOIDCConfigResponse) ProtoMessage() {}
 
 func (x *UpdateIDPOIDCConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[140]
+	mi := &file_zitadel_admin_proto_msgTypes[143]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7325,7 +7685,7 @@ func (x *UpdateIDPOIDCConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPOIDCConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateIDPOIDCConfigResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{140}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{143}
 }
 
 func (x *UpdateIDPOIDCConfigResponse) GetDetails() *object.ObjectDetails {
@@ -7348,7 +7708,7 @@ type UpdateIDPJWTConfigRequest struct {
 
 func (x *UpdateIDPJWTConfigRequest) Reset() {
 	*x = UpdateIDPJWTConfigRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[141]
+	mi := &file_zitadel_admin_proto_msgTypes[144]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7360,7 +7720,7 @@ func (x *UpdateIDPJWTConfigRequest) String() string {
 func (*UpdateIDPJWTConfigRequest) ProtoMessage() {}
 
 func (x *UpdateIDPJWTConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[141]
+	mi := &file_zitadel_admin_proto_msgTypes[144]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7373,7 +7733,7 @@ func (x *UpdateIDPJWTConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPJWTConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateIDPJWTConfigRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{141}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{144}
 }
 
 func (x *UpdateIDPJWTConfigRequest) GetIdpId() string {
@@ -7420,7 +7780,7 @@ type UpdateIDPJWTConfigResponse struct {
 
 func (x *UpdateIDPJWTConfigResponse) Reset() {
 	*x = UpdateIDPJWTConfigResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[142]
+	mi := &file_zitadel_admin_proto_msgTypes[145]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7432,7 +7792,7 @@ func (x *UpdateIDPJWTConfigResponse) String() string {
 func (*UpdateIDPJWTConfigResponse) ProtoMessage() {}
 
 func (x *UpdateIDPJWTConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[142]
+	mi := &file_zitadel_admin_proto_msgTypes[145]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7445,7 +7805,7 @@ func (x *UpdateIDPJWTConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIDPJWTConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateIDPJWTConfigResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{142}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{145}
 }
 
 func (x *UpdateIDPJWTConfigResponse) GetDetails() *object.ObjectDetails {
@@ -7467,7 +7827,7 @@ type ListProvidersRequest struct {
 
 func (x *ListProvidersRequest) Reset() {
 	*x = ListProvidersRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[143]
+	mi := &file_zitadel_admin_proto_msgTypes[146]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7479,7 +7839,7 @@ func (x *ListProvidersRequest) String() string {
 func (*ListProvidersRequest) ProtoMessage() {}
 
 func (x *ListProvidersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[143]
+	mi := &file_zitadel_admin_proto_msgTypes[146]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7492,7 +7852,7 @@ func (x *ListProvidersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProvidersRequest.ProtoReflect.Descriptor instead.
 func (*ListProvidersRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{143}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{146}
 }
 
 func (x *ListProvidersRequest) GetQuery() *object.ListQuery {
@@ -7522,7 +7882,7 @@ type ProviderQuery struct {
 
 func (x *ProviderQuery) Reset() {
 	*x = ProviderQuery{}
-	mi := &file_zitadel_admin_proto_msgTypes[144]
+	mi := &file_zitadel_admin_proto_msgTypes[147]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7534,7 +7894,7 @@ func (x *ProviderQuery) String() string {
 func (*ProviderQuery) ProtoMessage() {}
 
 func (x *ProviderQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[144]
+	mi := &file_zitadel_admin_proto_msgTypes[147]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7547,7 +7907,7 @@ func (x *ProviderQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProviderQuery.ProtoReflect.Descriptor instead.
 func (*ProviderQuery) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{144}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{147}
 }
 
 func (x *ProviderQuery) GetQuery() isProviderQuery_Query {
@@ -7601,7 +7961,7 @@ type ListProvidersResponse struct {
 
 func (x *ListProvidersResponse) Reset() {
 	*x = ListProvidersResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[145]
+	mi := &file_zitadel_admin_proto_msgTypes[148]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7613,7 +7973,7 @@ func (x *ListProvidersResponse) String() string {
 func (*ListProvidersResponse) ProtoMessage() {}
 
 func (x *ListProvidersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[145]
+	mi := &file_zitadel_admin_proto_msgTypes[148]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7626,7 +7986,7 @@ func (x *ListProvidersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProvidersResponse.ProtoReflect.Descriptor instead.
 func (*ListProvidersResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{145}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{148}
 }
 
 func (x *ListProvidersResponse) GetDetails() *object.ListDetails {
@@ -7652,7 +8012,7 @@ type GetProviderByIDRequest struct {
 
 func (x *GetProviderByIDRequest) Reset() {
 	*x = GetProviderByIDRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[146]
+	mi := &file_zitadel_admin_proto_msgTypes[149]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7664,7 +8024,7 @@ func (x *GetProviderByIDRequest) String() string {
 func (*GetProviderByIDRequest) ProtoMessage() {}
 
 func (x *GetProviderByIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[146]
+	mi := &file_zitadel_admin_proto_msgTypes[149]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7677,7 +8037,7 @@ func (x *GetProviderByIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProviderByIDRequest.ProtoReflect.Descriptor instead.
 func (*GetProviderByIDRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{146}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{149}
 }
 
 func (x *GetProviderByIDRequest) GetId() string {
@@ -7696,7 +8056,7 @@ type GetProviderByIDResponse struct {
 
 func (x *GetProviderByIDResponse) Reset() {
 	*x = GetProviderByIDResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[147]
+	mi := &file_zitadel_admin_proto_msgTypes[150]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7708,7 +8068,7 @@ func (x *GetProviderByIDResponse) String() string {
 func (*GetProviderByIDResponse) ProtoMessage() {}
 
 func (x *GetProviderByIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[147]
+	mi := &file_zitadel_admin_proto_msgTypes[150]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7721,7 +8081,7 @@ func (x *GetProviderByIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProviderByIDResponse.ProtoReflect.Descriptor instead.
 func (*GetProviderByIDResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{147}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{150}
 }
 
 func (x *GetProviderByIDResponse) GetIdp() *idp.Provider {
@@ -7751,7 +8111,7 @@ type AddGenericOAuthProviderRequest struct {
 
 func (x *AddGenericOAuthProviderRequest) Reset() {
 	*x = AddGenericOAuthProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[148]
+	mi := &file_zitadel_admin_proto_msgTypes[151]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7763,7 +8123,7 @@ func (x *AddGenericOAuthProviderRequest) String() string {
 func (*AddGenericOAuthProviderRequest) ProtoMessage() {}
 
 func (x *AddGenericOAuthProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[148]
+	mi := &file_zitadel_admin_proto_msgTypes[151]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7776,7 +8136,7 @@ func (x *AddGenericOAuthProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGenericOAuthProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGenericOAuthProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{148}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{151}
 }
 
 func (x *AddGenericOAuthProviderRequest) GetName() string {
@@ -7859,7 +8219,7 @@ type AddGenericOAuthProviderResponse struct {
 
 func (x *AddGenericOAuthProviderResponse) Reset() {
 	*x = AddGenericOAuthProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[149]
+	mi := &file_zitadel_admin_proto_msgTypes[152]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7871,7 +8231,7 @@ func (x *AddGenericOAuthProviderResponse) String() string {
 func (*AddGenericOAuthProviderResponse) ProtoMessage() {}
 
 func (x *AddGenericOAuthProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[149]
+	mi := &file_zitadel_admin_proto_msgTypes[152]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7884,7 +8244,7 @@ func (x *AddGenericOAuthProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGenericOAuthProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGenericOAuthProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{149}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{152}
 }
 
 func (x *AddGenericOAuthProviderResponse) GetDetails() *object.ObjectDetails {
@@ -7923,7 +8283,7 @@ type UpdateGenericOAuthProviderRequest struct {
 
 func (x *UpdateGenericOAuthProviderRequest) Reset() {
 	*x = UpdateGenericOAuthProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[150]
+	mi := &file_zitadel_admin_proto_msgTypes[153]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7935,7 +8295,7 @@ func (x *UpdateGenericOAuthProviderRequest) String() string {
 func (*UpdateGenericOAuthProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGenericOAuthProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[150]
+	mi := &file_zitadel_admin_proto_msgTypes[153]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7948,7 +8308,7 @@ func (x *UpdateGenericOAuthProviderRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use UpdateGenericOAuthProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGenericOAuthProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{150}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{153}
 }
 
 func (x *UpdateGenericOAuthProviderRequest) GetId() string {
@@ -8037,7 +8397,7 @@ type UpdateGenericOAuthProviderResponse struct {
 
 func (x *UpdateGenericOAuthProviderResponse) Reset() {
 	*x = UpdateGenericOAuthProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[151]
+	mi := &file_zitadel_admin_proto_msgTypes[154]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8049,7 +8409,7 @@ func (x *UpdateGenericOAuthProviderResponse) String() string {
 func (*UpdateGenericOAuthProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGenericOAuthProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[151]
+	mi := &file_zitadel_admin_proto_msgTypes[154]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8062,7 +8422,7 @@ func (x *UpdateGenericOAuthProviderResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use UpdateGenericOAuthProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGenericOAuthProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{151}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{154}
 }
 
 func (x *UpdateGenericOAuthProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8089,7 +8449,7 @@ type AddGenericOIDCProviderRequest struct {
 
 func (x *AddGenericOIDCProviderRequest) Reset() {
 	*x = AddGenericOIDCProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[152]
+	mi := &file_zitadel_admin_proto_msgTypes[155]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8101,7 +8461,7 @@ func (x *AddGenericOIDCProviderRequest) String() string {
 func (*AddGenericOIDCProviderRequest) ProtoMessage() {}
 
 func (x *AddGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[152]
+	mi := &file_zitadel_admin_proto_msgTypes[155]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8114,7 +8474,7 @@ func (x *AddGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGenericOIDCProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGenericOIDCProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{152}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{155}
 }
 
 func (x *AddGenericOIDCProviderRequest) GetName() string {
@@ -8183,7 +8543,7 @@ type AddGenericOIDCProviderResponse struct {
 
 func (x *AddGenericOIDCProviderResponse) Reset() {
 	*x = AddGenericOIDCProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[153]
+	mi := &file_zitadel_admin_proto_msgTypes[156]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8195,7 +8555,7 @@ func (x *AddGenericOIDCProviderResponse) String() string {
 func (*AddGenericOIDCProviderResponse) ProtoMessage() {}
 
 func (x *AddGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[153]
+	mi := &file_zitadel_admin_proto_msgTypes[156]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8208,7 +8568,7 @@ func (x *AddGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGenericOIDCProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGenericOIDCProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{153}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{156}
 }
 
 func (x *AddGenericOIDCProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8244,7 +8604,7 @@ type UpdateGenericOIDCProviderRequest struct {
 
 func (x *UpdateGenericOIDCProviderRequest) Reset() {
 	*x = UpdateGenericOIDCProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[154]
+	mi := &file_zitadel_admin_proto_msgTypes[157]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8256,7 +8616,7 @@ func (x *UpdateGenericOIDCProviderRequest) String() string {
 func (*UpdateGenericOIDCProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[154]
+	mi := &file_zitadel_admin_proto_msgTypes[157]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8269,7 +8629,7 @@ func (x *UpdateGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGenericOIDCProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGenericOIDCProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{154}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{157}
 }
 
 func (x *UpdateGenericOIDCProviderRequest) GetId() string {
@@ -8344,7 +8704,7 @@ type UpdateGenericOIDCProviderResponse struct {
 
 func (x *UpdateGenericOIDCProviderResponse) Reset() {
 	*x = UpdateGenericOIDCProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[155]
+	mi := &file_zitadel_admin_proto_msgTypes[158]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8356,7 +8716,7 @@ func (x *UpdateGenericOIDCProviderResponse) String() string {
 func (*UpdateGenericOIDCProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[155]
+	mi := &file_zitadel_admin_proto_msgTypes[158]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8369,7 +8729,7 @@ func (x *UpdateGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use UpdateGenericOIDCProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGenericOIDCProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{155}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{158}
 }
 
 func (x *UpdateGenericOIDCProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8393,7 +8753,7 @@ type MigrateGenericOIDCProviderRequest struct {
 
 func (x *MigrateGenericOIDCProviderRequest) Reset() {
 	*x = MigrateGenericOIDCProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[156]
+	mi := &file_zitadel_admin_proto_msgTypes[159]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8405,7 +8765,7 @@ func (x *MigrateGenericOIDCProviderRequest) String() string {
 func (*MigrateGenericOIDCProviderRequest) ProtoMessage() {}
 
 func (x *MigrateGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[156]
+	mi := &file_zitadel_admin_proto_msgTypes[159]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8418,7 +8778,7 @@ func (x *MigrateGenericOIDCProviderRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use MigrateGenericOIDCProviderRequest.ProtoReflect.Descriptor instead.
 func (*MigrateGenericOIDCProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{156}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{159}
 }
 
 func (x *MigrateGenericOIDCProviderRequest) GetId() string {
@@ -8478,7 +8838,7 @@ type MigrateGenericOIDCProviderResponse struct {
 
 func (x *MigrateGenericOIDCProviderResponse) Reset() {
 	*x = MigrateGenericOIDCProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[157]
+	mi := &file_zitadel_admin_proto_msgTypes[160]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8490,7 +8850,7 @@ func (x *MigrateGenericOIDCProviderResponse) String() string {
 func (*MigrateGenericOIDCProviderResponse) ProtoMessage() {}
 
 func (x *MigrateGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[157]
+	mi := &file_zitadel_admin_proto_msgTypes[160]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8503,7 +8863,7 @@ func (x *MigrateGenericOIDCProviderResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use MigrateGenericOIDCProviderResponse.ProtoReflect.Descriptor instead.
 func (*MigrateGenericOIDCProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{157}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{160}
 }
 
 func (x *MigrateGenericOIDCProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8527,7 +8887,7 @@ type AddJWTProviderRequest struct {
 
 func (x *AddJWTProviderRequest) Reset() {
 	*x = AddJWTProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[158]
+	mi := &file_zitadel_admin_proto_msgTypes[161]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8539,7 +8899,7 @@ func (x *AddJWTProviderRequest) String() string {
 func (*AddJWTProviderRequest) ProtoMessage() {}
 
 func (x *AddJWTProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[158]
+	mi := &file_zitadel_admin_proto_msgTypes[161]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8552,7 +8912,7 @@ func (x *AddJWTProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJWTProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddJWTProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{158}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{161}
 }
 
 func (x *AddJWTProviderRequest) GetName() string {
@@ -8607,7 +8967,7 @@ type AddJWTProviderResponse struct {
 
 func (x *AddJWTProviderResponse) Reset() {
 	*x = AddJWTProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[159]
+	mi := &file_zitadel_admin_proto_msgTypes[162]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8619,7 +8979,7 @@ func (x *AddJWTProviderResponse) String() string {
 func (*AddJWTProviderResponse) ProtoMessage() {}
 
 func (x *AddJWTProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[159]
+	mi := &file_zitadel_admin_proto_msgTypes[162]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8632,7 +8992,7 @@ func (x *AddJWTProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddJWTProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddJWTProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{159}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{162}
 }
 
 func (x *AddJWTProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8664,7 +9024,7 @@ type UpdateJWTProviderRequest struct {
 
 func (x *UpdateJWTProviderRequest) Reset() {
 	*x = UpdateJWTProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[160]
+	mi := &file_zitadel_admin_proto_msgTypes[163]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8676,7 +9036,7 @@ func (x *UpdateJWTProviderRequest) String() string {
 func (*UpdateJWTProviderRequest) ProtoMessage() {}
 
 func (x *UpdateJWTProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[160]
+	mi := &file_zitadel_admin_proto_msgTypes[163]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8689,7 +9049,7 @@ func (x *UpdateJWTProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJWTProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateJWTProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{160}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{163}
 }
 
 func (x *UpdateJWTProviderRequest) GetId() string {
@@ -8750,7 +9110,7 @@ type UpdateJWTProviderResponse struct {
 
 func (x *UpdateJWTProviderResponse) Reset() {
 	*x = UpdateJWTProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[161]
+	mi := &file_zitadel_admin_proto_msgTypes[164]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8762,7 +9122,7 @@ func (x *UpdateJWTProviderResponse) String() string {
 func (*UpdateJWTProviderResponse) ProtoMessage() {}
 
 func (x *UpdateJWTProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[161]
+	mi := &file_zitadel_admin_proto_msgTypes[164]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8775,7 +9135,7 @@ func (x *UpdateJWTProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJWTProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateJWTProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{161}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{164}
 }
 
 func (x *UpdateJWTProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8801,7 +9161,7 @@ type AddAzureADProviderRequest struct {
 
 func (x *AddAzureADProviderRequest) Reset() {
 	*x = AddAzureADProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[162]
+	mi := &file_zitadel_admin_proto_msgTypes[165]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8813,7 +9173,7 @@ func (x *AddAzureADProviderRequest) String() string {
 func (*AddAzureADProviderRequest) ProtoMessage() {}
 
 func (x *AddAzureADProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[162]
+	mi := &file_zitadel_admin_proto_msgTypes[165]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8826,7 +9186,7 @@ func (x *AddAzureADProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAzureADProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddAzureADProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{162}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{165}
 }
 
 func (x *AddAzureADProviderRequest) GetName() string {
@@ -8888,7 +9248,7 @@ type AddAzureADProviderResponse struct {
 
 func (x *AddAzureADProviderResponse) Reset() {
 	*x = AddAzureADProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[163]
+	mi := &file_zitadel_admin_proto_msgTypes[166]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8900,7 +9260,7 @@ func (x *AddAzureADProviderResponse) String() string {
 func (*AddAzureADProviderResponse) ProtoMessage() {}
 
 func (x *AddAzureADProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[163]
+	mi := &file_zitadel_admin_proto_msgTypes[166]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8913,7 +9273,7 @@ func (x *AddAzureADProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAzureADProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddAzureADProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{163}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{166}
 }
 
 func (x *AddAzureADProviderResponse) GetDetails() *object.ObjectDetails {
@@ -8948,7 +9308,7 @@ type UpdateAzureADProviderRequest struct {
 
 func (x *UpdateAzureADProviderRequest) Reset() {
 	*x = UpdateAzureADProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[164]
+	mi := &file_zitadel_admin_proto_msgTypes[167]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -8960,7 +9320,7 @@ func (x *UpdateAzureADProviderRequest) String() string {
 func (*UpdateAzureADProviderRequest) ProtoMessage() {}
 
 func (x *UpdateAzureADProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[164]
+	mi := &file_zitadel_admin_proto_msgTypes[167]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8973,7 +9333,7 @@ func (x *UpdateAzureADProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAzureADProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAzureADProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{164}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{167}
 }
 
 func (x *UpdateAzureADProviderRequest) GetId() string {
@@ -9041,7 +9401,7 @@ type UpdateAzureADProviderResponse struct {
 
 func (x *UpdateAzureADProviderResponse) Reset() {
 	*x = UpdateAzureADProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[165]
+	mi := &file_zitadel_admin_proto_msgTypes[168]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9053,7 +9413,7 @@ func (x *UpdateAzureADProviderResponse) String() string {
 func (*UpdateAzureADProviderResponse) ProtoMessage() {}
 
 func (x *UpdateAzureADProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[165]
+	mi := &file_zitadel_admin_proto_msgTypes[168]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9066,7 +9426,7 @@ func (x *UpdateAzureADProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAzureADProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAzureADProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{165}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{168}
 }
 
 func (x *UpdateAzureADProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9090,7 +9450,7 @@ type AddGitHubProviderRequest struct {
 
 func (x *AddGitHubProviderRequest) Reset() {
 	*x = AddGitHubProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[166]
+	mi := &file_zitadel_admin_proto_msgTypes[169]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9102,7 +9462,7 @@ func (x *AddGitHubProviderRequest) String() string {
 func (*AddGitHubProviderRequest) ProtoMessage() {}
 
 func (x *AddGitHubProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[166]
+	mi := &file_zitadel_admin_proto_msgTypes[169]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9115,7 +9475,7 @@ func (x *AddGitHubProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGitHubProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGitHubProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{166}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{169}
 }
 
 func (x *AddGitHubProviderRequest) GetName() string {
@@ -9163,7 +9523,7 @@ type AddGitHubProviderResponse struct {
 
 func (x *AddGitHubProviderResponse) Reset() {
 	*x = AddGitHubProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[167]
+	mi := &file_zitadel_admin_proto_msgTypes[170]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9175,7 +9535,7 @@ func (x *AddGitHubProviderResponse) String() string {
 func (*AddGitHubProviderResponse) ProtoMessage() {}
 
 func (x *AddGitHubProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[167]
+	mi := &file_zitadel_admin_proto_msgTypes[170]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9188,7 +9548,7 @@ func (x *AddGitHubProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGitHubProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGitHubProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{167}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{170}
 }
 
 func (x *AddGitHubProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9220,7 +9580,7 @@ type UpdateGitHubProviderRequest struct {
 
 func (x *UpdateGitHubProviderRequest) Reset() {
 	*x = UpdateGitHubProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[168]
+	mi := &file_zitadel_admin_proto_msgTypes[171]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9232,7 +9592,7 @@ func (x *UpdateGitHubProviderRequest) String() string {
 func (*UpdateGitHubProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGitHubProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[168]
+	mi := &file_zitadel_admin_proto_msgTypes[171]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9245,7 +9605,7 @@ func (x *UpdateGitHubProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGitHubProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGitHubProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{168}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{171}
 }
 
 func (x *UpdateGitHubProviderRequest) GetId() string {
@@ -9299,7 +9659,7 @@ type UpdateGitHubProviderResponse struct {
 
 func (x *UpdateGitHubProviderResponse) Reset() {
 	*x = UpdateGitHubProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[169]
+	mi := &file_zitadel_admin_proto_msgTypes[172]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9311,7 +9671,7 @@ func (x *UpdateGitHubProviderResponse) String() string {
 func (*UpdateGitHubProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGitHubProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[169]
+	mi := &file_zitadel_admin_proto_msgTypes[172]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9324,7 +9684,7 @@ func (x *UpdateGitHubProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGitHubProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGitHubProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{169}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{172}
 }
 
 func (x *UpdateGitHubProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9350,7 +9710,7 @@ type AddGitHubEnterpriseServerProviderRequest struct {
 
 func (x *AddGitHubEnterpriseServerProviderRequest) Reset() {
 	*x = AddGitHubEnterpriseServerProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[170]
+	mi := &file_zitadel_admin_proto_msgTypes[173]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9362,7 +9722,7 @@ func (x *AddGitHubEnterpriseServerProviderRequest) String() string {
 func (*AddGitHubEnterpriseServerProviderRequest) ProtoMessage() {}
 
 func (x *AddGitHubEnterpriseServerProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[170]
+	mi := &file_zitadel_admin_proto_msgTypes[173]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9375,7 +9735,7 @@ func (x *AddGitHubEnterpriseServerProviderRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use AddGitHubEnterpriseServerProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGitHubEnterpriseServerProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{170}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{173}
 }
 
 func (x *AddGitHubEnterpriseServerProviderRequest) GetClientId() string {
@@ -9444,7 +9804,7 @@ type AddGitHubEnterpriseServerProviderResponse struct {
 
 func (x *AddGitHubEnterpriseServerProviderResponse) Reset() {
 	*x = AddGitHubEnterpriseServerProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[171]
+	mi := &file_zitadel_admin_proto_msgTypes[174]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9456,7 +9816,7 @@ func (x *AddGitHubEnterpriseServerProviderResponse) String() string {
 func (*AddGitHubEnterpriseServerProviderResponse) ProtoMessage() {}
 
 func (x *AddGitHubEnterpriseServerProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[171]
+	mi := &file_zitadel_admin_proto_msgTypes[174]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9469,7 +9829,7 @@ func (x *AddGitHubEnterpriseServerProviderResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use AddGitHubEnterpriseServerProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGitHubEnterpriseServerProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{171}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{174}
 }
 
 func (x *AddGitHubEnterpriseServerProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9504,7 +9864,7 @@ type UpdateGitHubEnterpriseServerProviderRequest struct {
 
 func (x *UpdateGitHubEnterpriseServerProviderRequest) Reset() {
 	*x = UpdateGitHubEnterpriseServerProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[172]
+	mi := &file_zitadel_admin_proto_msgTypes[175]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9516,7 +9876,7 @@ func (x *UpdateGitHubEnterpriseServerProviderRequest) String() string {
 func (*UpdateGitHubEnterpriseServerProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGitHubEnterpriseServerProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[172]
+	mi := &file_zitadel_admin_proto_msgTypes[175]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9529,7 +9889,7 @@ func (x *UpdateGitHubEnterpriseServerProviderRequest) ProtoReflect() protoreflec
 
 // Deprecated: Use UpdateGitHubEnterpriseServerProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGitHubEnterpriseServerProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{172}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{175}
 }
 
 func (x *UpdateGitHubEnterpriseServerProviderRequest) GetId() string {
@@ -9604,7 +9964,7 @@ type UpdateGitHubEnterpriseServerProviderResponse struct {
 
 func (x *UpdateGitHubEnterpriseServerProviderResponse) Reset() {
 	*x = UpdateGitHubEnterpriseServerProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[173]
+	mi := &file_zitadel_admin_proto_msgTypes[176]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9616,7 +9976,7 @@ func (x *UpdateGitHubEnterpriseServerProviderResponse) String() string {
 func (*UpdateGitHubEnterpriseServerProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGitHubEnterpriseServerProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[173]
+	mi := &file_zitadel_admin_proto_msgTypes[176]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9629,7 +9989,7 @@ func (x *UpdateGitHubEnterpriseServerProviderResponse) ProtoReflect() protorefle
 
 // Deprecated: Use UpdateGitHubEnterpriseServerProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGitHubEnterpriseServerProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{173}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{176}
 }
 
 func (x *UpdateGitHubEnterpriseServerProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9653,7 +10013,7 @@ type AddGitLabProviderRequest struct {
 
 func (x *AddGitLabProviderRequest) Reset() {
 	*x = AddGitLabProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[174]
+	mi := &file_zitadel_admin_proto_msgTypes[177]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9665,7 +10025,7 @@ func (x *AddGitLabProviderRequest) String() string {
 func (*AddGitLabProviderRequest) ProtoMessage() {}
 
 func (x *AddGitLabProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[174]
+	mi := &file_zitadel_admin_proto_msgTypes[177]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9678,7 +10038,7 @@ func (x *AddGitLabProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGitLabProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGitLabProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{174}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{177}
 }
 
 func (x *AddGitLabProviderRequest) GetName() string {
@@ -9726,7 +10086,7 @@ type AddGitLabProviderResponse struct {
 
 func (x *AddGitLabProviderResponse) Reset() {
 	*x = AddGitLabProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[175]
+	mi := &file_zitadel_admin_proto_msgTypes[178]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9738,7 +10098,7 @@ func (x *AddGitLabProviderResponse) String() string {
 func (*AddGitLabProviderResponse) ProtoMessage() {}
 
 func (x *AddGitLabProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[175]
+	mi := &file_zitadel_admin_proto_msgTypes[178]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9751,7 +10111,7 @@ func (x *AddGitLabProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGitLabProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGitLabProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{175}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{178}
 }
 
 func (x *AddGitLabProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9783,7 +10143,7 @@ type UpdateGitLabProviderRequest struct {
 
 func (x *UpdateGitLabProviderRequest) Reset() {
 	*x = UpdateGitLabProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[176]
+	mi := &file_zitadel_admin_proto_msgTypes[179]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9795,7 +10155,7 @@ func (x *UpdateGitLabProviderRequest) String() string {
 func (*UpdateGitLabProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGitLabProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[176]
+	mi := &file_zitadel_admin_proto_msgTypes[179]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9808,7 +10168,7 @@ func (x *UpdateGitLabProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGitLabProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGitLabProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{176}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{179}
 }
 
 func (x *UpdateGitLabProviderRequest) GetId() string {
@@ -9862,7 +10222,7 @@ type UpdateGitLabProviderResponse struct {
 
 func (x *UpdateGitLabProviderResponse) Reset() {
 	*x = UpdateGitLabProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[177]
+	mi := &file_zitadel_admin_proto_msgTypes[180]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9874,7 +10234,7 @@ func (x *UpdateGitLabProviderResponse) String() string {
 func (*UpdateGitLabProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGitLabProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[177]
+	mi := &file_zitadel_admin_proto_msgTypes[180]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9887,7 +10247,7 @@ func (x *UpdateGitLabProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGitLabProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGitLabProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{177}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{180}
 }
 
 func (x *UpdateGitLabProviderResponse) GetDetails() *object.ObjectDetails {
@@ -9911,7 +10271,7 @@ type AddGitLabSelfHostedProviderRequest struct {
 
 func (x *AddGitLabSelfHostedProviderRequest) Reset() {
 	*x = AddGitLabSelfHostedProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[178]
+	mi := &file_zitadel_admin_proto_msgTypes[181]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9923,7 +10283,7 @@ func (x *AddGitLabSelfHostedProviderRequest) String() string {
 func (*AddGitLabSelfHostedProviderRequest) ProtoMessage() {}
 
 func (x *AddGitLabSelfHostedProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[178]
+	mi := &file_zitadel_admin_proto_msgTypes[181]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9936,7 +10296,7 @@ func (x *AddGitLabSelfHostedProviderRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use AddGitLabSelfHostedProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGitLabSelfHostedProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{178}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{181}
 }
 
 func (x *AddGitLabSelfHostedProviderRequest) GetIssuer() string {
@@ -9991,7 +10351,7 @@ type AddGitLabSelfHostedProviderResponse struct {
 
 func (x *AddGitLabSelfHostedProviderResponse) Reset() {
 	*x = AddGitLabSelfHostedProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[179]
+	mi := &file_zitadel_admin_proto_msgTypes[182]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10003,7 +10363,7 @@ func (x *AddGitLabSelfHostedProviderResponse) String() string {
 func (*AddGitLabSelfHostedProviderResponse) ProtoMessage() {}
 
 func (x *AddGitLabSelfHostedProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[179]
+	mi := &file_zitadel_admin_proto_msgTypes[182]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10016,7 +10376,7 @@ func (x *AddGitLabSelfHostedProviderResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AddGitLabSelfHostedProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGitLabSelfHostedProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{179}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{182}
 }
 
 func (x *AddGitLabSelfHostedProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10049,7 +10409,7 @@ type UpdateGitLabSelfHostedProviderRequest struct {
 
 func (x *UpdateGitLabSelfHostedProviderRequest) Reset() {
 	*x = UpdateGitLabSelfHostedProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[180]
+	mi := &file_zitadel_admin_proto_msgTypes[183]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10061,7 +10421,7 @@ func (x *UpdateGitLabSelfHostedProviderRequest) String() string {
 func (*UpdateGitLabSelfHostedProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGitLabSelfHostedProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[180]
+	mi := &file_zitadel_admin_proto_msgTypes[183]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10074,7 +10434,7 @@ func (x *UpdateGitLabSelfHostedProviderRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use UpdateGitLabSelfHostedProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGitLabSelfHostedProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{180}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{183}
 }
 
 func (x *UpdateGitLabSelfHostedProviderRequest) GetId() string {
@@ -10135,7 +10495,7 @@ type UpdateGitLabSelfHostedProviderResponse struct {
 
 func (x *UpdateGitLabSelfHostedProviderResponse) Reset() {
 	*x = UpdateGitLabSelfHostedProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[181]
+	mi := &file_zitadel_admin_proto_msgTypes[184]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10147,7 +10507,7 @@ func (x *UpdateGitLabSelfHostedProviderResponse) String() string {
 func (*UpdateGitLabSelfHostedProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGitLabSelfHostedProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[181]
+	mi := &file_zitadel_admin_proto_msgTypes[184]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10160,7 +10520,7 @@ func (x *UpdateGitLabSelfHostedProviderResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use UpdateGitLabSelfHostedProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGitLabSelfHostedProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{181}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{184}
 }
 
 func (x *UpdateGitLabSelfHostedProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10184,7 +10544,7 @@ type AddGoogleProviderRequest struct {
 
 func (x *AddGoogleProviderRequest) Reset() {
 	*x = AddGoogleProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[182]
+	mi := &file_zitadel_admin_proto_msgTypes[185]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10196,7 +10556,7 @@ func (x *AddGoogleProviderRequest) String() string {
 func (*AddGoogleProviderRequest) ProtoMessage() {}
 
 func (x *AddGoogleProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[182]
+	mi := &file_zitadel_admin_proto_msgTypes[185]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10209,7 +10569,7 @@ func (x *AddGoogleProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGoogleProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddGoogleProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{182}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{185}
 }
 
 func (x *AddGoogleProviderRequest) GetName() string {
@@ -10257,7 +10617,7 @@ type AddGoogleProviderResponse struct {
 
 func (x *AddGoogleProviderResponse) Reset() {
 	*x = AddGoogleProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[183]
+	mi := &file_zitadel_admin_proto_msgTypes[186]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10269,7 +10629,7 @@ func (x *AddGoogleProviderResponse) String() string {
 func (*AddGoogleProviderResponse) ProtoMessage() {}
 
 func (x *AddGoogleProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[183]
+	mi := &file_zitadel_admin_proto_msgTypes[186]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10282,7 +10642,7 @@ func (x *AddGoogleProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGoogleProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddGoogleProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{183}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{186}
 }
 
 func (x *AddGoogleProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10314,7 +10674,7 @@ type UpdateGoogleProviderRequest struct {
 
 func (x *UpdateGoogleProviderRequest) Reset() {
 	*x = UpdateGoogleProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[184]
+	mi := &file_zitadel_admin_proto_msgTypes[187]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10326,7 +10686,7 @@ func (x *UpdateGoogleProviderRequest) String() string {
 func (*UpdateGoogleProviderRequest) ProtoMessage() {}
 
 func (x *UpdateGoogleProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[184]
+	mi := &file_zitadel_admin_proto_msgTypes[187]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10339,7 +10699,7 @@ func (x *UpdateGoogleProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoogleProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGoogleProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{184}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{187}
 }
 
 func (x *UpdateGoogleProviderRequest) GetId() string {
@@ -10393,7 +10753,7 @@ type UpdateGoogleProviderResponse struct {
 
 func (x *UpdateGoogleProviderResponse) Reset() {
 	*x = UpdateGoogleProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[185]
+	mi := &file_zitadel_admin_proto_msgTypes[188]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10405,7 +10765,7 @@ func (x *UpdateGoogleProviderResponse) String() string {
 func (*UpdateGoogleProviderResponse) ProtoMessage() {}
 
 func (x *UpdateGoogleProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[185]
+	mi := &file_zitadel_admin_proto_msgTypes[188]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10418,7 +10778,7 @@ func (x *UpdateGoogleProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoogleProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGoogleProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{185}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{188}
 }
 
 func (x *UpdateGoogleProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10450,7 +10810,7 @@ type AddLDAPProviderRequest struct {
 
 func (x *AddLDAPProviderRequest) Reset() {
 	*x = AddLDAPProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[186]
+	mi := &file_zitadel_admin_proto_msgTypes[189]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10462,7 +10822,7 @@ func (x *AddLDAPProviderRequest) String() string {
 func (*AddLDAPProviderRequest) ProtoMessage() {}
 
 func (x *AddLDAPProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[186]
+	mi := &file_zitadel_admin_proto_msgTypes[189]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10475,7 +10835,7 @@ func (x *AddLDAPProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddLDAPProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddLDAPProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{186}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{189}
 }
 
 func (x *AddLDAPProviderRequest) GetName() string {
@@ -10579,7 +10939,7 @@ type AddLDAPProviderResponse struct {
 
 func (x *AddLDAPProviderResponse) Reset() {
 	*x = AddLDAPProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[187]
+	mi := &file_zitadel_admin_proto_msgTypes[190]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10591,7 +10951,7 @@ func (x *AddLDAPProviderResponse) String() string {
 func (*AddLDAPProviderResponse) ProtoMessage() {}
 
 func (x *AddLDAPProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[187]
+	mi := &file_zitadel_admin_proto_msgTypes[190]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10604,7 +10964,7 @@ func (x *AddLDAPProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddLDAPProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddLDAPProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{187}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{190}
 }
 
 func (x *AddLDAPProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10644,7 +11004,7 @@ type UpdateLDAPProviderRequest struct {
 
 func (x *UpdateLDAPProviderRequest) Reset() {
 	*x = UpdateLDAPProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[188]
+	mi := &file_zitadel_admin_proto_msgTypes[191]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10656,7 +11016,7 @@ func (x *UpdateLDAPProviderRequest) String() string {
 func (*UpdateLDAPProviderRequest) ProtoMessage() {}
 
 func (x *UpdateLDAPProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[188]
+	mi := &file_zitadel_admin_proto_msgTypes[191]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10669,7 +11029,7 @@ func (x *UpdateLDAPProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLDAPProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLDAPProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{188}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{191}
 }
 
 func (x *UpdateLDAPProviderRequest) GetId() string {
@@ -10779,7 +11139,7 @@ type UpdateLDAPProviderResponse struct {
 
 func (x *UpdateLDAPProviderResponse) Reset() {
 	*x = UpdateLDAPProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[189]
+	mi := &file_zitadel_admin_proto_msgTypes[192]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10791,7 +11151,7 @@ func (x *UpdateLDAPProviderResponse) String() string {
 func (*UpdateLDAPProviderResponse) ProtoMessage() {}
 
 func (x *UpdateLDAPProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[189]
+	mi := &file_zitadel_admin_proto_msgTypes[192]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10804,7 +11164,7 @@ func (x *UpdateLDAPProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLDAPProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLDAPProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{189}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{192}
 }
 
 func (x *UpdateLDAPProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10830,7 +11190,7 @@ type AddAppleProviderRequest struct {
 
 func (x *AddAppleProviderRequest) Reset() {
 	*x = AddAppleProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[190]
+	mi := &file_zitadel_admin_proto_msgTypes[193]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10842,7 +11202,7 @@ func (x *AddAppleProviderRequest) String() string {
 func (*AddAppleProviderRequest) ProtoMessage() {}
 
 func (x *AddAppleProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[190]
+	mi := &file_zitadel_admin_proto_msgTypes[193]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10855,7 +11215,7 @@ func (x *AddAppleProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAppleProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddAppleProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{190}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{193}
 }
 
 func (x *AddAppleProviderRequest) GetName() string {
@@ -10917,7 +11277,7 @@ type AddAppleProviderResponse struct {
 
 func (x *AddAppleProviderResponse) Reset() {
 	*x = AddAppleProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[191]
+	mi := &file_zitadel_admin_proto_msgTypes[194]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10929,7 +11289,7 @@ func (x *AddAppleProviderResponse) String() string {
 func (*AddAppleProviderResponse) ProtoMessage() {}
 
 func (x *AddAppleProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[191]
+	mi := &file_zitadel_admin_proto_msgTypes[194]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10942,7 +11302,7 @@ func (x *AddAppleProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAppleProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddAppleProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{191}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{194}
 }
 
 func (x *AddAppleProviderResponse) GetDetails() *object.ObjectDetails {
@@ -10975,7 +11335,7 @@ type UpdateAppleProviderRequest struct {
 
 func (x *UpdateAppleProviderRequest) Reset() {
 	*x = UpdateAppleProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[192]
+	mi := &file_zitadel_admin_proto_msgTypes[195]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10987,7 +11347,7 @@ func (x *UpdateAppleProviderRequest) String() string {
 func (*UpdateAppleProviderRequest) ProtoMessage() {}
 
 func (x *UpdateAppleProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[192]
+	mi := &file_zitadel_admin_proto_msgTypes[195]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11000,7 +11360,7 @@ func (x *UpdateAppleProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAppleProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAppleProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{192}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{195}
 }
 
 func (x *UpdateAppleProviderRequest) GetId() string {
@@ -11068,7 +11428,7 @@ type UpdateAppleProviderResponse struct {
 
 func (x *UpdateAppleProviderResponse) Reset() {
 	*x = UpdateAppleProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[193]
+	mi := &file_zitadel_admin_proto_msgTypes[196]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11080,7 +11440,7 @@ func (x *UpdateAppleProviderResponse) String() string {
 func (*UpdateAppleProviderResponse) ProtoMessage() {}
 
 func (x *UpdateAppleProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[193]
+	mi := &file_zitadel_admin_proto_msgTypes[196]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11093,7 +11453,7 @@ func (x *UpdateAppleProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAppleProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAppleProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{193}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{196}
 }
 
 func (x *UpdateAppleProviderResponse) GetDetails() *object.ObjectDetails {
@@ -11121,7 +11481,7 @@ type AddSAMLProviderRequest struct {
 	// Optionally specify the name of the attribute, which will be used to map the user
 	// in case the nameid-format returned is `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`.
 	TransientMappingAttributeName *string `protobuf:"bytes,8,opt,name=transient_mapping_attribute_name,json=transientMappingAttributeName,proto3,oneof" json:"transient_mapping_attribute_name,omitempty"`
-	// Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,
+	// Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,
 	// if the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata.
 	FederatedLogoutEnabled *bool `protobuf:"varint,9,opt,name=federated_logout_enabled,json=federatedLogoutEnabled,proto3,oneof" json:"federated_logout_enabled,omitempty"`
 	// Specify a Signature Algorithm that should be used to sign SAML requests and responses.
@@ -11133,7 +11493,7 @@ type AddSAMLProviderRequest struct {
 
 func (x *AddSAMLProviderRequest) Reset() {
 	*x = AddSAMLProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[194]
+	mi := &file_zitadel_admin_proto_msgTypes[197]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11145,7 +11505,7 @@ func (x *AddSAMLProviderRequest) String() string {
 func (*AddSAMLProviderRequest) ProtoMessage() {}
 
 func (x *AddSAMLProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[194]
+	mi := &file_zitadel_admin_proto_msgTypes[197]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11158,7 +11518,7 @@ func (x *AddSAMLProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSAMLProviderRequest.ProtoReflect.Descriptor instead.
 func (*AddSAMLProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{194}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{197}
 }
 
 func (x *AddSAMLProviderRequest) GetName() string {
@@ -11270,7 +11630,7 @@ type AddSAMLProviderResponse struct {
 
 func (x *AddSAMLProviderResponse) Reset() {
 	*x = AddSAMLProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[195]
+	mi := &file_zitadel_admin_proto_msgTypes[198]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11282,7 +11642,7 @@ func (x *AddSAMLProviderResponse) String() string {
 func (*AddSAMLProviderResponse) ProtoMessage() {}
 
 func (x *AddSAMLProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[195]
+	mi := &file_zitadel_admin_proto_msgTypes[198]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11295,7 +11655,7 @@ func (x *AddSAMLProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSAMLProviderResponse.ProtoReflect.Descriptor instead.
 func (*AddSAMLProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{195}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{198}
 }
 
 func (x *AddSAMLProviderResponse) GetDetails() *object.ObjectDetails {
@@ -11333,7 +11693,7 @@ type UpdateSAMLProviderRequest struct {
 	// Optionally specify the name of the attribute, which will be used to map the user
 	// in case the nameid-format returned is `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`.
 	TransientMappingAttributeName *string `protobuf:"bytes,9,opt,name=transient_mapping_attribute_name,json=transientMappingAttributeName,proto3,oneof" json:"transient_mapping_attribute_name,omitempty"`
-	// Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,
+	// Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,
 	// if the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata.
 	FederatedLogoutEnabled *bool `protobuf:"varint,10,opt,name=federated_logout_enabled,json=federatedLogoutEnabled,proto3,oneof" json:"federated_logout_enabled,omitempty"`
 	// Specify a Signature Algorithm that should be used to sign SAML requests and responses.
@@ -11345,7 +11705,7 @@ type UpdateSAMLProviderRequest struct {
 
 func (x *UpdateSAMLProviderRequest) Reset() {
 	*x = UpdateSAMLProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[196]
+	mi := &file_zitadel_admin_proto_msgTypes[199]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11357,7 +11717,7 @@ func (x *UpdateSAMLProviderRequest) String() string {
 func (*UpdateSAMLProviderRequest) ProtoMessage() {}
 
 func (x *UpdateSAMLProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[196]
+	mi := &file_zitadel_admin_proto_msgTypes[199]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11370,7 +11730,7 @@ func (x *UpdateSAMLProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSAMLProviderRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSAMLProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{196}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{199}
 }
 
 func (x *UpdateSAMLProviderRequest) GetId() string {
@@ -11487,7 +11847,7 @@ type UpdateSAMLProviderResponse struct {
 
 func (x *UpdateSAMLProviderResponse) Reset() {
 	*x = UpdateSAMLProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[197]
+	mi := &file_zitadel_admin_proto_msgTypes[200]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11499,7 +11859,7 @@ func (x *UpdateSAMLProviderResponse) String() string {
 func (*UpdateSAMLProviderResponse) ProtoMessage() {}
 
 func (x *UpdateSAMLProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[197]
+	mi := &file_zitadel_admin_proto_msgTypes[200]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11512,7 +11872,7 @@ func (x *UpdateSAMLProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSAMLProviderResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSAMLProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{197}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{200}
 }
 
 func (x *UpdateSAMLProviderResponse) GetDetails() *object.ObjectDetails {
@@ -11531,7 +11891,7 @@ type RegenerateSAMLProviderCertificateRequest struct {
 
 func (x *RegenerateSAMLProviderCertificateRequest) Reset() {
 	*x = RegenerateSAMLProviderCertificateRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[198]
+	mi := &file_zitadel_admin_proto_msgTypes[201]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11543,7 +11903,7 @@ func (x *RegenerateSAMLProviderCertificateRequest) String() string {
 func (*RegenerateSAMLProviderCertificateRequest) ProtoMessage() {}
 
 func (x *RegenerateSAMLProviderCertificateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[198]
+	mi := &file_zitadel_admin_proto_msgTypes[201]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11556,7 +11916,7 @@ func (x *RegenerateSAMLProviderCertificateRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use RegenerateSAMLProviderCertificateRequest.ProtoReflect.Descriptor instead.
 func (*RegenerateSAMLProviderCertificateRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{198}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{201}
 }
 
 func (x *RegenerateSAMLProviderCertificateRequest) GetId() string {
@@ -11575,7 +11935,7 @@ type RegenerateSAMLProviderCertificateResponse struct {
 
 func (x *RegenerateSAMLProviderCertificateResponse) Reset() {
 	*x = RegenerateSAMLProviderCertificateResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[199]
+	mi := &file_zitadel_admin_proto_msgTypes[202]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11587,7 +11947,7 @@ func (x *RegenerateSAMLProviderCertificateResponse) String() string {
 func (*RegenerateSAMLProviderCertificateResponse) ProtoMessage() {}
 
 func (x *RegenerateSAMLProviderCertificateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[199]
+	mi := &file_zitadel_admin_proto_msgTypes[202]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11600,7 +11960,7 @@ func (x *RegenerateSAMLProviderCertificateResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use RegenerateSAMLProviderCertificateResponse.ProtoReflect.Descriptor instead.
 func (*RegenerateSAMLProviderCertificateResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{199}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{202}
 }
 
 func (x *RegenerateSAMLProviderCertificateResponse) GetDetails() *object.ObjectDetails {
@@ -11619,7 +11979,7 @@ type DeleteProviderRequest struct {
 
 func (x *DeleteProviderRequest) Reset() {
 	*x = DeleteProviderRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[200]
+	mi := &file_zitadel_admin_proto_msgTypes[203]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11631,7 +11991,7 @@ func (x *DeleteProviderRequest) String() string {
 func (*DeleteProviderRequest) ProtoMessage() {}
 
 func (x *DeleteProviderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[200]
+	mi := &file_zitadel_admin_proto_msgTypes[203]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11644,7 +12004,7 @@ func (x *DeleteProviderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteProviderRequest.ProtoReflect.Descriptor instead.
 func (*DeleteProviderRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{200}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{203}
 }
 
 func (x *DeleteProviderRequest) GetId() string {
@@ -11663,7 +12023,7 @@ type DeleteProviderResponse struct {
 
 func (x *DeleteProviderResponse) Reset() {
 	*x = DeleteProviderResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[201]
+	mi := &file_zitadel_admin_proto_msgTypes[204]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11675,7 +12035,7 @@ func (x *DeleteProviderResponse) String() string {
 func (*DeleteProviderResponse) ProtoMessage() {}
 
 func (x *DeleteProviderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[201]
+	mi := &file_zitadel_admin_proto_msgTypes[204]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11688,7 +12048,7 @@ func (x *DeleteProviderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteProviderResponse.ProtoReflect.Descriptor instead.
 func (*DeleteProviderResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{201}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{204}
 }
 
 func (x *DeleteProviderResponse) GetDetails() *object.ObjectDetails {
@@ -11706,7 +12066,7 @@ type GetOrgIAMPolicyRequest struct {
 
 func (x *GetOrgIAMPolicyRequest) Reset() {
 	*x = GetOrgIAMPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[202]
+	mi := &file_zitadel_admin_proto_msgTypes[205]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11718,7 +12078,7 @@ func (x *GetOrgIAMPolicyRequest) String() string {
 func (*GetOrgIAMPolicyRequest) ProtoMessage() {}
 
 func (x *GetOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[202]
+	mi := &file_zitadel_admin_proto_msgTypes[205]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11731,7 +12091,7 @@ func (x *GetOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgIAMPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetOrgIAMPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{202}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{205}
 }
 
 type GetOrgIAMPolicyResponse struct {
@@ -11743,7 +12103,7 @@ type GetOrgIAMPolicyResponse struct {
 
 func (x *GetOrgIAMPolicyResponse) Reset() {
 	*x = GetOrgIAMPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[203]
+	mi := &file_zitadel_admin_proto_msgTypes[206]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11755,7 +12115,7 @@ func (x *GetOrgIAMPolicyResponse) String() string {
 func (*GetOrgIAMPolicyResponse) ProtoMessage() {}
 
 func (x *GetOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[203]
+	mi := &file_zitadel_admin_proto_msgTypes[206]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11768,7 +12128,7 @@ func (x *GetOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetOrgIAMPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetOrgIAMPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{203}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{206}
 }
 
 func (x *GetOrgIAMPolicyResponse) GetPolicy() *policy.OrgIAMPolicy {
@@ -11787,7 +12147,7 @@ type UpdateOrgIAMPolicyRequest struct {
 
 func (x *UpdateOrgIAMPolicyRequest) Reset() {
 	*x = UpdateOrgIAMPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[204]
+	mi := &file_zitadel_admin_proto_msgTypes[207]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11799,7 +12159,7 @@ func (x *UpdateOrgIAMPolicyRequest) String() string {
 func (*UpdateOrgIAMPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[204]
+	mi := &file_zitadel_admin_proto_msgTypes[207]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11812,7 +12172,7 @@ func (x *UpdateOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOrgIAMPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateOrgIAMPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{204}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{207}
 }
 
 func (x *UpdateOrgIAMPolicyRequest) GetUserLoginMustBeDomain() bool {
@@ -11831,7 +12191,7 @@ type UpdateOrgIAMPolicyResponse struct {
 
 func (x *UpdateOrgIAMPolicyResponse) Reset() {
 	*x = UpdateOrgIAMPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[205]
+	mi := &file_zitadel_admin_proto_msgTypes[208]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11843,7 +12203,7 @@ func (x *UpdateOrgIAMPolicyResponse) String() string {
 func (*UpdateOrgIAMPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[205]
+	mi := &file_zitadel_admin_proto_msgTypes[208]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11856,7 +12216,7 @@ func (x *UpdateOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateOrgIAMPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateOrgIAMPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{205}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{208}
 }
 
 func (x *UpdateOrgIAMPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -11875,7 +12235,7 @@ type GetCustomOrgIAMPolicyRequest struct {
 
 func (x *GetCustomOrgIAMPolicyRequest) Reset() {
 	*x = GetCustomOrgIAMPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[206]
+	mi := &file_zitadel_admin_proto_msgTypes[209]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11887,7 +12247,7 @@ func (x *GetCustomOrgIAMPolicyRequest) String() string {
 func (*GetCustomOrgIAMPolicyRequest) ProtoMessage() {}
 
 func (x *GetCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[206]
+	mi := &file_zitadel_admin_proto_msgTypes[209]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11900,7 +12260,7 @@ func (x *GetCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomOrgIAMPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomOrgIAMPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{206}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{209}
 }
 
 func (x *GetCustomOrgIAMPolicyRequest) GetOrgId() string {
@@ -11921,7 +12281,7 @@ type GetCustomOrgIAMPolicyResponse struct {
 
 func (x *GetCustomOrgIAMPolicyResponse) Reset() {
 	*x = GetCustomOrgIAMPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[207]
+	mi := &file_zitadel_admin_proto_msgTypes[210]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11933,7 +12293,7 @@ func (x *GetCustomOrgIAMPolicyResponse) String() string {
 func (*GetCustomOrgIAMPolicyResponse) ProtoMessage() {}
 
 func (x *GetCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[207]
+	mi := &file_zitadel_admin_proto_msgTypes[210]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11946,7 +12306,7 @@ func (x *GetCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomOrgIAMPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomOrgIAMPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{207}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{210}
 }
 
 func (x *GetCustomOrgIAMPolicyResponse) GetPolicy() *policy.OrgIAMPolicy {
@@ -11973,7 +12333,7 @@ type AddCustomOrgIAMPolicyRequest struct {
 
 func (x *AddCustomOrgIAMPolicyRequest) Reset() {
 	*x = AddCustomOrgIAMPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[208]
+	mi := &file_zitadel_admin_proto_msgTypes[211]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11985,7 +12345,7 @@ func (x *AddCustomOrgIAMPolicyRequest) String() string {
 func (*AddCustomOrgIAMPolicyRequest) ProtoMessage() {}
 
 func (x *AddCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[208]
+	mi := &file_zitadel_admin_proto_msgTypes[211]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11998,7 +12358,7 @@ func (x *AddCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCustomOrgIAMPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddCustomOrgIAMPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{208}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{211}
 }
 
 func (x *AddCustomOrgIAMPolicyRequest) GetOrgId() string {
@@ -12024,7 +12384,7 @@ type AddCustomOrgIAMPolicyResponse struct {
 
 func (x *AddCustomOrgIAMPolicyResponse) Reset() {
 	*x = AddCustomOrgIAMPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[209]
+	mi := &file_zitadel_admin_proto_msgTypes[212]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12036,7 +12396,7 @@ func (x *AddCustomOrgIAMPolicyResponse) String() string {
 func (*AddCustomOrgIAMPolicyResponse) ProtoMessage() {}
 
 func (x *AddCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[209]
+	mi := &file_zitadel_admin_proto_msgTypes[212]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12049,7 +12409,7 @@ func (x *AddCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCustomOrgIAMPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddCustomOrgIAMPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{209}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{212}
 }
 
 func (x *AddCustomOrgIAMPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -12069,7 +12429,7 @@ type UpdateCustomOrgIAMPolicyRequest struct {
 
 func (x *UpdateCustomOrgIAMPolicyRequest) Reset() {
 	*x = UpdateCustomOrgIAMPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[210]
+	mi := &file_zitadel_admin_proto_msgTypes[213]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12081,7 +12441,7 @@ func (x *UpdateCustomOrgIAMPolicyRequest) String() string {
 func (*UpdateCustomOrgIAMPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[210]
+	mi := &file_zitadel_admin_proto_msgTypes[213]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12094,7 +12454,7 @@ func (x *UpdateCustomOrgIAMPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomOrgIAMPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateCustomOrgIAMPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{210}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{213}
 }
 
 func (x *UpdateCustomOrgIAMPolicyRequest) GetOrgId() string {
@@ -12120,7 +12480,7 @@ type UpdateCustomOrgIAMPolicyResponse struct {
 
 func (x *UpdateCustomOrgIAMPolicyResponse) Reset() {
 	*x = UpdateCustomOrgIAMPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[211]
+	mi := &file_zitadel_admin_proto_msgTypes[214]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12132,7 +12492,7 @@ func (x *UpdateCustomOrgIAMPolicyResponse) String() string {
 func (*UpdateCustomOrgIAMPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[211]
+	mi := &file_zitadel_admin_proto_msgTypes[214]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12145,7 +12505,7 @@ func (x *UpdateCustomOrgIAMPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomOrgIAMPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateCustomOrgIAMPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{211}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{214}
 }
 
 func (x *UpdateCustomOrgIAMPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -12164,7 +12524,7 @@ type ResetCustomOrgIAMPolicyToDefaultRequest struct {
 
 func (x *ResetCustomOrgIAMPolicyToDefaultRequest) Reset() {
 	*x = ResetCustomOrgIAMPolicyToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[212]
+	mi := &file_zitadel_admin_proto_msgTypes[215]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12176,7 +12536,7 @@ func (x *ResetCustomOrgIAMPolicyToDefaultRequest) String() string {
 func (*ResetCustomOrgIAMPolicyToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomOrgIAMPolicyToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[212]
+	mi := &file_zitadel_admin_proto_msgTypes[215]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12189,7 +12549,7 @@ func (x *ResetCustomOrgIAMPolicyToDefaultRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use ResetCustomOrgIAMPolicyToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomOrgIAMPolicyToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{212}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{215}
 }
 
 func (x *ResetCustomOrgIAMPolicyToDefaultRequest) GetOrgId() string {
@@ -12208,7 +12568,7 @@ type ResetCustomOrgIAMPolicyToDefaultResponse struct {
 
 func (x *ResetCustomOrgIAMPolicyToDefaultResponse) Reset() {
 	*x = ResetCustomOrgIAMPolicyToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[213]
+	mi := &file_zitadel_admin_proto_msgTypes[216]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12220,7 +12580,7 @@ func (x *ResetCustomOrgIAMPolicyToDefaultResponse) String() string {
 func (*ResetCustomOrgIAMPolicyToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomOrgIAMPolicyToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[213]
+	mi := &file_zitadel_admin_proto_msgTypes[216]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12233,7 +12593,7 @@ func (x *ResetCustomOrgIAMPolicyToDefaultResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use ResetCustomOrgIAMPolicyToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomOrgIAMPolicyToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{213}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{216}
 }
 
 func (x *ResetCustomOrgIAMPolicyToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -12251,7 +12611,7 @@ type GetDomainPolicyRequest struct {
 
 func (x *GetDomainPolicyRequest) Reset() {
 	*x = GetDomainPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[214]
+	mi := &file_zitadel_admin_proto_msgTypes[217]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12263,7 +12623,7 @@ func (x *GetDomainPolicyRequest) String() string {
 func (*GetDomainPolicyRequest) ProtoMessage() {}
 
 func (x *GetDomainPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[214]
+	mi := &file_zitadel_admin_proto_msgTypes[217]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12276,7 +12636,7 @@ func (x *GetDomainPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDomainPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetDomainPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{214}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{217}
 }
 
 type GetDomainPolicyResponse struct {
@@ -12288,7 +12648,7 @@ type GetDomainPolicyResponse struct {
 
 func (x *GetDomainPolicyResponse) Reset() {
 	*x = GetDomainPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[215]
+	mi := &file_zitadel_admin_proto_msgTypes[218]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12300,7 +12660,7 @@ func (x *GetDomainPolicyResponse) String() string {
 func (*GetDomainPolicyResponse) ProtoMessage() {}
 
 func (x *GetDomainPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[215]
+	mi := &file_zitadel_admin_proto_msgTypes[218]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12313,7 +12673,7 @@ func (x *GetDomainPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDomainPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetDomainPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{215}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{218}
 }
 
 func (x *GetDomainPolicyResponse) GetPolicy() *policy.DomainPolicy {
@@ -12334,7 +12694,7 @@ type UpdateDomainPolicyRequest struct {
 
 func (x *UpdateDomainPolicyRequest) Reset() {
 	*x = UpdateDomainPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[216]
+	mi := &file_zitadel_admin_proto_msgTypes[219]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12346,7 +12706,7 @@ func (x *UpdateDomainPolicyRequest) String() string {
 func (*UpdateDomainPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateDomainPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[216]
+	mi := &file_zitadel_admin_proto_msgTypes[219]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12359,7 +12719,7 @@ func (x *UpdateDomainPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDomainPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateDomainPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{216}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{219}
 }
 
 func (x *UpdateDomainPolicyRequest) GetUserLoginMustBeDomain() bool {
@@ -12392,7 +12752,7 @@ type UpdateDomainPolicyResponse struct {
 
 func (x *UpdateDomainPolicyResponse) Reset() {
 	*x = UpdateDomainPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[217]
+	mi := &file_zitadel_admin_proto_msgTypes[220]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12404,7 +12764,7 @@ func (x *UpdateDomainPolicyResponse) String() string {
 func (*UpdateDomainPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateDomainPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[217]
+	mi := &file_zitadel_admin_proto_msgTypes[220]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12417,7 +12777,7 @@ func (x *UpdateDomainPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDomainPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateDomainPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{217}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{220}
 }
 
 func (x *UpdateDomainPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -12436,7 +12796,7 @@ type GetCustomDomainPolicyRequest struct {
 
 func (x *GetCustomDomainPolicyRequest) Reset() {
 	*x = GetCustomDomainPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[218]
+	mi := &file_zitadel_admin_proto_msgTypes[221]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12448,7 +12808,7 @@ func (x *GetCustomDomainPolicyRequest) String() string {
 func (*GetCustomDomainPolicyRequest) ProtoMessage() {}
 
 func (x *GetCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[218]
+	mi := &file_zitadel_admin_proto_msgTypes[221]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12461,7 +12821,7 @@ func (x *GetCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomDomainPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomDomainPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{218}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{221}
 }
 
 func (x *GetCustomDomainPolicyRequest) GetOrgId() string {
@@ -12482,7 +12842,7 @@ type GetCustomDomainPolicyResponse struct {
 
 func (x *GetCustomDomainPolicyResponse) Reset() {
 	*x = GetCustomDomainPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[219]
+	mi := &file_zitadel_admin_proto_msgTypes[222]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12494,7 +12854,7 @@ func (x *GetCustomDomainPolicyResponse) String() string {
 func (*GetCustomDomainPolicyResponse) ProtoMessage() {}
 
 func (x *GetCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[219]
+	mi := &file_zitadel_admin_proto_msgTypes[222]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12507,7 +12867,7 @@ func (x *GetCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomDomainPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomDomainPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{219}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{222}
 }
 
 func (x *GetCustomDomainPolicyResponse) GetPolicy() *policy.DomainPolicy {
@@ -12536,7 +12896,7 @@ type AddCustomDomainPolicyRequest struct {
 
 func (x *AddCustomDomainPolicyRequest) Reset() {
 	*x = AddCustomDomainPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[220]
+	mi := &file_zitadel_admin_proto_msgTypes[223]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12548,7 +12908,7 @@ func (x *AddCustomDomainPolicyRequest) String() string {
 func (*AddCustomDomainPolicyRequest) ProtoMessage() {}
 
 func (x *AddCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[220]
+	mi := &file_zitadel_admin_proto_msgTypes[223]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12561,7 +12921,7 @@ func (x *AddCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCustomDomainPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddCustomDomainPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{220}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{223}
 }
 
 func (x *AddCustomDomainPolicyRequest) GetOrgId() string {
@@ -12601,7 +12961,7 @@ type AddCustomDomainPolicyResponse struct {
 
 func (x *AddCustomDomainPolicyResponse) Reset() {
 	*x = AddCustomDomainPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[221]
+	mi := &file_zitadel_admin_proto_msgTypes[224]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12613,7 +12973,7 @@ func (x *AddCustomDomainPolicyResponse) String() string {
 func (*AddCustomDomainPolicyResponse) ProtoMessage() {}
 
 func (x *AddCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[221]
+	mi := &file_zitadel_admin_proto_msgTypes[224]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12626,7 +12986,7 @@ func (x *AddCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCustomDomainPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddCustomDomainPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{221}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{224}
 }
 
 func (x *AddCustomDomainPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -12648,7 +13008,7 @@ type UpdateCustomDomainPolicyRequest struct {
 
 func (x *UpdateCustomDomainPolicyRequest) Reset() {
 	*x = UpdateCustomDomainPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[222]
+	mi := &file_zitadel_admin_proto_msgTypes[225]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12660,7 +13020,7 @@ func (x *UpdateCustomDomainPolicyRequest) String() string {
 func (*UpdateCustomDomainPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[222]
+	mi := &file_zitadel_admin_proto_msgTypes[225]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12673,7 +13033,7 @@ func (x *UpdateCustomDomainPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomDomainPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateCustomDomainPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{222}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{225}
 }
 
 func (x *UpdateCustomDomainPolicyRequest) GetOrgId() string {
@@ -12713,7 +13073,7 @@ type UpdateCustomDomainPolicyResponse struct {
 
 func (x *UpdateCustomDomainPolicyResponse) Reset() {
 	*x = UpdateCustomDomainPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[223]
+	mi := &file_zitadel_admin_proto_msgTypes[226]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12725,7 +13085,7 @@ func (x *UpdateCustomDomainPolicyResponse) String() string {
 func (*UpdateCustomDomainPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[223]
+	mi := &file_zitadel_admin_proto_msgTypes[226]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12738,7 +13098,7 @@ func (x *UpdateCustomDomainPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateCustomDomainPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateCustomDomainPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{223}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{226}
 }
 
 func (x *UpdateCustomDomainPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -12757,7 +13117,7 @@ type ResetCustomDomainPolicyToDefaultRequest struct {
 
 func (x *ResetCustomDomainPolicyToDefaultRequest) Reset() {
 	*x = ResetCustomDomainPolicyToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[224]
+	mi := &file_zitadel_admin_proto_msgTypes[227]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12769,7 +13129,7 @@ func (x *ResetCustomDomainPolicyToDefaultRequest) String() string {
 func (*ResetCustomDomainPolicyToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomDomainPolicyToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[224]
+	mi := &file_zitadel_admin_proto_msgTypes[227]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12782,7 +13142,7 @@ func (x *ResetCustomDomainPolicyToDefaultRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use ResetCustomDomainPolicyToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomDomainPolicyToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{224}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{227}
 }
 
 func (x *ResetCustomDomainPolicyToDefaultRequest) GetOrgId() string {
@@ -12801,7 +13161,7 @@ type ResetCustomDomainPolicyToDefaultResponse struct {
 
 func (x *ResetCustomDomainPolicyToDefaultResponse) Reset() {
 	*x = ResetCustomDomainPolicyToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[225]
+	mi := &file_zitadel_admin_proto_msgTypes[228]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12813,7 +13173,7 @@ func (x *ResetCustomDomainPolicyToDefaultResponse) String() string {
 func (*ResetCustomDomainPolicyToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomDomainPolicyToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[225]
+	mi := &file_zitadel_admin_proto_msgTypes[228]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12826,7 +13186,7 @@ func (x *ResetCustomDomainPolicyToDefaultResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use ResetCustomDomainPolicyToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomDomainPolicyToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{225}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{228}
 }
 
 func (x *ResetCustomDomainPolicyToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -12845,7 +13205,7 @@ type GetLabelPolicyRequest struct {
 
 func (x *GetLabelPolicyRequest) Reset() {
 	*x = GetLabelPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[226]
+	mi := &file_zitadel_admin_proto_msgTypes[229]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12857,7 +13217,7 @@ func (x *GetLabelPolicyRequest) String() string {
 func (*GetLabelPolicyRequest) ProtoMessage() {}
 
 func (x *GetLabelPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[226]
+	mi := &file_zitadel_admin_proto_msgTypes[229]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12870,7 +13230,7 @@ func (x *GetLabelPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetLabelPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{226}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{229}
 }
 
 type GetLabelPolicyResponse struct {
@@ -12882,7 +13242,7 @@ type GetLabelPolicyResponse struct {
 
 func (x *GetLabelPolicyResponse) Reset() {
 	*x = GetLabelPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[227]
+	mi := &file_zitadel_admin_proto_msgTypes[230]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12894,7 +13254,7 @@ func (x *GetLabelPolicyResponse) String() string {
 func (*GetLabelPolicyResponse) ProtoMessage() {}
 
 func (x *GetLabelPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[227]
+	mi := &file_zitadel_admin_proto_msgTypes[230]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12907,7 +13267,7 @@ func (x *GetLabelPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLabelPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetLabelPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{227}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{230}
 }
 
 func (x *GetLabelPolicyResponse) GetPolicy() *policy.LabelPolicy {
@@ -12926,7 +13286,7 @@ type GetPreviewLabelPolicyRequest struct {
 
 func (x *GetPreviewLabelPolicyRequest) Reset() {
 	*x = GetPreviewLabelPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[228]
+	mi := &file_zitadel_admin_proto_msgTypes[231]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12938,7 +13298,7 @@ func (x *GetPreviewLabelPolicyRequest) String() string {
 func (*GetPreviewLabelPolicyRequest) ProtoMessage() {}
 
 func (x *GetPreviewLabelPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[228]
+	mi := &file_zitadel_admin_proto_msgTypes[231]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12951,7 +13311,7 @@ func (x *GetPreviewLabelPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPreviewLabelPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetPreviewLabelPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{228}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{231}
 }
 
 type GetPreviewLabelPolicyResponse struct {
@@ -12963,7 +13323,7 @@ type GetPreviewLabelPolicyResponse struct {
 
 func (x *GetPreviewLabelPolicyResponse) Reset() {
 	*x = GetPreviewLabelPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[229]
+	mi := &file_zitadel_admin_proto_msgTypes[232]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12975,7 +13335,7 @@ func (x *GetPreviewLabelPolicyResponse) String() string {
 func (*GetPreviewLabelPolicyResponse) ProtoMessage() {}
 
 func (x *GetPreviewLabelPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[229]
+	mi := &file_zitadel_admin_proto_msgTypes[232]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12988,7 +13348,7 @@ func (x *GetPreviewLabelPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPreviewLabelPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetPreviewLabelPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{229}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{232}
 }
 
 func (x *GetPreviewLabelPolicyResponse) GetPolicy() *policy.LabelPolicy {
@@ -13017,7 +13377,7 @@ type UpdateLabelPolicyRequest struct {
 
 func (x *UpdateLabelPolicyRequest) Reset() {
 	*x = UpdateLabelPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[230]
+	mi := &file_zitadel_admin_proto_msgTypes[233]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13029,7 +13389,7 @@ func (x *UpdateLabelPolicyRequest) String() string {
 func (*UpdateLabelPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateLabelPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[230]
+	mi := &file_zitadel_admin_proto_msgTypes[233]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13042,7 +13402,7 @@ func (x *UpdateLabelPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLabelPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLabelPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{230}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{233}
 }
 
 func (x *UpdateLabelPolicyRequest) GetPrimaryColor() string {
@@ -13131,7 +13491,7 @@ type UpdateLabelPolicyResponse struct {
 
 func (x *UpdateLabelPolicyResponse) Reset() {
 	*x = UpdateLabelPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[231]
+	mi := &file_zitadel_admin_proto_msgTypes[234]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13143,7 +13503,7 @@ func (x *UpdateLabelPolicyResponse) String() string {
 func (*UpdateLabelPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateLabelPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[231]
+	mi := &file_zitadel_admin_proto_msgTypes[234]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13156,7 +13516,7 @@ func (x *UpdateLabelPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLabelPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLabelPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{231}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{234}
 }
 
 func (x *UpdateLabelPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -13175,7 +13535,7 @@ type ActivateLabelPolicyRequest struct {
 
 func (x *ActivateLabelPolicyRequest) Reset() {
 	*x = ActivateLabelPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[232]
+	mi := &file_zitadel_admin_proto_msgTypes[235]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13187,7 +13547,7 @@ func (x *ActivateLabelPolicyRequest) String() string {
 func (*ActivateLabelPolicyRequest) ProtoMessage() {}
 
 func (x *ActivateLabelPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[232]
+	mi := &file_zitadel_admin_proto_msgTypes[235]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13200,7 +13560,7 @@ func (x *ActivateLabelPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLabelPolicyRequest.ProtoReflect.Descriptor instead.
 func (*ActivateLabelPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{232}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{235}
 }
 
 type ActivateLabelPolicyResponse struct {
@@ -13212,7 +13572,7 @@ type ActivateLabelPolicyResponse struct {
 
 func (x *ActivateLabelPolicyResponse) Reset() {
 	*x = ActivateLabelPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[233]
+	mi := &file_zitadel_admin_proto_msgTypes[236]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13224,7 +13584,7 @@ func (x *ActivateLabelPolicyResponse) String() string {
 func (*ActivateLabelPolicyResponse) ProtoMessage() {}
 
 func (x *ActivateLabelPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[233]
+	mi := &file_zitadel_admin_proto_msgTypes[236]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13237,7 +13597,7 @@ func (x *ActivateLabelPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLabelPolicyResponse.ProtoReflect.Descriptor instead.
 func (*ActivateLabelPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{233}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{236}
 }
 
 func (x *ActivateLabelPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -13256,7 +13616,7 @@ type RemoveLabelPolicyLogoRequest struct {
 
 func (x *RemoveLabelPolicyLogoRequest) Reset() {
 	*x = RemoveLabelPolicyLogoRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[234]
+	mi := &file_zitadel_admin_proto_msgTypes[237]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13268,7 +13628,7 @@ func (x *RemoveLabelPolicyLogoRequest) String() string {
 func (*RemoveLabelPolicyLogoRequest) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyLogoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[234]
+	mi := &file_zitadel_admin_proto_msgTypes[237]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13281,7 +13641,7 @@ func (x *RemoveLabelPolicyLogoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyLogoRequest.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyLogoRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{234}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{237}
 }
 
 type RemoveLabelPolicyLogoResponse struct {
@@ -13293,7 +13653,7 @@ type RemoveLabelPolicyLogoResponse struct {
 
 func (x *RemoveLabelPolicyLogoResponse) Reset() {
 	*x = RemoveLabelPolicyLogoResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[235]
+	mi := &file_zitadel_admin_proto_msgTypes[238]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13305,7 +13665,7 @@ func (x *RemoveLabelPolicyLogoResponse) String() string {
 func (*RemoveLabelPolicyLogoResponse) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyLogoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[235]
+	mi := &file_zitadel_admin_proto_msgTypes[238]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13318,7 +13678,7 @@ func (x *RemoveLabelPolicyLogoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyLogoResponse.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyLogoResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{235}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{238}
 }
 
 func (x *RemoveLabelPolicyLogoResponse) GetDetails() *object.ObjectDetails {
@@ -13337,7 +13697,7 @@ type RemoveLabelPolicyLogoDarkRequest struct {
 
 func (x *RemoveLabelPolicyLogoDarkRequest) Reset() {
 	*x = RemoveLabelPolicyLogoDarkRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[236]
+	mi := &file_zitadel_admin_proto_msgTypes[239]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13349,7 +13709,7 @@ func (x *RemoveLabelPolicyLogoDarkRequest) String() string {
 func (*RemoveLabelPolicyLogoDarkRequest) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyLogoDarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[236]
+	mi := &file_zitadel_admin_proto_msgTypes[239]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13362,7 +13722,7 @@ func (x *RemoveLabelPolicyLogoDarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyLogoDarkRequest.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyLogoDarkRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{236}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{239}
 }
 
 type RemoveLabelPolicyLogoDarkResponse struct {
@@ -13374,7 +13734,7 @@ type RemoveLabelPolicyLogoDarkResponse struct {
 
 func (x *RemoveLabelPolicyLogoDarkResponse) Reset() {
 	*x = RemoveLabelPolicyLogoDarkResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[237]
+	mi := &file_zitadel_admin_proto_msgTypes[240]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13386,7 +13746,7 @@ func (x *RemoveLabelPolicyLogoDarkResponse) String() string {
 func (*RemoveLabelPolicyLogoDarkResponse) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyLogoDarkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[237]
+	mi := &file_zitadel_admin_proto_msgTypes[240]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13399,7 +13759,7 @@ func (x *RemoveLabelPolicyLogoDarkResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use RemoveLabelPolicyLogoDarkResponse.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyLogoDarkResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{237}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{240}
 }
 
 func (x *RemoveLabelPolicyLogoDarkResponse) GetDetails() *object.ObjectDetails {
@@ -13418,7 +13778,7 @@ type RemoveLabelPolicyIconRequest struct {
 
 func (x *RemoveLabelPolicyIconRequest) Reset() {
 	*x = RemoveLabelPolicyIconRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[238]
+	mi := &file_zitadel_admin_proto_msgTypes[241]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13430,7 +13790,7 @@ func (x *RemoveLabelPolicyIconRequest) String() string {
 func (*RemoveLabelPolicyIconRequest) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyIconRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[238]
+	mi := &file_zitadel_admin_proto_msgTypes[241]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13443,7 +13803,7 @@ func (x *RemoveLabelPolicyIconRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyIconRequest.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyIconRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{238}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{241}
 }
 
 type RemoveLabelPolicyIconResponse struct {
@@ -13455,7 +13815,7 @@ type RemoveLabelPolicyIconResponse struct {
 
 func (x *RemoveLabelPolicyIconResponse) Reset() {
 	*x = RemoveLabelPolicyIconResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[239]
+	mi := &file_zitadel_admin_proto_msgTypes[242]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13467,7 +13827,7 @@ func (x *RemoveLabelPolicyIconResponse) String() string {
 func (*RemoveLabelPolicyIconResponse) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyIconResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[239]
+	mi := &file_zitadel_admin_proto_msgTypes[242]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13480,7 +13840,7 @@ func (x *RemoveLabelPolicyIconResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyIconResponse.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyIconResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{239}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{242}
 }
 
 func (x *RemoveLabelPolicyIconResponse) GetDetails() *object.ObjectDetails {
@@ -13499,7 +13859,7 @@ type RemoveLabelPolicyIconDarkRequest struct {
 
 func (x *RemoveLabelPolicyIconDarkRequest) Reset() {
 	*x = RemoveLabelPolicyIconDarkRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[240]
+	mi := &file_zitadel_admin_proto_msgTypes[243]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13511,7 +13871,7 @@ func (x *RemoveLabelPolicyIconDarkRequest) String() string {
 func (*RemoveLabelPolicyIconDarkRequest) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyIconDarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[240]
+	mi := &file_zitadel_admin_proto_msgTypes[243]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13524,7 +13884,7 @@ func (x *RemoveLabelPolicyIconDarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyIconDarkRequest.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyIconDarkRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{240}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{243}
 }
 
 type RemoveLabelPolicyIconDarkResponse struct {
@@ -13536,7 +13896,7 @@ type RemoveLabelPolicyIconDarkResponse struct {
 
 func (x *RemoveLabelPolicyIconDarkResponse) Reset() {
 	*x = RemoveLabelPolicyIconDarkResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[241]
+	mi := &file_zitadel_admin_proto_msgTypes[244]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13548,7 +13908,7 @@ func (x *RemoveLabelPolicyIconDarkResponse) String() string {
 func (*RemoveLabelPolicyIconDarkResponse) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyIconDarkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[241]
+	mi := &file_zitadel_admin_proto_msgTypes[244]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13561,7 +13921,7 @@ func (x *RemoveLabelPolicyIconDarkResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use RemoveLabelPolicyIconDarkResponse.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyIconDarkResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{241}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{244}
 }
 
 func (x *RemoveLabelPolicyIconDarkResponse) GetDetails() *object.ObjectDetails {
@@ -13580,7 +13940,7 @@ type RemoveLabelPolicyFontRequest struct {
 
 func (x *RemoveLabelPolicyFontRequest) Reset() {
 	*x = RemoveLabelPolicyFontRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[242]
+	mi := &file_zitadel_admin_proto_msgTypes[245]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13592,7 +13952,7 @@ func (x *RemoveLabelPolicyFontRequest) String() string {
 func (*RemoveLabelPolicyFontRequest) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyFontRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[242]
+	mi := &file_zitadel_admin_proto_msgTypes[245]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13605,7 +13965,7 @@ func (x *RemoveLabelPolicyFontRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyFontRequest.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyFontRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{242}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{245}
 }
 
 type RemoveLabelPolicyFontResponse struct {
@@ -13617,7 +13977,7 @@ type RemoveLabelPolicyFontResponse struct {
 
 func (x *RemoveLabelPolicyFontResponse) Reset() {
 	*x = RemoveLabelPolicyFontResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[243]
+	mi := &file_zitadel_admin_proto_msgTypes[246]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13629,7 +13989,7 @@ func (x *RemoveLabelPolicyFontResponse) String() string {
 func (*RemoveLabelPolicyFontResponse) ProtoMessage() {}
 
 func (x *RemoveLabelPolicyFontResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[243]
+	mi := &file_zitadel_admin_proto_msgTypes[246]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13642,7 +14002,7 @@ func (x *RemoveLabelPolicyFontResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveLabelPolicyFontResponse.ProtoReflect.Descriptor instead.
 func (*RemoveLabelPolicyFontResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{243}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{246}
 }
 
 func (x *RemoveLabelPolicyFontResponse) GetDetails() *object.ObjectDetails {
@@ -13661,7 +14021,7 @@ type GetLoginPolicyRequest struct {
 
 func (x *GetLoginPolicyRequest) Reset() {
 	*x = GetLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[244]
+	mi := &file_zitadel_admin_proto_msgTypes[247]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13673,7 +14033,7 @@ func (x *GetLoginPolicyRequest) String() string {
 func (*GetLoginPolicyRequest) ProtoMessage() {}
 
 func (x *GetLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[244]
+	mi := &file_zitadel_admin_proto_msgTypes[247]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13686,7 +14046,7 @@ func (x *GetLoginPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{244}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{247}
 }
 
 type GetLoginPolicyResponse struct {
@@ -13698,7 +14058,7 @@ type GetLoginPolicyResponse struct {
 
 func (x *GetLoginPolicyResponse) Reset() {
 	*x = GetLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[245]
+	mi := &file_zitadel_admin_proto_msgTypes[248]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13710,7 +14070,7 @@ func (x *GetLoginPolicyResponse) String() string {
 func (*GetLoginPolicyResponse) ProtoMessage() {}
 
 func (x *GetLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[245]
+	mi := &file_zitadel_admin_proto_msgTypes[248]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13723,7 +14083,7 @@ func (x *GetLoginPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{245}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{248}
 }
 
 func (x *GetLoginPolicyResponse) GetPolicy() *policy.LoginPolicy {
@@ -13759,7 +14119,7 @@ type UpdateLoginPolicyRequest struct {
 
 func (x *UpdateLoginPolicyRequest) Reset() {
 	*x = UpdateLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[246]
+	mi := &file_zitadel_admin_proto_msgTypes[249]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13771,7 +14131,7 @@ func (x *UpdateLoginPolicyRequest) String() string {
 func (*UpdateLoginPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[246]
+	mi := &file_zitadel_admin_proto_msgTypes[249]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13784,7 +14144,7 @@ func (x *UpdateLoginPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{246}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{249}
 }
 
 func (x *UpdateLoginPolicyRequest) GetAllowUsernamePassword() bool {
@@ -13915,7 +14275,7 @@ type UpdateLoginPolicyResponse struct {
 
 func (x *UpdateLoginPolicyResponse) Reset() {
 	*x = UpdateLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[247]
+	mi := &file_zitadel_admin_proto_msgTypes[250]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13927,7 +14287,7 @@ func (x *UpdateLoginPolicyResponse) String() string {
 func (*UpdateLoginPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[247]
+	mi := &file_zitadel_admin_proto_msgTypes[250]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13940,7 +14300,7 @@ func (x *UpdateLoginPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{247}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{250}
 }
 
 func (x *UpdateLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -13960,7 +14320,7 @@ type ListLoginPolicyIDPsRequest struct {
 
 func (x *ListLoginPolicyIDPsRequest) Reset() {
 	*x = ListLoginPolicyIDPsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[248]
+	mi := &file_zitadel_admin_proto_msgTypes[251]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13972,7 +14332,7 @@ func (x *ListLoginPolicyIDPsRequest) String() string {
 func (*ListLoginPolicyIDPsRequest) ProtoMessage() {}
 
 func (x *ListLoginPolicyIDPsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[248]
+	mi := &file_zitadel_admin_proto_msgTypes[251]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13985,7 +14345,7 @@ func (x *ListLoginPolicyIDPsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLoginPolicyIDPsRequest.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicyIDPsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{248}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{251}
 }
 
 func (x *ListLoginPolicyIDPsRequest) GetQuery() *object.ListQuery {
@@ -14005,7 +14365,7 @@ type ListLoginPolicyIDPsResponse struct {
 
 func (x *ListLoginPolicyIDPsResponse) Reset() {
 	*x = ListLoginPolicyIDPsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[249]
+	mi := &file_zitadel_admin_proto_msgTypes[252]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14017,7 +14377,7 @@ func (x *ListLoginPolicyIDPsResponse) String() string {
 func (*ListLoginPolicyIDPsResponse) ProtoMessage() {}
 
 func (x *ListLoginPolicyIDPsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[249]
+	mi := &file_zitadel_admin_proto_msgTypes[252]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14030,7 +14390,7 @@ func (x *ListLoginPolicyIDPsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLoginPolicyIDPsResponse.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicyIDPsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{249}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{252}
 }
 
 func (x *ListLoginPolicyIDPsResponse) GetDetails() *object.ListDetails {
@@ -14056,7 +14416,7 @@ type AddIDPToLoginPolicyRequest struct {
 
 func (x *AddIDPToLoginPolicyRequest) Reset() {
 	*x = AddIDPToLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[250]
+	mi := &file_zitadel_admin_proto_msgTypes[253]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14068,7 +14428,7 @@ func (x *AddIDPToLoginPolicyRequest) String() string {
 func (*AddIDPToLoginPolicyRequest) ProtoMessage() {}
 
 func (x *AddIDPToLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[250]
+	mi := &file_zitadel_admin_proto_msgTypes[253]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14081,7 +14441,7 @@ func (x *AddIDPToLoginPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddIDPToLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddIDPToLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{250}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{253}
 }
 
 func (x *AddIDPToLoginPolicyRequest) GetIdpId() string {
@@ -14100,7 +14460,7 @@ type AddIDPToLoginPolicyResponse struct {
 
 func (x *AddIDPToLoginPolicyResponse) Reset() {
 	*x = AddIDPToLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[251]
+	mi := &file_zitadel_admin_proto_msgTypes[254]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14112,7 +14472,7 @@ func (x *AddIDPToLoginPolicyResponse) String() string {
 func (*AddIDPToLoginPolicyResponse) ProtoMessage() {}
 
 func (x *AddIDPToLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[251]
+	mi := &file_zitadel_admin_proto_msgTypes[254]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14125,7 +14485,7 @@ func (x *AddIDPToLoginPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddIDPToLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddIDPToLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{251}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{254}
 }
 
 func (x *AddIDPToLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14144,7 +14504,7 @@ type RemoveIDPFromLoginPolicyRequest struct {
 
 func (x *RemoveIDPFromLoginPolicyRequest) Reset() {
 	*x = RemoveIDPFromLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[252]
+	mi := &file_zitadel_admin_proto_msgTypes[255]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14156,7 +14516,7 @@ func (x *RemoveIDPFromLoginPolicyRequest) String() string {
 func (*RemoveIDPFromLoginPolicyRequest) ProtoMessage() {}
 
 func (x *RemoveIDPFromLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[252]
+	mi := &file_zitadel_admin_proto_msgTypes[255]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14169,7 +14529,7 @@ func (x *RemoveIDPFromLoginPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIDPFromLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*RemoveIDPFromLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{252}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{255}
 }
 
 func (x *RemoveIDPFromLoginPolicyRequest) GetIdpId() string {
@@ -14188,7 +14548,7 @@ type RemoveIDPFromLoginPolicyResponse struct {
 
 func (x *RemoveIDPFromLoginPolicyResponse) Reset() {
 	*x = RemoveIDPFromLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[253]
+	mi := &file_zitadel_admin_proto_msgTypes[256]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14200,7 +14560,7 @@ func (x *RemoveIDPFromLoginPolicyResponse) String() string {
 func (*RemoveIDPFromLoginPolicyResponse) ProtoMessage() {}
 
 func (x *RemoveIDPFromLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[253]
+	mi := &file_zitadel_admin_proto_msgTypes[256]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14213,7 +14573,7 @@ func (x *RemoveIDPFromLoginPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIDPFromLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*RemoveIDPFromLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{253}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{256}
 }
 
 func (x *RemoveIDPFromLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14232,7 +14592,7 @@ type ListLoginPolicySecondFactorsRequest struct {
 
 func (x *ListLoginPolicySecondFactorsRequest) Reset() {
 	*x = ListLoginPolicySecondFactorsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[254]
+	mi := &file_zitadel_admin_proto_msgTypes[257]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14244,7 +14604,7 @@ func (x *ListLoginPolicySecondFactorsRequest) String() string {
 func (*ListLoginPolicySecondFactorsRequest) ProtoMessage() {}
 
 func (x *ListLoginPolicySecondFactorsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[254]
+	mi := &file_zitadel_admin_proto_msgTypes[257]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14257,7 +14617,7 @@ func (x *ListLoginPolicySecondFactorsRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListLoginPolicySecondFactorsRequest.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicySecondFactorsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{254}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{257}
 }
 
 type ListLoginPolicySecondFactorsResponse struct {
@@ -14270,7 +14630,7 @@ type ListLoginPolicySecondFactorsResponse struct {
 
 func (x *ListLoginPolicySecondFactorsResponse) Reset() {
 	*x = ListLoginPolicySecondFactorsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[255]
+	mi := &file_zitadel_admin_proto_msgTypes[258]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14282,7 +14642,7 @@ func (x *ListLoginPolicySecondFactorsResponse) String() string {
 func (*ListLoginPolicySecondFactorsResponse) ProtoMessage() {}
 
 func (x *ListLoginPolicySecondFactorsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[255]
+	mi := &file_zitadel_admin_proto_msgTypes[258]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14295,7 +14655,7 @@ func (x *ListLoginPolicySecondFactorsResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use ListLoginPolicySecondFactorsResponse.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicySecondFactorsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{255}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{258}
 }
 
 func (x *ListLoginPolicySecondFactorsResponse) GetDetails() *object.ListDetails {
@@ -14321,7 +14681,7 @@ type AddSecondFactorToLoginPolicyRequest struct {
 
 func (x *AddSecondFactorToLoginPolicyRequest) Reset() {
 	*x = AddSecondFactorToLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[256]
+	mi := &file_zitadel_admin_proto_msgTypes[259]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14333,7 +14693,7 @@ func (x *AddSecondFactorToLoginPolicyRequest) String() string {
 func (*AddSecondFactorToLoginPolicyRequest) ProtoMessage() {}
 
 func (x *AddSecondFactorToLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[256]
+	mi := &file_zitadel_admin_proto_msgTypes[259]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14346,7 +14706,7 @@ func (x *AddSecondFactorToLoginPolicyRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AddSecondFactorToLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddSecondFactorToLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{256}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{259}
 }
 
 func (x *AddSecondFactorToLoginPolicyRequest) GetType() policy.SecondFactorType {
@@ -14365,7 +14725,7 @@ type AddSecondFactorToLoginPolicyResponse struct {
 
 func (x *AddSecondFactorToLoginPolicyResponse) Reset() {
 	*x = AddSecondFactorToLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[257]
+	mi := &file_zitadel_admin_proto_msgTypes[260]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14377,7 +14737,7 @@ func (x *AddSecondFactorToLoginPolicyResponse) String() string {
 func (*AddSecondFactorToLoginPolicyResponse) ProtoMessage() {}
 
 func (x *AddSecondFactorToLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[257]
+	mi := &file_zitadel_admin_proto_msgTypes[260]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14390,7 +14750,7 @@ func (x *AddSecondFactorToLoginPolicyResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AddSecondFactorToLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddSecondFactorToLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{257}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{260}
 }
 
 func (x *AddSecondFactorToLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14409,7 +14769,7 @@ type RemoveSecondFactorFromLoginPolicyRequest struct {
 
 func (x *RemoveSecondFactorFromLoginPolicyRequest) Reset() {
 	*x = RemoveSecondFactorFromLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[258]
+	mi := &file_zitadel_admin_proto_msgTypes[261]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14421,7 +14781,7 @@ func (x *RemoveSecondFactorFromLoginPolicyRequest) String() string {
 func (*RemoveSecondFactorFromLoginPolicyRequest) ProtoMessage() {}
 
 func (x *RemoveSecondFactorFromLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[258]
+	mi := &file_zitadel_admin_proto_msgTypes[261]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14434,7 +14794,7 @@ func (x *RemoveSecondFactorFromLoginPolicyRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use RemoveSecondFactorFromLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*RemoveSecondFactorFromLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{258}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{261}
 }
 
 func (x *RemoveSecondFactorFromLoginPolicyRequest) GetType() policy.SecondFactorType {
@@ -14453,7 +14813,7 @@ type RemoveSecondFactorFromLoginPolicyResponse struct {
 
 func (x *RemoveSecondFactorFromLoginPolicyResponse) Reset() {
 	*x = RemoveSecondFactorFromLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[259]
+	mi := &file_zitadel_admin_proto_msgTypes[262]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14465,7 +14825,7 @@ func (x *RemoveSecondFactorFromLoginPolicyResponse) String() string {
 func (*RemoveSecondFactorFromLoginPolicyResponse) ProtoMessage() {}
 
 func (x *RemoveSecondFactorFromLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[259]
+	mi := &file_zitadel_admin_proto_msgTypes[262]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14478,7 +14838,7 @@ func (x *RemoveSecondFactorFromLoginPolicyResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use RemoveSecondFactorFromLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*RemoveSecondFactorFromLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{259}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{262}
 }
 
 func (x *RemoveSecondFactorFromLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14497,7 +14857,7 @@ type ListLoginPolicyMultiFactorsRequest struct {
 
 func (x *ListLoginPolicyMultiFactorsRequest) Reset() {
 	*x = ListLoginPolicyMultiFactorsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[260]
+	mi := &file_zitadel_admin_proto_msgTypes[263]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14509,7 +14869,7 @@ func (x *ListLoginPolicyMultiFactorsRequest) String() string {
 func (*ListLoginPolicyMultiFactorsRequest) ProtoMessage() {}
 
 func (x *ListLoginPolicyMultiFactorsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[260]
+	mi := &file_zitadel_admin_proto_msgTypes[263]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14522,7 +14882,7 @@ func (x *ListLoginPolicyMultiFactorsRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListLoginPolicyMultiFactorsRequest.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicyMultiFactorsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{260}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{263}
 }
 
 type ListLoginPolicyMultiFactorsResponse struct {
@@ -14535,7 +14895,7 @@ type ListLoginPolicyMultiFactorsResponse struct {
 
 func (x *ListLoginPolicyMultiFactorsResponse) Reset() {
 	*x = ListLoginPolicyMultiFactorsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[261]
+	mi := &file_zitadel_admin_proto_msgTypes[264]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14547,7 +14907,7 @@ func (x *ListLoginPolicyMultiFactorsResponse) String() string {
 func (*ListLoginPolicyMultiFactorsResponse) ProtoMessage() {}
 
 func (x *ListLoginPolicyMultiFactorsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[261]
+	mi := &file_zitadel_admin_proto_msgTypes[264]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14560,7 +14920,7 @@ func (x *ListLoginPolicyMultiFactorsResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListLoginPolicyMultiFactorsResponse.ProtoReflect.Descriptor instead.
 func (*ListLoginPolicyMultiFactorsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{261}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{264}
 }
 
 func (x *ListLoginPolicyMultiFactorsResponse) GetDetails() *object.ListDetails {
@@ -14586,7 +14946,7 @@ type AddMultiFactorToLoginPolicyRequest struct {
 
 func (x *AddMultiFactorToLoginPolicyRequest) Reset() {
 	*x = AddMultiFactorToLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[262]
+	mi := &file_zitadel_admin_proto_msgTypes[265]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14598,7 +14958,7 @@ func (x *AddMultiFactorToLoginPolicyRequest) String() string {
 func (*AddMultiFactorToLoginPolicyRequest) ProtoMessage() {}
 
 func (x *AddMultiFactorToLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[262]
+	mi := &file_zitadel_admin_proto_msgTypes[265]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14611,7 +14971,7 @@ func (x *AddMultiFactorToLoginPolicyRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use AddMultiFactorToLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddMultiFactorToLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{262}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{265}
 }
 
 func (x *AddMultiFactorToLoginPolicyRequest) GetType() policy.MultiFactorType {
@@ -14630,7 +14990,7 @@ type AddMultiFactorToLoginPolicyResponse struct {
 
 func (x *AddMultiFactorToLoginPolicyResponse) Reset() {
 	*x = AddMultiFactorToLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[263]
+	mi := &file_zitadel_admin_proto_msgTypes[266]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14642,7 +15002,7 @@ func (x *AddMultiFactorToLoginPolicyResponse) String() string {
 func (*AddMultiFactorToLoginPolicyResponse) ProtoMessage() {}
 
 func (x *AddMultiFactorToLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[263]
+	mi := &file_zitadel_admin_proto_msgTypes[266]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14655,7 +15015,7 @@ func (x *AddMultiFactorToLoginPolicyResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AddMultiFactorToLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddMultiFactorToLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{263}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{266}
 }
 
 func (x *AddMultiFactorToLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14674,7 +15034,7 @@ type RemoveMultiFactorFromLoginPolicyRequest struct {
 
 func (x *RemoveMultiFactorFromLoginPolicyRequest) Reset() {
 	*x = RemoveMultiFactorFromLoginPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[264]
+	mi := &file_zitadel_admin_proto_msgTypes[267]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14686,7 +15046,7 @@ func (x *RemoveMultiFactorFromLoginPolicyRequest) String() string {
 func (*RemoveMultiFactorFromLoginPolicyRequest) ProtoMessage() {}
 
 func (x *RemoveMultiFactorFromLoginPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[264]
+	mi := &file_zitadel_admin_proto_msgTypes[267]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14699,7 +15059,7 @@ func (x *RemoveMultiFactorFromLoginPolicyRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use RemoveMultiFactorFromLoginPolicyRequest.ProtoReflect.Descriptor instead.
 func (*RemoveMultiFactorFromLoginPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{264}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{267}
 }
 
 func (x *RemoveMultiFactorFromLoginPolicyRequest) GetType() policy.MultiFactorType {
@@ -14718,7 +15078,7 @@ type RemoveMultiFactorFromLoginPolicyResponse struct {
 
 func (x *RemoveMultiFactorFromLoginPolicyResponse) Reset() {
 	*x = RemoveMultiFactorFromLoginPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[265]
+	mi := &file_zitadel_admin_proto_msgTypes[268]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14730,7 +15090,7 @@ func (x *RemoveMultiFactorFromLoginPolicyResponse) String() string {
 func (*RemoveMultiFactorFromLoginPolicyResponse) ProtoMessage() {}
 
 func (x *RemoveMultiFactorFromLoginPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[265]
+	mi := &file_zitadel_admin_proto_msgTypes[268]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14743,7 +15103,7 @@ func (x *RemoveMultiFactorFromLoginPolicyResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use RemoveMultiFactorFromLoginPolicyResponse.ProtoReflect.Descriptor instead.
 func (*RemoveMultiFactorFromLoginPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{265}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{268}
 }
 
 func (x *RemoveMultiFactorFromLoginPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14761,7 +15121,7 @@ type GetPasswordComplexityPolicyRequest struct {
 
 func (x *GetPasswordComplexityPolicyRequest) Reset() {
 	*x = GetPasswordComplexityPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[266]
+	mi := &file_zitadel_admin_proto_msgTypes[269]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14773,7 +15133,7 @@ func (x *GetPasswordComplexityPolicyRequest) String() string {
 func (*GetPasswordComplexityPolicyRequest) ProtoMessage() {}
 
 func (x *GetPasswordComplexityPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[266]
+	mi := &file_zitadel_admin_proto_msgTypes[269]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14786,7 +15146,7 @@ func (x *GetPasswordComplexityPolicyRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use GetPasswordComplexityPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetPasswordComplexityPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{266}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{269}
 }
 
 type GetPasswordComplexityPolicyResponse struct {
@@ -14798,7 +15158,7 @@ type GetPasswordComplexityPolicyResponse struct {
 
 func (x *GetPasswordComplexityPolicyResponse) Reset() {
 	*x = GetPasswordComplexityPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[267]
+	mi := &file_zitadel_admin_proto_msgTypes[270]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14810,7 +15170,7 @@ func (x *GetPasswordComplexityPolicyResponse) String() string {
 func (*GetPasswordComplexityPolicyResponse) ProtoMessage() {}
 
 func (x *GetPasswordComplexityPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[267]
+	mi := &file_zitadel_admin_proto_msgTypes[270]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14823,7 +15183,7 @@ func (x *GetPasswordComplexityPolicyResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use GetPasswordComplexityPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetPasswordComplexityPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{267}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{270}
 }
 
 func (x *GetPasswordComplexityPolicyResponse) GetPolicy() *policy.PasswordComplexityPolicy {
@@ -14846,7 +15206,7 @@ type UpdatePasswordComplexityPolicyRequest struct {
 
 func (x *UpdatePasswordComplexityPolicyRequest) Reset() {
 	*x = UpdatePasswordComplexityPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[268]
+	mi := &file_zitadel_admin_proto_msgTypes[271]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14858,7 +15218,7 @@ func (x *UpdatePasswordComplexityPolicyRequest) String() string {
 func (*UpdatePasswordComplexityPolicyRequest) ProtoMessage() {}
 
 func (x *UpdatePasswordComplexityPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[268]
+	mi := &file_zitadel_admin_proto_msgTypes[271]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14871,7 +15231,7 @@ func (x *UpdatePasswordComplexityPolicyRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use UpdatePasswordComplexityPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdatePasswordComplexityPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{268}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{271}
 }
 
 func (x *UpdatePasswordComplexityPolicyRequest) GetMinLength() uint32 {
@@ -14918,7 +15278,7 @@ type UpdatePasswordComplexityPolicyResponse struct {
 
 func (x *UpdatePasswordComplexityPolicyResponse) Reset() {
 	*x = UpdatePasswordComplexityPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[269]
+	mi := &file_zitadel_admin_proto_msgTypes[272]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14930,7 +15290,7 @@ func (x *UpdatePasswordComplexityPolicyResponse) String() string {
 func (*UpdatePasswordComplexityPolicyResponse) ProtoMessage() {}
 
 func (x *UpdatePasswordComplexityPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[269]
+	mi := &file_zitadel_admin_proto_msgTypes[272]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14943,7 +15303,7 @@ func (x *UpdatePasswordComplexityPolicyResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use UpdatePasswordComplexityPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdatePasswordComplexityPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{269}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{272}
 }
 
 func (x *UpdatePasswordComplexityPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -14962,7 +15322,7 @@ type GetPasswordAgePolicyRequest struct {
 
 func (x *GetPasswordAgePolicyRequest) Reset() {
 	*x = GetPasswordAgePolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[270]
+	mi := &file_zitadel_admin_proto_msgTypes[273]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14974,7 +15334,7 @@ func (x *GetPasswordAgePolicyRequest) String() string {
 func (*GetPasswordAgePolicyRequest) ProtoMessage() {}
 
 func (x *GetPasswordAgePolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[270]
+	mi := &file_zitadel_admin_proto_msgTypes[273]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14987,7 +15347,7 @@ func (x *GetPasswordAgePolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPasswordAgePolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetPasswordAgePolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{270}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{273}
 }
 
 type GetPasswordAgePolicyResponse struct {
@@ -14999,7 +15359,7 @@ type GetPasswordAgePolicyResponse struct {
 
 func (x *GetPasswordAgePolicyResponse) Reset() {
 	*x = GetPasswordAgePolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[271]
+	mi := &file_zitadel_admin_proto_msgTypes[274]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15011,7 +15371,7 @@ func (x *GetPasswordAgePolicyResponse) String() string {
 func (*GetPasswordAgePolicyResponse) ProtoMessage() {}
 
 func (x *GetPasswordAgePolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[271]
+	mi := &file_zitadel_admin_proto_msgTypes[274]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15024,7 +15384,7 @@ func (x *GetPasswordAgePolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPasswordAgePolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetPasswordAgePolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{271}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{274}
 }
 
 func (x *GetPasswordAgePolicyResponse) GetPolicy() *policy.PasswordAgePolicy {
@@ -15038,7 +15398,7 @@ type UpdatePasswordAgePolicyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Amount of days after which a password will expire. The user will be forced to change the password on the following authentication.
 	MaxAgeDays uint32 `protobuf:"varint,1,opt,name=max_age_days,json=maxAgeDays,proto3" json:"max_age_days,omitempty"`
-	// Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user.
+	// Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user.
 	ExpireWarnDays uint32 `protobuf:"varint,2,opt,name=expire_warn_days,json=expireWarnDays,proto3" json:"expire_warn_days,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -15046,7 +15406,7 @@ type UpdatePasswordAgePolicyRequest struct {
 
 func (x *UpdatePasswordAgePolicyRequest) Reset() {
 	*x = UpdatePasswordAgePolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[272]
+	mi := &file_zitadel_admin_proto_msgTypes[275]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15058,7 +15418,7 @@ func (x *UpdatePasswordAgePolicyRequest) String() string {
 func (*UpdatePasswordAgePolicyRequest) ProtoMessage() {}
 
 func (x *UpdatePasswordAgePolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[272]
+	mi := &file_zitadel_admin_proto_msgTypes[275]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15071,7 +15431,7 @@ func (x *UpdatePasswordAgePolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePasswordAgePolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdatePasswordAgePolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{272}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{275}
 }
 
 func (x *UpdatePasswordAgePolicyRequest) GetMaxAgeDays() uint32 {
@@ -15097,7 +15457,7 @@ type UpdatePasswordAgePolicyResponse struct {
 
 func (x *UpdatePasswordAgePolicyResponse) Reset() {
 	*x = UpdatePasswordAgePolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[273]
+	mi := &file_zitadel_admin_proto_msgTypes[276]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15109,7 +15469,7 @@ func (x *UpdatePasswordAgePolicyResponse) String() string {
 func (*UpdatePasswordAgePolicyResponse) ProtoMessage() {}
 
 func (x *UpdatePasswordAgePolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[273]
+	mi := &file_zitadel_admin_proto_msgTypes[276]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15122,7 +15482,7 @@ func (x *UpdatePasswordAgePolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePasswordAgePolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdatePasswordAgePolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{273}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{276}
 }
 
 func (x *UpdatePasswordAgePolicyResponse) GetDetails() *object.ObjectDetails {
@@ -15141,7 +15501,7 @@ type GetLockoutPolicyRequest struct {
 
 func (x *GetLockoutPolicyRequest) Reset() {
 	*x = GetLockoutPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[274]
+	mi := &file_zitadel_admin_proto_msgTypes[277]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15153,7 +15513,7 @@ func (x *GetLockoutPolicyRequest) String() string {
 func (*GetLockoutPolicyRequest) ProtoMessage() {}
 
 func (x *GetLockoutPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[274]
+	mi := &file_zitadel_admin_proto_msgTypes[277]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15166,7 +15526,7 @@ func (x *GetLockoutPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLockoutPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetLockoutPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{274}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{277}
 }
 
 type GetLockoutPolicyResponse struct {
@@ -15178,7 +15538,7 @@ type GetLockoutPolicyResponse struct {
 
 func (x *GetLockoutPolicyResponse) Reset() {
 	*x = GetLockoutPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[275]
+	mi := &file_zitadel_admin_proto_msgTypes[278]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15190,7 +15550,7 @@ func (x *GetLockoutPolicyResponse) String() string {
 func (*GetLockoutPolicyResponse) ProtoMessage() {}
 
 func (x *GetLockoutPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[275]
+	mi := &file_zitadel_admin_proto_msgTypes[278]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15203,7 +15563,7 @@ func (x *GetLockoutPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetLockoutPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetLockoutPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{275}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{278}
 }
 
 func (x *GetLockoutPolicyResponse) GetPolicy() *policy.LockoutPolicy {
@@ -15224,7 +15584,7 @@ type UpdateLockoutPolicyRequest struct {
 
 func (x *UpdateLockoutPolicyRequest) Reset() {
 	*x = UpdateLockoutPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[276]
+	mi := &file_zitadel_admin_proto_msgTypes[279]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15236,7 +15596,7 @@ func (x *UpdateLockoutPolicyRequest) String() string {
 func (*UpdateLockoutPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateLockoutPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[276]
+	mi := &file_zitadel_admin_proto_msgTypes[279]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15249,7 +15609,7 @@ func (x *UpdateLockoutPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLockoutPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLockoutPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{276}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{279}
 }
 
 func (x *UpdateLockoutPolicyRequest) GetMaxPasswordAttempts() uint32 {
@@ -15275,7 +15635,7 @@ type UpdateLockoutPolicyResponse struct {
 
 func (x *UpdateLockoutPolicyResponse) Reset() {
 	*x = UpdateLockoutPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[277]
+	mi := &file_zitadel_admin_proto_msgTypes[280]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15287,7 +15647,7 @@ func (x *UpdateLockoutPolicyResponse) String() string {
 func (*UpdateLockoutPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateLockoutPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[277]
+	mi := &file_zitadel_admin_proto_msgTypes[280]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15300,7 +15660,7 @@ func (x *UpdateLockoutPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLockoutPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLockoutPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{277}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{280}
 }
 
 func (x *UpdateLockoutPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -15319,7 +15679,7 @@ type GetPrivacyPolicyRequest struct {
 
 func (x *GetPrivacyPolicyRequest) Reset() {
 	*x = GetPrivacyPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[278]
+	mi := &file_zitadel_admin_proto_msgTypes[281]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15331,7 +15691,7 @@ func (x *GetPrivacyPolicyRequest) String() string {
 func (*GetPrivacyPolicyRequest) ProtoMessage() {}
 
 func (x *GetPrivacyPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[278]
+	mi := &file_zitadel_admin_proto_msgTypes[281]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15344,7 +15704,7 @@ func (x *GetPrivacyPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivacyPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetPrivacyPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{278}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{281}
 }
 
 type GetPrivacyPolicyResponse struct {
@@ -15356,7 +15716,7 @@ type GetPrivacyPolicyResponse struct {
 
 func (x *GetPrivacyPolicyResponse) Reset() {
 	*x = GetPrivacyPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[279]
+	mi := &file_zitadel_admin_proto_msgTypes[282]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15368,7 +15728,7 @@ func (x *GetPrivacyPolicyResponse) String() string {
 func (*GetPrivacyPolicyResponse) ProtoMessage() {}
 
 func (x *GetPrivacyPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[279]
+	mi := &file_zitadel_admin_proto_msgTypes[282]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15381,7 +15741,7 @@ func (x *GetPrivacyPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPrivacyPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetPrivacyPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{279}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{282}
 }
 
 func (x *GetPrivacyPolicyResponse) GetPolicy() *policy.PrivacyPolicy {
@@ -15406,7 +15766,7 @@ type UpdatePrivacyPolicyRequest struct {
 
 func (x *UpdatePrivacyPolicyRequest) Reset() {
 	*x = UpdatePrivacyPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[280]
+	mi := &file_zitadel_admin_proto_msgTypes[283]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15418,7 +15778,7 @@ func (x *UpdatePrivacyPolicyRequest) String() string {
 func (*UpdatePrivacyPolicyRequest) ProtoMessage() {}
 
 func (x *UpdatePrivacyPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[280]
+	mi := &file_zitadel_admin_proto_msgTypes[283]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15431,7 +15791,7 @@ func (x *UpdatePrivacyPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePrivacyPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdatePrivacyPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{280}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{283}
 }
 
 func (x *UpdatePrivacyPolicyRequest) GetTosLink() string {
@@ -15492,7 +15852,7 @@ type UpdatePrivacyPolicyResponse struct {
 
 func (x *UpdatePrivacyPolicyResponse) Reset() {
 	*x = UpdatePrivacyPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[281]
+	mi := &file_zitadel_admin_proto_msgTypes[284]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15504,7 +15864,7 @@ func (x *UpdatePrivacyPolicyResponse) String() string {
 func (*UpdatePrivacyPolicyResponse) ProtoMessage() {}
 
 func (x *UpdatePrivacyPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[281]
+	mi := &file_zitadel_admin_proto_msgTypes[284]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15517,7 +15877,7 @@ func (x *UpdatePrivacyPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdatePrivacyPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdatePrivacyPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{281}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{284}
 }
 
 func (x *UpdatePrivacyPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -15536,7 +15896,7 @@ type AddNotificationPolicyRequest struct {
 
 func (x *AddNotificationPolicyRequest) Reset() {
 	*x = AddNotificationPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[282]
+	mi := &file_zitadel_admin_proto_msgTypes[285]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15548,7 +15908,7 @@ func (x *AddNotificationPolicyRequest) String() string {
 func (*AddNotificationPolicyRequest) ProtoMessage() {}
 
 func (x *AddNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[282]
+	mi := &file_zitadel_admin_proto_msgTypes[285]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15561,7 +15921,7 @@ func (x *AddNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddNotificationPolicyRequest.ProtoReflect.Descriptor instead.
 func (*AddNotificationPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{282}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{285}
 }
 
 func (x *AddNotificationPolicyRequest) GetPasswordChange() bool {
@@ -15580,7 +15940,7 @@ type AddNotificationPolicyResponse struct {
 
 func (x *AddNotificationPolicyResponse) Reset() {
 	*x = AddNotificationPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[283]
+	mi := &file_zitadel_admin_proto_msgTypes[286]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15592,7 +15952,7 @@ func (x *AddNotificationPolicyResponse) String() string {
 func (*AddNotificationPolicyResponse) ProtoMessage() {}
 
 func (x *AddNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[283]
+	mi := &file_zitadel_admin_proto_msgTypes[286]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15605,7 +15965,7 @@ func (x *AddNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddNotificationPolicyResponse.ProtoReflect.Descriptor instead.
 func (*AddNotificationPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{283}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{286}
 }
 
 func (x *AddNotificationPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -15624,7 +15984,7 @@ type GetNotificationPolicyRequest struct {
 
 func (x *GetNotificationPolicyRequest) Reset() {
 	*x = GetNotificationPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[284]
+	mi := &file_zitadel_admin_proto_msgTypes[287]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15636,7 +15996,7 @@ func (x *GetNotificationPolicyRequest) String() string {
 func (*GetNotificationPolicyRequest) ProtoMessage() {}
 
 func (x *GetNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[284]
+	mi := &file_zitadel_admin_proto_msgTypes[287]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15649,7 +16009,7 @@ func (x *GetNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetNotificationPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetNotificationPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{284}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{287}
 }
 
 type GetNotificationPolicyResponse struct {
@@ -15661,7 +16021,7 @@ type GetNotificationPolicyResponse struct {
 
 func (x *GetNotificationPolicyResponse) Reset() {
 	*x = GetNotificationPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[285]
+	mi := &file_zitadel_admin_proto_msgTypes[288]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15673,7 +16033,7 @@ func (x *GetNotificationPolicyResponse) String() string {
 func (*GetNotificationPolicyResponse) ProtoMessage() {}
 
 func (x *GetNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[285]
+	mi := &file_zitadel_admin_proto_msgTypes[288]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15686,7 +16046,7 @@ func (x *GetNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetNotificationPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetNotificationPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{285}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{288}
 }
 
 func (x *GetNotificationPolicyResponse) GetPolicy() *policy.NotificationPolicy {
@@ -15705,7 +16065,7 @@ type UpdateNotificationPolicyRequest struct {
 
 func (x *UpdateNotificationPolicyRequest) Reset() {
 	*x = UpdateNotificationPolicyRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[286]
+	mi := &file_zitadel_admin_proto_msgTypes[289]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15717,7 +16077,7 @@ func (x *UpdateNotificationPolicyRequest) String() string {
 func (*UpdateNotificationPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[286]
+	mi := &file_zitadel_admin_proto_msgTypes[289]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15730,7 +16090,7 @@ func (x *UpdateNotificationPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateNotificationPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateNotificationPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{286}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{289}
 }
 
 func (x *UpdateNotificationPolicyRequest) GetPasswordChange() bool {
@@ -15749,7 +16109,7 @@ type UpdateNotificationPolicyResponse struct {
 
 func (x *UpdateNotificationPolicyResponse) Reset() {
 	*x = UpdateNotificationPolicyResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[287]
+	mi := &file_zitadel_admin_proto_msgTypes[290]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15761,7 +16121,7 @@ func (x *UpdateNotificationPolicyResponse) String() string {
 func (*UpdateNotificationPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[287]
+	mi := &file_zitadel_admin_proto_msgTypes[290]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15774,7 +16134,7 @@ func (x *UpdateNotificationPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateNotificationPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateNotificationPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{287}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{290}
 }
 
 func (x *UpdateNotificationPolicyResponse) GetDetails() *object.ObjectDetails {
@@ -15793,7 +16153,7 @@ type GetDefaultInitMessageTextRequest struct {
 
 func (x *GetDefaultInitMessageTextRequest) Reset() {
 	*x = GetDefaultInitMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[288]
+	mi := &file_zitadel_admin_proto_msgTypes[291]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15805,7 +16165,7 @@ func (x *GetDefaultInitMessageTextRequest) String() string {
 func (*GetDefaultInitMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultInitMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[288]
+	mi := &file_zitadel_admin_proto_msgTypes[291]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15818,7 +16178,7 @@ func (x *GetDefaultInitMessageTextRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDefaultInitMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultInitMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{288}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{291}
 }
 
 func (x *GetDefaultInitMessageTextRequest) GetLanguage() string {
@@ -15837,7 +16197,7 @@ type GetDefaultInitMessageTextResponse struct {
 
 func (x *GetDefaultInitMessageTextResponse) Reset() {
 	*x = GetDefaultInitMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[289]
+	mi := &file_zitadel_admin_proto_msgTypes[292]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15849,7 +16209,7 @@ func (x *GetDefaultInitMessageTextResponse) String() string {
 func (*GetDefaultInitMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultInitMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[289]
+	mi := &file_zitadel_admin_proto_msgTypes[292]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15862,7 +16222,7 @@ func (x *GetDefaultInitMessageTextResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use GetDefaultInitMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultInitMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{289}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{292}
 }
 
 func (x *GetDefaultInitMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -15881,7 +16241,7 @@ type GetCustomInitMessageTextRequest struct {
 
 func (x *GetCustomInitMessageTextRequest) Reset() {
 	*x = GetCustomInitMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[290]
+	mi := &file_zitadel_admin_proto_msgTypes[293]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15893,7 +16253,7 @@ func (x *GetCustomInitMessageTextRequest) String() string {
 func (*GetCustomInitMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomInitMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[290]
+	mi := &file_zitadel_admin_proto_msgTypes[293]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15906,7 +16266,7 @@ func (x *GetCustomInitMessageTextRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomInitMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomInitMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{290}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{293}
 }
 
 func (x *GetCustomInitMessageTextRequest) GetLanguage() string {
@@ -15925,7 +16285,7 @@ type GetCustomInitMessageTextResponse struct {
 
 func (x *GetCustomInitMessageTextResponse) Reset() {
 	*x = GetCustomInitMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[291]
+	mi := &file_zitadel_admin_proto_msgTypes[294]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15937,7 +16297,7 @@ func (x *GetCustomInitMessageTextResponse) String() string {
 func (*GetCustomInitMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomInitMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[291]
+	mi := &file_zitadel_admin_proto_msgTypes[294]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15950,7 +16310,7 @@ func (x *GetCustomInitMessageTextResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomInitMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomInitMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{291}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{294}
 }
 
 func (x *GetCustomInitMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -15976,7 +16336,7 @@ type SetDefaultInitMessageTextRequest struct {
 
 func (x *SetDefaultInitMessageTextRequest) Reset() {
 	*x = SetDefaultInitMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[292]
+	mi := &file_zitadel_admin_proto_msgTypes[295]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15988,7 +16348,7 @@ func (x *SetDefaultInitMessageTextRequest) String() string {
 func (*SetDefaultInitMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultInitMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[292]
+	mi := &file_zitadel_admin_proto_msgTypes[295]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16001,7 +16361,7 @@ func (x *SetDefaultInitMessageTextRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetDefaultInitMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultInitMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{292}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{295}
 }
 
 func (x *SetDefaultInitMessageTextRequest) GetLanguage() string {
@@ -16069,7 +16429,7 @@ type SetDefaultInitMessageTextResponse struct {
 
 func (x *SetDefaultInitMessageTextResponse) Reset() {
 	*x = SetDefaultInitMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[293]
+	mi := &file_zitadel_admin_proto_msgTypes[296]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16081,7 +16441,7 @@ func (x *SetDefaultInitMessageTextResponse) String() string {
 func (*SetDefaultInitMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultInitMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[293]
+	mi := &file_zitadel_admin_proto_msgTypes[296]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16094,7 +16454,7 @@ func (x *SetDefaultInitMessageTextResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use SetDefaultInitMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultInitMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{293}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{296}
 }
 
 func (x *SetDefaultInitMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -16113,7 +16473,7 @@ type ResetCustomInitMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomInitMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomInitMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[294]
+	mi := &file_zitadel_admin_proto_msgTypes[297]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16125,7 +16485,7 @@ func (x *ResetCustomInitMessageTextToDefaultRequest) String() string {
 func (*ResetCustomInitMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomInitMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[294]
+	mi := &file_zitadel_admin_proto_msgTypes[297]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16138,7 +16498,7 @@ func (x *ResetCustomInitMessageTextToDefaultRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use ResetCustomInitMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomInitMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{294}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{297}
 }
 
 func (x *ResetCustomInitMessageTextToDefaultRequest) GetLanguage() string {
@@ -16157,7 +16517,7 @@ type ResetCustomInitMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomInitMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomInitMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[295]
+	mi := &file_zitadel_admin_proto_msgTypes[298]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16169,7 +16529,7 @@ func (x *ResetCustomInitMessageTextToDefaultResponse) String() string {
 func (*ResetCustomInitMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomInitMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[295]
+	mi := &file_zitadel_admin_proto_msgTypes[298]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16182,7 +16542,7 @@ func (x *ResetCustomInitMessageTextToDefaultResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use ResetCustomInitMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomInitMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{295}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{298}
 }
 
 func (x *ResetCustomInitMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -16201,7 +16561,7 @@ type GetDefaultPasswordResetMessageTextRequest struct {
 
 func (x *GetDefaultPasswordResetMessageTextRequest) Reset() {
 	*x = GetDefaultPasswordResetMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[296]
+	mi := &file_zitadel_admin_proto_msgTypes[299]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16213,7 +16573,7 @@ func (x *GetDefaultPasswordResetMessageTextRequest) String() string {
 func (*GetDefaultPasswordResetMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultPasswordResetMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[296]
+	mi := &file_zitadel_admin_proto_msgTypes[299]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16226,7 +16586,7 @@ func (x *GetDefaultPasswordResetMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetDefaultPasswordResetMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordResetMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{296}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{299}
 }
 
 func (x *GetDefaultPasswordResetMessageTextRequest) GetLanguage() string {
@@ -16245,7 +16605,7 @@ type GetDefaultPasswordResetMessageTextResponse struct {
 
 func (x *GetDefaultPasswordResetMessageTextResponse) Reset() {
 	*x = GetDefaultPasswordResetMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[297]
+	mi := &file_zitadel_admin_proto_msgTypes[300]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16257,7 +16617,7 @@ func (x *GetDefaultPasswordResetMessageTextResponse) String() string {
 func (*GetDefaultPasswordResetMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultPasswordResetMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[297]
+	mi := &file_zitadel_admin_proto_msgTypes[300]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16270,7 +16630,7 @@ func (x *GetDefaultPasswordResetMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use GetDefaultPasswordResetMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordResetMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{297}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{300}
 }
 
 func (x *GetDefaultPasswordResetMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -16289,7 +16649,7 @@ type GetCustomPasswordResetMessageTextRequest struct {
 
 func (x *GetCustomPasswordResetMessageTextRequest) Reset() {
 	*x = GetCustomPasswordResetMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[298]
+	mi := &file_zitadel_admin_proto_msgTypes[301]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16301,7 +16661,7 @@ func (x *GetCustomPasswordResetMessageTextRequest) String() string {
 func (*GetCustomPasswordResetMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomPasswordResetMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[298]
+	mi := &file_zitadel_admin_proto_msgTypes[301]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16314,7 +16674,7 @@ func (x *GetCustomPasswordResetMessageTextRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetCustomPasswordResetMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordResetMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{298}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{301}
 }
 
 func (x *GetCustomPasswordResetMessageTextRequest) GetLanguage() string {
@@ -16333,7 +16693,7 @@ type GetCustomPasswordResetMessageTextResponse struct {
 
 func (x *GetCustomPasswordResetMessageTextResponse) Reset() {
 	*x = GetCustomPasswordResetMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[299]
+	mi := &file_zitadel_admin_proto_msgTypes[302]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16345,7 +16705,7 @@ func (x *GetCustomPasswordResetMessageTextResponse) String() string {
 func (*GetCustomPasswordResetMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomPasswordResetMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[299]
+	mi := &file_zitadel_admin_proto_msgTypes[302]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16358,7 +16718,7 @@ func (x *GetCustomPasswordResetMessageTextResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetCustomPasswordResetMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordResetMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{299}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{302}
 }
 
 func (x *GetCustomPasswordResetMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -16384,7 +16744,7 @@ type SetDefaultPasswordResetMessageTextRequest struct {
 
 func (x *SetDefaultPasswordResetMessageTextRequest) Reset() {
 	*x = SetDefaultPasswordResetMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[300]
+	mi := &file_zitadel_admin_proto_msgTypes[303]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16396,7 +16756,7 @@ func (x *SetDefaultPasswordResetMessageTextRequest) String() string {
 func (*SetDefaultPasswordResetMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultPasswordResetMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[300]
+	mi := &file_zitadel_admin_proto_msgTypes[303]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16409,7 +16769,7 @@ func (x *SetDefaultPasswordResetMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use SetDefaultPasswordResetMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordResetMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{300}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{303}
 }
 
 func (x *SetDefaultPasswordResetMessageTextRequest) GetLanguage() string {
@@ -16477,7 +16837,7 @@ type SetDefaultPasswordResetMessageTextResponse struct {
 
 func (x *SetDefaultPasswordResetMessageTextResponse) Reset() {
 	*x = SetDefaultPasswordResetMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[301]
+	mi := &file_zitadel_admin_proto_msgTypes[304]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16489,7 +16849,7 @@ func (x *SetDefaultPasswordResetMessageTextResponse) String() string {
 func (*SetDefaultPasswordResetMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultPasswordResetMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[301]
+	mi := &file_zitadel_admin_proto_msgTypes[304]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16502,7 +16862,7 @@ func (x *SetDefaultPasswordResetMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use SetDefaultPasswordResetMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordResetMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{301}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{304}
 }
 
 func (x *SetDefaultPasswordResetMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -16521,7 +16881,7 @@ type ResetCustomPasswordResetMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomPasswordResetMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[302]
+	mi := &file_zitadel_admin_proto_msgTypes[305]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16533,7 +16893,7 @@ func (x *ResetCustomPasswordResetMessageTextToDefaultRequest) String() string {
 func (*ResetCustomPasswordResetMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[302]
+	mi := &file_zitadel_admin_proto_msgTypes[305]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16546,7 +16906,7 @@ func (x *ResetCustomPasswordResetMessageTextToDefaultRequest) ProtoReflect() pro
 
 // Deprecated: Use ResetCustomPasswordResetMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordResetMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{302}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{305}
 }
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultRequest) GetLanguage() string {
@@ -16565,7 +16925,7 @@ type ResetCustomPasswordResetMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomPasswordResetMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[303]
+	mi := &file_zitadel_admin_proto_msgTypes[306]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16577,7 +16937,7 @@ func (x *ResetCustomPasswordResetMessageTextToDefaultResponse) String() string {
 func (*ResetCustomPasswordResetMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[303]
+	mi := &file_zitadel_admin_proto_msgTypes[306]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16590,7 +16950,7 @@ func (x *ResetCustomPasswordResetMessageTextToDefaultResponse) ProtoReflect() pr
 
 // Deprecated: Use ResetCustomPasswordResetMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordResetMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{303}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{306}
 }
 
 func (x *ResetCustomPasswordResetMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -16609,7 +16969,7 @@ type GetDefaultVerifyEmailMessageTextRequest struct {
 
 func (x *GetDefaultVerifyEmailMessageTextRequest) Reset() {
 	*x = GetDefaultVerifyEmailMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[304]
+	mi := &file_zitadel_admin_proto_msgTypes[307]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16621,7 +16981,7 @@ func (x *GetDefaultVerifyEmailMessageTextRequest) String() string {
 func (*GetDefaultVerifyEmailMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[304]
+	mi := &file_zitadel_admin_proto_msgTypes[307]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16634,7 +16994,7 @@ func (x *GetDefaultVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetDefaultVerifyEmailMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyEmailMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{304}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{307}
 }
 
 func (x *GetDefaultVerifyEmailMessageTextRequest) GetLanguage() string {
@@ -16653,7 +17013,7 @@ type GetDefaultVerifyEmailMessageTextResponse struct {
 
 func (x *GetDefaultVerifyEmailMessageTextResponse) Reset() {
 	*x = GetDefaultVerifyEmailMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[305]
+	mi := &file_zitadel_admin_proto_msgTypes[308]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16665,7 +17025,7 @@ func (x *GetDefaultVerifyEmailMessageTextResponse) String() string {
 func (*GetDefaultVerifyEmailMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[305]
+	mi := &file_zitadel_admin_proto_msgTypes[308]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16678,7 +17038,7 @@ func (x *GetDefaultVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetDefaultVerifyEmailMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyEmailMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{305}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{308}
 }
 
 func (x *GetDefaultVerifyEmailMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -16697,7 +17057,7 @@ type GetCustomVerifyEmailMessageTextRequest struct {
 
 func (x *GetCustomVerifyEmailMessageTextRequest) Reset() {
 	*x = GetCustomVerifyEmailMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[306]
+	mi := &file_zitadel_admin_proto_msgTypes[309]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16709,7 +17069,7 @@ func (x *GetCustomVerifyEmailMessageTextRequest) String() string {
 func (*GetCustomVerifyEmailMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[306]
+	mi := &file_zitadel_admin_proto_msgTypes[309]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16722,7 +17082,7 @@ func (x *GetCustomVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GetCustomVerifyEmailMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyEmailMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{306}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{309}
 }
 
 func (x *GetCustomVerifyEmailMessageTextRequest) GetLanguage() string {
@@ -16741,7 +17101,7 @@ type GetCustomVerifyEmailMessageTextResponse struct {
 
 func (x *GetCustomVerifyEmailMessageTextResponse) Reset() {
 	*x = GetCustomVerifyEmailMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[307]
+	mi := &file_zitadel_admin_proto_msgTypes[310]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16753,7 +17113,7 @@ func (x *GetCustomVerifyEmailMessageTextResponse) String() string {
 func (*GetCustomVerifyEmailMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[307]
+	mi := &file_zitadel_admin_proto_msgTypes[310]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16766,7 +17126,7 @@ func (x *GetCustomVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetCustomVerifyEmailMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyEmailMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{307}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{310}
 }
 
 func (x *GetCustomVerifyEmailMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -16792,7 +17152,7 @@ type SetDefaultVerifyEmailMessageTextRequest struct {
 
 func (x *SetDefaultVerifyEmailMessageTextRequest) Reset() {
 	*x = SetDefaultVerifyEmailMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[308]
+	mi := &file_zitadel_admin_proto_msgTypes[311]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16804,7 +17164,7 @@ func (x *SetDefaultVerifyEmailMessageTextRequest) String() string {
 func (*SetDefaultVerifyEmailMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[308]
+	mi := &file_zitadel_admin_proto_msgTypes[311]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16817,7 +17177,7 @@ func (x *SetDefaultVerifyEmailMessageTextRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use SetDefaultVerifyEmailMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyEmailMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{308}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{311}
 }
 
 func (x *SetDefaultVerifyEmailMessageTextRequest) GetLanguage() string {
@@ -16885,7 +17245,7 @@ type SetDefaultVerifyEmailMessageTextResponse struct {
 
 func (x *SetDefaultVerifyEmailMessageTextResponse) Reset() {
 	*x = SetDefaultVerifyEmailMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[309]
+	mi := &file_zitadel_admin_proto_msgTypes[312]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16897,7 +17257,7 @@ func (x *SetDefaultVerifyEmailMessageTextResponse) String() string {
 func (*SetDefaultVerifyEmailMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[309]
+	mi := &file_zitadel_admin_proto_msgTypes[312]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16910,7 +17270,7 @@ func (x *SetDefaultVerifyEmailMessageTextResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use SetDefaultVerifyEmailMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyEmailMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{309}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{312}
 }
 
 func (x *SetDefaultVerifyEmailMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -16929,7 +17289,7 @@ type ResetCustomVerifyEmailMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomVerifyEmailMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[310]
+	mi := &file_zitadel_admin_proto_msgTypes[313]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16941,7 +17301,7 @@ func (x *ResetCustomVerifyEmailMessageTextToDefaultRequest) String() string {
 func (*ResetCustomVerifyEmailMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[310]
+	mi := &file_zitadel_admin_proto_msgTypes[313]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16954,7 +17314,7 @@ func (x *ResetCustomVerifyEmailMessageTextToDefaultRequest) ProtoReflect() proto
 
 // Deprecated: Use ResetCustomVerifyEmailMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyEmailMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{310}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{313}
 }
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultRequest) GetLanguage() string {
@@ -16973,7 +17333,7 @@ type ResetCustomVerifyEmailMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomVerifyEmailMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[311]
+	mi := &file_zitadel_admin_proto_msgTypes[314]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16985,7 +17345,7 @@ func (x *ResetCustomVerifyEmailMessageTextToDefaultResponse) String() string {
 func (*ResetCustomVerifyEmailMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[311]
+	mi := &file_zitadel_admin_proto_msgTypes[314]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16998,7 +17358,7 @@ func (x *ResetCustomVerifyEmailMessageTextToDefaultResponse) ProtoReflect() prot
 
 // Deprecated: Use ResetCustomVerifyEmailMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyEmailMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{311}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{314}
 }
 
 func (x *ResetCustomVerifyEmailMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -17017,7 +17377,7 @@ type GetDefaultVerifyPhoneMessageTextRequest struct {
 
 func (x *GetDefaultVerifyPhoneMessageTextRequest) Reset() {
 	*x = GetDefaultVerifyPhoneMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[312]
+	mi := &file_zitadel_admin_proto_msgTypes[315]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17029,7 +17389,7 @@ func (x *GetDefaultVerifyPhoneMessageTextRequest) String() string {
 func (*GetDefaultVerifyPhoneMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[312]
+	mi := &file_zitadel_admin_proto_msgTypes[315]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17042,7 +17402,7 @@ func (x *GetDefaultVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetDefaultVerifyPhoneMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyPhoneMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{312}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{315}
 }
 
 func (x *GetDefaultVerifyPhoneMessageTextRequest) GetLanguage() string {
@@ -17061,7 +17421,7 @@ type GetDefaultVerifyPhoneMessageTextResponse struct {
 
 func (x *GetDefaultVerifyPhoneMessageTextResponse) Reset() {
 	*x = GetDefaultVerifyPhoneMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[313]
+	mi := &file_zitadel_admin_proto_msgTypes[316]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17073,7 +17433,7 @@ func (x *GetDefaultVerifyPhoneMessageTextResponse) String() string {
 func (*GetDefaultVerifyPhoneMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[313]
+	mi := &file_zitadel_admin_proto_msgTypes[316]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17086,7 +17446,7 @@ func (x *GetDefaultVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetDefaultVerifyPhoneMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyPhoneMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{313}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{316}
 }
 
 func (x *GetDefaultVerifyPhoneMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17105,7 +17465,7 @@ type GetCustomVerifyPhoneMessageTextRequest struct {
 
 func (x *GetCustomVerifyPhoneMessageTextRequest) Reset() {
 	*x = GetCustomVerifyPhoneMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[314]
+	mi := &file_zitadel_admin_proto_msgTypes[317]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17117,7 +17477,7 @@ func (x *GetCustomVerifyPhoneMessageTextRequest) String() string {
 func (*GetCustomVerifyPhoneMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[314]
+	mi := &file_zitadel_admin_proto_msgTypes[317]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17130,7 +17490,7 @@ func (x *GetCustomVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GetCustomVerifyPhoneMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyPhoneMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{314}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{317}
 }
 
 func (x *GetCustomVerifyPhoneMessageTextRequest) GetLanguage() string {
@@ -17149,7 +17509,7 @@ type GetCustomVerifyPhoneMessageTextResponse struct {
 
 func (x *GetCustomVerifyPhoneMessageTextResponse) Reset() {
 	*x = GetCustomVerifyPhoneMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[315]
+	mi := &file_zitadel_admin_proto_msgTypes[318]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17161,7 +17521,7 @@ func (x *GetCustomVerifyPhoneMessageTextResponse) String() string {
 func (*GetCustomVerifyPhoneMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[315]
+	mi := &file_zitadel_admin_proto_msgTypes[318]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17174,7 +17534,7 @@ func (x *GetCustomVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetCustomVerifyPhoneMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyPhoneMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{315}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{318}
 }
 
 func (x *GetCustomVerifyPhoneMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17200,7 +17560,7 @@ type SetDefaultVerifyPhoneMessageTextRequest struct {
 
 func (x *SetDefaultVerifyPhoneMessageTextRequest) Reset() {
 	*x = SetDefaultVerifyPhoneMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[316]
+	mi := &file_zitadel_admin_proto_msgTypes[319]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17212,7 +17572,7 @@ func (x *SetDefaultVerifyPhoneMessageTextRequest) String() string {
 func (*SetDefaultVerifyPhoneMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[316]
+	mi := &file_zitadel_admin_proto_msgTypes[319]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17225,7 +17585,7 @@ func (x *SetDefaultVerifyPhoneMessageTextRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use SetDefaultVerifyPhoneMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyPhoneMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{316}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{319}
 }
 
 func (x *SetDefaultVerifyPhoneMessageTextRequest) GetLanguage() string {
@@ -17293,7 +17653,7 @@ type SetDefaultVerifyPhoneMessageTextResponse struct {
 
 func (x *SetDefaultVerifyPhoneMessageTextResponse) Reset() {
 	*x = SetDefaultVerifyPhoneMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[317]
+	mi := &file_zitadel_admin_proto_msgTypes[320]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17305,7 +17665,7 @@ func (x *SetDefaultVerifyPhoneMessageTextResponse) String() string {
 func (*SetDefaultVerifyPhoneMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[317]
+	mi := &file_zitadel_admin_proto_msgTypes[320]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17318,7 +17678,7 @@ func (x *SetDefaultVerifyPhoneMessageTextResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use SetDefaultVerifyPhoneMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyPhoneMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{317}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{320}
 }
 
 func (x *SetDefaultVerifyPhoneMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -17337,7 +17697,7 @@ type ResetCustomVerifyPhoneMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomVerifyPhoneMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[318]
+	mi := &file_zitadel_admin_proto_msgTypes[321]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17349,7 +17709,7 @@ func (x *ResetCustomVerifyPhoneMessageTextToDefaultRequest) String() string {
 func (*ResetCustomVerifyPhoneMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[318]
+	mi := &file_zitadel_admin_proto_msgTypes[321]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17362,7 +17722,7 @@ func (x *ResetCustomVerifyPhoneMessageTextToDefaultRequest) ProtoReflect() proto
 
 // Deprecated: Use ResetCustomVerifyPhoneMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyPhoneMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{318}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{321}
 }
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultRequest) GetLanguage() string {
@@ -17381,7 +17741,7 @@ type ResetCustomVerifyPhoneMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomVerifyPhoneMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[319]
+	mi := &file_zitadel_admin_proto_msgTypes[322]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17393,7 +17753,7 @@ func (x *ResetCustomVerifyPhoneMessageTextToDefaultResponse) String() string {
 func (*ResetCustomVerifyPhoneMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[319]
+	mi := &file_zitadel_admin_proto_msgTypes[322]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17406,7 +17766,7 @@ func (x *ResetCustomVerifyPhoneMessageTextToDefaultResponse) ProtoReflect() prot
 
 // Deprecated: Use ResetCustomVerifyPhoneMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyPhoneMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{319}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{322}
 }
 
 func (x *ResetCustomVerifyPhoneMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -17425,7 +17785,7 @@ type GetCustomVerifySMSOTPMessageTextRequest struct {
 
 func (x *GetCustomVerifySMSOTPMessageTextRequest) Reset() {
 	*x = GetCustomVerifySMSOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[320]
+	mi := &file_zitadel_admin_proto_msgTypes[323]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17437,7 +17797,7 @@ func (x *GetCustomVerifySMSOTPMessageTextRequest) String() string {
 func (*GetCustomVerifySMSOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[320]
+	mi := &file_zitadel_admin_proto_msgTypes[323]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17450,7 +17810,7 @@ func (x *GetCustomVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetCustomVerifySMSOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifySMSOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{320}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{323}
 }
 
 func (x *GetCustomVerifySMSOTPMessageTextRequest) GetLanguage() string {
@@ -17469,7 +17829,7 @@ type GetCustomVerifySMSOTPMessageTextResponse struct {
 
 func (x *GetCustomVerifySMSOTPMessageTextResponse) Reset() {
 	*x = GetCustomVerifySMSOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[321]
+	mi := &file_zitadel_admin_proto_msgTypes[324]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17481,7 +17841,7 @@ func (x *GetCustomVerifySMSOTPMessageTextResponse) String() string {
 func (*GetCustomVerifySMSOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[321]
+	mi := &file_zitadel_admin_proto_msgTypes[324]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17494,7 +17854,7 @@ func (x *GetCustomVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetCustomVerifySMSOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifySMSOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{321}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{324}
 }
 
 func (x *GetCustomVerifySMSOTPMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17513,7 +17873,7 @@ type GetDefaultVerifySMSOTPMessageTextRequest struct {
 
 func (x *GetDefaultVerifySMSOTPMessageTextRequest) Reset() {
 	*x = GetDefaultVerifySMSOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[322]
+	mi := &file_zitadel_admin_proto_msgTypes[325]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17525,7 +17885,7 @@ func (x *GetDefaultVerifySMSOTPMessageTextRequest) String() string {
 func (*GetDefaultVerifySMSOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[322]
+	mi := &file_zitadel_admin_proto_msgTypes[325]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17538,7 +17898,7 @@ func (x *GetDefaultVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetDefaultVerifySMSOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifySMSOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{322}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{325}
 }
 
 func (x *GetDefaultVerifySMSOTPMessageTextRequest) GetLanguage() string {
@@ -17557,7 +17917,7 @@ type GetDefaultVerifySMSOTPMessageTextResponse struct {
 
 func (x *GetDefaultVerifySMSOTPMessageTextResponse) Reset() {
 	*x = GetDefaultVerifySMSOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[323]
+	mi := &file_zitadel_admin_proto_msgTypes[326]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17569,7 +17929,7 @@ func (x *GetDefaultVerifySMSOTPMessageTextResponse) String() string {
 func (*GetDefaultVerifySMSOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[323]
+	mi := &file_zitadel_admin_proto_msgTypes[326]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17582,7 +17942,7 @@ func (x *GetDefaultVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetDefaultVerifySMSOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifySMSOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{323}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{326}
 }
 
 func (x *GetDefaultVerifySMSOTPMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17602,7 +17962,7 @@ type SetDefaultVerifySMSOTPMessageTextRequest struct {
 
 func (x *SetDefaultVerifySMSOTPMessageTextRequest) Reset() {
 	*x = SetDefaultVerifySMSOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[324]
+	mi := &file_zitadel_admin_proto_msgTypes[327]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17614,7 +17974,7 @@ func (x *SetDefaultVerifySMSOTPMessageTextRequest) String() string {
 func (*SetDefaultVerifySMSOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[324]
+	mi := &file_zitadel_admin_proto_msgTypes[327]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17627,7 +17987,7 @@ func (x *SetDefaultVerifySMSOTPMessageTextRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use SetDefaultVerifySMSOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifySMSOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{324}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{327}
 }
 
 func (x *SetDefaultVerifySMSOTPMessageTextRequest) GetLanguage() string {
@@ -17653,7 +18013,7 @@ type SetDefaultVerifySMSOTPMessageTextResponse struct {
 
 func (x *SetDefaultVerifySMSOTPMessageTextResponse) Reset() {
 	*x = SetDefaultVerifySMSOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[325]
+	mi := &file_zitadel_admin_proto_msgTypes[328]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17665,7 +18025,7 @@ func (x *SetDefaultVerifySMSOTPMessageTextResponse) String() string {
 func (*SetDefaultVerifySMSOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[325]
+	mi := &file_zitadel_admin_proto_msgTypes[328]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17678,7 +18038,7 @@ func (x *SetDefaultVerifySMSOTPMessageTextResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use SetDefaultVerifySMSOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifySMSOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{325}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{328}
 }
 
 func (x *SetDefaultVerifySMSOTPMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -17697,7 +18057,7 @@ type ResetCustomVerifySMSOTPMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomVerifySMSOTPMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[326]
+	mi := &file_zitadel_admin_proto_msgTypes[329]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17709,7 +18069,7 @@ func (x *ResetCustomVerifySMSOTPMessageTextToDefaultRequest) String() string {
 func (*ResetCustomVerifySMSOTPMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[326]
+	mi := &file_zitadel_admin_proto_msgTypes[329]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17722,7 +18082,7 @@ func (x *ResetCustomVerifySMSOTPMessageTextToDefaultRequest) ProtoReflect() prot
 
 // Deprecated: Use ResetCustomVerifySMSOTPMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifySMSOTPMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{326}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{329}
 }
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultRequest) GetLanguage() string {
@@ -17741,7 +18101,7 @@ type ResetCustomVerifySMSOTPMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomVerifySMSOTPMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[327]
+	mi := &file_zitadel_admin_proto_msgTypes[330]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17753,7 +18113,7 @@ func (x *ResetCustomVerifySMSOTPMessageTextToDefaultResponse) String() string {
 func (*ResetCustomVerifySMSOTPMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[327]
+	mi := &file_zitadel_admin_proto_msgTypes[330]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17766,7 +18126,7 @@ func (x *ResetCustomVerifySMSOTPMessageTextToDefaultResponse) ProtoReflect() pro
 
 // Deprecated: Use ResetCustomVerifySMSOTPMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifySMSOTPMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{327}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{330}
 }
 
 func (x *ResetCustomVerifySMSOTPMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -17785,7 +18145,7 @@ type GetCustomVerifyEmailOTPMessageTextRequest struct {
 
 func (x *GetCustomVerifyEmailOTPMessageTextRequest) Reset() {
 	*x = GetCustomVerifyEmailOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[328]
+	mi := &file_zitadel_admin_proto_msgTypes[331]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17797,7 +18157,7 @@ func (x *GetCustomVerifyEmailOTPMessageTextRequest) String() string {
 func (*GetCustomVerifyEmailOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[328]
+	mi := &file_zitadel_admin_proto_msgTypes[331]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17810,7 +18170,7 @@ func (x *GetCustomVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetCustomVerifyEmailOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyEmailOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{328}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{331}
 }
 
 func (x *GetCustomVerifyEmailOTPMessageTextRequest) GetLanguage() string {
@@ -17829,7 +18189,7 @@ type GetCustomVerifyEmailOTPMessageTextResponse struct {
 
 func (x *GetCustomVerifyEmailOTPMessageTextResponse) Reset() {
 	*x = GetCustomVerifyEmailOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[329]
+	mi := &file_zitadel_admin_proto_msgTypes[332]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17841,7 +18201,7 @@ func (x *GetCustomVerifyEmailOTPMessageTextResponse) String() string {
 func (*GetCustomVerifyEmailOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[329]
+	mi := &file_zitadel_admin_proto_msgTypes[332]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17854,7 +18214,7 @@ func (x *GetCustomVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use GetCustomVerifyEmailOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomVerifyEmailOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{329}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{332}
 }
 
 func (x *GetCustomVerifyEmailOTPMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17873,7 +18233,7 @@ type GetDefaultVerifyEmailOTPMessageTextRequest struct {
 
 func (x *GetDefaultVerifyEmailOTPMessageTextRequest) Reset() {
 	*x = GetDefaultVerifyEmailOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[330]
+	mi := &file_zitadel_admin_proto_msgTypes[333]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17885,7 +18245,7 @@ func (x *GetDefaultVerifyEmailOTPMessageTextRequest) String() string {
 func (*GetDefaultVerifyEmailOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[330]
+	mi := &file_zitadel_admin_proto_msgTypes[333]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17898,7 +18258,7 @@ func (x *GetDefaultVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use GetDefaultVerifyEmailOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyEmailOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{330}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{333}
 }
 
 func (x *GetDefaultVerifyEmailOTPMessageTextRequest) GetLanguage() string {
@@ -17917,7 +18277,7 @@ type GetDefaultVerifyEmailOTPMessageTextResponse struct {
 
 func (x *GetDefaultVerifyEmailOTPMessageTextResponse) Reset() {
 	*x = GetDefaultVerifyEmailOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[331]
+	mi := &file_zitadel_admin_proto_msgTypes[334]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17929,7 +18289,7 @@ func (x *GetDefaultVerifyEmailOTPMessageTextResponse) String() string {
 func (*GetDefaultVerifyEmailOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[331]
+	mi := &file_zitadel_admin_proto_msgTypes[334]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17942,7 +18302,7 @@ func (x *GetDefaultVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use GetDefaultVerifyEmailOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultVerifyEmailOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{331}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{334}
 }
 
 func (x *GetDefaultVerifyEmailOTPMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -17968,7 +18328,7 @@ type SetDefaultVerifyEmailOTPMessageTextRequest struct {
 
 func (x *SetDefaultVerifyEmailOTPMessageTextRequest) Reset() {
 	*x = SetDefaultVerifyEmailOTPMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[332]
+	mi := &file_zitadel_admin_proto_msgTypes[335]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17980,7 +18340,7 @@ func (x *SetDefaultVerifyEmailOTPMessageTextRequest) String() string {
 func (*SetDefaultVerifyEmailOTPMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[332]
+	mi := &file_zitadel_admin_proto_msgTypes[335]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17993,7 +18353,7 @@ func (x *SetDefaultVerifyEmailOTPMessageTextRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use SetDefaultVerifyEmailOTPMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyEmailOTPMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{332}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{335}
 }
 
 func (x *SetDefaultVerifyEmailOTPMessageTextRequest) GetLanguage() string {
@@ -18061,7 +18421,7 @@ type SetDefaultVerifyEmailOTPMessageTextResponse struct {
 
 func (x *SetDefaultVerifyEmailOTPMessageTextResponse) Reset() {
 	*x = SetDefaultVerifyEmailOTPMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[333]
+	mi := &file_zitadel_admin_proto_msgTypes[336]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18073,7 +18433,7 @@ func (x *SetDefaultVerifyEmailOTPMessageTextResponse) String() string {
 func (*SetDefaultVerifyEmailOTPMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[333]
+	mi := &file_zitadel_admin_proto_msgTypes[336]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18086,7 +18446,7 @@ func (x *SetDefaultVerifyEmailOTPMessageTextResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use SetDefaultVerifyEmailOTPMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultVerifyEmailOTPMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{333}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{336}
 }
 
 func (x *SetDefaultVerifyEmailOTPMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -18105,7 +18465,7 @@ type ResetCustomVerifyEmailOTPMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomVerifyEmailOTPMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[334]
+	mi := &file_zitadel_admin_proto_msgTypes[337]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18117,7 +18477,7 @@ func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) String() string {
 func (*ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[334]
+	mi := &file_zitadel_admin_proto_msgTypes[337]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18130,7 +18490,7 @@ func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) ProtoReflect() pr
 
 // Deprecated: Use ResetCustomVerifyEmailOTPMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{334}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{337}
 }
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultRequest) GetLanguage() string {
@@ -18149,7 +18509,7 @@ type ResetCustomVerifyEmailOTPMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomVerifyEmailOTPMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[335]
+	mi := &file_zitadel_admin_proto_msgTypes[338]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18161,7 +18521,7 @@ func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) String() string 
 func (*ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[335]
+	mi := &file_zitadel_admin_proto_msgTypes[338]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18174,7 +18534,7 @@ func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) ProtoReflect() p
 
 // Deprecated: Use ResetCustomVerifyEmailOTPMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{335}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{338}
 }
 
 func (x *ResetCustomVerifyEmailOTPMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -18193,7 +18553,7 @@ type GetDefaultDomainClaimedMessageTextRequest struct {
 
 func (x *GetDefaultDomainClaimedMessageTextRequest) Reset() {
 	*x = GetDefaultDomainClaimedMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[336]
+	mi := &file_zitadel_admin_proto_msgTypes[339]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18205,7 +18565,7 @@ func (x *GetDefaultDomainClaimedMessageTextRequest) String() string {
 func (*GetDefaultDomainClaimedMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[336]
+	mi := &file_zitadel_admin_proto_msgTypes[339]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18218,7 +18578,7 @@ func (x *GetDefaultDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetDefaultDomainClaimedMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultDomainClaimedMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{336}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{339}
 }
 
 func (x *GetDefaultDomainClaimedMessageTextRequest) GetLanguage() string {
@@ -18237,7 +18597,7 @@ type GetDefaultDomainClaimedMessageTextResponse struct {
 
 func (x *GetDefaultDomainClaimedMessageTextResponse) Reset() {
 	*x = GetDefaultDomainClaimedMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[337]
+	mi := &file_zitadel_admin_proto_msgTypes[340]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18249,7 +18609,7 @@ func (x *GetDefaultDomainClaimedMessageTextResponse) String() string {
 func (*GetDefaultDomainClaimedMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultDomainClaimedMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[337]
+	mi := &file_zitadel_admin_proto_msgTypes[340]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18262,7 +18622,7 @@ func (x *GetDefaultDomainClaimedMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use GetDefaultDomainClaimedMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultDomainClaimedMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{337}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{340}
 }
 
 func (x *GetDefaultDomainClaimedMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -18281,7 +18641,7 @@ type GetCustomDomainClaimedMessageTextRequest struct {
 
 func (x *GetCustomDomainClaimedMessageTextRequest) Reset() {
 	*x = GetCustomDomainClaimedMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[338]
+	mi := &file_zitadel_admin_proto_msgTypes[341]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18293,7 +18653,7 @@ func (x *GetCustomDomainClaimedMessageTextRequest) String() string {
 func (*GetCustomDomainClaimedMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[338]
+	mi := &file_zitadel_admin_proto_msgTypes[341]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18306,7 +18666,7 @@ func (x *GetCustomDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetCustomDomainClaimedMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomDomainClaimedMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{338}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{341}
 }
 
 func (x *GetCustomDomainClaimedMessageTextRequest) GetLanguage() string {
@@ -18325,7 +18685,7 @@ type GetCustomDomainClaimedMessageTextResponse struct {
 
 func (x *GetCustomDomainClaimedMessageTextResponse) Reset() {
 	*x = GetCustomDomainClaimedMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[339]
+	mi := &file_zitadel_admin_proto_msgTypes[342]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18337,7 +18697,7 @@ func (x *GetCustomDomainClaimedMessageTextResponse) String() string {
 func (*GetCustomDomainClaimedMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomDomainClaimedMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[339]
+	mi := &file_zitadel_admin_proto_msgTypes[342]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18350,7 +18710,7 @@ func (x *GetCustomDomainClaimedMessageTextResponse) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetCustomDomainClaimedMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomDomainClaimedMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{339}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{342}
 }
 
 func (x *GetCustomDomainClaimedMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -18376,7 +18736,7 @@ type SetDefaultDomainClaimedMessageTextRequest struct {
 
 func (x *SetDefaultDomainClaimedMessageTextRequest) Reset() {
 	*x = SetDefaultDomainClaimedMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[340]
+	mi := &file_zitadel_admin_proto_msgTypes[343]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18388,7 +18748,7 @@ func (x *SetDefaultDomainClaimedMessageTextRequest) String() string {
 func (*SetDefaultDomainClaimedMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[340]
+	mi := &file_zitadel_admin_proto_msgTypes[343]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18401,7 +18761,7 @@ func (x *SetDefaultDomainClaimedMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use SetDefaultDomainClaimedMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultDomainClaimedMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{340}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{343}
 }
 
 func (x *SetDefaultDomainClaimedMessageTextRequest) GetLanguage() string {
@@ -18469,7 +18829,7 @@ type SetDefaultDomainClaimedMessageTextResponse struct {
 
 func (x *SetDefaultDomainClaimedMessageTextResponse) Reset() {
 	*x = SetDefaultDomainClaimedMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[341]
+	mi := &file_zitadel_admin_proto_msgTypes[344]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18481,7 +18841,7 @@ func (x *SetDefaultDomainClaimedMessageTextResponse) String() string {
 func (*SetDefaultDomainClaimedMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultDomainClaimedMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[341]
+	mi := &file_zitadel_admin_proto_msgTypes[344]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18494,7 +18854,7 @@ func (x *SetDefaultDomainClaimedMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use SetDefaultDomainClaimedMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultDomainClaimedMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{341}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{344}
 }
 
 func (x *SetDefaultDomainClaimedMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -18513,7 +18873,7 @@ type ResetCustomDomainClaimedMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomDomainClaimedMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[342]
+	mi := &file_zitadel_admin_proto_msgTypes[345]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18525,7 +18885,7 @@ func (x *ResetCustomDomainClaimedMessageTextToDefaultRequest) String() string {
 func (*ResetCustomDomainClaimedMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[342]
+	mi := &file_zitadel_admin_proto_msgTypes[345]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18538,7 +18898,7 @@ func (x *ResetCustomDomainClaimedMessageTextToDefaultRequest) ProtoReflect() pro
 
 // Deprecated: Use ResetCustomDomainClaimedMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomDomainClaimedMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{342}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{345}
 }
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultRequest) GetLanguage() string {
@@ -18557,7 +18917,7 @@ type ResetCustomDomainClaimedMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomDomainClaimedMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[343]
+	mi := &file_zitadel_admin_proto_msgTypes[346]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18569,7 +18929,7 @@ func (x *ResetCustomDomainClaimedMessageTextToDefaultResponse) String() string {
 func (*ResetCustomDomainClaimedMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[343]
+	mi := &file_zitadel_admin_proto_msgTypes[346]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18582,7 +18942,7 @@ func (x *ResetCustomDomainClaimedMessageTextToDefaultResponse) ProtoReflect() pr
 
 // Deprecated: Use ResetCustomDomainClaimedMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomDomainClaimedMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{343}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{346}
 }
 
 func (x *ResetCustomDomainClaimedMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -18601,7 +18961,7 @@ type GetDefaultPasswordChangeMessageTextRequest struct {
 
 func (x *GetDefaultPasswordChangeMessageTextRequest) Reset() {
 	*x = GetDefaultPasswordChangeMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[344]
+	mi := &file_zitadel_admin_proto_msgTypes[347]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18613,7 +18973,7 @@ func (x *GetDefaultPasswordChangeMessageTextRequest) String() string {
 func (*GetDefaultPasswordChangeMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultPasswordChangeMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[344]
+	mi := &file_zitadel_admin_proto_msgTypes[347]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18626,7 +18986,7 @@ func (x *GetDefaultPasswordChangeMessageTextRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use GetDefaultPasswordChangeMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordChangeMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{344}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{347}
 }
 
 func (x *GetDefaultPasswordChangeMessageTextRequest) GetLanguage() string {
@@ -18645,7 +19005,7 @@ type GetDefaultPasswordChangeMessageTextResponse struct {
 
 func (x *GetDefaultPasswordChangeMessageTextResponse) Reset() {
 	*x = GetDefaultPasswordChangeMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[345]
+	mi := &file_zitadel_admin_proto_msgTypes[348]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18657,7 +19017,7 @@ func (x *GetDefaultPasswordChangeMessageTextResponse) String() string {
 func (*GetDefaultPasswordChangeMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultPasswordChangeMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[345]
+	mi := &file_zitadel_admin_proto_msgTypes[348]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18670,7 +19030,7 @@ func (x *GetDefaultPasswordChangeMessageTextResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use GetDefaultPasswordChangeMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordChangeMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{345}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{348}
 }
 
 func (x *GetDefaultPasswordChangeMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -18689,7 +19049,7 @@ type GetCustomPasswordChangeMessageTextRequest struct {
 
 func (x *GetCustomPasswordChangeMessageTextRequest) Reset() {
 	*x = GetCustomPasswordChangeMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[346]
+	mi := &file_zitadel_admin_proto_msgTypes[349]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18701,7 +19061,7 @@ func (x *GetCustomPasswordChangeMessageTextRequest) String() string {
 func (*GetCustomPasswordChangeMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomPasswordChangeMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[346]
+	mi := &file_zitadel_admin_proto_msgTypes[349]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18714,7 +19074,7 @@ func (x *GetCustomPasswordChangeMessageTextRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use GetCustomPasswordChangeMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordChangeMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{346}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{349}
 }
 
 func (x *GetCustomPasswordChangeMessageTextRequest) GetLanguage() string {
@@ -18733,7 +19093,7 @@ type GetCustomPasswordChangeMessageTextResponse struct {
 
 func (x *GetCustomPasswordChangeMessageTextResponse) Reset() {
 	*x = GetCustomPasswordChangeMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[347]
+	mi := &file_zitadel_admin_proto_msgTypes[350]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18745,7 +19105,7 @@ func (x *GetCustomPasswordChangeMessageTextResponse) String() string {
 func (*GetCustomPasswordChangeMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomPasswordChangeMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[347]
+	mi := &file_zitadel_admin_proto_msgTypes[350]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18758,7 +19118,7 @@ func (x *GetCustomPasswordChangeMessageTextResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use GetCustomPasswordChangeMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordChangeMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{347}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{350}
 }
 
 func (x *GetCustomPasswordChangeMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -18784,7 +19144,7 @@ type SetDefaultPasswordChangeMessageTextRequest struct {
 
 func (x *SetDefaultPasswordChangeMessageTextRequest) Reset() {
 	*x = SetDefaultPasswordChangeMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[348]
+	mi := &file_zitadel_admin_proto_msgTypes[351]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18796,7 +19156,7 @@ func (x *SetDefaultPasswordChangeMessageTextRequest) String() string {
 func (*SetDefaultPasswordChangeMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultPasswordChangeMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[348]
+	mi := &file_zitadel_admin_proto_msgTypes[351]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18809,7 +19169,7 @@ func (x *SetDefaultPasswordChangeMessageTextRequest) ProtoReflect() protoreflect
 
 // Deprecated: Use SetDefaultPasswordChangeMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordChangeMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{348}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{351}
 }
 
 func (x *SetDefaultPasswordChangeMessageTextRequest) GetLanguage() string {
@@ -18877,7 +19237,7 @@ type SetDefaultPasswordChangeMessageTextResponse struct {
 
 func (x *SetDefaultPasswordChangeMessageTextResponse) Reset() {
 	*x = SetDefaultPasswordChangeMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[349]
+	mi := &file_zitadel_admin_proto_msgTypes[352]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18889,7 +19249,7 @@ func (x *SetDefaultPasswordChangeMessageTextResponse) String() string {
 func (*SetDefaultPasswordChangeMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultPasswordChangeMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[349]
+	mi := &file_zitadel_admin_proto_msgTypes[352]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18902,7 +19262,7 @@ func (x *SetDefaultPasswordChangeMessageTextResponse) ProtoReflect() protoreflec
 
 // Deprecated: Use SetDefaultPasswordChangeMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordChangeMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{349}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{352}
 }
 
 func (x *SetDefaultPasswordChangeMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -18921,7 +19281,7 @@ type ResetCustomPasswordChangeMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomPasswordChangeMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[350]
+	mi := &file_zitadel_admin_proto_msgTypes[353]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18933,7 +19293,7 @@ func (x *ResetCustomPasswordChangeMessageTextToDefaultRequest) String() string {
 func (*ResetCustomPasswordChangeMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[350]
+	mi := &file_zitadel_admin_proto_msgTypes[353]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18946,7 +19306,7 @@ func (x *ResetCustomPasswordChangeMessageTextToDefaultRequest) ProtoReflect() pr
 
 // Deprecated: Use ResetCustomPasswordChangeMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordChangeMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{350}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{353}
 }
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultRequest) GetLanguage() string {
@@ -18965,7 +19325,7 @@ type ResetCustomPasswordChangeMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomPasswordChangeMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[351]
+	mi := &file_zitadel_admin_proto_msgTypes[354]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -18977,7 +19337,7 @@ func (x *ResetCustomPasswordChangeMessageTextToDefaultResponse) String() string 
 func (*ResetCustomPasswordChangeMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[351]
+	mi := &file_zitadel_admin_proto_msgTypes[354]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18990,7 +19350,7 @@ func (x *ResetCustomPasswordChangeMessageTextToDefaultResponse) ProtoReflect() p
 
 // Deprecated: Use ResetCustomPasswordChangeMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordChangeMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{351}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{354}
 }
 
 func (x *ResetCustomPasswordChangeMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -19009,7 +19369,7 @@ type GetDefaultInviteUserMessageTextRequest struct {
 
 func (x *GetDefaultInviteUserMessageTextRequest) Reset() {
 	*x = GetDefaultInviteUserMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[352]
+	mi := &file_zitadel_admin_proto_msgTypes[355]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19021,7 +19381,7 @@ func (x *GetDefaultInviteUserMessageTextRequest) String() string {
 func (*GetDefaultInviteUserMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultInviteUserMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[352]
+	mi := &file_zitadel_admin_proto_msgTypes[355]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19034,7 +19394,7 @@ func (x *GetDefaultInviteUserMessageTextRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GetDefaultInviteUserMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultInviteUserMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{352}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{355}
 }
 
 func (x *GetDefaultInviteUserMessageTextRequest) GetLanguage() string {
@@ -19053,7 +19413,7 @@ type GetDefaultInviteUserMessageTextResponse struct {
 
 func (x *GetDefaultInviteUserMessageTextResponse) Reset() {
 	*x = GetDefaultInviteUserMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[353]
+	mi := &file_zitadel_admin_proto_msgTypes[356]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19065,7 +19425,7 @@ func (x *GetDefaultInviteUserMessageTextResponse) String() string {
 func (*GetDefaultInviteUserMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultInviteUserMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[353]
+	mi := &file_zitadel_admin_proto_msgTypes[356]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19078,7 +19438,7 @@ func (x *GetDefaultInviteUserMessageTextResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetDefaultInviteUserMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultInviteUserMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{353}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{356}
 }
 
 func (x *GetDefaultInviteUserMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -19097,7 +19457,7 @@ type GetCustomInviteUserMessageTextRequest struct {
 
 func (x *GetCustomInviteUserMessageTextRequest) Reset() {
 	*x = GetCustomInviteUserMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[354]
+	mi := &file_zitadel_admin_proto_msgTypes[357]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19109,7 +19469,7 @@ func (x *GetCustomInviteUserMessageTextRequest) String() string {
 func (*GetCustomInviteUserMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomInviteUserMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[354]
+	mi := &file_zitadel_admin_proto_msgTypes[357]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19122,7 +19482,7 @@ func (x *GetCustomInviteUserMessageTextRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use GetCustomInviteUserMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomInviteUserMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{354}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{357}
 }
 
 func (x *GetCustomInviteUserMessageTextRequest) GetLanguage() string {
@@ -19141,7 +19501,7 @@ type GetCustomInviteUserMessageTextResponse struct {
 
 func (x *GetCustomInviteUserMessageTextResponse) Reset() {
 	*x = GetCustomInviteUserMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[355]
+	mi := &file_zitadel_admin_proto_msgTypes[358]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19153,7 +19513,7 @@ func (x *GetCustomInviteUserMessageTextResponse) String() string {
 func (*GetCustomInviteUserMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomInviteUserMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[355]
+	mi := &file_zitadel_admin_proto_msgTypes[358]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19166,7 +19526,7 @@ func (x *GetCustomInviteUserMessageTextResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use GetCustomInviteUserMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomInviteUserMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{355}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{358}
 }
 
 func (x *GetCustomInviteUserMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -19192,7 +19552,7 @@ type SetDefaultInviteUserMessageTextRequest struct {
 
 func (x *SetDefaultInviteUserMessageTextRequest) Reset() {
 	*x = SetDefaultInviteUserMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[356]
+	mi := &file_zitadel_admin_proto_msgTypes[359]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19204,7 +19564,7 @@ func (x *SetDefaultInviteUserMessageTextRequest) String() string {
 func (*SetDefaultInviteUserMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultInviteUserMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[356]
+	mi := &file_zitadel_admin_proto_msgTypes[359]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19217,7 +19577,7 @@ func (x *SetDefaultInviteUserMessageTextRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use SetDefaultInviteUserMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultInviteUserMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{356}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{359}
 }
 
 func (x *SetDefaultInviteUserMessageTextRequest) GetLanguage() string {
@@ -19285,7 +19645,7 @@ type SetDefaultInviteUserMessageTextResponse struct {
 
 func (x *SetDefaultInviteUserMessageTextResponse) Reset() {
 	*x = SetDefaultInviteUserMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[357]
+	mi := &file_zitadel_admin_proto_msgTypes[360]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19297,7 +19657,7 @@ func (x *SetDefaultInviteUserMessageTextResponse) String() string {
 func (*SetDefaultInviteUserMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultInviteUserMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[357]
+	mi := &file_zitadel_admin_proto_msgTypes[360]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19310,7 +19670,7 @@ func (x *SetDefaultInviteUserMessageTextResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use SetDefaultInviteUserMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultInviteUserMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{357}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{360}
 }
 
 func (x *SetDefaultInviteUserMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -19329,7 +19689,7 @@ type ResetCustomInviteUserMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomInviteUserMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomInviteUserMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[358]
+	mi := &file_zitadel_admin_proto_msgTypes[361]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19341,7 +19701,7 @@ func (x *ResetCustomInviteUserMessageTextToDefaultRequest) String() string {
 func (*ResetCustomInviteUserMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomInviteUserMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[358]
+	mi := &file_zitadel_admin_proto_msgTypes[361]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19354,7 +19714,7 @@ func (x *ResetCustomInviteUserMessageTextToDefaultRequest) ProtoReflect() protor
 
 // Deprecated: Use ResetCustomInviteUserMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomInviteUserMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{358}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{361}
 }
 
 func (x *ResetCustomInviteUserMessageTextToDefaultRequest) GetLanguage() string {
@@ -19373,7 +19733,7 @@ type ResetCustomInviteUserMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomInviteUserMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomInviteUserMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[359]
+	mi := &file_zitadel_admin_proto_msgTypes[362]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19385,7 +19745,7 @@ func (x *ResetCustomInviteUserMessageTextToDefaultResponse) String() string {
 func (*ResetCustomInviteUserMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomInviteUserMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[359]
+	mi := &file_zitadel_admin_proto_msgTypes[362]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19398,7 +19758,7 @@ func (x *ResetCustomInviteUserMessageTextToDefaultResponse) ProtoReflect() proto
 
 // Deprecated: Use ResetCustomInviteUserMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomInviteUserMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{359}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{362}
 }
 
 func (x *ResetCustomInviteUserMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -19417,7 +19777,7 @@ type GetDefaultPasswordlessRegistrationMessageTextRequest struct {
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextRequest) Reset() {
 	*x = GetDefaultPasswordlessRegistrationMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[360]
+	mi := &file_zitadel_admin_proto_msgTypes[363]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19429,7 +19789,7 @@ func (x *GetDefaultPasswordlessRegistrationMessageTextRequest) String() string {
 func (*GetDefaultPasswordlessRegistrationMessageTextRequest) ProtoMessage() {}
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[360]
+	mi := &file_zitadel_admin_proto_msgTypes[363]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19442,7 +19802,7 @@ func (x *GetDefaultPasswordlessRegistrationMessageTextRequest) ProtoReflect() pr
 
 // Deprecated: Use GetDefaultPasswordlessRegistrationMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordlessRegistrationMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{360}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{363}
 }
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextRequest) GetLanguage() string {
@@ -19461,7 +19821,7 @@ type GetDefaultPasswordlessRegistrationMessageTextResponse struct {
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextResponse) Reset() {
 	*x = GetDefaultPasswordlessRegistrationMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[361]
+	mi := &file_zitadel_admin_proto_msgTypes[364]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19473,7 +19833,7 @@ func (x *GetDefaultPasswordlessRegistrationMessageTextResponse) String() string 
 func (*GetDefaultPasswordlessRegistrationMessageTextResponse) ProtoMessage() {}
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[361]
+	mi := &file_zitadel_admin_proto_msgTypes[364]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19486,7 +19846,7 @@ func (x *GetDefaultPasswordlessRegistrationMessageTextResponse) ProtoReflect() p
 
 // Deprecated: Use GetDefaultPasswordlessRegistrationMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultPasswordlessRegistrationMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{361}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{364}
 }
 
 func (x *GetDefaultPasswordlessRegistrationMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -19505,7 +19865,7 @@ type GetCustomPasswordlessRegistrationMessageTextRequest struct {
 
 func (x *GetCustomPasswordlessRegistrationMessageTextRequest) Reset() {
 	*x = GetCustomPasswordlessRegistrationMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[362]
+	mi := &file_zitadel_admin_proto_msgTypes[365]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19517,7 +19877,7 @@ func (x *GetCustomPasswordlessRegistrationMessageTextRequest) String() string {
 func (*GetCustomPasswordlessRegistrationMessageTextRequest) ProtoMessage() {}
 
 func (x *GetCustomPasswordlessRegistrationMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[362]
+	mi := &file_zitadel_admin_proto_msgTypes[365]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19530,7 +19890,7 @@ func (x *GetCustomPasswordlessRegistrationMessageTextRequest) ProtoReflect() pro
 
 // Deprecated: Use GetCustomPasswordlessRegistrationMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordlessRegistrationMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{362}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{365}
 }
 
 func (x *GetCustomPasswordlessRegistrationMessageTextRequest) GetLanguage() string {
@@ -19549,7 +19909,7 @@ type GetCustomPasswordlessRegistrationMessageTextResponse struct {
 
 func (x *GetCustomPasswordlessRegistrationMessageTextResponse) Reset() {
 	*x = GetCustomPasswordlessRegistrationMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[363]
+	mi := &file_zitadel_admin_proto_msgTypes[366]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19561,7 +19921,7 @@ func (x *GetCustomPasswordlessRegistrationMessageTextResponse) String() string {
 func (*GetCustomPasswordlessRegistrationMessageTextResponse) ProtoMessage() {}
 
 func (x *GetCustomPasswordlessRegistrationMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[363]
+	mi := &file_zitadel_admin_proto_msgTypes[366]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19574,7 +19934,7 @@ func (x *GetCustomPasswordlessRegistrationMessageTextResponse) ProtoReflect() pr
 
 // Deprecated: Use GetCustomPasswordlessRegistrationMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomPasswordlessRegistrationMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{363}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{366}
 }
 
 func (x *GetCustomPasswordlessRegistrationMessageTextResponse) GetCustomText() *text.MessageCustomText {
@@ -19600,7 +19960,7 @@ type SetDefaultPasswordlessRegistrationMessageTextRequest struct {
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextRequest) Reset() {
 	*x = SetDefaultPasswordlessRegistrationMessageTextRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[364]
+	mi := &file_zitadel_admin_proto_msgTypes[367]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19612,7 +19972,7 @@ func (x *SetDefaultPasswordlessRegistrationMessageTextRequest) String() string {
 func (*SetDefaultPasswordlessRegistrationMessageTextRequest) ProtoMessage() {}
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[364]
+	mi := &file_zitadel_admin_proto_msgTypes[367]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19625,7 +19985,7 @@ func (x *SetDefaultPasswordlessRegistrationMessageTextRequest) ProtoReflect() pr
 
 // Deprecated: Use SetDefaultPasswordlessRegistrationMessageTextRequest.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordlessRegistrationMessageTextRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{364}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{367}
 }
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextRequest) GetLanguage() string {
@@ -19693,7 +20053,7 @@ type SetDefaultPasswordlessRegistrationMessageTextResponse struct {
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextResponse) Reset() {
 	*x = SetDefaultPasswordlessRegistrationMessageTextResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[365]
+	mi := &file_zitadel_admin_proto_msgTypes[368]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19705,7 +20065,7 @@ func (x *SetDefaultPasswordlessRegistrationMessageTextResponse) String() string 
 func (*SetDefaultPasswordlessRegistrationMessageTextResponse) ProtoMessage() {}
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[365]
+	mi := &file_zitadel_admin_proto_msgTypes[368]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19718,7 +20078,7 @@ func (x *SetDefaultPasswordlessRegistrationMessageTextResponse) ProtoReflect() p
 
 // Deprecated: Use SetDefaultPasswordlessRegistrationMessageTextResponse.ProtoReflect.Descriptor instead.
 func (*SetDefaultPasswordlessRegistrationMessageTextResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{365}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{368}
 }
 
 func (x *SetDefaultPasswordlessRegistrationMessageTextResponse) GetDetails() *object.ObjectDetails {
@@ -19737,7 +20097,7 @@ type ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest struct {
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) Reset() {
 	*x = ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[366]
+	mi := &file_zitadel_admin_proto_msgTypes[369]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19749,7 +20109,7 @@ func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) String(
 func (*ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[366]
+	mi := &file_zitadel_admin_proto_msgTypes[369]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19762,7 +20122,7 @@ func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) ProtoRe
 
 // Deprecated: Use ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{366}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{369}
 }
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest) GetLanguage() string {
@@ -19781,7 +20141,7 @@ type ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse struct {
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) Reset() {
 	*x = ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[367]
+	mi := &file_zitadel_admin_proto_msgTypes[370]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19793,7 +20153,7 @@ func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) String
 func (*ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[367]
+	mi := &file_zitadel_admin_proto_msgTypes[370]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19806,7 +20166,7 @@ func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) ProtoR
 
 // Deprecated: Use ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{367}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{370}
 }
 
 func (x *ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -19825,7 +20185,7 @@ type GetDefaultLoginTextsRequest struct {
 
 func (x *GetDefaultLoginTextsRequest) Reset() {
 	*x = GetDefaultLoginTextsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[368]
+	mi := &file_zitadel_admin_proto_msgTypes[371]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19837,7 +20197,7 @@ func (x *GetDefaultLoginTextsRequest) String() string {
 func (*GetDefaultLoginTextsRequest) ProtoMessage() {}
 
 func (x *GetDefaultLoginTextsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[368]
+	mi := &file_zitadel_admin_proto_msgTypes[371]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19850,7 +20210,7 @@ func (x *GetDefaultLoginTextsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDefaultLoginTextsRequest.ProtoReflect.Descriptor instead.
 func (*GetDefaultLoginTextsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{368}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{371}
 }
 
 func (x *GetDefaultLoginTextsRequest) GetLanguage() string {
@@ -19869,7 +20229,7 @@ type GetDefaultLoginTextsResponse struct {
 
 func (x *GetDefaultLoginTextsResponse) Reset() {
 	*x = GetDefaultLoginTextsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[369]
+	mi := &file_zitadel_admin_proto_msgTypes[372]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19881,7 +20241,7 @@ func (x *GetDefaultLoginTextsResponse) String() string {
 func (*GetDefaultLoginTextsResponse) ProtoMessage() {}
 
 func (x *GetDefaultLoginTextsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[369]
+	mi := &file_zitadel_admin_proto_msgTypes[372]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19894,7 +20254,7 @@ func (x *GetDefaultLoginTextsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDefaultLoginTextsResponse.ProtoReflect.Descriptor instead.
 func (*GetDefaultLoginTextsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{369}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{372}
 }
 
 func (x *GetDefaultLoginTextsResponse) GetCustomText() *text.LoginCustomText {
@@ -19913,7 +20273,7 @@ type GetCustomLoginTextsRequest struct {
 
 func (x *GetCustomLoginTextsRequest) Reset() {
 	*x = GetCustomLoginTextsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[370]
+	mi := &file_zitadel_admin_proto_msgTypes[373]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19925,7 +20285,7 @@ func (x *GetCustomLoginTextsRequest) String() string {
 func (*GetCustomLoginTextsRequest) ProtoMessage() {}
 
 func (x *GetCustomLoginTextsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[370]
+	mi := &file_zitadel_admin_proto_msgTypes[373]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19938,7 +20298,7 @@ func (x *GetCustomLoginTextsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomLoginTextsRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomLoginTextsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{370}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{373}
 }
 
 func (x *GetCustomLoginTextsRequest) GetLanguage() string {
@@ -19957,7 +20317,7 @@ type GetCustomLoginTextsResponse struct {
 
 func (x *GetCustomLoginTextsResponse) Reset() {
 	*x = GetCustomLoginTextsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[371]
+	mi := &file_zitadel_admin_proto_msgTypes[374]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -19969,7 +20329,7 @@ func (x *GetCustomLoginTextsResponse) String() string {
 func (*GetCustomLoginTextsResponse) ProtoMessage() {}
 
 func (x *GetCustomLoginTextsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[371]
+	mi := &file_zitadel_admin_proto_msgTypes[374]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19982,7 +20342,7 @@ func (x *GetCustomLoginTextsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomLoginTextsResponse.ProtoReflect.Descriptor instead.
 func (*GetCustomLoginTextsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{371}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{374}
 }
 
 func (x *GetCustomLoginTextsResponse) GetCustomText() *text.LoginCustomText {
@@ -20039,7 +20399,7 @@ type SetCustomLoginTextsRequest struct {
 
 func (x *SetCustomLoginTextsRequest) Reset() {
 	*x = SetCustomLoginTextsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[372]
+	mi := &file_zitadel_admin_proto_msgTypes[375]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20051,7 +20411,7 @@ func (x *SetCustomLoginTextsRequest) String() string {
 func (*SetCustomLoginTextsRequest) ProtoMessage() {}
 
 func (x *SetCustomLoginTextsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[372]
+	mi := &file_zitadel_admin_proto_msgTypes[375]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20064,7 +20424,7 @@ func (x *SetCustomLoginTextsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetCustomLoginTextsRequest.ProtoReflect.Descriptor instead.
 func (*SetCustomLoginTextsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{372}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{375}
 }
 
 func (x *SetCustomLoginTextsRequest) GetLanguage() string {
@@ -20329,7 +20689,7 @@ type SetCustomLoginTextsResponse struct {
 
 func (x *SetCustomLoginTextsResponse) Reset() {
 	*x = SetCustomLoginTextsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[373]
+	mi := &file_zitadel_admin_proto_msgTypes[376]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20341,7 +20701,7 @@ func (x *SetCustomLoginTextsResponse) String() string {
 func (*SetCustomLoginTextsResponse) ProtoMessage() {}
 
 func (x *SetCustomLoginTextsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[373]
+	mi := &file_zitadel_admin_proto_msgTypes[376]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20354,7 +20714,7 @@ func (x *SetCustomLoginTextsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetCustomLoginTextsResponse.ProtoReflect.Descriptor instead.
 func (*SetCustomLoginTextsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{373}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{376}
 }
 
 func (x *SetCustomLoginTextsResponse) GetDetails() *object.ObjectDetails {
@@ -20373,7 +20733,7 @@ type ResetCustomLoginTextsToDefaultRequest struct {
 
 func (x *ResetCustomLoginTextsToDefaultRequest) Reset() {
 	*x = ResetCustomLoginTextsToDefaultRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[374]
+	mi := &file_zitadel_admin_proto_msgTypes[377]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20385,7 +20745,7 @@ func (x *ResetCustomLoginTextsToDefaultRequest) String() string {
 func (*ResetCustomLoginTextsToDefaultRequest) ProtoMessage() {}
 
 func (x *ResetCustomLoginTextsToDefaultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[374]
+	mi := &file_zitadel_admin_proto_msgTypes[377]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20398,7 +20758,7 @@ func (x *ResetCustomLoginTextsToDefaultRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use ResetCustomLoginTextsToDefaultRequest.ProtoReflect.Descriptor instead.
 func (*ResetCustomLoginTextsToDefaultRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{374}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{377}
 }
 
 func (x *ResetCustomLoginTextsToDefaultRequest) GetLanguage() string {
@@ -20417,7 +20777,7 @@ type ResetCustomLoginTextsToDefaultResponse struct {
 
 func (x *ResetCustomLoginTextsToDefaultResponse) Reset() {
 	*x = ResetCustomLoginTextsToDefaultResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[375]
+	mi := &file_zitadel_admin_proto_msgTypes[378]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20429,7 +20789,7 @@ func (x *ResetCustomLoginTextsToDefaultResponse) String() string {
 func (*ResetCustomLoginTextsToDefaultResponse) ProtoMessage() {}
 
 func (x *ResetCustomLoginTextsToDefaultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[375]
+	mi := &file_zitadel_admin_proto_msgTypes[378]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20442,7 +20802,7 @@ func (x *ResetCustomLoginTextsToDefaultResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ResetCustomLoginTextsToDefaultResponse.ProtoReflect.Descriptor instead.
 func (*ResetCustomLoginTextsToDefaultResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{375}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{378}
 }
 
 func (x *ResetCustomLoginTextsToDefaultResponse) GetDetails() *object.ObjectDetails {
@@ -20462,7 +20822,7 @@ type AddIAMMemberRequest struct {
 
 func (x *AddIAMMemberRequest) Reset() {
 	*x = AddIAMMemberRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[376]
+	mi := &file_zitadel_admin_proto_msgTypes[379]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20474,7 +20834,7 @@ func (x *AddIAMMemberRequest) String() string {
 func (*AddIAMMemberRequest) ProtoMessage() {}
 
 func (x *AddIAMMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[376]
+	mi := &file_zitadel_admin_proto_msgTypes[379]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20487,7 +20847,7 @@ func (x *AddIAMMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddIAMMemberRequest.ProtoReflect.Descriptor instead.
 func (*AddIAMMemberRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{376}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{379}
 }
 
 func (x *AddIAMMemberRequest) GetUserId() string {
@@ -20513,7 +20873,7 @@ type AddIAMMemberResponse struct {
 
 func (x *AddIAMMemberResponse) Reset() {
 	*x = AddIAMMemberResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[377]
+	mi := &file_zitadel_admin_proto_msgTypes[380]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20525,7 +20885,7 @@ func (x *AddIAMMemberResponse) String() string {
 func (*AddIAMMemberResponse) ProtoMessage() {}
 
 func (x *AddIAMMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[377]
+	mi := &file_zitadel_admin_proto_msgTypes[380]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20538,7 +20898,7 @@ func (x *AddIAMMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddIAMMemberResponse.ProtoReflect.Descriptor instead.
 func (*AddIAMMemberResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{377}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{380}
 }
 
 func (x *AddIAMMemberResponse) GetDetails() *object.ObjectDetails {
@@ -20558,7 +20918,7 @@ type UpdateIAMMemberRequest struct {
 
 func (x *UpdateIAMMemberRequest) Reset() {
 	*x = UpdateIAMMemberRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[378]
+	mi := &file_zitadel_admin_proto_msgTypes[381]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20570,7 +20930,7 @@ func (x *UpdateIAMMemberRequest) String() string {
 func (*UpdateIAMMemberRequest) ProtoMessage() {}
 
 func (x *UpdateIAMMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[378]
+	mi := &file_zitadel_admin_proto_msgTypes[381]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20583,7 +20943,7 @@ func (x *UpdateIAMMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIAMMemberRequest.ProtoReflect.Descriptor instead.
 func (*UpdateIAMMemberRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{378}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{381}
 }
 
 func (x *UpdateIAMMemberRequest) GetUserId() string {
@@ -20609,7 +20969,7 @@ type UpdateIAMMemberResponse struct {
 
 func (x *UpdateIAMMemberResponse) Reset() {
 	*x = UpdateIAMMemberResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[379]
+	mi := &file_zitadel_admin_proto_msgTypes[382]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20621,7 +20981,7 @@ func (x *UpdateIAMMemberResponse) String() string {
 func (*UpdateIAMMemberResponse) ProtoMessage() {}
 
 func (x *UpdateIAMMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[379]
+	mi := &file_zitadel_admin_proto_msgTypes[382]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20634,7 +20994,7 @@ func (x *UpdateIAMMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateIAMMemberResponse.ProtoReflect.Descriptor instead.
 func (*UpdateIAMMemberResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{379}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{382}
 }
 
 func (x *UpdateIAMMemberResponse) GetDetails() *object.ObjectDetails {
@@ -20653,7 +21013,7 @@ type RemoveIAMMemberRequest struct {
 
 func (x *RemoveIAMMemberRequest) Reset() {
 	*x = RemoveIAMMemberRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[380]
+	mi := &file_zitadel_admin_proto_msgTypes[383]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20665,7 +21025,7 @@ func (x *RemoveIAMMemberRequest) String() string {
 func (*RemoveIAMMemberRequest) ProtoMessage() {}
 
 func (x *RemoveIAMMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[380]
+	mi := &file_zitadel_admin_proto_msgTypes[383]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20678,7 +21038,7 @@ func (x *RemoveIAMMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIAMMemberRequest.ProtoReflect.Descriptor instead.
 func (*RemoveIAMMemberRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{380}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{383}
 }
 
 func (x *RemoveIAMMemberRequest) GetUserId() string {
@@ -20697,7 +21057,7 @@ type RemoveIAMMemberResponse struct {
 
 func (x *RemoveIAMMemberResponse) Reset() {
 	*x = RemoveIAMMemberResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[381]
+	mi := &file_zitadel_admin_proto_msgTypes[384]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20709,7 +21069,7 @@ func (x *RemoveIAMMemberResponse) String() string {
 func (*RemoveIAMMemberResponse) ProtoMessage() {}
 
 func (x *RemoveIAMMemberResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[381]
+	mi := &file_zitadel_admin_proto_msgTypes[384]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20722,7 +21082,7 @@ func (x *RemoveIAMMemberResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveIAMMemberResponse.ProtoReflect.Descriptor instead.
 func (*RemoveIAMMemberResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{381}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{384}
 }
 
 func (x *RemoveIAMMemberResponse) GetDetails() *object.ObjectDetails {
@@ -20741,7 +21101,7 @@ type ListIAMMemberRolesRequest struct {
 
 func (x *ListIAMMemberRolesRequest) Reset() {
 	*x = ListIAMMemberRolesRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[382]
+	mi := &file_zitadel_admin_proto_msgTypes[385]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20753,7 +21113,7 @@ func (x *ListIAMMemberRolesRequest) String() string {
 func (*ListIAMMemberRolesRequest) ProtoMessage() {}
 
 func (x *ListIAMMemberRolesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[382]
+	mi := &file_zitadel_admin_proto_msgTypes[385]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20766,7 +21126,7 @@ func (x *ListIAMMemberRolesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIAMMemberRolesRequest.ProtoReflect.Descriptor instead.
 func (*ListIAMMemberRolesRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{382}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{385}
 }
 
 type ListIAMMemberRolesResponse struct {
@@ -20779,7 +21139,7 @@ type ListIAMMemberRolesResponse struct {
 
 func (x *ListIAMMemberRolesResponse) Reset() {
 	*x = ListIAMMemberRolesResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[383]
+	mi := &file_zitadel_admin_proto_msgTypes[386]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20791,7 +21151,7 @@ func (x *ListIAMMemberRolesResponse) String() string {
 func (*ListIAMMemberRolesResponse) ProtoMessage() {}
 
 func (x *ListIAMMemberRolesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[383]
+	mi := &file_zitadel_admin_proto_msgTypes[386]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20804,7 +21164,7 @@ func (x *ListIAMMemberRolesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIAMMemberRolesResponse.ProtoReflect.Descriptor instead.
 func (*ListIAMMemberRolesResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{383}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{386}
 }
 
 func (x *ListIAMMemberRolesResponse) GetDetails() *object.ListDetails {
@@ -20834,7 +21194,7 @@ type ListIAMMembersRequest struct {
 
 func (x *ListIAMMembersRequest) Reset() {
 	*x = ListIAMMembersRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[384]
+	mi := &file_zitadel_admin_proto_msgTypes[387]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20846,7 +21206,7 @@ func (x *ListIAMMembersRequest) String() string {
 func (*ListIAMMembersRequest) ProtoMessage() {}
 
 func (x *ListIAMMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[384]
+	mi := &file_zitadel_admin_proto_msgTypes[387]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20859,7 +21219,7 @@ func (x *ListIAMMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIAMMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListIAMMembersRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{384}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{387}
 }
 
 func (x *ListIAMMembersRequest) GetQuery() *object.ListQuery {
@@ -20893,7 +21253,7 @@ type ListIAMMembersResponse struct {
 
 func (x *ListIAMMembersResponse) Reset() {
 	*x = ListIAMMembersResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[385]
+	mi := &file_zitadel_admin_proto_msgTypes[388]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20905,7 +21265,7 @@ func (x *ListIAMMembersResponse) String() string {
 func (*ListIAMMembersResponse) ProtoMessage() {}
 
 func (x *ListIAMMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[385]
+	mi := &file_zitadel_admin_proto_msgTypes[388]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20918,7 +21278,7 @@ func (x *ListIAMMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListIAMMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListIAMMembersResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{385}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{388}
 }
 
 func (x *ListIAMMembersResponse) GetDetails() *object.ListDetails {
@@ -20944,7 +21304,7 @@ type ListViewsRequest struct {
 
 func (x *ListViewsRequest) Reset() {
 	*x = ListViewsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[386]
+	mi := &file_zitadel_admin_proto_msgTypes[389]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20956,7 +21316,7 @@ func (x *ListViewsRequest) String() string {
 func (*ListViewsRequest) ProtoMessage() {}
 
 func (x *ListViewsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[386]
+	mi := &file_zitadel_admin_proto_msgTypes[389]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -20969,7 +21329,7 @@ func (x *ListViewsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListViewsRequest.ProtoReflect.Descriptor instead.
 func (*ListViewsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{386}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{389}
 }
 
 type ListViewsResponse struct {
@@ -20982,7 +21342,7 @@ type ListViewsResponse struct {
 
 func (x *ListViewsResponse) Reset() {
 	*x = ListViewsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[387]
+	mi := &file_zitadel_admin_proto_msgTypes[390]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -20994,7 +21354,7 @@ func (x *ListViewsResponse) String() string {
 func (*ListViewsResponse) ProtoMessage() {}
 
 func (x *ListViewsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[387]
+	mi := &file_zitadel_admin_proto_msgTypes[390]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21007,7 +21367,7 @@ func (x *ListViewsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListViewsResponse.ProtoReflect.Descriptor instead.
 func (*ListViewsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{387}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{390}
 }
 
 func (x *ListViewsResponse) GetResult() []*View {
@@ -21026,7 +21386,7 @@ type ListFailedEventsRequest struct {
 
 func (x *ListFailedEventsRequest) Reset() {
 	*x = ListFailedEventsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[388]
+	mi := &file_zitadel_admin_proto_msgTypes[391]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21038,7 +21398,7 @@ func (x *ListFailedEventsRequest) String() string {
 func (*ListFailedEventsRequest) ProtoMessage() {}
 
 func (x *ListFailedEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[388]
+	mi := &file_zitadel_admin_proto_msgTypes[391]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21051,7 +21411,7 @@ func (x *ListFailedEventsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFailedEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListFailedEventsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{388}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{391}
 }
 
 type ListFailedEventsResponse struct {
@@ -21064,7 +21424,7 @@ type ListFailedEventsResponse struct {
 
 func (x *ListFailedEventsResponse) Reset() {
 	*x = ListFailedEventsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[389]
+	mi := &file_zitadel_admin_proto_msgTypes[392]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21076,7 +21436,7 @@ func (x *ListFailedEventsResponse) String() string {
 func (*ListFailedEventsResponse) ProtoMessage() {}
 
 func (x *ListFailedEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[389]
+	mi := &file_zitadel_admin_proto_msgTypes[392]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21089,7 +21449,7 @@ func (x *ListFailedEventsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListFailedEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListFailedEventsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{389}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{392}
 }
 
 func (x *ListFailedEventsResponse) GetResult() []*FailedEvent {
@@ -21110,7 +21470,7 @@ type RemoveFailedEventRequest struct {
 
 func (x *RemoveFailedEventRequest) Reset() {
 	*x = RemoveFailedEventRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[390]
+	mi := &file_zitadel_admin_proto_msgTypes[393]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21122,7 +21482,7 @@ func (x *RemoveFailedEventRequest) String() string {
 func (*RemoveFailedEventRequest) ProtoMessage() {}
 
 func (x *RemoveFailedEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[390]
+	mi := &file_zitadel_admin_proto_msgTypes[393]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21135,7 +21495,7 @@ func (x *RemoveFailedEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveFailedEventRequest.ProtoReflect.Descriptor instead.
 func (*RemoveFailedEventRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{390}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{393}
 }
 
 func (x *RemoveFailedEventRequest) GetDatabase() string {
@@ -21168,7 +21528,7 @@ type RemoveFailedEventResponse struct {
 
 func (x *RemoveFailedEventResponse) Reset() {
 	*x = RemoveFailedEventResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[391]
+	mi := &file_zitadel_admin_proto_msgTypes[394]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21180,7 +21540,7 @@ func (x *RemoveFailedEventResponse) String() string {
 func (*RemoveFailedEventResponse) ProtoMessage() {}
 
 func (x *RemoveFailedEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[391]
+	mi := &file_zitadel_admin_proto_msgTypes[394]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21193,7 +21553,7 @@ func (x *RemoveFailedEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveFailedEventResponse.ProtoReflect.Descriptor instead.
 func (*RemoveFailedEventResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{391}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{394}
 }
 
 type View struct {
@@ -21209,7 +21569,7 @@ type View struct {
 
 func (x *View) Reset() {
 	*x = View{}
-	mi := &file_zitadel_admin_proto_msgTypes[392]
+	mi := &file_zitadel_admin_proto_msgTypes[395]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21221,7 +21581,7 @@ func (x *View) String() string {
 func (*View) ProtoMessage() {}
 
 func (x *View) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[392]
+	mi := &file_zitadel_admin_proto_msgTypes[395]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21234,7 +21594,7 @@ func (x *View) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use View.ProtoReflect.Descriptor instead.
 func (*View) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{392}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{395}
 }
 
 func (x *View) GetDatabase() string {
@@ -21286,7 +21646,7 @@ type FailedEvent struct {
 
 func (x *FailedEvent) Reset() {
 	*x = FailedEvent{}
-	mi := &file_zitadel_admin_proto_msgTypes[393]
+	mi := &file_zitadel_admin_proto_msgTypes[396]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21298,7 +21658,7 @@ func (x *FailedEvent) String() string {
 func (*FailedEvent) ProtoMessage() {}
 
 func (x *FailedEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[393]
+	mi := &file_zitadel_admin_proto_msgTypes[396]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21311,7 +21671,7 @@ func (x *FailedEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FailedEvent.ProtoReflect.Descriptor instead.
 func (*FailedEvent) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{393}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{396}
 }
 
 func (x *FailedEvent) GetDatabase() string {
@@ -21376,7 +21736,7 @@ type ImportDataRequest struct {
 
 func (x *ImportDataRequest) Reset() {
 	*x = ImportDataRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[394]
+	mi := &file_zitadel_admin_proto_msgTypes[397]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21388,7 +21748,7 @@ func (x *ImportDataRequest) String() string {
 func (*ImportDataRequest) ProtoMessage() {}
 
 func (x *ImportDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[394]
+	mi := &file_zitadel_admin_proto_msgTypes[397]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21401,7 +21761,7 @@ func (x *ImportDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataRequest.ProtoReflect.Descriptor instead.
 func (*ImportDataRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{394}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{397}
 }
 
 func (x *ImportDataRequest) GetData() isImportDataRequest_Data {
@@ -21551,7 +21911,7 @@ type ImportDataOrg struct {
 
 func (x *ImportDataOrg) Reset() {
 	*x = ImportDataOrg{}
-	mi := &file_zitadel_admin_proto_msgTypes[395]
+	mi := &file_zitadel_admin_proto_msgTypes[398]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21563,7 +21923,7 @@ func (x *ImportDataOrg) String() string {
 func (*ImportDataOrg) ProtoMessage() {}
 
 func (x *ImportDataOrg) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[395]
+	mi := &file_zitadel_admin_proto_msgTypes[398]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21576,7 +21936,7 @@ func (x *ImportDataOrg) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataOrg.ProtoReflect.Descriptor instead.
 func (*ImportDataOrg) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{395}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{398}
 }
 
 func (x *ImportDataOrg) GetOrgs() []*DataOrg {
@@ -21633,7 +21993,7 @@ type DataOrg struct {
 
 func (x *DataOrg) Reset() {
 	*x = DataOrg{}
-	mi := &file_zitadel_admin_proto_msgTypes[396]
+	mi := &file_zitadel_admin_proto_msgTypes[399]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21645,7 +22005,7 @@ func (x *DataOrg) String() string {
 func (*DataOrg) ProtoMessage() {}
 
 func (x *DataOrg) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[396]
+	mi := &file_zitadel_admin_proto_msgTypes[399]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21658,7 +22018,7 @@ func (x *DataOrg) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataOrg.ProtoReflect.Descriptor instead.
 func (*DataOrg) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{396}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{399}
 }
 
 func (x *DataOrg) GetOrgId() string {
@@ -21944,7 +22304,7 @@ type ImportDataResponse struct {
 
 func (x *ImportDataResponse) Reset() {
 	*x = ImportDataResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[397]
+	mi := &file_zitadel_admin_proto_msgTypes[400]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -21956,7 +22316,7 @@ func (x *ImportDataResponse) String() string {
 func (*ImportDataResponse) ProtoMessage() {}
 
 func (x *ImportDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[397]
+	mi := &file_zitadel_admin_proto_msgTypes[400]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -21969,7 +22329,7 @@ func (x *ImportDataResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataResponse.ProtoReflect.Descriptor instead.
 func (*ImportDataResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{397}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{400}
 }
 
 func (x *ImportDataResponse) GetErrors() []*ImportDataError {
@@ -21997,7 +22357,7 @@ type ImportDataError struct {
 
 func (x *ImportDataError) Reset() {
 	*x = ImportDataError{}
-	mi := &file_zitadel_admin_proto_msgTypes[398]
+	mi := &file_zitadel_admin_proto_msgTypes[401]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22009,7 +22369,7 @@ func (x *ImportDataError) String() string {
 func (*ImportDataError) ProtoMessage() {}
 
 func (x *ImportDataError) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[398]
+	mi := &file_zitadel_admin_proto_msgTypes[401]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22022,7 +22382,7 @@ func (x *ImportDataError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataError.ProtoReflect.Descriptor instead.
 func (*ImportDataError) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{398}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{401}
 }
 
 func (x *ImportDataError) GetType() string {
@@ -22055,7 +22415,7 @@ type ImportDataSuccess struct {
 
 func (x *ImportDataSuccess) Reset() {
 	*x = ImportDataSuccess{}
-	mi := &file_zitadel_admin_proto_msgTypes[399]
+	mi := &file_zitadel_admin_proto_msgTypes[402]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22067,7 +22427,7 @@ func (x *ImportDataSuccess) String() string {
 func (*ImportDataSuccess) ProtoMessage() {}
 
 func (x *ImportDataSuccess) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[399]
+	mi := &file_zitadel_admin_proto_msgTypes[402]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22080,7 +22440,7 @@ func (x *ImportDataSuccess) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccess.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccess) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{399}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{402}
 }
 
 func (x *ImportDataSuccess) GetOrgs() []*ImportDataSuccessOrg {
@@ -22120,7 +22480,7 @@ type ImportDataSuccessOrg struct {
 
 func (x *ImportDataSuccessOrg) Reset() {
 	*x = ImportDataSuccessOrg{}
-	mi := &file_zitadel_admin_proto_msgTypes[400]
+	mi := &file_zitadel_admin_proto_msgTypes[403]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22132,7 +22492,7 @@ func (x *ImportDataSuccessOrg) String() string {
 func (*ImportDataSuccessOrg) ProtoMessage() {}
 
 func (x *ImportDataSuccessOrg) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[400]
+	mi := &file_zitadel_admin_proto_msgTypes[403]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22145,7 +22505,7 @@ func (x *ImportDataSuccessOrg) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessOrg.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessOrg) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{400}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{403}
 }
 
 func (x *ImportDataSuccessOrg) GetOrgId() string {
@@ -22313,7 +22673,7 @@ type ImportDataSuccessProjectGrant struct {
 
 func (x *ImportDataSuccessProjectGrant) Reset() {
 	*x = ImportDataSuccessProjectGrant{}
-	mi := &file_zitadel_admin_proto_msgTypes[401]
+	mi := &file_zitadel_admin_proto_msgTypes[404]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22325,7 +22685,7 @@ func (x *ImportDataSuccessProjectGrant) String() string {
 func (*ImportDataSuccessProjectGrant) ProtoMessage() {}
 
 func (x *ImportDataSuccessProjectGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[401]
+	mi := &file_zitadel_admin_proto_msgTypes[404]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22338,7 +22698,7 @@ func (x *ImportDataSuccessProjectGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessProjectGrant.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessProjectGrant) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{401}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{404}
 }
 
 func (x *ImportDataSuccessProjectGrant) GetGrantId() string {
@@ -22372,7 +22732,7 @@ type ImportDataSuccessUserGrant struct {
 
 func (x *ImportDataSuccessUserGrant) Reset() {
 	*x = ImportDataSuccessUserGrant{}
-	mi := &file_zitadel_admin_proto_msgTypes[402]
+	mi := &file_zitadel_admin_proto_msgTypes[405]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22384,7 +22744,7 @@ func (x *ImportDataSuccessUserGrant) String() string {
 func (*ImportDataSuccessUserGrant) ProtoMessage() {}
 
 func (x *ImportDataSuccessUserGrant) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[402]
+	mi := &file_zitadel_admin_proto_msgTypes[405]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22397,7 +22757,7 @@ func (x *ImportDataSuccessUserGrant) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessUserGrant.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessUserGrant) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{402}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{405}
 }
 
 func (x *ImportDataSuccessUserGrant) GetProjectId() string {
@@ -22424,7 +22784,7 @@ type ImportDataSuccessProjectMember struct {
 
 func (x *ImportDataSuccessProjectMember) Reset() {
 	*x = ImportDataSuccessProjectMember{}
-	mi := &file_zitadel_admin_proto_msgTypes[403]
+	mi := &file_zitadel_admin_proto_msgTypes[406]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22436,7 +22796,7 @@ func (x *ImportDataSuccessProjectMember) String() string {
 func (*ImportDataSuccessProjectMember) ProtoMessage() {}
 
 func (x *ImportDataSuccessProjectMember) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[403]
+	mi := &file_zitadel_admin_proto_msgTypes[406]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22449,7 +22809,7 @@ func (x *ImportDataSuccessProjectMember) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessProjectMember.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessProjectMember) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{403}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{406}
 }
 
 func (x *ImportDataSuccessProjectMember) GetProjectId() string {
@@ -22477,7 +22837,7 @@ type ImportDataSuccessProjectGrantMember struct {
 
 func (x *ImportDataSuccessProjectGrantMember) Reset() {
 	*x = ImportDataSuccessProjectGrantMember{}
-	mi := &file_zitadel_admin_proto_msgTypes[404]
+	mi := &file_zitadel_admin_proto_msgTypes[407]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22489,7 +22849,7 @@ func (x *ImportDataSuccessProjectGrantMember) String() string {
 func (*ImportDataSuccessProjectGrantMember) ProtoMessage() {}
 
 func (x *ImportDataSuccessProjectGrantMember) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[404]
+	mi := &file_zitadel_admin_proto_msgTypes[407]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22502,7 +22862,7 @@ func (x *ImportDataSuccessProjectGrantMember) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ImportDataSuccessProjectGrantMember.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessProjectGrantMember) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{404}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{407}
 }
 
 func (x *ImportDataSuccessProjectGrantMember) GetProjectId() string {
@@ -22538,7 +22898,7 @@ type ImportDataSuccessUserLinks struct {
 
 func (x *ImportDataSuccessUserLinks) Reset() {
 	*x = ImportDataSuccessUserLinks{}
-	mi := &file_zitadel_admin_proto_msgTypes[405]
+	mi := &file_zitadel_admin_proto_msgTypes[408]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22550,7 +22910,7 @@ func (x *ImportDataSuccessUserLinks) String() string {
 func (*ImportDataSuccessUserLinks) ProtoMessage() {}
 
 func (x *ImportDataSuccessUserLinks) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[405]
+	mi := &file_zitadel_admin_proto_msgTypes[408]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22563,7 +22923,7 @@ func (x *ImportDataSuccessUserLinks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessUserLinks.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessUserLinks) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{405}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{408}
 }
 
 func (x *ImportDataSuccessUserLinks) GetUserId() string {
@@ -22604,7 +22964,7 @@ type ImportDataSuccessUserMetadata struct {
 
 func (x *ImportDataSuccessUserMetadata) Reset() {
 	*x = ImportDataSuccessUserMetadata{}
-	mi := &file_zitadel_admin_proto_msgTypes[406]
+	mi := &file_zitadel_admin_proto_msgTypes[409]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22616,7 +22976,7 @@ func (x *ImportDataSuccessUserMetadata) String() string {
 func (*ImportDataSuccessUserMetadata) ProtoMessage() {}
 
 func (x *ImportDataSuccessUserMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[406]
+	mi := &file_zitadel_admin_proto_msgTypes[409]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22629,7 +22989,7 @@ func (x *ImportDataSuccessUserMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataSuccessUserMetadata.ProtoReflect.Descriptor instead.
 func (*ImportDataSuccessUserMetadata) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{406}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{409}
 }
 
 func (x *ImportDataSuccessUserMetadata) GetUserId() string {
@@ -22663,7 +23023,7 @@ type ExportDataRequest struct {
 
 func (x *ExportDataRequest) Reset() {
 	*x = ExportDataRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[407]
+	mi := &file_zitadel_admin_proto_msgTypes[410]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22675,7 +23035,7 @@ func (x *ExportDataRequest) String() string {
 func (*ExportDataRequest) ProtoMessage() {}
 
 func (x *ExportDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[407]
+	mi := &file_zitadel_admin_proto_msgTypes[410]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22688,7 +23048,7 @@ func (x *ExportDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportDataRequest.ProtoReflect.Descriptor instead.
 func (*ExportDataRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{407}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{410}
 }
 
 func (x *ExportDataRequest) GetOrgIds() []string {
@@ -22763,7 +23123,7 @@ type ExportDataResponse struct {
 
 func (x *ExportDataResponse) Reset() {
 	*x = ExportDataResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[408]
+	mi := &file_zitadel_admin_proto_msgTypes[411]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22775,7 +23135,7 @@ func (x *ExportDataResponse) String() string {
 func (*ExportDataResponse) ProtoMessage() {}
 
 func (x *ExportDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[408]
+	mi := &file_zitadel_admin_proto_msgTypes[411]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22788,7 +23148,7 @@ func (x *ExportDataResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportDataResponse.ProtoReflect.Descriptor instead.
 func (*ExportDataResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{408}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{411}
 }
 
 func (x *ExportDataResponse) GetOrgs() []*DataOrg {
@@ -22821,7 +23181,7 @@ type ListEventsRequest struct {
 
 func (x *ListEventsRequest) Reset() {
 	*x = ListEventsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[409]
+	mi := &file_zitadel_admin_proto_msgTypes[412]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22833,7 +23193,7 @@ func (x *ListEventsRequest) String() string {
 func (*ListEventsRequest) ProtoMessage() {}
 
 func (x *ListEventsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[409]
+	mi := &file_zitadel_admin_proto_msgTypes[412]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22846,7 +23206,7 @@ func (x *ListEventsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEventsRequest.ProtoReflect.Descriptor instead.
 func (*ListEventsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{409}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{412}
 }
 
 func (x *ListEventsRequest) GetSequence() uint64 {
@@ -22963,7 +23323,7 @@ type ListEventsResponse struct {
 
 func (x *ListEventsResponse) Reset() {
 	*x = ListEventsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[410]
+	mi := &file_zitadel_admin_proto_msgTypes[413]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -22975,7 +23335,7 @@ func (x *ListEventsResponse) String() string {
 func (*ListEventsResponse) ProtoMessage() {}
 
 func (x *ListEventsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[410]
+	mi := &file_zitadel_admin_proto_msgTypes[413]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -22988,7 +23348,7 @@ func (x *ListEventsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEventsResponse.ProtoReflect.Descriptor instead.
 func (*ListEventsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{410}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{413}
 }
 
 func (x *ListEventsResponse) GetEvents() []*event.Event {
@@ -23006,7 +23366,7 @@ type ListEventTypesRequest struct {
 
 func (x *ListEventTypesRequest) Reset() {
 	*x = ListEventTypesRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[411]
+	mi := &file_zitadel_admin_proto_msgTypes[414]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23018,7 +23378,7 @@ func (x *ListEventTypesRequest) String() string {
 func (*ListEventTypesRequest) ProtoMessage() {}
 
 func (x *ListEventTypesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[411]
+	mi := &file_zitadel_admin_proto_msgTypes[414]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23031,7 +23391,7 @@ func (x *ListEventTypesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEventTypesRequest.ProtoReflect.Descriptor instead.
 func (*ListEventTypesRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{411}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{414}
 }
 
 type ListEventTypesResponse struct {
@@ -23043,7 +23403,7 @@ type ListEventTypesResponse struct {
 
 func (x *ListEventTypesResponse) Reset() {
 	*x = ListEventTypesResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[412]
+	mi := &file_zitadel_admin_proto_msgTypes[415]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23055,7 +23415,7 @@ func (x *ListEventTypesResponse) String() string {
 func (*ListEventTypesResponse) ProtoMessage() {}
 
 func (x *ListEventTypesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[412]
+	mi := &file_zitadel_admin_proto_msgTypes[415]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23068,7 +23428,7 @@ func (x *ListEventTypesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListEventTypesResponse.ProtoReflect.Descriptor instead.
 func (*ListEventTypesResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{412}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{415}
 }
 
 func (x *ListEventTypesResponse) GetEventTypes() []*event.EventType {
@@ -23086,7 +23446,7 @@ type ListAggregateTypesRequest struct {
 
 func (x *ListAggregateTypesRequest) Reset() {
 	*x = ListAggregateTypesRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[413]
+	mi := &file_zitadel_admin_proto_msgTypes[416]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23098,7 +23458,7 @@ func (x *ListAggregateTypesRequest) String() string {
 func (*ListAggregateTypesRequest) ProtoMessage() {}
 
 func (x *ListAggregateTypesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[413]
+	mi := &file_zitadel_admin_proto_msgTypes[416]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23111,7 +23471,7 @@ func (x *ListAggregateTypesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAggregateTypesRequest.ProtoReflect.Descriptor instead.
 func (*ListAggregateTypesRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{413}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{416}
 }
 
 type ListAggregateTypesResponse struct {
@@ -23123,7 +23483,7 @@ type ListAggregateTypesResponse struct {
 
 func (x *ListAggregateTypesResponse) Reset() {
 	*x = ListAggregateTypesResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[414]
+	mi := &file_zitadel_admin_proto_msgTypes[417]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23135,7 +23495,7 @@ func (x *ListAggregateTypesResponse) String() string {
 func (*ListAggregateTypesResponse) ProtoMessage() {}
 
 func (x *ListAggregateTypesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[414]
+	mi := &file_zitadel_admin_proto_msgTypes[417]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23148,7 +23508,7 @@ func (x *ListAggregateTypesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAggregateTypesResponse.ProtoReflect.Descriptor instead.
 func (*ListAggregateTypesResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{414}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{417}
 }
 
 func (x *ListAggregateTypesResponse) GetAggregateTypes() []*event.AggregateType {
@@ -23166,7 +23526,7 @@ type ActivateFeatureLoginDefaultOrgRequest struct {
 
 func (x *ActivateFeatureLoginDefaultOrgRequest) Reset() {
 	*x = ActivateFeatureLoginDefaultOrgRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[415]
+	mi := &file_zitadel_admin_proto_msgTypes[418]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23178,7 +23538,7 @@ func (x *ActivateFeatureLoginDefaultOrgRequest) String() string {
 func (*ActivateFeatureLoginDefaultOrgRequest) ProtoMessage() {}
 
 func (x *ActivateFeatureLoginDefaultOrgRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[415]
+	mi := &file_zitadel_admin_proto_msgTypes[418]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23191,7 +23551,7 @@ func (x *ActivateFeatureLoginDefaultOrgRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use ActivateFeatureLoginDefaultOrgRequest.ProtoReflect.Descriptor instead.
 func (*ActivateFeatureLoginDefaultOrgRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{415}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{418}
 }
 
 type ActivateFeatureLoginDefaultOrgResponse struct {
@@ -23203,7 +23563,7 @@ type ActivateFeatureLoginDefaultOrgResponse struct {
 
 func (x *ActivateFeatureLoginDefaultOrgResponse) Reset() {
 	*x = ActivateFeatureLoginDefaultOrgResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[416]
+	mi := &file_zitadel_admin_proto_msgTypes[419]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23215,7 +23575,7 @@ func (x *ActivateFeatureLoginDefaultOrgResponse) String() string {
 func (*ActivateFeatureLoginDefaultOrgResponse) ProtoMessage() {}
 
 func (x *ActivateFeatureLoginDefaultOrgResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[416]
+	mi := &file_zitadel_admin_proto_msgTypes[419]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23228,7 +23588,7 @@ func (x *ActivateFeatureLoginDefaultOrgResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ActivateFeatureLoginDefaultOrgResponse.ProtoReflect.Descriptor instead.
 func (*ActivateFeatureLoginDefaultOrgResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{416}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{419}
 }
 
 func (x *ActivateFeatureLoginDefaultOrgResponse) GetDetails() *object.ObjectDetails {
@@ -23252,7 +23612,7 @@ type ListMilestonesRequest struct {
 
 func (x *ListMilestonesRequest) Reset() {
 	*x = ListMilestonesRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[417]
+	mi := &file_zitadel_admin_proto_msgTypes[420]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23264,7 +23624,7 @@ func (x *ListMilestonesRequest) String() string {
 func (*ListMilestonesRequest) ProtoMessage() {}
 
 func (x *ListMilestonesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[417]
+	mi := &file_zitadel_admin_proto_msgTypes[420]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23277,7 +23637,7 @@ func (x *ListMilestonesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMilestonesRequest.ProtoReflect.Descriptor instead.
 func (*ListMilestonesRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{417}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{420}
 }
 
 func (x *ListMilestonesRequest) GetQuery() *object.ListQuery {
@@ -23311,7 +23671,7 @@ type ListMilestonesResponse struct {
 
 func (x *ListMilestonesResponse) Reset() {
 	*x = ListMilestonesResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[418]
+	mi := &file_zitadel_admin_proto_msgTypes[421]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23323,7 +23683,7 @@ func (x *ListMilestonesResponse) String() string {
 func (*ListMilestonesResponse) ProtoMessage() {}
 
 func (x *ListMilestonesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[418]
+	mi := &file_zitadel_admin_proto_msgTypes[421]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23336,7 +23696,7 @@ func (x *ListMilestonesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMilestonesResponse.ProtoReflect.Descriptor instead.
 func (*ListMilestonesResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{418}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{421}
 }
 
 func (x *ListMilestonesResponse) GetDetails() *object.ListDetails {
@@ -23363,7 +23723,7 @@ type SetRestrictionsRequest struct {
 
 func (x *SetRestrictionsRequest) Reset() {
 	*x = SetRestrictionsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[419]
+	mi := &file_zitadel_admin_proto_msgTypes[422]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23375,7 +23735,7 @@ func (x *SetRestrictionsRequest) String() string {
 func (*SetRestrictionsRequest) ProtoMessage() {}
 
 func (x *SetRestrictionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[419]
+	mi := &file_zitadel_admin_proto_msgTypes[422]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23388,7 +23748,7 @@ func (x *SetRestrictionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRestrictionsRequest.ProtoReflect.Descriptor instead.
 func (*SetRestrictionsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{419}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{422}
 }
 
 func (x *SetRestrictionsRequest) GetDisallowPublicOrgRegistration() bool {
@@ -23415,7 +23775,7 @@ type SelectLanguages struct {
 
 func (x *SelectLanguages) Reset() {
 	*x = SelectLanguages{}
-	mi := &file_zitadel_admin_proto_msgTypes[420]
+	mi := &file_zitadel_admin_proto_msgTypes[423]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23427,7 +23787,7 @@ func (x *SelectLanguages) String() string {
 func (*SelectLanguages) ProtoMessage() {}
 
 func (x *SelectLanguages) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[420]
+	mi := &file_zitadel_admin_proto_msgTypes[423]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23440,7 +23800,7 @@ func (x *SelectLanguages) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SelectLanguages.ProtoReflect.Descriptor instead.
 func (*SelectLanguages) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{420}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{423}
 }
 
 func (x *SelectLanguages) GetList() []string {
@@ -23459,7 +23819,7 @@ type SetRestrictionsResponse struct {
 
 func (x *SetRestrictionsResponse) Reset() {
 	*x = SetRestrictionsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[421]
+	mi := &file_zitadel_admin_proto_msgTypes[424]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23471,7 +23831,7 @@ func (x *SetRestrictionsResponse) String() string {
 func (*SetRestrictionsResponse) ProtoMessage() {}
 
 func (x *SetRestrictionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[421]
+	mi := &file_zitadel_admin_proto_msgTypes[424]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23484,7 +23844,7 @@ func (x *SetRestrictionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetRestrictionsResponse.ProtoReflect.Descriptor instead.
 func (*SetRestrictionsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{421}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{424}
 }
 
 func (x *SetRestrictionsResponse) GetDetails() *object.ObjectDetails {
@@ -23502,7 +23862,7 @@ type GetRestrictionsRequest struct {
 
 func (x *GetRestrictionsRequest) Reset() {
 	*x = GetRestrictionsRequest{}
-	mi := &file_zitadel_admin_proto_msgTypes[422]
+	mi := &file_zitadel_admin_proto_msgTypes[425]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23514,7 +23874,7 @@ func (x *GetRestrictionsRequest) String() string {
 func (*GetRestrictionsRequest) ProtoMessage() {}
 
 func (x *GetRestrictionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[422]
+	mi := &file_zitadel_admin_proto_msgTypes[425]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23527,7 +23887,7 @@ func (x *GetRestrictionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRestrictionsRequest.ProtoReflect.Descriptor instead.
 func (*GetRestrictionsRequest) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{422}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{425}
 }
 
 type GetRestrictionsResponse struct {
@@ -23541,7 +23901,7 @@ type GetRestrictionsResponse struct {
 
 func (x *GetRestrictionsResponse) Reset() {
 	*x = GetRestrictionsResponse{}
-	mi := &file_zitadel_admin_proto_msgTypes[423]
+	mi := &file_zitadel_admin_proto_msgTypes[426]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23553,7 +23913,7 @@ func (x *GetRestrictionsResponse) String() string {
 func (*GetRestrictionsResponse) ProtoMessage() {}
 
 func (x *GetRestrictionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[423]
+	mi := &file_zitadel_admin_proto_msgTypes[426]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23566,7 +23926,7 @@ func (x *GetRestrictionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRestrictionsResponse.ProtoReflect.Descriptor instead.
 func (*GetRestrictionsResponse) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{423}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{426}
 }
 
 func (x *GetRestrictionsResponse) GetDetails() *object.ObjectDetails {
@@ -23590,6 +23950,60 @@ func (x *GetRestrictionsResponse) GetAllowedLanguages() []string {
 	return nil
 }
 
+// ClientCredentials authenticates the SMTP client using Oauth 2.0 Client Credentials grant.
+// https://datatracker.ietf.org/doc/html/rfc6749#section-4.4
+type SMTPXOAuth2Auth_ClientCredentials struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ClientSecret  string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) Reset() {
+	*x = SMTPXOAuth2Auth_ClientCredentials{}
+	mi := &file_zitadel_admin_proto_msgTypes[427]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPXOAuth2Auth_ClientCredentials) ProtoMessage() {}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_admin_proto_msgTypes[427]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPXOAuth2Auth_ClientCredentials.ProtoReflect.Descriptor instead.
+func (*SMTPXOAuth2Auth_ClientCredentials) Descriptor() ([]byte, []int) {
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{61, 0}
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) GetClientSecret() string {
+	if x != nil {
+		return x.ClientSecret
+	}
+	return ""
+}
+
 type SetUpOrgRequest_Org struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -23600,7 +24014,7 @@ type SetUpOrgRequest_Org struct {
 
 func (x *SetUpOrgRequest_Org) Reset() {
 	*x = SetUpOrgRequest_Org{}
-	mi := &file_zitadel_admin_proto_msgTypes[424]
+	mi := &file_zitadel_admin_proto_msgTypes[428]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23612,7 +24026,7 @@ func (x *SetUpOrgRequest_Org) String() string {
 func (*SetUpOrgRequest_Org) ProtoMessage() {}
 
 func (x *SetUpOrgRequest_Org) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[424]
+	mi := &file_zitadel_admin_proto_msgTypes[428]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23625,7 +24039,7 @@ func (x *SetUpOrgRequest_Org) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest_Org.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest_Org) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118, 0}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121, 0}
 }
 
 func (x *SetUpOrgRequest_Org) GetName() string {
@@ -23655,7 +24069,7 @@ type SetUpOrgRequest_Human struct {
 
 func (x *SetUpOrgRequest_Human) Reset() {
 	*x = SetUpOrgRequest_Human{}
-	mi := &file_zitadel_admin_proto_msgTypes[425]
+	mi := &file_zitadel_admin_proto_msgTypes[429]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23667,7 +24081,7 @@ func (x *SetUpOrgRequest_Human) String() string {
 func (*SetUpOrgRequest_Human) ProtoMessage() {}
 
 func (x *SetUpOrgRequest_Human) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[425]
+	mi := &file_zitadel_admin_proto_msgTypes[429]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23680,7 +24094,7 @@ func (x *SetUpOrgRequest_Human) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest_Human.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest_Human) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118, 1}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121, 1}
 }
 
 func (x *SetUpOrgRequest_Human) GetUserName() string {
@@ -23732,7 +24146,7 @@ type SetUpOrgRequest_Human_Profile struct {
 
 func (x *SetUpOrgRequest_Human_Profile) Reset() {
 	*x = SetUpOrgRequest_Human_Profile{}
-	mi := &file_zitadel_admin_proto_msgTypes[426]
+	mi := &file_zitadel_admin_proto_msgTypes[430]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23744,7 +24158,7 @@ func (x *SetUpOrgRequest_Human_Profile) String() string {
 func (*SetUpOrgRequest_Human_Profile) ProtoMessage() {}
 
 func (x *SetUpOrgRequest_Human_Profile) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[426]
+	mi := &file_zitadel_admin_proto_msgTypes[430]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23757,7 +24171,7 @@ func (x *SetUpOrgRequest_Human_Profile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest_Human_Profile.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest_Human_Profile) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118, 1, 0}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121, 1, 0}
 }
 
 func (x *SetUpOrgRequest_Human_Profile) GetFirstName() string {
@@ -23812,7 +24226,7 @@ type SetUpOrgRequest_Human_Email struct {
 
 func (x *SetUpOrgRequest_Human_Email) Reset() {
 	*x = SetUpOrgRequest_Human_Email{}
-	mi := &file_zitadel_admin_proto_msgTypes[427]
+	mi := &file_zitadel_admin_proto_msgTypes[431]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23824,7 +24238,7 @@ func (x *SetUpOrgRequest_Human_Email) String() string {
 func (*SetUpOrgRequest_Human_Email) ProtoMessage() {}
 
 func (x *SetUpOrgRequest_Human_Email) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[427]
+	mi := &file_zitadel_admin_proto_msgTypes[431]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23837,7 +24251,7 @@ func (x *SetUpOrgRequest_Human_Email) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest_Human_Email.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest_Human_Email) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118, 1, 1}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121, 1, 1}
 }
 
 func (x *SetUpOrgRequest_Human_Email) GetEmail() string {
@@ -23865,7 +24279,7 @@ type SetUpOrgRequest_Human_Phone struct {
 
 func (x *SetUpOrgRequest_Human_Phone) Reset() {
 	*x = SetUpOrgRequest_Human_Phone{}
-	mi := &file_zitadel_admin_proto_msgTypes[428]
+	mi := &file_zitadel_admin_proto_msgTypes[432]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23877,7 +24291,7 @@ func (x *SetUpOrgRequest_Human_Phone) String() string {
 func (*SetUpOrgRequest_Human_Phone) ProtoMessage() {}
 
 func (x *SetUpOrgRequest_Human_Phone) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[428]
+	mi := &file_zitadel_admin_proto_msgTypes[432]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23890,7 +24304,7 @@ func (x *SetUpOrgRequest_Human_Phone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetUpOrgRequest_Human_Phone.ProtoReflect.Descriptor instead.
 func (*SetUpOrgRequest_Human_Phone) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{118, 1, 2}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{121, 1, 2}
 }
 
 func (x *SetUpOrgRequest_Human_Phone) GetPhone() string {
@@ -23916,7 +24330,7 @@ type ImportDataRequest_LocalInput struct {
 
 func (x *ImportDataRequest_LocalInput) Reset() {
 	*x = ImportDataRequest_LocalInput{}
-	mi := &file_zitadel_admin_proto_msgTypes[429]
+	mi := &file_zitadel_admin_proto_msgTypes[433]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23928,7 +24342,7 @@ func (x *ImportDataRequest_LocalInput) String() string {
 func (*ImportDataRequest_LocalInput) ProtoMessage() {}
 
 func (x *ImportDataRequest_LocalInput) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[429]
+	mi := &file_zitadel_admin_proto_msgTypes[433]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23941,7 +24355,7 @@ func (x *ImportDataRequest_LocalInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataRequest_LocalInput.ProtoReflect.Descriptor instead.
 func (*ImportDataRequest_LocalInput) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{394, 0}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{397, 0}
 }
 
 func (x *ImportDataRequest_LocalInput) GetPath() string {
@@ -23965,7 +24379,7 @@ type ImportDataRequest_S3Input struct {
 
 func (x *ImportDataRequest_S3Input) Reset() {
 	*x = ImportDataRequest_S3Input{}
-	mi := &file_zitadel_admin_proto_msgTypes[430]
+	mi := &file_zitadel_admin_proto_msgTypes[434]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -23977,7 +24391,7 @@ func (x *ImportDataRequest_S3Input) String() string {
 func (*ImportDataRequest_S3Input) ProtoMessage() {}
 
 func (x *ImportDataRequest_S3Input) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[430]
+	mi := &file_zitadel_admin_proto_msgTypes[434]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -23990,7 +24404,7 @@ func (x *ImportDataRequest_S3Input) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataRequest_S3Input.ProtoReflect.Descriptor instead.
 func (*ImportDataRequest_S3Input) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{394, 1}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{397, 1}
 }
 
 func (x *ImportDataRequest_S3Input) GetPath() string {
@@ -24046,7 +24460,7 @@ type ImportDataRequest_GCSInput struct {
 
 func (x *ImportDataRequest_GCSInput) Reset() {
 	*x = ImportDataRequest_GCSInput{}
-	mi := &file_zitadel_admin_proto_msgTypes[431]
+	mi := &file_zitadel_admin_proto_msgTypes[435]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -24058,7 +24472,7 @@ func (x *ImportDataRequest_GCSInput) String() string {
 func (*ImportDataRequest_GCSInput) ProtoMessage() {}
 
 func (x *ImportDataRequest_GCSInput) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[431]
+	mi := &file_zitadel_admin_proto_msgTypes[435]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -24071,7 +24485,7 @@ func (x *ImportDataRequest_GCSInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ImportDataRequest_GCSInput.ProtoReflect.Descriptor instead.
 func (*ImportDataRequest_GCSInput) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{394, 2}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{397, 2}
 }
 
 func (x *ImportDataRequest_GCSInput) GetBucket() string {
@@ -24104,7 +24518,7 @@ type ExportDataRequest_LocalOutput struct {
 
 func (x *ExportDataRequest_LocalOutput) Reset() {
 	*x = ExportDataRequest_LocalOutput{}
-	mi := &file_zitadel_admin_proto_msgTypes[432]
+	mi := &file_zitadel_admin_proto_msgTypes[436]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -24116,7 +24530,7 @@ func (x *ExportDataRequest_LocalOutput) String() string {
 func (*ExportDataRequest_LocalOutput) ProtoMessage() {}
 
 func (x *ExportDataRequest_LocalOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[432]
+	mi := &file_zitadel_admin_proto_msgTypes[436]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -24129,7 +24543,7 @@ func (x *ExportDataRequest_LocalOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportDataRequest_LocalOutput.ProtoReflect.Descriptor instead.
 func (*ExportDataRequest_LocalOutput) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{407, 0}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{410, 0}
 }
 
 func (x *ExportDataRequest_LocalOutput) GetPath() string {
@@ -24153,7 +24567,7 @@ type ExportDataRequest_S3Output struct {
 
 func (x *ExportDataRequest_S3Output) Reset() {
 	*x = ExportDataRequest_S3Output{}
-	mi := &file_zitadel_admin_proto_msgTypes[433]
+	mi := &file_zitadel_admin_proto_msgTypes[437]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -24165,7 +24579,7 @@ func (x *ExportDataRequest_S3Output) String() string {
 func (*ExportDataRequest_S3Output) ProtoMessage() {}
 
 func (x *ExportDataRequest_S3Output) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[433]
+	mi := &file_zitadel_admin_proto_msgTypes[437]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -24178,7 +24592,7 @@ func (x *ExportDataRequest_S3Output) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportDataRequest_S3Output.ProtoReflect.Descriptor instead.
 func (*ExportDataRequest_S3Output) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{407, 1}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{410, 1}
 }
 
 func (x *ExportDataRequest_S3Output) GetPath() string {
@@ -24234,7 +24648,7 @@ type ExportDataRequest_GCSOutput struct {
 
 func (x *ExportDataRequest_GCSOutput) Reset() {
 	*x = ExportDataRequest_GCSOutput{}
-	mi := &file_zitadel_admin_proto_msgTypes[434]
+	mi := &file_zitadel_admin_proto_msgTypes[438]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -24246,7 +24660,7 @@ func (x *ExportDataRequest_GCSOutput) String() string {
 func (*ExportDataRequest_GCSOutput) ProtoMessage() {}
 
 func (x *ExportDataRequest_GCSOutput) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[434]
+	mi := &file_zitadel_admin_proto_msgTypes[438]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -24259,7 +24673,7 @@ func (x *ExportDataRequest_GCSOutput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExportDataRequest_GCSOutput.ProtoReflect.Descriptor instead.
 func (*ExportDataRequest_GCSOutput) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{407, 2}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{410, 2}
 }
 
 func (x *ExportDataRequest_GCSOutput) GetBucket() string {
@@ -24293,7 +24707,7 @@ type ListEventsRequestCreationDateRange struct {
 
 func (x *ListEventsRequestCreationDateRange) Reset() {
 	*x = ListEventsRequestCreationDateRange{}
-	mi := &file_zitadel_admin_proto_msgTypes[435]
+	mi := &file_zitadel_admin_proto_msgTypes[439]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -24305,7 +24719,7 @@ func (x *ListEventsRequestCreationDateRange) String() string {
 func (*ListEventsRequestCreationDateRange) ProtoMessage() {}
 
 func (x *ListEventsRequestCreationDateRange) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_admin_proto_msgTypes[435]
+	mi := &file_zitadel_admin_proto_msgTypes[439]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -24318,7 +24732,7 @@ func (x *ListEventsRequestCreationDateRange) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListEventsRequestCreationDateRange.ProtoReflect.Descriptor instead.
 func (*ListEventsRequestCreationDateRange) Descriptor() ([]byte, []int) {
-	return file_zitadel_admin_proto_rawDescGZIP(), []int{409, 0}
+	return file_zitadel_admin_proto_rawDescGZIP(), []int{412, 0}
 }
 
 func (x *ListEventsRequestCreationDateRange) GetSince() *timestamppb.Timestamp {
@@ -24499,7 +24913,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x05query\x18\x01 \x01(\v2\x15.zitadel.v1.ListQueryR\x05query\"\x8b\x01\n" +
 	"\x1aListEmailProvidersResponse\x121\n" +
 	"\adetails\x18\x01 \x01(\v2\x17.zitadel.v1.ListDetailsR\adetails\x12:\n" +
-	"\x06result\x18\x02 \x03(\v2\".zitadel.settings.v1.EmailProviderR\x06result\"\xd4\x04\n" +
+	"\x06result\x18\x02 \x03(\v2\".zitadel.settings.v1.EmailProviderR\x06result\"\x88\x06\n" +
 	"\x1bAddEmailProviderSMTPRequest\x12Y\n" +
 	"\x0esender_address\x18\x01 \x01(\tB2\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rsenderAddress\x12C\n" +
 	"\vsender_name\x18\x02 \x01(\tB\"\x92A\x11J\t\"ZITADEL\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\n" +
@@ -24509,10 +24923,29 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04user\x18\x05 \x01(\tB+\x92A(J&\"197f0117-529e-443d-bf6c-0292dd9a02b7\"R\x04user\x126\n" +
 	"\bpassword\x18\x06 \x01(\tB\x1a\x92A\x17J\x15\"this-is-my-password\"R\bpassword\x12U\n" +
 	"\x10reply_to_address\x18\a \x01(\tB+\x92A\x1eJ\x19\"replyto@m.zitadel.cloud\"x\xc8\x01\xfaB\ar\x05\x10\x00\x18\xc8\x01R\x0ereplyToAddress\x12J\n" +
-	"\vdescription\x18\b \x01(\tB(\x92A\x1bJ\x16\"provider description\"x\xc8\x01\xfaB\ar\x05\x10\x00\x18\xc8\x01R\vdescription\"c\n" +
+	"\vdescription\x18\b \x01(\tB(\x92A\x1bJ\x16\"provider description\"x\xc8\x01\xfaB\ar\x05\x10\x00\x18\xc8\x01R\vdescription\x122\n" +
+	"\x04none\x18\t \x01(\v2\x1c.zitadel.admin.v1.SMTPNoAuthH\x00R\x04none\x127\n" +
+	"\x05plain\x18\n" +
+	" \x01(\v2\x1f.zitadel.admin.v1.SMTPPlainAuthH\x00R\x05plain\x12=\n" +
+	"\axoauth2\x18\v \x01(\v2!.zitadel.admin.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\x06\n" +
+	"\x04Auth\"\f\n" +
+	"\n" +
+	"SMTPNoAuth\"Z\n" +
+	"\rSMTPPlainAuth\x12I\n" +
+	"\bpassword\x18\x01 \x01(\tB-\x92A\x1cJ\x1a\"this-is-my-client-secret\"\xe2A\x01\x02\xfaB\ar\x05\x10\x00\x18\xc8\x01R\bpassword\"\xfa\x03\n" +
+	"\x0fSMTPXOAuth2Auth\x12\\\n" +
+	"\x0etoken_endpoint\x18\x01 \x01(\tB5\x92A$J\x1f\"http://auth.example.com/token\"x\xc8\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x00\x18\xc8\x01R\rtokenEndpoint\x12M\n" +
+	"\x06scopes\x18\x02 \x03(\tB5\x92A\x1eJ\x1c[\"https://mail.example.com\"]\xe2A\x01\x02\xfaB\r\x92\x01\n" +
+	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12d\n" +
+	"\x12client_credentials\x18\x03 \x01(\v23.zitadel.admin.v1.SMTPXOAuth2Auth.ClientCredentialsH\x00R\x11clientCredentials\x1a\xc5\x01\n" +
+	"\x11ClientCredentials\x12Y\n" +
+	"\tclient_id\x18\x01 \x01(\tB<\x92A+J&\"197f0117-529e-443d-bf6c-0292dd9a02b7\"x\xc8\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x00\x18\xc8\x01R\bclientId\x12U\n" +
+	"\rclient_secret\x18\x02 \x01(\tB0\x92A\x1fJ\x1a\"this-is-my-client-secret\"x\xc8\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x00\x18\xc8\x01R\fclientSecretB\f\n" +
+	"\n" +
+	"OAuth2Type\"c\n" +
 	"\x1cAddEmailProviderSMTPResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\"\xf2\x04\n" +
+	"\x02id\x18\x02 \x01(\tR\x02id\"\xa6\x06\n" +
 	"\x1eUpdateEmailProviderSMTPRequest\x12Y\n" +
 	"\x0esender_address\x18\x01 \x01(\tB2\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rsenderAddress\x12C\n" +
 	"\vsender_name\x18\x02 \x01(\tB\"\x92A\x11J\t\"ZITADEL\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\n" +
@@ -24523,7 +24956,12 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x10reply_to_address\x18\x06 \x01(\tB+\x92A\x1eJ\x19\"replyto@m.zitadel.cloud\"x\xc8\x01\xfaB\ar\x05\x10\x00\x18\xc8\x01R\x0ereplyToAddress\x126\n" +
 	"\bpassword\x18\a \x01(\tB\x1a\x92A\x17J\x15\"this-is-my-password\"R\bpassword\x12J\n" +
 	"\vdescription\x18\b \x01(\tB(\x92A\x1bJ\x16\"provider description\"x\xc8\x01\xfaB\ar\x05\x10\x00\x18\xc8\x01R\vdescription\x12\x19\n" +
-	"\x02id\x18\t \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18dR\x02id\"V\n" +
+	"\x02id\x18\t \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18dR\x02id\x122\n" +
+	"\x04none\x18\n" +
+	" \x01(\v2\x1c.zitadel.admin.v1.SMTPNoAuthH\x00R\x04none\x127\n" +
+	"\x05plain\x18\v \x01(\v2\x1f.zitadel.admin.v1.SMTPPlainAuthH\x00R\x05plain\x12=\n" +
+	"\axoauth2\x18\f \x01(\v2!.zitadel.admin.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\x06\n" +
+	"\x04Auth\"V\n" +
 	"\x1fUpdateEmailProviderSMTPResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\x83\x01\n" +
 	"&UpdateEmailProviderSMTPPasswordRequest\x12>\n" +
@@ -24569,7 +25007,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	" TestEmailProviderSMTPByIdRequest\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18dR\x02id\x12_\n" +
 	"\x10receiver_address\x18\x02 \x01(\tB4\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\tr\a\x10\x01\x18\xc8\x01`\x01R\x0freceiverAddress\"#\n" +
-	"!TestEmailProviderSMTPByIdResponse\"\xa9\x05\n" +
+	"!TestEmailProviderSMTPByIdResponse\"\xe2\x06\n" +
 	"\x1cTestEmailProviderSMTPRequest\x12Y\n" +
 	"\x0esender_address\x18\x01 \x01(\tB2\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rsenderAddress\x12C\n" +
 	"\vsender_name\x18\x02 \x01(\tB\"\x92A\x11J\t\"ZITADEL\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\n" +
@@ -24579,7 +25017,12 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04user\x18\x05 \x01(\tB+\x92A(J&\"197f0117-529e-443d-bf6c-0292dd9a02b7\"R\x04user\x126\n" +
 	"\bpassword\x18\x06 \x01(\tB\x1a\x92A\x17J\x15\"this-is-my-password\"R\bpassword\x12_\n" +
 	"\x10receiver_address\x18\a \x01(\tB4\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\tr\a\x10\x01\x18\xc8\x01`\x01R\x0freceiverAddress\x12\x93\x01\n" +
-	"\x02id\x18\b \x01(\tB\x82\x01\x92A\x7f2gZitadel SMTP provider id in case you are not sending the password and want to reuse the stored passwordJ\x14\"267191369515139464\"R\x02id\"\x1f\n" +
+	"\x02id\x18\b \x01(\tB\x82\x01\x92A\x7f2gZitadel SMTP provider id in case you are not sending the password and want to reuse the stored passwordJ\x14\"267191369515139464\"R\x02id\x122\n" +
+	"\x04none\x18\t \x01(\v2\x1c.zitadel.admin.v1.SMTPNoAuthH\x00R\x04none\x127\n" +
+	"\x05plain\x18\n" +
+	" \x01(\v2\x1f.zitadel.admin.v1.SMTPPlainAuthH\x00R\x05plain\x12=\n" +
+	"\axoauth2\x18\v \x01(\v2!.zitadel.admin.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\v\n" +
+	"\x04Auth\x12\x03\xf8B\x01\"\x1f\n" +
 	"\x1dTestEmailProviderSMTPResponse\"F\n" +
 	"\x17ListSMSProvidersRequest\x12+\n" +
 	"\x05query\x18\x01 \x01(\v2\x15.zitadel.v1.ListQueryR\x05query\"\x87\x01\n" +
@@ -24722,7 +25165,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"first_name\x18\x01 \x01(\tB\x1b\x92A\x0eJ\x06\"Gigi\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\tfirstName\x12;\n" +
 	"\tlast_name\x18\x02 \x01(\tB\x1e\x92A\x11J\t\"Giraffe\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blastName\x12;\n" +
 	"\tnick_name\x18\x03 \x01(\tB\x1e\x92A\x13J\x0e\"gigi-giraffe\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\bnickName\x12\x9c\x01\n" +
-	"\fdisplay_name\x18\x04 \x01(\tBy\x92An2Ya user can set the display name if nothing is set ZITADEL computes \"first_name last_name\"J\x0e\"Gigi Giraffe\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\vdisplayName\x12z\n" +
+	"\fdisplay_name\x18\x04 \x01(\tBy\x92An2Ya user can set the display name if nothing is set Zitadel computes \"first_name last_name\"J\x0e\"Gigi Giraffe\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\vdisplayName\x12z\n" +
 	"\x12preferred_language\x18\x05 \x01(\tBK\x92AA27language tag analog https://tools.ietf.org/html/rfc3066J\x04\"en\"x\n" +
 	"\xfaB\x04r\x02\x18\n" +
 	"R\x11preferredLanguage\x12/\n" +
@@ -24774,7 +25217,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\tclient_id\x18\x03 \x01(\tBA\x92A42,client id generated by the identity providerx\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A820client secret generated by the identity providerx\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12q\n" +
 	"\x06issuer\x18\x05 \x01(\tBY\x92AL2(the oidc issuer of the identity providerJ\x1d\"https://accounts.google.com\"x\xc8\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12\x88\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tBp\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBp\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
 	"\x14display_name_mapping\x18\a \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBM\x92AB2@definition which field is mapped to the display name of the user\xfaB\x05\x82\x01\x02\x10\x01R\x12displayNameMapping\x12\x93\x01\n" +
 	"\x10username_mapping\x18\b \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBF\x92A;29definition which field is mapped to the email of the user\xfaB\x05\x82\x01\x02\x10\x01R\x0fusernameMapping\x12#\n" +
 	"\rauto_register\x18\t \x01(\bR\fautoRegister:1\x92A.\n" +
@@ -24824,7 +25267,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x06issuer\x18\x02 \x01(\tB\\\x92AO2(the oidc issuer of the identity providerJ\x1d\"https://accounts.google.com\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12^\n" +
 	"\tclient_id\x18\x03 \x01(\tBA\x92A42,client id generated by the identity providerx\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12\x8d\x01\n" +
 	"\rclient_secret\x18\x04 \x01(\tBh\x92A]2Xclient secret generated by the identity provider. If empty the secret is not overwrittenx\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x88\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBp\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBp\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
 	"\x14display_name_mapping\x18\x06 \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBM\x92AB2@definition which field is mapped to the display name of the user\xfaB\x05\x82\x01\x02\x10\x01R\x12displayNameMapping\x12\x93\x01\n" +
 	"\x10username_mapping\x18\a \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBF\x92A;29definition which field is mapped to the email of the user\xfaB\x05\x82\x01\x02\x10\x01R\x0fusernameMapping:#\x92A \n" +
 	"\x1e\xd2\x01\x06idp_id\xd2\x01\x06issuer\xd2\x01\tclient_id\"R\n" +
@@ -24860,10 +25303,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tB\x1c\x92A\x0fJ\r\"My Provider\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12e\n" +
 	"\tclient_id\x18\x02 \x01(\tBH\x92A;2,client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12u\n" +
 	"\rclient_secret\x18\x03 \x01(\tBP\x92AC20Client secret generated by the identity providerJ\x0f\"client-secret\"\xfaB\ar\x05\x10\x01\x18\xe8\aR\fclientSecret\x12\xae\x01\n" +
-	"\x16authorization_endpoint\x18\x04 \x01(\tBw\x92Aj28The endpoint where ZITADEL send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
-	"\x0etoken_endpoint\x18\x05 \x01(\tBb\x92AU2,The endpoint where ZITADEL can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
-	"\ruser_endpoint\x18\x06 \x01(\tBz\x92Am27The endpoint where ZITADEL can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
-	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2KThe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x16authorization_endpoint\x18\x04 \x01(\tBw\x92Aj28The endpoint where Zitadel send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
+	"\x0etoken_endpoint\x18\x05 \x01(\tBb\x92AU2,The endpoint where Zitadel can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
+	"\ruser_endpoint\x18\x06 \x01(\tBz\x92Am27The endpoint where Zitadel can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
+	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2KThe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12\x83\x01\n" +
 	"\fid_attribute\x18\b \x01(\tB`\x92AS2FIdentifying attribute of the user in the response of the user_endpointJ\t\"user_id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vidAttribute\x12B\n" +
 	"\x10provider_options\x18\t \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12\x19\n" +
@@ -24878,10 +25321,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tB\x1c\x92A\x0fJ\r\"My Provider\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12e\n" +
 	"\tclient_id\x18\x03 \x01(\tBH\x92A;2,Client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12q\n" +
 	"\rclient_secret\x18\x04 \x01(\tBL\x92AA2.Client secret will only be updated if providedJ\x0f\"client-secret\"\xfaB\x05r\x03\x18\xe8\aR\fclientSecret\x12\xae\x01\n" +
-	"\x16authorization_endpoint\x18\x05 \x01(\tBw\x92Aj28The endpoint where ZITADEL send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
-	"\x0etoken_endpoint\x18\x06 \x01(\tBb\x92AU2,The endpoint where ZITADEL can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
-	"\ruser_endpoint\x18\a \x01(\tBz\x92Am27The endpoint where ZITADEL can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
-	"\x06scopes\x18\b \x03(\tB\x80\x01\x92Am2KThe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x16authorization_endpoint\x18\x05 \x01(\tBw\x92Aj28The endpoint where Zitadel send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
+	"\x0etoken_endpoint\x18\x06 \x01(\tBb\x92AU2,The endpoint where Zitadel can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
+	"\ruser_endpoint\x18\a \x01(\tBz\x92Am27The endpoint where Zitadel can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
+	"\x06scopes\x18\b \x03(\tB\x80\x01\x92Am2KThe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12\x83\x01\n" +
 	"\fid_attribute\x18\t \x01(\tB`\x92AS2FIdentifying attribute of the user in the response of the user_endpointJ\t\"user_id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vidAttribute\x12B\n" +
 	"\x10provider_options\x18\n" +
@@ -24895,7 +25338,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x06issuer\x18\x02 \x01(\tBW\x92AJ2(the OIDC issuer of the identity providerJ\x1e\"https://accounts.google.com/\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12e\n" +
 	"\tclient_id\x18\x03 \x01(\tBH\x92A;2,client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12g\n" +
 	"\rclient_secret\x18\x04 \x01(\tBB\x92A52)secret generated by the identity providerJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xe8\aR\fclientSecret\x12\x99\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12-\n" +
 	"\x13is_id_token_mapping\x18\a \x01(\bR\x10isIdTokenMapping\x12\x19\n" +
@@ -24910,7 +25353,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x06issuer\x18\x03 \x01(\tBW\x92AJ2(the OIDC issuer of the identity providerJ\x1e\"https://accounts.google.com/\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12e\n" +
 	"\tclient_id\x18\x04 \x01(\tBH\x92A;2,client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x05 \x01(\tBE\x92A:2.client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xe8\aR\fclientSecret\x12\x99\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12-\n" +
 	"\x13is_id_token_mapping\x18\b \x01(\bR\x10isIdTokenMapping\x12\x19\n" +
@@ -24961,8 +25404,8 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\tclient_id\x18\x02 \x01(\tB?\x92A22#client id generated by the Azure ADJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12e\n" +
 	"\rclient_secret\x18\x03 \x01(\tB@\x92A32'client secret generated by the Azure ADJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\xd9\x01\n" +
 	"\x06tenant\x18\x04 \x01(\v2\x1d.zitadel.idp.v1.AzureADTenantB\xa1\x01\x92A\x9d\x012\x9a\x01Defines what kind of accounts are allowed to authenticate (Personal, Organizational, All). If not provided the `common` tenant will be used (All accounts)R\x06tenant\x12\xd3\x01\n" +
-	"\x0eemail_verified\x18\x05 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2>the scopes requested by ZITADEL during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
+	"\x0eemail_verified\x18\x05 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2>the scopes requested by Zitadel during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"a\n" +
 	"\x1aAddAzureADProviderResponse\x123\n" +
@@ -24976,8 +25419,8 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\tclient_id\x18\x03 \x01(\tB?\x92A22#Client id generated by the Azure ADJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client_secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\xd9\x01\n" +
 	"\x06tenant\x18\x05 \x01(\v2\x1d.zitadel.idp.v1.AzureADTenantB\xa1\x01\x92A\x9d\x012\x9a\x01Defines what kind of accounts are allowed to authenticate (Personal, Organizational, All). If not provided the `common` tenant will be used (All accounts)R\x06tenant\x12\xd3\x01\n" +
-	"\x0eemail_verified\x18\x06 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
-	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2>the scopes requested by ZITADEL during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
+	"\x0eemail_verified\x18\x06 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
+	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2>the scopes requested by Zitadel during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"T\n" +
 	"\x1dUpdateAzureADProviderResponse\x123\n" +
@@ -24986,7 +25429,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26GitHub will be used as default, if no name is providedJ\b\"GitHub\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GitHubJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12c\n" +
 	"\rclient_secret\x18\x03 \x01(\tB>\x92A12%Client secret generated by the GitHubJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGitHubProviderResponse\x123\n" +
@@ -24999,7 +25442,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"J\b\"GitHub\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitHubJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client_secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGitHubProviderResponse\x123\n" +
@@ -25015,7 +25458,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12/\n" +
 	"\ruser_endpoint\x18\x06 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x89\x01\n" +
-	"\x06scopes\x18\a \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\a \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"p\n" +
 	")AddGitHubEnterpriseServerProviderResponse\x123\n" +
@@ -25034,7 +25477,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12/\n" +
 	"\ruser_endpoint\x18\a \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x89\x01\n" +
-	"\x06scopes\x18\b \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\b \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\t \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"c\n" +
 	",UpdateGitHubEnterpriseServerProviderResponse\x123\n" +
@@ -25043,7 +25486,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26GitLab will be used as default, if no name is providedJ\b\"GitLab\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x03 \x01(\tB:\x92A-2!Client secret generated by GitLabJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGitLabProviderResponse\x123\n" +
@@ -25055,7 +25498,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tBM\x92AB26GitLab will be used as default, if no name is providedJ\b\"GitLab\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGitLabProviderResponse\x123\n" +
@@ -25067,7 +25510,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"J\b\"GitLab\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x04 \x01(\tB:\x92A-2!Client secret generated by GitLabJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"j\n" +
 	"#AddGitLabSelfHostedProviderResponse\x123\n" +
@@ -25082,7 +25525,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"J\b\"GitLab\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x04 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x05 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"]\n" +
 	"&UpdateGitLabSelfHostedProviderResponse\x123\n" +
@@ -25091,7 +25534,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26Google will be used as default, if no name is providedJ\b\"Google\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GoogleJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x03 \x01(\tB:\x92A-2!Client secret generated by GoogleJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGoogleProviderResponse\x123\n" +
@@ -25104,7 +25547,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"J\b\"Google\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GoogleJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGoogleProviderResponse\x123\n" +
@@ -25172,7 +25615,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"R\x05keyId\x12\x86\x01\n" +
 	"\vprivate_key\x18\x05 \x01(\fBe\x92AT2\x1ePrivate Key generated by AppleJ,\"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1...\"x\x88'\x80\x01\x01\xe2A\x01\x02\xfaB\az\x05\x10\x01\x18\x88'R\n" +
 	"privateKey\x12~\n" +
-	"\x06scopes\x18\x06 \x03(\tBf\x92AS2;The scopes requested by ZITADEL during the request to AppleJ\x11[\"name\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBf\x92AS2;The scopes requested by Zitadel during the request to AppleJ\x11[\"name\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"_\n" +
 	"\x18AddAppleProviderResponse\x123\n" +
@@ -25193,7 +25636,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"R\x05keyId\x12}\n" +
 	"\vprivate_key\x18\x06 \x01(\fB\\\x92AQ2\x1ePrivate Key generated by AppleJ,\"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1...\"x\x88'\xfaB\x05z\x03\x18\x88'R\n" +
 	"privateKey\x12\x8b\x01\n" +
-	"\x06scopes\x18\a \x03(\tBs\x92A`2;The scopes requested by ZITADEL during the request to AppleJ\x1e[\"openid\", \"profile\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\a \x03(\tBs\x92A`2;The scopes requested by Zitadel during the request to AppleJ\x1e[\"openid\", \"profile\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"R\n" +
 	"\x1bUpdateAppleProviderResponse\x123\n" +
@@ -25463,17 +25906,17 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\x19\n" +
 	"\x17GetPrivacyPolicyRequest\"T\n" +
 	"\x18GetPrivacyPolicyResponse\x128\n" +
-	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\xdc\x05\n" +
+	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\xf6\x05\n" +
 	"\x1aUpdatePrivacyPolicyRequest\x12Q\n" +
 	"\btos_link\x18\x01 \x01(\tB6\x92A3J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12W\n" +
 	"\fprivacy_link\x18\x02 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/legal/privacy-policy\"R\vprivacyLink\x12Q\n" +
 	"\thelp_link\x18\x03 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x04 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
 	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12<\n" +
-	"\tdocs_link\x18\x05 \x01(\tB\x1f\x92A\x1cJ\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x8b\x01\n" +
-	"\vcustom_link\x18\x06 \x01(\tBj\x92Ag2LLink to an external resource that will be available to users in the console.J\x17\"https://external.link\"R\n" +
-	"customLink\x12\x82\x01\n" +
-	"\x10custom_link_text\x18\a \x01(\tBX\x92AU2GThe button text that would be shown in console pointing to custom link.J\n" +
+	"\tdocs_link\x18\x05 \x01(\tB\x1f\x92A\x1cJ\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +
+	"\vcustom_link\x18\x06 \x01(\tBu\x92Ar2WLink to an external resource that will be available to users in the management console.J\x17\"https://external.link\"R\n" +
+	"customLink\x12\x91\x01\n" +
+	"\x10custom_link_text\x18\a \x01(\tBg\x92Ad2VThe button text that would be shown in the management console pointing to custom link.J\n" +
 	"\"External\"R\x0ecustomLinkText\"R\n" +
 	"\x1bUpdatePrivacyPolicyResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\xa9\x01\n" +
@@ -25626,7 +26069,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"customText\"\xbe\x02\n" +
 	"(SetDefaultVerifySMSOTPMessageTextRequest\x123\n" +
 	"\blanguage\x18\x01 \x01(\tB\x17\x92A\x06J\x04\"de\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xdc\x01\n" +
-	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"`\n" +
+	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"`\n" +
 	")SetDefaultVerifySMSOTPMessageTextResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\\\n" +
 	"2ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x12&\n" +
@@ -25653,7 +26096,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"pre_header\x18\x03 \x01(\tB+\x92A J\x1b\"Verify One-time Password \"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x12D\n" +
 	"\asubject\x18\x04 \x01(\tB*\x92A\x1fJ\x1a\"Verify One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
 	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xe6\x01\n" +
-	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
+	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
 	"\vbutton_text\x18\a \x01(\tB\x1e\x92A\x13J\x0e\"Authenticate\"x\xf4\x03\xfaB\x05r\x03(\xa0\x1fR\n" +
 	"buttonText\x12)\n" +
 	"\vfooter_text\x18\b \x01(\tB\b\xfaB\x05r\x03(\xc0>R\n" +
@@ -26115,7 +26558,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\adetails\x18\x01 \x01(\v2\x17.zitadel.v1.ListDetailsR\adetails\x127\n" +
 	"\x06result\x18\x02 \x03(\v2\x1f.zitadel.milestone.v1.MilestoneR\x06result\"\xac\x04\n" +
 	"\x16SetRestrictionsRequest\x12\x8f\x02\n" +
-	" disallow_public_org_registration\x18\x01 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if ZITADEL should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.H\x00R\x1ddisallowPublicOrgRegistration\x88\x01\x01\x12\xc4\x01\n" +
+	" disallow_public_org_registration\x18\x01 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if Zitadel should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.H\x00R\x1ddisallowPublicOrgRegistration\x88\x01\x01\x12\xc4\x01\n" +
 	"\x11allowed_languages\x18\x02 \x01(\v2!.zitadel.admin.v1.SelectLanguagesBo\x92Al2jrestricts the allowed languages. If allowed_languages is undefined, the allowed languages are not changed.H\x01R\x10allowedLanguages\x88\x01\x01B#\n" +
 	"!_disallow_public_org_registrationB\x14\n" +
 	"\x12_allowed_languages\"~\n" +
@@ -26126,11 +26569,11 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x16GetRestrictionsRequest\"\xbb\x04\n" +
 	"\x17GetRestrictionsResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12\x8a\x02\n" +
-	" disallow_public_org_registration\x18\x02 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if ZITADEL should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.R\x1ddisallowPublicOrgRegistration\x12\xdd\x01\n" +
-	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xf8\xa2\x05\n" +
+	" disallow_public_org_registration\x18\x02 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if Zitadel should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.R\x1ddisallowPublicOrgRegistration\x12\xdd\x01\n" +
+	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xa4\xa3\x05\n" +
 	"\fAdminService\x12\xb7\x02\n" +
 	"\aHealthz\x12 .zitadel.admin.v1.HealthzRequest\x1a!.zitadel.admin.v1.HealthzResponse\"\xe6\x01\x92A\xd2\x01\n" +
-	"\aGeneral\x12\aHealthz\x1a~The health endpoint allows an external system to probe if ZITADEL system API is alive. Response as soon as ZITADEL is running.J\x18\n" +
+	"\aGeneral\x12\aHealthz\x1a~The health endpoint allows an external system to probe if Zitadel system API is alive. Response as soon as Zitadel is running.J\x18\n" +
 	"\x03200\x12\x11\n" +
 	"\x0fZITADEL startedJ$\n" +
 	"\adefault\x12\x19\n" +
@@ -26312,10 +26755,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\n" +
 	"\biam.read\x82\xd3\xe4\x93\x02\x1c\x12\x1a/notification/provider/log\x12\xfa\x01\n" +
 	"\x11GetSecurityPolicy\x12*.zitadel.admin.v1.GetSecurityPolicyRequest\x1a+.zitadel.admin.v1.GetSecurityPolicyResponse\"\x8b\x01\x92AY\n" +
-	"\bSettings\x12\x15Get Security Settings\x1a6Returns the security settings of the ZITADEL instance.\x82\xb5\x18\x11\n" +
+	"\bSettings\x12\x15Get Security Settings\x1a6Returns the security settings of the Zitadel instance.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x14\x12\x12/policies/security\x12\xfa\x01\n" +
 	"\x11SetSecurityPolicy\x12*.zitadel.admin.v1.SetSecurityPolicyRequest\x1a+.zitadel.admin.v1.SetSecurityPolicyResponse\"\x8b\x01\x92AU\n" +
-	"\bSettings\x12\x15Set Security Settings\x1a2Set the security settings of the ZITADEL instance.\x82\xb5\x18\x12\n" +
+	"\bSettings\x12\x15Set Security Settings\x1a2Set the security settings of the Zitadel instance.\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/policies/security\x12\xab\x01\n" +
 	"\n" +
 	"GetOrgByID\x12#.zitadel.admin.v1.GetOrgByIDRequest\x1a$.zitadel.admin.v1.GetOrgByIDResponse\"R\x92A/\n" +
@@ -26335,7 +26778,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\biam.read\x82\xd3\xe4\x93\x02\x12\x12\x10/orgs/_is_unique\x12\xf2\x02\n" +
 	"\rSetDefaultOrg\x12&.zitadel.admin.v1.SetDefaultOrgRequest\x1a'.zitadel.admin.v1.SetDefaultOrgResponse\"\x8f\x02\x92A\xde\x01\n" +
 	"\rOrganizations\n" +
-	"\bSettings\x12\x18Set Default Organization\x1a\xa8\x01Sets the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.\x82\xb5\x18\v\n" +
+	"\bSettings\x12\x18Set Default Organization\x1a\xa8\x01Sets the default organization of the Zitadel instance. If no specific organization is given on the register form, a user will be registered to the default organization.\x82\xb5\x18\v\n" +
 	"\tiam.write\x82\xd3\xe4\x93\x02\x18\x1a\x16/orgs/default/{org_id}\x12\xa3\x01\n" +
 	"\rGetDefaultOrg\x12&.zitadel.admin.v1.GetDefaultOrgRequest\x1a'.zitadel.admin.v1.GetDefaultOrgResponse\"A\x92A\x1b\n" +
 	"\rOrganizations\n" +
@@ -26397,7 +26840,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\riam.idp.write\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/idps/oidc\x12\xc4\x04\n" +
 	"\tAddJWTIDP\x12\".zitadel.admin.v1.AddJWTIDPRequest\x1a#.zitadel.admin.v1.AddJWTIDPResponse\"\xed\x03\x92A\xc2\x03\n" +
-	"\x12Identity Providers\x12+Deprecated: Add JWT Identity Provider (IDP)\x1a\xae\x02Create a new identity provider configuration to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where ZITADEL can get the existing JWT token.J\x14\n" +
+	"\x12Identity Providers\x12+Deprecated: Add JWT Identity Provider (IDP)\x1a\xae\x02Create a new identity provider configuration to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where Zitadel can get the existing JWT token.J\x14\n" +
 	"\x03200\x12\r\n" +
 	"\vidp createdJ6\n" +
 	"\x03400\x12/\n" +
@@ -26573,65 +27016,65 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02 *\x1e/orgs/{org_id}/policies/orgiam\x12\x9b\x03\n" +
 	"\x0fGetDomainPolicy\x12(.zitadel.admin.v1.GetDomainPolicyRequest\x1a).zitadel.admin.v1.GetDomainPolicyResponse\"\xb2\x02\x92A\x81\x02\n" +
 	"\bSettings\n" +
-	"\x0fDomain Settings\x12\x13Get Domain Settings\x1a\xae\x01Returns the domain settings configured as default on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation..J\x1e\n" +
+	"\x0fDomain Settings\x12\x13Get Domain Settings\x1a\xae\x01Returns the domain settings configured as default on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation..J\x1e\n" +
 	"\x03200\x12\x17\n" +
 	"\x15default domain policy\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x12\x12\x10/policies/domain\x12\xe7\x03\n" +
 	"\x12UpdateDomainPolicy\x12+.zitadel.admin.v1.UpdateDomainPolicyRequest\x1a,.zitadel.admin.v1.UpdateDomainPolicyResponse\"\xf5\x02\x92A\xc0\x02\n" +
 	"\bSettings\n" +
-	"\x0fDomain Settings\x12\x16Update Domain Settings\x1a\xe2\x01Update the domain settings configured as default on the instance. Domain settings specify how ZITADEL should handle domains, usernames, emails and validation. It affects all organizations that do not have overwritten settings.J&\n" +
+	"\x0fDomain Settings\x12\x16Update Domain Settings\x1a\xe2\x01Update the domain settings configured as default on the instance. Domain settings specify how Zitadel should handle domains, usernames, emails and validation. It affects all organizations that do not have overwritten settings.J&\n" +
 	"\x03200\x12\x1f\n" +
 	"\x1ddefault domain policy updated\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x15:\x01*\x1a\x10/policies/domain\x12\xd2\x04\n" +
 	"\x15GetCustomDomainPolicy\x12..zitadel.admin.v1.GetCustomDomainPolicyRequest\x1a/.zitadel.admin.v1.GetCustomDomainPolicyResponse\"\xd7\x03\x92A\x98\x03\n" +
 	"\bSettings\n" +
 	"\x0fDomain Settings\n" +
-	"\rOrganizations\x12$Get Domain Settings for Organization\x1a\xfa\x01Get the domain settings configured on a specific organization. If the organization doesn't have a custom setting, the default will be returned. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.JI\n" +
+	"\rOrganizations\x12$Get Domain Settings for Organization\x1a\xfa\x01Get the domain settings configured on a specific organization. If the organization doesn't have a custom setting, the default will be returned. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.JI\n" +
 	"\x03200\x12B\n" +
 	"@domain policy of the org or the default policy if not customized\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02 \x12\x1e/orgs/{org_id}/policies/domain\x12\x9c\x04\n" +
 	"\x15AddCustomDomainPolicy\x12..zitadel.admin.v1.AddCustomDomainPolicyRequest\x1a/.zitadel.admin.v1.AddCustomDomainPolicyResponse\"\xa1\x03\x92A\xde\x02\n" +
 	"\bSettings\n" +
 	"\x0fDomain Settings\n" +
-	"\rOrganizations\x12)Set a Domain Settings for an Organization\x1a\xe6\x01Create the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.J\x1e\n" +
+	"\rOrganizations\x12)Set a Domain Settings for an Organization\x1a\xe6\x01Create the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.J\x1e\n" +
 	"\x03200\x12\x17\n" +
 	"\x15domain policy created\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/orgs/{org_id}/policies/domain\x12\xa3\x04\n" +
 	"\x18UpdateCustomDomainPolicy\x121.zitadel.admin.v1.UpdateCustomDomainPolicyRequest\x1a2.zitadel.admin.v1.UpdateCustomDomainPolicyResponse\"\x9f\x03\x92A\xdc\x02\n" +
 	"\bSettings\n" +
 	"\x0fDomain Settings\n" +
-	"\rOrganizations\x12'Update Domain Settings for Organization\x1a\xe6\x01Update the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.J\x1e\n" +
+	"\rOrganizations\x12'Update Domain Settings for Organization\x1a\xe6\x01Update the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.J\x1e\n" +
 	"\x03200\x12\x17\n" +
 	"\x15domain policy updated\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02#:\x01*\x1a\x1e/orgs/{org_id}/policies/domain\x12\xc8\x04\n" +
 	" ResetCustomDomainPolicyToDefault\x129.zitadel.admin.v1.ResetCustomDomainPolicyToDefaultRequest\x1a:.zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse\"\xac\x03\x92A\xeb\x02\n" +
 	"\bSettings\n" +
 	"\x0fDomain Settings\n" +
-	"\rOrganizations\x12%Reset Domain Settings of Organization\x1a\xd7\x01Resets the domain settings configured on a specific organization to the settings configured on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.J>\n" +
+	"\rOrganizations\x12%Reset Domain Settings of Organization\x1a\xd7\x01Resets the domain settings configured on a specific organization to the settings configured on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.J>\n" +
 	"\x03200\x127\n" +
 	"5resets the custom domain policy to the default policy\x82\xb5\x18\x13\n" +
-	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02 *\x1e/orgs/{org_id}/policies/domain\x12\xb8\x04\n" +
-	"\x0eGetLabelPolicy\x12'.zitadel.admin.v1.GetLabelPolicyRequest\x1a(.zitadel.admin.v1.GetLabelPolicyResponse\"\xd2\x03\x92A\xa2\x03\n" +
+	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02 *\x1e/orgs/{org_id}/policies/domain\x12\xc3\x04\n" +
+	"\x0eGetLabelPolicy\x12'.zitadel.admin.v1.GetLabelPolicyRequest\x1a(.zitadel.admin.v1.GetLabelPolicyResponse\"\xdd\x03\x92A\xad\x03\n" +
 	"\bSettings\n" +
-	"\bBranding\x12&Get Private Labeling/Branding Settings\x1a\xc4\x02Returns the currently active private labeling/branding configured on the instance level. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.J\x1d\n" +
+	"\bBranding\x12&Get Private Labeling/Branding Settings\x1a\xcf\x02Returns the currently active private labeling/branding configured on the instance level. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.J\x1d\n" +
 	"\x03200\x12\x16\n" +
 	"\x14default label policy\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x11\x12\x0f/policies/label\x12\x9b\x06\n" +
-	"\x15GetPreviewLabelPolicy\x12..zitadel.admin.v1.GetPreviewLabelPolicyRequest\x1a/.zitadel.admin.v1.GetPreviewLabelPolicyResponse\"\xa0\x05\x92A\xe7\x04\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x11\x12\x0f/policies/label\x12\xa6\x06\n" +
+	"\x15GetPreviewLabelPolicy\x12..zitadel.admin.v1.GetPreviewLabelPolicyRequest\x1a/.zitadel.admin.v1.GetPreviewLabelPolicyResponse\"\xab\x05\x92A\xf2\x04\n" +
 	"\bSettings\n" +
-	"\bBranding\x12.Get Preview Private Labeling/Branding Settings\x1a\x81\x04Returns the preview private labeling/branding configured on the instance level. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.J\x1d\n" +
+	"\bBranding\x12.Get Preview Private Labeling/Branding Settings\x1a\x8c\x04Returns the preview private labeling/branding configured on the instance level. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.J\x1d\n" +
 	"\x03200\x12\x16\n" +
 	"\x14default label policy\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x1a\x12\x18/policies/label/_preview\x12\xf7\x04\n" +
-	"\x11UpdateLabelPolicy\x12*.zitadel.admin.v1.UpdateLabelPolicyRequest\x1a+.zitadel.admin.v1.UpdateLabelPolicyResponse\"\x88\x04\x92A\xd4\x03\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x1a\x12\x18/policies/label/_preview\x12\x82\x05\n" +
+	"\x11UpdateLabelPolicy\x12*.zitadel.admin.v1.UpdateLabelPolicyRequest\x1a+.zitadel.admin.v1.UpdateLabelPolicyResponse\"\x93\x04\x92A\xdf\x03\n" +
 	"\bSettings\n" +
-	"\bBranding\x12!Update Labeling/Branding Settings\x1a\xf3\x02Update the preview private labeling/branding configured on the instance level. It affects all organizations, that don't overwrite the settings. The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.J%\n" +
+	"\bBranding\x12!Update Labeling/Branding Settings\x1a\xfe\x02Update the preview private labeling/branding configured on the instance level. It affects all organizations, that don't overwrite the settings. The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.J%\n" +
 	"\x03200\x12\x1e\n" +
 	"\x1cdefault label policy updated\x82\xb5\x18\x12\n" +
-	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/policies/label\x12\x8e\x04\n" +
-	"\x13ActivateLabelPolicy\x12,.zitadel.admin.v1.ActivateLabelPolicyRequest\x1a-.zitadel.admin.v1.ActivateLabelPolicyResponse\"\x99\x03\x92A\xdb\x02\n" +
+	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/policies/label\x12\x99\x04\n" +
+	"\x13ActivateLabelPolicy\x12,.zitadel.admin.v1.ActivateLabelPolicyRequest\x1a-.zitadel.admin.v1.ActivateLabelPolicyResponse\"\xa4\x03\x92A\xe6\x02\n" +
 	"\bSettings\n" +
-	"\bBranding\x12#Activate Labeling/Branding Settings\x1a\x9f\x02Activates the preview private labeling/branding configured on the instance level. It will be shown to the users afterward. It affects all organizations, that don't overwrite the settings. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.\x82\xb5\x18\x12\n" +
+	"\bBranding\x12#Activate Labeling/Branding Settings\x1a\xaa\x02Activates the preview private labeling/branding configured on the instance level. It will be shown to the users afterward. It affects all organizations, that don't overwrite the settings. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/policies/label/_activate\x12\x8d\x03\n" +
 	"\x15RemoveLabelPolicyLogo\x12..zitadel.admin.v1.RemoveLabelPolicyLogoRequest\x1a/.zitadel.admin.v1.RemoveLabelPolicyLogoResponse\"\x92\x02\x92A\xdc\x01\n" +
 	"\bSettings\n" +
@@ -26817,7 +27260,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x19\x1a\x17#/definitions/rpcStatus\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/policies/notification\x12\xb7\x04\n" +
 	"\x19GetDefaultInitMessageText\x122.zitadel.admin.v1.GetDefaultInitMessageTextRequest\x1a3.zitadel.admin.v1.GetDefaultInitMessageTextResponse\"\xb0\x03\x92A\xea\x02\n" +
-	"\rMessage Texts\x12\x1dGet Default Init Message Text\x1a\xb9\x02Get the default text of the initialize-user message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12\x1dGet Default Init Message Text\x1a\xb9\x02Get the default text of the initialize-user message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02'\x12%/text/default/message/init/{language}\x12\xad\x04\n" +
 	"\x18GetCustomInitMessageText\x121.zitadel.admin.v1.GetCustomInitMessageTextRequest\x1a2.zitadel.admin.v1.GetCustomInitMessageTextResponse\"\xa9\x03\x92A\xeb\x02\n" +
 	"\rMessage Texts\x12\x1cGet Custom Init Message Text\x1a\xbb\x02Get the custom text of the initialize-user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address.\x82\xb5\x18\x11\n" +
@@ -26826,10 +27269,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12$Set Default Custom Init Message Text\x1a\xc2\x04Set the custom text of the initialize-user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\":\x01*\x1a\x1d/text/message/init/{language}\x12\xb1\x04\n" +
 	"#ResetCustomInitMessageTextToDefault\x12<.zitadel.admin.v1.ResetCustomInitMessageTextToDefaultRequest\x1a=.zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse\"\x8c\x03\x92A\xcc\x02\n" +
-	"\rMessage Texts\x12)Reset Custom Init Message Text to Default\x1a\x8f\x02Removes the custom text of the initialize-user message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x12)Reset Custom Init Message Text to Default\x1a\x8f\x02Removes the custom text of the initialize-user message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02\x1f*\x1d/text/message/init/{language}\x12\xf5\x04\n" +
 	"\"GetDefaultPasswordResetMessageText\x12;.zitadel.admin.v1.GetDefaultPasswordResetMessageTextRequest\x1a<.zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse\"\xd3\x03\x92A\xd2\x02\n" +
-	"\rMessage Texts\x12'Get Default Password Reset Message Text\x1a\x97\x02Get the default text of the password reset message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12'Get Default Password Reset Message Text\x1a\x97\x02Get the default text of the password reset message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02bZ0\x12./text/default/message/passwordreset/{language}\x12./text/deafult/message/passwordreset/{language}\x12\xb9\x04\n" +
 	"!GetCustomPasswordResetMessageText\x12:.zitadel.admin.v1.GetCustomPasswordResetMessageTextRequest\x1a;.zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse\"\x9a\x03\x92A\xd3\x02\n" +
 	"\rMessage Texts\x12&Get Custom Password Reset Message Text\x1a\x99\x02Get the custom text of the password reset message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.\x82\xb5\x18\x11\n" +
@@ -26838,10 +27281,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12.Set Default Custom Password Reset Message Text\x1a\xa5\x04Set the custom text of the password reset user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02+:\x01*\x1a&/text/message/passwordreset/{language}\x12\xe3\x04\n" +
 	",ResetCustomPasswordResetMessageTextToDefault\x12E.zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultRequest\x1aF.zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse\"\xa3\x03\x92A\xda\x02\n" +
-	"\rMessage Texts\x123Reset Custom Password Reset Message Text to Default\x1a\x93\x02Removes the custom text of the password reset user message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x123Reset Custom Password Reset Message Text to Default\x1a\x93\x02Removes the custom text of the password reset user message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02(*&/text/message/passwordreset/{language}\x12\xb8\x04\n" +
 	" GetDefaultVerifyEmailMessageText\x129.zitadel.admin.v1.GetDefaultVerifyEmailMessageTextRequest\x1a:.zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse\"\x9c\x03\x92A\xcf\x02\n" +
-	"\rMessage Texts\x12%Get Default Verify Email Message Text\x1a\x96\x02Get the default text of the verify-email message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new non-verified email address.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12%Get Default Verify Email Message Text\x1a\x96\x02Get the default text of the verify-email message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new non-verified email address.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/verifyemail/{language}\x12\xae\x04\n" +
 	"\x1fGetCustomVerifyEmailMessageText\x128.zitadel.admin.v1.GetCustomVerifyEmailMessageTextRequest\x1a9.zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse\"\x95\x03\x92A\xd0\x02\n" +
 	"\rMessage Texts\x12$Get Custom Verify Email Message Text\x1a\x98\x02Get the custom text of the verify-email message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new non-verified email address.\x82\xb5\x18\x11\n" +
@@ -26850,10 +27293,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12%Set Default Verify Email Message Text\x1a\xa3\x04Set the custom text of the verify email user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new nonverified email address. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02):\x01*\x1a$/text/message/verifyemail/{language}\x12\xd2\x04\n" +
 	"*ResetCustomVerifyEmailMessageTextToDefault\x12C.zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultRequest\x1aD.zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse\"\x98\x03\x92A\xd1\x02\n" +
-	"\rMessage Texts\x121Reset Custom Verify Email Message Text to Default\x1a\x8c\x02Removes the custom text of the email verify message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x121Reset Custom Verify Email Message Text to Default\x1a\x8c\x02Removes the custom text of the email verify message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyemail/{language}\x12\xdd\x04\n" +
 	" GetDefaultVerifyPhoneMessageText\x129.zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextRequest\x1a:.zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse\"\xc1\x03\x92A\xf4\x02\n" +
-	"\rMessage Texts\x12%Get Default Verify Phone Message Text\x1a\xbb\x02Get the default text of the verify-phone message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12%Get Default Verify Phone Message Text\x1a\xbb\x02Get the default text of the verify-phone message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/verifyphone/{language}\x12\xd3\x04\n" +
 	"\x1fGetCustomVerifyPhoneMessageText\x128.zitadel.admin.v1.GetCustomVerifyPhoneMessageTextRequest\x1a9.zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse\"\xba\x03\x92A\xf5\x02\n" +
 	"\rMessage Texts\x12$Get Custom Verify Phone Message Text\x1a\xbd\x02Get the custom text of the verify-phone message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.\x82\xb5\x18\x11\n" +
@@ -26862,10 +27305,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12+Set Default Verify Phone Reset Message Text\x1a\xc9\x04Set the custom text of the verify-phone user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02):\x01*\x1a$/text/message/verifyphone/{language}\x12\xcc\x04\n" +
 	"*ResetCustomVerifyPhoneMessageTextToDefault\x12C.zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest\x1aD.zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse\"\x92\x03\x92A\xcb\x02\n" +
-	"\rMessage Texts\x121Reset Custom Verify Phone Message Text to Default\x1a\x86\x02Removes the custom text of the verify-phone message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x121Reset Custom Verify Phone Message Text to Default\x1a\x86\x02Removes the custom text of the verify-phone message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyphone/{language}\x12\xe5\x04\n" +
 	"!GetDefaultVerifySMSOTPMessageText\x12:.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a;.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xc6\x03\x92A\xf8\x02\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbd\x02Get the default text of the verify SMS OTP message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbd\x02Get the default text of the verify SMS OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xdb\x04\n" +
 	" GetCustomVerifySMSOTPMessageText\x129.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest\x1a:.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse\"\xbf\x03\x92A\xf9\x02\n" +
 	"\rMessage Texts\x12&Get Custom Verify SMS OTP Message Text\x1a\xbf\x02Get the custom text of the verify SMS OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
@@ -26874,10 +27317,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12-Set Default Verify SMS OTP Reset Message Text\x1a\xcb\x04Set the custom text of the verify SMS OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02*:\x01*\x1a%/text/message/verifysmsotp/{language}\x12\xd4\x04\n" +
 	"+ResetCustomVerifySMSOTPMessageTextToDefault\x12D.zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x1aE.zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse\"\x97\x03\x92A\xcf\x02\n" +
-	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x88\x02Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x88\x02Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02'*%/text/message/verifysmsotp/{language}\x12\xef\x04\n" +
 	"#GetDefaultVerifyEmailOTPMessageText\x12<.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xca\x03\x92A\xfa\x02\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbf\x02Get the default text of the verify Email OTP message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbf\x02Get the default text of the verify Email OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xde\x04\n" +
 	"\"GetCustomVerifyEmailOTPMessageText\x12;.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse\"\xbc\x03\x92A\xf4\x02\n" +
 	"\rMessage Texts\x12&Get Custom Verify SMS OTP Message Text\x1a\xba\x02Get the custom text of the Email OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
@@ -26886,10 +27329,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12-Set Default Verify SMS OTP Reset Message Text\x1a\xc6\x04Set the custom text of the Email OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02,:\x01*\x1a'/text/message/verifyemailotp/{language}\x12\xd7\x04\n" +
 	"-ResetCustomVerifyEmailOTPMessageTextToDefault\x12F.zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest\x1aG.zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse\"\x94\x03\x92A\xca\x02\n" +
-	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x83\x02Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x83\x02Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02)*'/text/message/verifyemailotp/{language}\x12\xf2\x04\n" +
 	"\"GetDefaultDomainClaimedMessageText\x12;.zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest\x1a<.zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse\"\xd0\x03\x92A\x81\x03\n" +
-	"\rMessage Texts\x12'Get Default Domain Claimed Message Text\x1a\xc6\x02Get the default text of the domain claimed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12'Get Default Domain Claimed Message Text\x1a\xc6\x02Get the default text of the domain claimed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x020\x12./text/default/message/domainclaimed/{language}\x12\xe8\x04\n" +
 	"!GetCustomDomainClaimedMessageText\x12:.zitadel.admin.v1.GetCustomDomainClaimedMessageTextRequest\x1a;.zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse\"\xc9\x03\x92A\x82\x03\n" +
 	"\rMessage Texts\x12&Get Custom Domain Claimed Message Text\x1a\xc8\x02Get the custom text of the domain claimed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.\x82\xb5\x18\x11\n" +
@@ -26898,10 +27341,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12'Set Default Domain Claimed Message Text\x1a\xe9\x04Set the custom text of the domain claimed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message/email is sent when an organization claims a domain and a user of this domain exists in another organization. The Following Variables can be used: {{.Domain}} {{.TempUsername}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02+:\x01*\x1a&/text/message/domainclaimed/{language}\x12\xd8\x04\n" +
 	",ResetCustomDomainClaimedMessageTextToDefault\x12E.zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultRequest\x1aF.zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse\"\x98\x03\x92A\xcf\x02\n" +
-	"\rMessage Texts\x123Reset Custom Domain Claimed Message Text to Default\x1a\x88\x02Removes the custom text of the domain claimed message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x123Reset Custom Domain Claimed Message Text to Default\x1a\x88\x02Removes the custom text of the domain claimed message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02(*&/text/message/domainclaimed/{language}\x12\xb7\x05\n" +
 	"-GetDefaultPasswordlessRegistrationMessageText\x12F.zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextRequest\x1aG.zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse\"\xf4\x03\x92A\x99\x03\n" +
-	"\rMessage Texts\x122Get Default Passwordless Registration Message Text\x1a\xd3\x02Get the default text of the domain claimed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x122Get Default Passwordless Registration Message Text\x1a\xd3\x02Get the default text of the domain claimed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02<\x12:/text/default/message/passwordless_registration/{language}\x12\xc0\x05\n" +
 	",GetCustomPasswordlessRegistrationMessageText\x12E.zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextRequest\x1aF.zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse\"\x80\x04\x92A\xad\x03\n" +
 	"\rMessage Texts\x121Get Custom Passwordless Registration Message Text\x1a\xe8\x02Get the custom text of the passwordless/passkey registration message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.\x82\xb5\x18\x11\n" +
@@ -26910,10 +27353,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x122Set Default Passwordless Registration Message Text\x1a\xec\x04Set the custom text of the passwordless/passkey registration message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message/email is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.  The Following Variables can be used: {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x027:\x01*\x1a2/text/message/passwordless_registration/{language}\x12\xa3\x05\n" +
 	"7ResetCustomPasswordlessRegistrationMessageTextToDefault\x12P.zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest\x1aQ.zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse\"\xc2\x03\x92A\xed\x02\n" +
-	"\rMessage Texts\x12>Reset Custom Passwordless Registration Message Text to Default\x1a\x9b\x02Removes the custom text of the passwordless/passkey registration message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x12>Reset Custom Passwordless Registration Message Text to Default\x1a\x9b\x02Removes the custom text of the passwordless/passkey registration message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x024*2/text/message/passwordless_registration/{language}\x12\xca\x04\n" +
 	"#GetDefaultPasswordChangeMessageText\x12<.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse\"\xa5\x03\x92A\xd4\x02\n" +
-	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\x97\x02Get the default text of the password-changed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\x97\x02Get the default text of the password-changed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x022\x120/text/default/message/password_change/{language}\x12\xc0\x04\n" +
 	"\"GetCustomPasswordChangeMessageText\x12;.zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse\"\x9e\x03\x92A\xd5\x02\n" +
 	"\rMessage Texts\x12(Get Custom Password Changed Message Text\x1a\x99\x02Get the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.\x82\xb5\x18\x11\n" +
@@ -26922,10 +27365,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12)Set Default Password Changed Message Text\x1a\x9d\x04Set the custom text of the password-changed message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message/email is sent when the password of a user has been changed.  The Following Variables can be used: {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02-:\x01*\x1a(/text/message/password_change/{language}\x12\xe1\x04\n" +
 	"-ResetCustomPasswordChangeMessageTextToDefault\x12F.zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultRequest\x1aG.zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse\"\x9e\x03\x92A\xd3\x02\n" +
-	"\rMessage Texts\x125Reset Custom Password Changed Message Text to Default\x1a\x8a\x02Removes the custom text of the password-changed message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x125Reset Custom Password Changed Message Text to Default\x1a\x8a\x02Removes the custom text of the password-changed message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02**(/text/message/password_change/{language}\x12\xaa\x04\n" +
 	"\x1fGetDefaultInviteUserMessageText\x128.zitadel.admin.v1.GetDefaultInviteUserMessageTextRequest\x1a9.zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse\"\x91\x03\x92A\xc4\x02\n" +
-	"\rMessage Texts\x12$Get Default Invite User Message Text\x1a\x8c\x02Get the default text of the invite user message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested.\x82\xb5\x18\x11\n" +
+	"\rMessage Texts\x12$Get Default Invite User Message Text\x1a\x8c\x02Get the default text of the invite user message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/invite_user/{language}\x12\xa0\x04\n" +
 	"\x1eGetCustomInviteUserMessageText\x127.zitadel.admin.v1.GetCustomInviteUserMessageTextRequest\x1a8.zitadel.admin.v1.GetCustomInviteUserMessageTextResponse\"\x8a\x03\x92A\xc5\x02\n" +
 	"\rMessage Texts\x12#Get Custom Invite User Message Text\x1a\x8e\x02Get the custom text of the invite user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested.\x82\xb5\x18\x11\n" +
@@ -26934,10 +27377,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\rMessage Texts\x12$Set Default Invite User Message Text\x1a\xa0\x04Set the custom text of the invite user message/email that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested. The Following Variables can be used: {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}} {{.ApplicationName}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02):\x01*\x1a$/text/message/invite_user/{language}\x12\xc7\x04\n" +
 	")ResetCustomInviteUserMessageTextToDefault\x12B.zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultRequest\x1aC.zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse\"\x90\x03\x92A\xc9\x02\n" +
-	"\rMessage Texts\x120Reset Custom Invite User Message Text to Default\x1a\x85\x02Removes the custom text of the invite user message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x120Reset Custom Invite User Message Text to Default\x1a\x85\x02Removes the custom text of the invite user message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02&*$/text/message/invite_user/{language}\x12\xbc\x03\n" +
 	"\x14GetDefaultLoginTexts\x12-.zitadel.admin.v1.GetDefaultLoginTextsRequest\x1a..zitadel.admin.v1.GetDefaultLoginTextsResponse\"\xc4\x02\x92A\x85\x02\n" +
-	"\vLogin Texts\x12\x16Get Default Login Text\x1a\xdd\x01Get the default texts for the login and register UI of ZITADEL, which are stored as translation files in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x11\n" +
+	"\vLogin Texts\x12\x16Get Default Login Text\x1a\xdd\x01Get the default texts for the login and register UI of ZITADEL, which are stored as translation files in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02 \x12\x1e/text/default/login/{language}\x12\xb1\x03\n" +
 	"\x13GetCustomLoginTexts\x12,.zitadel.admin.v1.GetCustomLoginTextsRequest\x1a-.zitadel.admin.v1.GetCustomLoginTextsResponse\"\xbc\x02\x92A\x85\x02\n" +
 	"\vLogin Texts\x12\x15Get Custom Login Text\x1a\xde\x01Get the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance as settings/database. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x11\n" +
@@ -26946,11 +27389,11 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\vLogin Texts\x12\x16Set Default Login Text\x1a\xde\x01Set the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance as settings/database. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/text/login/{language}\x12\x99\x04\n" +
 	"\x1dResetCustomLoginTextToDefault\x127.zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest\x1a8.zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse\"\x84\x03\x92A\xcb\x02\n" +
-	"\vLogin Texts\x12\"Reset Custom Login Text to Default\x1a\x97\x02Removes the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\vLogin Texts\x12\"Reset Custom Login Text to Default\x1a\x97\x02Removes the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02\x18*\x16/text/login/{language}\x12\xad\x03\n" +
 	"\x12ListIAMMemberRoles\x12+.zitadel.admin.v1.ListIAMMemberRolesRequest\x1a,.zitadel.admin.v1.ListIAMMemberRolesResponse\"\xbb\x02\x92A\x84\x02\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL Administrators\x12\x15List IAM Member Roles\x1a\xa2\x01Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the instance level.J%\n" +
+	"\x16ZITADEL Administrators\x12\x15List IAM Member Roles\x1a\xa2\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the instance level.J%\n" +
 	"\x03200\x12\x1e\n" +
 	"\x1croles on the IAM of the user\x82\xb5\x18\x11\n" +
 	"\x0fiam.member.read\x82\xd3\xe4\x93\x02\x18\"\x16/members/roles/_search\x12\xd8\x01\n" +
@@ -27043,7 +27486,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x14Feature Restrictions\x125Get the current feature restrictions for the instance\x1a\xc2\x01Undefined values mean that the feature is not restricted. If restrictions were never set, the instances features are not restricted, all properties are undefined and the details object is empty.J\x80\x01\n" +
 	"\x03200\x12y\n" +
 	"wThe status 200 is also returned if no restrictions were ever set. In this case, all feature restrictions are undefined.\x82\xb5\x18\x17\n" +
-	"\x15iam.restrictions.read\x82\xd3\xe4\x93\x02\x0f\x12\r/restrictionsB\x8d\f\x92A\xde\v\x12\xe3\x01\n" +
+	"\x15iam.restrictions.read\x82\xd3\xe4\x93\x02\x0f\x12\r/restrictionsB\x98\f\x92A\xe9\v\x12\xe3\x01\n" +
 	"\x1cAdministration API aka Admin\x12EThis API is intended to configure and manage the IAM instance itself.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
@@ -27066,8 +27509,8 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x06OAuth2\x124\n" +
 	"\x06openid\n" +
 	"*urn:zitadel:iam:org:project:id:zitadel:audj\x18\n" +
-	"\x16Authentication Methodsj\x97\x01\n" +
-	"\bBranding\x12\x8a\x01Defines the look of the login UI, E-Mails, and ZITADEL Console. For adding assets like logo, icon and font, have a look at the assets API.j\x11\n" +
+	"\x16Authentication Methodsj\xa2\x01\n" +
+	"\bBranding\x12\x95\x01Defines the look of the login UI, E-Mails, and Zitadel Management Console. For adding assets like logo, icon and font, have a look at the assets API.j\x11\n" +
 	"\x0fDomain Settingsj\b\n" +
 	"\x06Eventsj\x0f\n" +
 	"\rFailed Eventsj\x16\n" +
@@ -27107,7 +27550,7 @@ func file_zitadel_admin_proto_rawDescGZIP() []byte {
 	return file_zitadel_admin_proto_rawDescData
 }
 
-var file_zitadel_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 436)
+var file_zitadel_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 440)
 var file_zitadel_admin_proto_goTypes = []any{
 	(*HealthzRequest)(nil),                                                  // 0: zitadel.admin.v1.HealthzRequest
 	(*HealthzResponse)(nil),                                                 // 1: zitadel.admin.v1.HealthzResponse
@@ -27168,1353 +27611,1367 @@ var file_zitadel_admin_proto_goTypes = []any{
 	(*ListEmailProvidersRequest)(nil),                                       // 56: zitadel.admin.v1.ListEmailProvidersRequest
 	(*ListEmailProvidersResponse)(nil),                                      // 57: zitadel.admin.v1.ListEmailProvidersResponse
 	(*AddEmailProviderSMTPRequest)(nil),                                     // 58: zitadel.admin.v1.AddEmailProviderSMTPRequest
-	(*AddEmailProviderSMTPResponse)(nil),                                    // 59: zitadel.admin.v1.AddEmailProviderSMTPResponse
-	(*UpdateEmailProviderSMTPRequest)(nil),                                  // 60: zitadel.admin.v1.UpdateEmailProviderSMTPRequest
-	(*UpdateEmailProviderSMTPResponse)(nil),                                 // 61: zitadel.admin.v1.UpdateEmailProviderSMTPResponse
-	(*UpdateEmailProviderSMTPPasswordRequest)(nil),                          // 62: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordRequest
-	(*UpdateEmailProviderSMTPPasswordResponse)(nil),                         // 63: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse
-	(*AddEmailProviderHTTPRequest)(nil),                                     // 64: zitadel.admin.v1.AddEmailProviderHTTPRequest
-	(*AddEmailProviderHTTPResponse)(nil),                                    // 65: zitadel.admin.v1.AddEmailProviderHTTPResponse
-	(*UpdateEmailProviderHTTPRequest)(nil),                                  // 66: zitadel.admin.v1.UpdateEmailProviderHTTPRequest
-	(*UpdateEmailProviderHTTPResponse)(nil),                                 // 67: zitadel.admin.v1.UpdateEmailProviderHTTPResponse
-	(*ActivateEmailProviderRequest)(nil),                                    // 68: zitadel.admin.v1.ActivateEmailProviderRequest
-	(*ActivateEmailProviderResponse)(nil),                                   // 69: zitadel.admin.v1.ActivateEmailProviderResponse
-	(*DeactivateEmailProviderRequest)(nil),                                  // 70: zitadel.admin.v1.DeactivateEmailProviderRequest
-	(*DeactivateEmailProviderResponse)(nil),                                 // 71: zitadel.admin.v1.DeactivateEmailProviderResponse
-	(*RemoveEmailProviderRequest)(nil),                                      // 72: zitadel.admin.v1.RemoveEmailProviderRequest
-	(*RemoveEmailProviderResponse)(nil),                                     // 73: zitadel.admin.v1.RemoveEmailProviderResponse
-	(*TestEmailProviderSMTPByIdRequest)(nil),                                // 74: zitadel.admin.v1.TestEmailProviderSMTPByIdRequest
-	(*TestEmailProviderSMTPByIdResponse)(nil),                               // 75: zitadel.admin.v1.TestEmailProviderSMTPByIdResponse
-	(*TestEmailProviderSMTPRequest)(nil),                                    // 76: zitadel.admin.v1.TestEmailProviderSMTPRequest
-	(*TestEmailProviderSMTPResponse)(nil),                                   // 77: zitadel.admin.v1.TestEmailProviderSMTPResponse
-	(*ListSMSProvidersRequest)(nil),                                         // 78: zitadel.admin.v1.ListSMSProvidersRequest
-	(*ListSMSProvidersResponse)(nil),                                        // 79: zitadel.admin.v1.ListSMSProvidersResponse
-	(*GetSMSProviderRequest)(nil),                                           // 80: zitadel.admin.v1.GetSMSProviderRequest
-	(*GetSMSProviderResponse)(nil),                                          // 81: zitadel.admin.v1.GetSMSProviderResponse
-	(*AddSMSProviderTwilioRequest)(nil),                                     // 82: zitadel.admin.v1.AddSMSProviderTwilioRequest
-	(*AddSMSProviderTwilioResponse)(nil),                                    // 83: zitadel.admin.v1.AddSMSProviderTwilioResponse
-	(*UpdateSMSProviderTwilioRequest)(nil),                                  // 84: zitadel.admin.v1.UpdateSMSProviderTwilioRequest
-	(*UpdateSMSProviderTwilioResponse)(nil),                                 // 85: zitadel.admin.v1.UpdateSMSProviderTwilioResponse
-	(*UpdateSMSProviderTwilioTokenRequest)(nil),                             // 86: zitadel.admin.v1.UpdateSMSProviderTwilioTokenRequest
-	(*UpdateSMSProviderTwilioTokenResponse)(nil),                            // 87: zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse
-	(*AddSMSProviderHTTPRequest)(nil),                                       // 88: zitadel.admin.v1.AddSMSProviderHTTPRequest
-	(*AddSMSProviderHTTPResponse)(nil),                                      // 89: zitadel.admin.v1.AddSMSProviderHTTPResponse
-	(*UpdateSMSProviderHTTPRequest)(nil),                                    // 90: zitadel.admin.v1.UpdateSMSProviderHTTPRequest
-	(*UpdateSMSProviderHTTPResponse)(nil),                                   // 91: zitadel.admin.v1.UpdateSMSProviderHTTPResponse
-	(*ActivateSMSProviderRequest)(nil),                                      // 92: zitadel.admin.v1.ActivateSMSProviderRequest
-	(*ActivateSMSProviderResponse)(nil),                                     // 93: zitadel.admin.v1.ActivateSMSProviderResponse
-	(*DeactivateSMSProviderRequest)(nil),                                    // 94: zitadel.admin.v1.DeactivateSMSProviderRequest
-	(*DeactivateSMSProviderResponse)(nil),                                   // 95: zitadel.admin.v1.DeactivateSMSProviderResponse
-	(*RemoveSMSProviderRequest)(nil),                                        // 96: zitadel.admin.v1.RemoveSMSProviderRequest
-	(*RemoveSMSProviderResponse)(nil),                                       // 97: zitadel.admin.v1.RemoveSMSProviderResponse
-	(*GetFileSystemNotificationProviderRequest)(nil),                        // 98: zitadel.admin.v1.GetFileSystemNotificationProviderRequest
-	(*GetFileSystemNotificationProviderResponse)(nil),                       // 99: zitadel.admin.v1.GetFileSystemNotificationProviderResponse
-	(*GetLogNotificationProviderRequest)(nil),                               // 100: zitadel.admin.v1.GetLogNotificationProviderRequest
-	(*GetLogNotificationProviderResponse)(nil),                              // 101: zitadel.admin.v1.GetLogNotificationProviderResponse
-	(*GetOIDCSettingsRequest)(nil),                                          // 102: zitadel.admin.v1.GetOIDCSettingsRequest
-	(*GetOIDCSettingsResponse)(nil),                                         // 103: zitadel.admin.v1.GetOIDCSettingsResponse
-	(*AddOIDCSettingsRequest)(nil),                                          // 104: zitadel.admin.v1.AddOIDCSettingsRequest
-	(*AddOIDCSettingsResponse)(nil),                                         // 105: zitadel.admin.v1.AddOIDCSettingsResponse
-	(*UpdateOIDCSettingsRequest)(nil),                                       // 106: zitadel.admin.v1.UpdateOIDCSettingsRequest
-	(*UpdateOIDCSettingsResponse)(nil),                                      // 107: zitadel.admin.v1.UpdateOIDCSettingsResponse
-	(*GetSecurityPolicyRequest)(nil),                                        // 108: zitadel.admin.v1.GetSecurityPolicyRequest
-	(*GetSecurityPolicyResponse)(nil),                                       // 109: zitadel.admin.v1.GetSecurityPolicyResponse
-	(*SetSecurityPolicyRequest)(nil),                                        // 110: zitadel.admin.v1.SetSecurityPolicyRequest
-	(*SetSecurityPolicyResponse)(nil),                                       // 111: zitadel.admin.v1.SetSecurityPolicyResponse
-	(*IsOrgUniqueRequest)(nil),                                              // 112: zitadel.admin.v1.IsOrgUniqueRequest
-	(*IsOrgUniqueResponse)(nil),                                             // 113: zitadel.admin.v1.IsOrgUniqueResponse
-	(*GetOrgByIDRequest)(nil),                                               // 114: zitadel.admin.v1.GetOrgByIDRequest
-	(*GetOrgByIDResponse)(nil),                                              // 115: zitadel.admin.v1.GetOrgByIDResponse
-	(*ListOrgsRequest)(nil),                                                 // 116: zitadel.admin.v1.ListOrgsRequest
-	(*ListOrgsResponse)(nil),                                                // 117: zitadel.admin.v1.ListOrgsResponse
-	(*SetUpOrgRequest)(nil),                                                 // 118: zitadel.admin.v1.SetUpOrgRequest
-	(*SetUpOrgResponse)(nil),                                                // 119: zitadel.admin.v1.SetUpOrgResponse
-	(*RemoveOrgRequest)(nil),                                                // 120: zitadel.admin.v1.RemoveOrgRequest
-	(*RemoveOrgResponse)(nil),                                               // 121: zitadel.admin.v1.RemoveOrgResponse
-	(*GetIDPByIDRequest)(nil),                                               // 122: zitadel.admin.v1.GetIDPByIDRequest
-	(*GetIDPByIDResponse)(nil),                                              // 123: zitadel.admin.v1.GetIDPByIDResponse
-	(*ListIDPsRequest)(nil),                                                 // 124: zitadel.admin.v1.ListIDPsRequest
-	(*IDPQuery)(nil),                                                        // 125: zitadel.admin.v1.IDPQuery
-	(*ListIDPsResponse)(nil),                                                // 126: zitadel.admin.v1.ListIDPsResponse
-	(*AddOIDCIDPRequest)(nil),                                               // 127: zitadel.admin.v1.AddOIDCIDPRequest
-	(*AddOIDCIDPResponse)(nil),                                              // 128: zitadel.admin.v1.AddOIDCIDPResponse
-	(*AddJWTIDPRequest)(nil),                                                // 129: zitadel.admin.v1.AddJWTIDPRequest
-	(*AddJWTIDPResponse)(nil),                                               // 130: zitadel.admin.v1.AddJWTIDPResponse
-	(*UpdateIDPRequest)(nil),                                                // 131: zitadel.admin.v1.UpdateIDPRequest
-	(*UpdateIDPResponse)(nil),                                               // 132: zitadel.admin.v1.UpdateIDPResponse
-	(*DeactivateIDPRequest)(nil),                                            // 133: zitadel.admin.v1.DeactivateIDPRequest
-	(*DeactivateIDPResponse)(nil),                                           // 134: zitadel.admin.v1.DeactivateIDPResponse
-	(*ReactivateIDPRequest)(nil),                                            // 135: zitadel.admin.v1.ReactivateIDPRequest
-	(*ReactivateIDPResponse)(nil),                                           // 136: zitadel.admin.v1.ReactivateIDPResponse
-	(*RemoveIDPRequest)(nil),                                                // 137: zitadel.admin.v1.RemoveIDPRequest
-	(*RemoveIDPResponse)(nil),                                               // 138: zitadel.admin.v1.RemoveIDPResponse
-	(*UpdateIDPOIDCConfigRequest)(nil),                                      // 139: zitadel.admin.v1.UpdateIDPOIDCConfigRequest
-	(*UpdateIDPOIDCConfigResponse)(nil),                                     // 140: zitadel.admin.v1.UpdateIDPOIDCConfigResponse
-	(*UpdateIDPJWTConfigRequest)(nil),                                       // 141: zitadel.admin.v1.UpdateIDPJWTConfigRequest
-	(*UpdateIDPJWTConfigResponse)(nil),                                      // 142: zitadel.admin.v1.UpdateIDPJWTConfigResponse
-	(*ListProvidersRequest)(nil),                                            // 143: zitadel.admin.v1.ListProvidersRequest
-	(*ProviderQuery)(nil),                                                   // 144: zitadel.admin.v1.ProviderQuery
-	(*ListProvidersResponse)(nil),                                           // 145: zitadel.admin.v1.ListProvidersResponse
-	(*GetProviderByIDRequest)(nil),                                          // 146: zitadel.admin.v1.GetProviderByIDRequest
-	(*GetProviderByIDResponse)(nil),                                         // 147: zitadel.admin.v1.GetProviderByIDResponse
-	(*AddGenericOAuthProviderRequest)(nil),                                  // 148: zitadel.admin.v1.AddGenericOAuthProviderRequest
-	(*AddGenericOAuthProviderResponse)(nil),                                 // 149: zitadel.admin.v1.AddGenericOAuthProviderResponse
-	(*UpdateGenericOAuthProviderRequest)(nil),                               // 150: zitadel.admin.v1.UpdateGenericOAuthProviderRequest
-	(*UpdateGenericOAuthProviderResponse)(nil),                              // 151: zitadel.admin.v1.UpdateGenericOAuthProviderResponse
-	(*AddGenericOIDCProviderRequest)(nil),                                   // 152: zitadel.admin.v1.AddGenericOIDCProviderRequest
-	(*AddGenericOIDCProviderResponse)(nil),                                  // 153: zitadel.admin.v1.AddGenericOIDCProviderResponse
-	(*UpdateGenericOIDCProviderRequest)(nil),                                // 154: zitadel.admin.v1.UpdateGenericOIDCProviderRequest
-	(*UpdateGenericOIDCProviderResponse)(nil),                               // 155: zitadel.admin.v1.UpdateGenericOIDCProviderResponse
-	(*MigrateGenericOIDCProviderRequest)(nil),                               // 156: zitadel.admin.v1.MigrateGenericOIDCProviderRequest
-	(*MigrateGenericOIDCProviderResponse)(nil),                              // 157: zitadel.admin.v1.MigrateGenericOIDCProviderResponse
-	(*AddJWTProviderRequest)(nil),                                           // 158: zitadel.admin.v1.AddJWTProviderRequest
-	(*AddJWTProviderResponse)(nil),                                          // 159: zitadel.admin.v1.AddJWTProviderResponse
-	(*UpdateJWTProviderRequest)(nil),                                        // 160: zitadel.admin.v1.UpdateJWTProviderRequest
-	(*UpdateJWTProviderResponse)(nil),                                       // 161: zitadel.admin.v1.UpdateJWTProviderResponse
-	(*AddAzureADProviderRequest)(nil),                                       // 162: zitadel.admin.v1.AddAzureADProviderRequest
-	(*AddAzureADProviderResponse)(nil),                                      // 163: zitadel.admin.v1.AddAzureADProviderResponse
-	(*UpdateAzureADProviderRequest)(nil),                                    // 164: zitadel.admin.v1.UpdateAzureADProviderRequest
-	(*UpdateAzureADProviderResponse)(nil),                                   // 165: zitadel.admin.v1.UpdateAzureADProviderResponse
-	(*AddGitHubProviderRequest)(nil),                                        // 166: zitadel.admin.v1.AddGitHubProviderRequest
-	(*AddGitHubProviderResponse)(nil),                                       // 167: zitadel.admin.v1.AddGitHubProviderResponse
-	(*UpdateGitHubProviderRequest)(nil),                                     // 168: zitadel.admin.v1.UpdateGitHubProviderRequest
-	(*UpdateGitHubProviderResponse)(nil),                                    // 169: zitadel.admin.v1.UpdateGitHubProviderResponse
-	(*AddGitHubEnterpriseServerProviderRequest)(nil),                        // 170: zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest
-	(*AddGitHubEnterpriseServerProviderResponse)(nil),                       // 171: zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse
-	(*UpdateGitHubEnterpriseServerProviderRequest)(nil),                     // 172: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest
-	(*UpdateGitHubEnterpriseServerProviderResponse)(nil),                    // 173: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse
-	(*AddGitLabProviderRequest)(nil),                                        // 174: zitadel.admin.v1.AddGitLabProviderRequest
-	(*AddGitLabProviderResponse)(nil),                                       // 175: zitadel.admin.v1.AddGitLabProviderResponse
-	(*UpdateGitLabProviderRequest)(nil),                                     // 176: zitadel.admin.v1.UpdateGitLabProviderRequest
-	(*UpdateGitLabProviderResponse)(nil),                                    // 177: zitadel.admin.v1.UpdateGitLabProviderResponse
-	(*AddGitLabSelfHostedProviderRequest)(nil),                              // 178: zitadel.admin.v1.AddGitLabSelfHostedProviderRequest
-	(*AddGitLabSelfHostedProviderResponse)(nil),                             // 179: zitadel.admin.v1.AddGitLabSelfHostedProviderResponse
-	(*UpdateGitLabSelfHostedProviderRequest)(nil),                           // 180: zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest
-	(*UpdateGitLabSelfHostedProviderResponse)(nil),                          // 181: zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse
-	(*AddGoogleProviderRequest)(nil),                                        // 182: zitadel.admin.v1.AddGoogleProviderRequest
-	(*AddGoogleProviderResponse)(nil),                                       // 183: zitadel.admin.v1.AddGoogleProviderResponse
-	(*UpdateGoogleProviderRequest)(nil),                                     // 184: zitadel.admin.v1.UpdateGoogleProviderRequest
-	(*UpdateGoogleProviderResponse)(nil),                                    // 185: zitadel.admin.v1.UpdateGoogleProviderResponse
-	(*AddLDAPProviderRequest)(nil),                                          // 186: zitadel.admin.v1.AddLDAPProviderRequest
-	(*AddLDAPProviderResponse)(nil),                                         // 187: zitadel.admin.v1.AddLDAPProviderResponse
-	(*UpdateLDAPProviderRequest)(nil),                                       // 188: zitadel.admin.v1.UpdateLDAPProviderRequest
-	(*UpdateLDAPProviderResponse)(nil),                                      // 189: zitadel.admin.v1.UpdateLDAPProviderResponse
-	(*AddAppleProviderRequest)(nil),                                         // 190: zitadel.admin.v1.AddAppleProviderRequest
-	(*AddAppleProviderResponse)(nil),                                        // 191: zitadel.admin.v1.AddAppleProviderResponse
-	(*UpdateAppleProviderRequest)(nil),                                      // 192: zitadel.admin.v1.UpdateAppleProviderRequest
-	(*UpdateAppleProviderResponse)(nil),                                     // 193: zitadel.admin.v1.UpdateAppleProviderResponse
-	(*AddSAMLProviderRequest)(nil),                                          // 194: zitadel.admin.v1.AddSAMLProviderRequest
-	(*AddSAMLProviderResponse)(nil),                                         // 195: zitadel.admin.v1.AddSAMLProviderResponse
-	(*UpdateSAMLProviderRequest)(nil),                                       // 196: zitadel.admin.v1.UpdateSAMLProviderRequest
-	(*UpdateSAMLProviderResponse)(nil),                                      // 197: zitadel.admin.v1.UpdateSAMLProviderResponse
-	(*RegenerateSAMLProviderCertificateRequest)(nil),                        // 198: zitadel.admin.v1.RegenerateSAMLProviderCertificateRequest
-	(*RegenerateSAMLProviderCertificateResponse)(nil),                       // 199: zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse
-	(*DeleteProviderRequest)(nil),                                           // 200: zitadel.admin.v1.DeleteProviderRequest
-	(*DeleteProviderResponse)(nil),                                          // 201: zitadel.admin.v1.DeleteProviderResponse
-	(*GetOrgIAMPolicyRequest)(nil),                                          // 202: zitadel.admin.v1.GetOrgIAMPolicyRequest
-	(*GetOrgIAMPolicyResponse)(nil),                                         // 203: zitadel.admin.v1.GetOrgIAMPolicyResponse
-	(*UpdateOrgIAMPolicyRequest)(nil),                                       // 204: zitadel.admin.v1.UpdateOrgIAMPolicyRequest
-	(*UpdateOrgIAMPolicyResponse)(nil),                                      // 205: zitadel.admin.v1.UpdateOrgIAMPolicyResponse
-	(*GetCustomOrgIAMPolicyRequest)(nil),                                    // 206: zitadel.admin.v1.GetCustomOrgIAMPolicyRequest
-	(*GetCustomOrgIAMPolicyResponse)(nil),                                   // 207: zitadel.admin.v1.GetCustomOrgIAMPolicyResponse
-	(*AddCustomOrgIAMPolicyRequest)(nil),                                    // 208: zitadel.admin.v1.AddCustomOrgIAMPolicyRequest
-	(*AddCustomOrgIAMPolicyResponse)(nil),                                   // 209: zitadel.admin.v1.AddCustomOrgIAMPolicyResponse
-	(*UpdateCustomOrgIAMPolicyRequest)(nil),                                 // 210: zitadel.admin.v1.UpdateCustomOrgIAMPolicyRequest
-	(*UpdateCustomOrgIAMPolicyResponse)(nil),                                // 211: zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse
-	(*ResetCustomOrgIAMPolicyToDefaultRequest)(nil),                         // 212: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultRequest
-	(*ResetCustomOrgIAMPolicyToDefaultResponse)(nil),                        // 213: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse
-	(*GetDomainPolicyRequest)(nil),                                          // 214: zitadel.admin.v1.GetDomainPolicyRequest
-	(*GetDomainPolicyResponse)(nil),                                         // 215: zitadel.admin.v1.GetDomainPolicyResponse
-	(*UpdateDomainPolicyRequest)(nil),                                       // 216: zitadel.admin.v1.UpdateDomainPolicyRequest
-	(*UpdateDomainPolicyResponse)(nil),                                      // 217: zitadel.admin.v1.UpdateDomainPolicyResponse
-	(*GetCustomDomainPolicyRequest)(nil),                                    // 218: zitadel.admin.v1.GetCustomDomainPolicyRequest
-	(*GetCustomDomainPolicyResponse)(nil),                                   // 219: zitadel.admin.v1.GetCustomDomainPolicyResponse
-	(*AddCustomDomainPolicyRequest)(nil),                                    // 220: zitadel.admin.v1.AddCustomDomainPolicyRequest
-	(*AddCustomDomainPolicyResponse)(nil),                                   // 221: zitadel.admin.v1.AddCustomDomainPolicyResponse
-	(*UpdateCustomDomainPolicyRequest)(nil),                                 // 222: zitadel.admin.v1.UpdateCustomDomainPolicyRequest
-	(*UpdateCustomDomainPolicyResponse)(nil),                                // 223: zitadel.admin.v1.UpdateCustomDomainPolicyResponse
-	(*ResetCustomDomainPolicyToDefaultRequest)(nil),                         // 224: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultRequest
-	(*ResetCustomDomainPolicyToDefaultResponse)(nil),                        // 225: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse
-	(*GetLabelPolicyRequest)(nil),                                           // 226: zitadel.admin.v1.GetLabelPolicyRequest
-	(*GetLabelPolicyResponse)(nil),                                          // 227: zitadel.admin.v1.GetLabelPolicyResponse
-	(*GetPreviewLabelPolicyRequest)(nil),                                    // 228: zitadel.admin.v1.GetPreviewLabelPolicyRequest
-	(*GetPreviewLabelPolicyResponse)(nil),                                   // 229: zitadel.admin.v1.GetPreviewLabelPolicyResponse
-	(*UpdateLabelPolicyRequest)(nil),                                        // 230: zitadel.admin.v1.UpdateLabelPolicyRequest
-	(*UpdateLabelPolicyResponse)(nil),                                       // 231: zitadel.admin.v1.UpdateLabelPolicyResponse
-	(*ActivateLabelPolicyRequest)(nil),                                      // 232: zitadel.admin.v1.ActivateLabelPolicyRequest
-	(*ActivateLabelPolicyResponse)(nil),                                     // 233: zitadel.admin.v1.ActivateLabelPolicyResponse
-	(*RemoveLabelPolicyLogoRequest)(nil),                                    // 234: zitadel.admin.v1.RemoveLabelPolicyLogoRequest
-	(*RemoveLabelPolicyLogoResponse)(nil),                                   // 235: zitadel.admin.v1.RemoveLabelPolicyLogoResponse
-	(*RemoveLabelPolicyLogoDarkRequest)(nil),                                // 236: zitadel.admin.v1.RemoveLabelPolicyLogoDarkRequest
-	(*RemoveLabelPolicyLogoDarkResponse)(nil),                               // 237: zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse
-	(*RemoveLabelPolicyIconRequest)(nil),                                    // 238: zitadel.admin.v1.RemoveLabelPolicyIconRequest
-	(*RemoveLabelPolicyIconResponse)(nil),                                   // 239: zitadel.admin.v1.RemoveLabelPolicyIconResponse
-	(*RemoveLabelPolicyIconDarkRequest)(nil),                                // 240: zitadel.admin.v1.RemoveLabelPolicyIconDarkRequest
-	(*RemoveLabelPolicyIconDarkResponse)(nil),                               // 241: zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse
-	(*RemoveLabelPolicyFontRequest)(nil),                                    // 242: zitadel.admin.v1.RemoveLabelPolicyFontRequest
-	(*RemoveLabelPolicyFontResponse)(nil),                                   // 243: zitadel.admin.v1.RemoveLabelPolicyFontResponse
-	(*GetLoginPolicyRequest)(nil),                                           // 244: zitadel.admin.v1.GetLoginPolicyRequest
-	(*GetLoginPolicyResponse)(nil),                                          // 245: zitadel.admin.v1.GetLoginPolicyResponse
-	(*UpdateLoginPolicyRequest)(nil),                                        // 246: zitadel.admin.v1.UpdateLoginPolicyRequest
-	(*UpdateLoginPolicyResponse)(nil),                                       // 247: zitadel.admin.v1.UpdateLoginPolicyResponse
-	(*ListLoginPolicyIDPsRequest)(nil),                                      // 248: zitadel.admin.v1.ListLoginPolicyIDPsRequest
-	(*ListLoginPolicyIDPsResponse)(nil),                                     // 249: zitadel.admin.v1.ListLoginPolicyIDPsResponse
-	(*AddIDPToLoginPolicyRequest)(nil),                                      // 250: zitadel.admin.v1.AddIDPToLoginPolicyRequest
-	(*AddIDPToLoginPolicyResponse)(nil),                                     // 251: zitadel.admin.v1.AddIDPToLoginPolicyResponse
-	(*RemoveIDPFromLoginPolicyRequest)(nil),                                 // 252: zitadel.admin.v1.RemoveIDPFromLoginPolicyRequest
-	(*RemoveIDPFromLoginPolicyResponse)(nil),                                // 253: zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse
-	(*ListLoginPolicySecondFactorsRequest)(nil),                             // 254: zitadel.admin.v1.ListLoginPolicySecondFactorsRequest
-	(*ListLoginPolicySecondFactorsResponse)(nil),                            // 255: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse
-	(*AddSecondFactorToLoginPolicyRequest)(nil),                             // 256: zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest
-	(*AddSecondFactorToLoginPolicyResponse)(nil),                            // 257: zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse
-	(*RemoveSecondFactorFromLoginPolicyRequest)(nil),                        // 258: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest
-	(*RemoveSecondFactorFromLoginPolicyResponse)(nil),                       // 259: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse
-	(*ListLoginPolicyMultiFactorsRequest)(nil),                              // 260: zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest
-	(*ListLoginPolicyMultiFactorsResponse)(nil),                             // 261: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse
-	(*AddMultiFactorToLoginPolicyRequest)(nil),                              // 262: zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest
-	(*AddMultiFactorToLoginPolicyResponse)(nil),                             // 263: zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse
-	(*RemoveMultiFactorFromLoginPolicyRequest)(nil),                         // 264: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest
-	(*RemoveMultiFactorFromLoginPolicyResponse)(nil),                        // 265: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse
-	(*GetPasswordComplexityPolicyRequest)(nil),                              // 266: zitadel.admin.v1.GetPasswordComplexityPolicyRequest
-	(*GetPasswordComplexityPolicyResponse)(nil),                             // 267: zitadel.admin.v1.GetPasswordComplexityPolicyResponse
-	(*UpdatePasswordComplexityPolicyRequest)(nil),                           // 268: zitadel.admin.v1.UpdatePasswordComplexityPolicyRequest
-	(*UpdatePasswordComplexityPolicyResponse)(nil),                          // 269: zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse
-	(*GetPasswordAgePolicyRequest)(nil),                                     // 270: zitadel.admin.v1.GetPasswordAgePolicyRequest
-	(*GetPasswordAgePolicyResponse)(nil),                                    // 271: zitadel.admin.v1.GetPasswordAgePolicyResponse
-	(*UpdatePasswordAgePolicyRequest)(nil),                                  // 272: zitadel.admin.v1.UpdatePasswordAgePolicyRequest
-	(*UpdatePasswordAgePolicyResponse)(nil),                                 // 273: zitadel.admin.v1.UpdatePasswordAgePolicyResponse
-	(*GetLockoutPolicyRequest)(nil),                                         // 274: zitadel.admin.v1.GetLockoutPolicyRequest
-	(*GetLockoutPolicyResponse)(nil),                                        // 275: zitadel.admin.v1.GetLockoutPolicyResponse
-	(*UpdateLockoutPolicyRequest)(nil),                                      // 276: zitadel.admin.v1.UpdateLockoutPolicyRequest
-	(*UpdateLockoutPolicyResponse)(nil),                                     // 277: zitadel.admin.v1.UpdateLockoutPolicyResponse
-	(*GetPrivacyPolicyRequest)(nil),                                         // 278: zitadel.admin.v1.GetPrivacyPolicyRequest
-	(*GetPrivacyPolicyResponse)(nil),                                        // 279: zitadel.admin.v1.GetPrivacyPolicyResponse
-	(*UpdatePrivacyPolicyRequest)(nil),                                      // 280: zitadel.admin.v1.UpdatePrivacyPolicyRequest
-	(*UpdatePrivacyPolicyResponse)(nil),                                     // 281: zitadel.admin.v1.UpdatePrivacyPolicyResponse
-	(*AddNotificationPolicyRequest)(nil),                                    // 282: zitadel.admin.v1.AddNotificationPolicyRequest
-	(*AddNotificationPolicyResponse)(nil),                                   // 283: zitadel.admin.v1.AddNotificationPolicyResponse
-	(*GetNotificationPolicyRequest)(nil),                                    // 284: zitadel.admin.v1.GetNotificationPolicyRequest
-	(*GetNotificationPolicyResponse)(nil),                                   // 285: zitadel.admin.v1.GetNotificationPolicyResponse
-	(*UpdateNotificationPolicyRequest)(nil),                                 // 286: zitadel.admin.v1.UpdateNotificationPolicyRequest
-	(*UpdateNotificationPolicyResponse)(nil),                                // 287: zitadel.admin.v1.UpdateNotificationPolicyResponse
-	(*GetDefaultInitMessageTextRequest)(nil),                                // 288: zitadel.admin.v1.GetDefaultInitMessageTextRequest
-	(*GetDefaultInitMessageTextResponse)(nil),                               // 289: zitadel.admin.v1.GetDefaultInitMessageTextResponse
-	(*GetCustomInitMessageTextRequest)(nil),                                 // 290: zitadel.admin.v1.GetCustomInitMessageTextRequest
-	(*GetCustomInitMessageTextResponse)(nil),                                // 291: zitadel.admin.v1.GetCustomInitMessageTextResponse
-	(*SetDefaultInitMessageTextRequest)(nil),                                // 292: zitadel.admin.v1.SetDefaultInitMessageTextRequest
-	(*SetDefaultInitMessageTextResponse)(nil),                               // 293: zitadel.admin.v1.SetDefaultInitMessageTextResponse
-	(*ResetCustomInitMessageTextToDefaultRequest)(nil),                      // 294: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultRequest
-	(*ResetCustomInitMessageTextToDefaultResponse)(nil),                     // 295: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse
-	(*GetDefaultPasswordResetMessageTextRequest)(nil),                       // 296: zitadel.admin.v1.GetDefaultPasswordResetMessageTextRequest
-	(*GetDefaultPasswordResetMessageTextResponse)(nil),                      // 297: zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse
-	(*GetCustomPasswordResetMessageTextRequest)(nil),                        // 298: zitadel.admin.v1.GetCustomPasswordResetMessageTextRequest
-	(*GetCustomPasswordResetMessageTextResponse)(nil),                       // 299: zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse
-	(*SetDefaultPasswordResetMessageTextRequest)(nil),                       // 300: zitadel.admin.v1.SetDefaultPasswordResetMessageTextRequest
-	(*SetDefaultPasswordResetMessageTextResponse)(nil),                      // 301: zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse
-	(*ResetCustomPasswordResetMessageTextToDefaultRequest)(nil),             // 302: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultRequest
-	(*ResetCustomPasswordResetMessageTextToDefaultResponse)(nil),            // 303: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse
-	(*GetDefaultVerifyEmailMessageTextRequest)(nil),                         // 304: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextRequest
-	(*GetDefaultVerifyEmailMessageTextResponse)(nil),                        // 305: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse
-	(*GetCustomVerifyEmailMessageTextRequest)(nil),                          // 306: zitadel.admin.v1.GetCustomVerifyEmailMessageTextRequest
-	(*GetCustomVerifyEmailMessageTextResponse)(nil),                         // 307: zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse
-	(*SetDefaultVerifyEmailMessageTextRequest)(nil),                         // 308: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextRequest
-	(*SetDefaultVerifyEmailMessageTextResponse)(nil),                        // 309: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse
-	(*ResetCustomVerifyEmailMessageTextToDefaultRequest)(nil),               // 310: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultRequest
-	(*ResetCustomVerifyEmailMessageTextToDefaultResponse)(nil),              // 311: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse
-	(*GetDefaultVerifyPhoneMessageTextRequest)(nil),                         // 312: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextRequest
-	(*GetDefaultVerifyPhoneMessageTextResponse)(nil),                        // 313: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse
-	(*GetCustomVerifyPhoneMessageTextRequest)(nil),                          // 314: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextRequest
-	(*GetCustomVerifyPhoneMessageTextResponse)(nil),                         // 315: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse
-	(*SetDefaultVerifyPhoneMessageTextRequest)(nil),                         // 316: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextRequest
-	(*SetDefaultVerifyPhoneMessageTextResponse)(nil),                        // 317: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse
-	(*ResetCustomVerifyPhoneMessageTextToDefaultRequest)(nil),               // 318: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest
-	(*ResetCustomVerifyPhoneMessageTextToDefaultResponse)(nil),              // 319: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse
-	(*GetCustomVerifySMSOTPMessageTextRequest)(nil),                         // 320: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest
-	(*GetCustomVerifySMSOTPMessageTextResponse)(nil),                        // 321: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse
-	(*GetDefaultVerifySMSOTPMessageTextRequest)(nil),                        // 322: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest
-	(*GetDefaultVerifySMSOTPMessageTextResponse)(nil),                       // 323: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse
-	(*SetDefaultVerifySMSOTPMessageTextRequest)(nil),                        // 324: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest
-	(*SetDefaultVerifySMSOTPMessageTextResponse)(nil),                       // 325: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse
-	(*ResetCustomVerifySMSOTPMessageTextToDefaultRequest)(nil),              // 326: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest
-	(*ResetCustomVerifySMSOTPMessageTextToDefaultResponse)(nil),             // 327: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse
-	(*GetCustomVerifyEmailOTPMessageTextRequest)(nil),                       // 328: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest
-	(*GetCustomVerifyEmailOTPMessageTextResponse)(nil),                      // 329: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse
-	(*GetDefaultVerifyEmailOTPMessageTextRequest)(nil),                      // 330: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest
-	(*GetDefaultVerifyEmailOTPMessageTextResponse)(nil),                     // 331: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse
-	(*SetDefaultVerifyEmailOTPMessageTextRequest)(nil),                      // 332: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest
-	(*SetDefaultVerifyEmailOTPMessageTextResponse)(nil),                     // 333: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse
-	(*ResetCustomVerifyEmailOTPMessageTextToDefaultRequest)(nil),            // 334: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest
-	(*ResetCustomVerifyEmailOTPMessageTextToDefaultResponse)(nil),           // 335: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse
-	(*GetDefaultDomainClaimedMessageTextRequest)(nil),                       // 336: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest
-	(*GetDefaultDomainClaimedMessageTextResponse)(nil),                      // 337: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse
-	(*GetCustomDomainClaimedMessageTextRequest)(nil),                        // 338: zitadel.admin.v1.GetCustomDomainClaimedMessageTextRequest
-	(*GetCustomDomainClaimedMessageTextResponse)(nil),                       // 339: zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse
-	(*SetDefaultDomainClaimedMessageTextRequest)(nil),                       // 340: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextRequest
-	(*SetDefaultDomainClaimedMessageTextResponse)(nil),                      // 341: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse
-	(*ResetCustomDomainClaimedMessageTextToDefaultRequest)(nil),             // 342: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultRequest
-	(*ResetCustomDomainClaimedMessageTextToDefaultResponse)(nil),            // 343: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse
-	(*GetDefaultPasswordChangeMessageTextRequest)(nil),                      // 344: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest
-	(*GetDefaultPasswordChangeMessageTextResponse)(nil),                     // 345: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse
-	(*GetCustomPasswordChangeMessageTextRequest)(nil),                       // 346: zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest
-	(*GetCustomPasswordChangeMessageTextResponse)(nil),                      // 347: zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse
-	(*SetDefaultPasswordChangeMessageTextRequest)(nil),                      // 348: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextRequest
-	(*SetDefaultPasswordChangeMessageTextResponse)(nil),                     // 349: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse
-	(*ResetCustomPasswordChangeMessageTextToDefaultRequest)(nil),            // 350: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultRequest
-	(*ResetCustomPasswordChangeMessageTextToDefaultResponse)(nil),           // 351: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse
-	(*GetDefaultInviteUserMessageTextRequest)(nil),                          // 352: zitadel.admin.v1.GetDefaultInviteUserMessageTextRequest
-	(*GetDefaultInviteUserMessageTextResponse)(nil),                         // 353: zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse
-	(*GetCustomInviteUserMessageTextRequest)(nil),                           // 354: zitadel.admin.v1.GetCustomInviteUserMessageTextRequest
-	(*GetCustomInviteUserMessageTextResponse)(nil),                          // 355: zitadel.admin.v1.GetCustomInviteUserMessageTextResponse
-	(*SetDefaultInviteUserMessageTextRequest)(nil),                          // 356: zitadel.admin.v1.SetDefaultInviteUserMessageTextRequest
-	(*SetDefaultInviteUserMessageTextResponse)(nil),                         // 357: zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse
-	(*ResetCustomInviteUserMessageTextToDefaultRequest)(nil),                // 358: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultRequest
-	(*ResetCustomInviteUserMessageTextToDefaultResponse)(nil),               // 359: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse
-	(*GetDefaultPasswordlessRegistrationMessageTextRequest)(nil),            // 360: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextRequest
-	(*GetDefaultPasswordlessRegistrationMessageTextResponse)(nil),           // 361: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse
-	(*GetCustomPasswordlessRegistrationMessageTextRequest)(nil),             // 362: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextRequest
-	(*GetCustomPasswordlessRegistrationMessageTextResponse)(nil),            // 363: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse
-	(*SetDefaultPasswordlessRegistrationMessageTextRequest)(nil),            // 364: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextRequest
-	(*SetDefaultPasswordlessRegistrationMessageTextResponse)(nil),           // 365: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse
-	(*ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest)(nil),  // 366: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest
-	(*ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse)(nil), // 367: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse
-	(*GetDefaultLoginTextsRequest)(nil),                                     // 368: zitadel.admin.v1.GetDefaultLoginTextsRequest
-	(*GetDefaultLoginTextsResponse)(nil),                                    // 369: zitadel.admin.v1.GetDefaultLoginTextsResponse
-	(*GetCustomLoginTextsRequest)(nil),                                      // 370: zitadel.admin.v1.GetCustomLoginTextsRequest
-	(*GetCustomLoginTextsResponse)(nil),                                     // 371: zitadel.admin.v1.GetCustomLoginTextsResponse
-	(*SetCustomLoginTextsRequest)(nil),                                      // 372: zitadel.admin.v1.SetCustomLoginTextsRequest
-	(*SetCustomLoginTextsResponse)(nil),                                     // 373: zitadel.admin.v1.SetCustomLoginTextsResponse
-	(*ResetCustomLoginTextsToDefaultRequest)(nil),                           // 374: zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest
-	(*ResetCustomLoginTextsToDefaultResponse)(nil),                          // 375: zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse
-	(*AddIAMMemberRequest)(nil),                                             // 376: zitadel.admin.v1.AddIAMMemberRequest
-	(*AddIAMMemberResponse)(nil),                                            // 377: zitadel.admin.v1.AddIAMMemberResponse
-	(*UpdateIAMMemberRequest)(nil),                                          // 378: zitadel.admin.v1.UpdateIAMMemberRequest
-	(*UpdateIAMMemberResponse)(nil),                                         // 379: zitadel.admin.v1.UpdateIAMMemberResponse
-	(*RemoveIAMMemberRequest)(nil),                                          // 380: zitadel.admin.v1.RemoveIAMMemberRequest
-	(*RemoveIAMMemberResponse)(nil),                                         // 381: zitadel.admin.v1.RemoveIAMMemberResponse
-	(*ListIAMMemberRolesRequest)(nil),                                       // 382: zitadel.admin.v1.ListIAMMemberRolesRequest
-	(*ListIAMMemberRolesResponse)(nil),                                      // 383: zitadel.admin.v1.ListIAMMemberRolesResponse
-	(*ListIAMMembersRequest)(nil),                                           // 384: zitadel.admin.v1.ListIAMMembersRequest
-	(*ListIAMMembersResponse)(nil),                                          // 385: zitadel.admin.v1.ListIAMMembersResponse
-	(*ListViewsRequest)(nil),                                                // 386: zitadel.admin.v1.ListViewsRequest
-	(*ListViewsResponse)(nil),                                               // 387: zitadel.admin.v1.ListViewsResponse
-	(*ListFailedEventsRequest)(nil),                                         // 388: zitadel.admin.v1.ListFailedEventsRequest
-	(*ListFailedEventsResponse)(nil),                                        // 389: zitadel.admin.v1.ListFailedEventsResponse
-	(*RemoveFailedEventRequest)(nil),                                        // 390: zitadel.admin.v1.RemoveFailedEventRequest
-	(*RemoveFailedEventResponse)(nil),                                       // 391: zitadel.admin.v1.RemoveFailedEventResponse
-	(*View)(nil),                                                            // 392: zitadel.admin.v1.View
-	(*FailedEvent)(nil),                                                     // 393: zitadel.admin.v1.FailedEvent
-	(*ImportDataRequest)(nil),                                               // 394: zitadel.admin.v1.ImportDataRequest
-	(*ImportDataOrg)(nil),                                                   // 395: zitadel.admin.v1.ImportDataOrg
-	(*DataOrg)(nil),                                                         // 396: zitadel.admin.v1.DataOrg
-	(*ImportDataResponse)(nil),                                              // 397: zitadel.admin.v1.ImportDataResponse
-	(*ImportDataError)(nil),                                                 // 398: zitadel.admin.v1.ImportDataError
-	(*ImportDataSuccess)(nil),                                               // 399: zitadel.admin.v1.ImportDataSuccess
-	(*ImportDataSuccessOrg)(nil),                                            // 400: zitadel.admin.v1.ImportDataSuccessOrg
-	(*ImportDataSuccessProjectGrant)(nil),                                   // 401: zitadel.admin.v1.ImportDataSuccessProjectGrant
-	(*ImportDataSuccessUserGrant)(nil),                                      // 402: zitadel.admin.v1.ImportDataSuccessUserGrant
-	(*ImportDataSuccessProjectMember)(nil),                                  // 403: zitadel.admin.v1.ImportDataSuccessProjectMember
-	(*ImportDataSuccessProjectGrantMember)(nil),                             // 404: zitadel.admin.v1.ImportDataSuccessProjectGrantMember
-	(*ImportDataSuccessUserLinks)(nil),                                      // 405: zitadel.admin.v1.ImportDataSuccessUserLinks
-	(*ImportDataSuccessUserMetadata)(nil),                                   // 406: zitadel.admin.v1.ImportDataSuccessUserMetadata
-	(*ExportDataRequest)(nil),                                               // 407: zitadel.admin.v1.ExportDataRequest
-	(*ExportDataResponse)(nil),                                              // 408: zitadel.admin.v1.ExportDataResponse
-	(*ListEventsRequest)(nil),                                               // 409: zitadel.admin.v1.ListEventsRequest
-	(*ListEventsResponse)(nil),                                              // 410: zitadel.admin.v1.ListEventsResponse
-	(*ListEventTypesRequest)(nil),                                           // 411: zitadel.admin.v1.ListEventTypesRequest
-	(*ListEventTypesResponse)(nil),                                          // 412: zitadel.admin.v1.ListEventTypesResponse
-	(*ListAggregateTypesRequest)(nil),                                       // 413: zitadel.admin.v1.ListAggregateTypesRequest
-	(*ListAggregateTypesResponse)(nil),                                      // 414: zitadel.admin.v1.ListAggregateTypesResponse
-	(*ActivateFeatureLoginDefaultOrgRequest)(nil),                           // 415: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgRequest
-	(*ActivateFeatureLoginDefaultOrgResponse)(nil),                          // 416: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse
-	(*ListMilestonesRequest)(nil),                                           // 417: zitadel.admin.v1.ListMilestonesRequest
-	(*ListMilestonesResponse)(nil),                                          // 418: zitadel.admin.v1.ListMilestonesResponse
-	(*SetRestrictionsRequest)(nil),                                          // 419: zitadel.admin.v1.SetRestrictionsRequest
-	(*SelectLanguages)(nil),                                                 // 420: zitadel.admin.v1.SelectLanguages
-	(*SetRestrictionsResponse)(nil),                                         // 421: zitadel.admin.v1.SetRestrictionsResponse
-	(*GetRestrictionsRequest)(nil),                                          // 422: zitadel.admin.v1.GetRestrictionsRequest
-	(*GetRestrictionsResponse)(nil),                                         // 423: zitadel.admin.v1.GetRestrictionsResponse
-	(*SetUpOrgRequest_Org)(nil),                                             // 424: zitadel.admin.v1.SetUpOrgRequest.Org
-	(*SetUpOrgRequest_Human)(nil),                                           // 425: zitadel.admin.v1.SetUpOrgRequest.Human
-	(*SetUpOrgRequest_Human_Profile)(nil),                                   // 426: zitadel.admin.v1.SetUpOrgRequest.Human.Profile
-	(*SetUpOrgRequest_Human_Email)(nil),                                     // 427: zitadel.admin.v1.SetUpOrgRequest.Human.Email
-	(*SetUpOrgRequest_Human_Phone)(nil),                                     // 428: zitadel.admin.v1.SetUpOrgRequest.Human.Phone
-	(*ImportDataRequest_LocalInput)(nil),                                    // 429: zitadel.admin.v1.ImportDataRequest.LocalInput
-	(*ImportDataRequest_S3Input)(nil),                                       // 430: zitadel.admin.v1.ImportDataRequest.S3Input
-	(*ImportDataRequest_GCSInput)(nil),                                      // 431: zitadel.admin.v1.ImportDataRequest.GCSInput
-	(*ExportDataRequest_LocalOutput)(nil),                                   // 432: zitadel.admin.v1.ExportDataRequest.LocalOutput
-	(*ExportDataRequest_S3Output)(nil),                                      // 433: zitadel.admin.v1.ExportDataRequest.S3Output
-	(*ExportDataRequest_GCSOutput)(nil),                                     // 434: zitadel.admin.v1.ExportDataRequest.GCSOutput
-	(*ListEventsRequestCreationDateRange)(nil),                              // 435: zitadel.admin.v1.ListEventsRequest.creation_date_range
-	(*object.ObjectDetails)(nil),                                            // 436: zitadel.v1.ObjectDetails
-	(*org.Org)(nil),                                                         // 437: zitadel.org.v1.Org
-	(*instance.InstanceDetail)(nil),                                         // 438: zitadel.instance.v1.InstanceDetail
-	(*object.ListQuery)(nil),                                                // 439: zitadel.v1.ListQuery
-	(instance.DomainFieldName)(0),                                           // 440: zitadel.instance.v1.DomainFieldName
-	(*instance.DomainSearchQuery)(nil),                                      // 441: zitadel.instance.v1.DomainSearchQuery
-	(*object.ListDetails)(nil),                                              // 442: zitadel.v1.ListDetails
-	(*instance.Domain)(nil),                                                 // 443: zitadel.instance.v1.Domain
-	(*instance.TrustedDomainSearchQuery)(nil),                               // 444: zitadel.instance.v1.TrustedDomainSearchQuery
-	(*instance.TrustedDomain)(nil),                                          // 445: zitadel.instance.v1.TrustedDomain
-	(*settings.SecretGeneratorQuery)(nil),                                   // 446: zitadel.settings.v1.SecretGeneratorQuery
-	(*settings.SecretGenerator)(nil),                                        // 447: zitadel.settings.v1.SecretGenerator
-	(settings.SecretGeneratorType)(0),                                       // 448: zitadel.settings.v1.SecretGeneratorType
-	(*durationpb.Duration)(nil),                                             // 449: google.protobuf.Duration
-	(*settings.SMTPConfig)(nil),                                             // 450: zitadel.settings.v1.SMTPConfig
-	(*settings.EmailProvider)(nil),                                          // 451: zitadel.settings.v1.EmailProvider
-	(*settings.SMSProvider)(nil),                                            // 452: zitadel.settings.v1.SMSProvider
-	(*settings.DebugNotificationProvider)(nil),                              // 453: zitadel.settings.v1.DebugNotificationProvider
-	(*settings.OIDCSettings)(nil),                                           // 454: zitadel.settings.v1.OIDCSettings
-	(*settings.SecurityPolicy)(nil),                                         // 455: zitadel.settings.v1.SecurityPolicy
-	(org.OrgFieldName)(0),                                                   // 456: zitadel.org.v1.OrgFieldName
-	(*org.OrgQuery)(nil),                                                    // 457: zitadel.org.v1.OrgQuery
-	(*idp.IDP)(nil),                                                         // 458: zitadel.idp.v1.IDP
-	(idp.IDPFieldName)(0),                                                   // 459: zitadel.idp.v1.IDPFieldName
-	(*idp.IDPIDQuery)(nil),                                                  // 460: zitadel.idp.v1.IDPIDQuery
-	(*idp.IDPNameQuery)(nil),                                                // 461: zitadel.idp.v1.IDPNameQuery
-	(idp.IDPStylingType)(0),                                                 // 462: zitadel.idp.v1.IDPStylingType
-	(idp.OIDCMappingField)(0),                                               // 463: zitadel.idp.v1.OIDCMappingField
-	(*idp.Provider)(nil),                                                    // 464: zitadel.idp.v1.Provider
-	(*idp.Options)(nil),                                                     // 465: zitadel.idp.v1.Options
-	(*idp.AzureADTenant)(nil),                                               // 466: zitadel.idp.v1.AzureADTenant
-	(*idp.LDAPAttributes)(nil),                                              // 467: zitadel.idp.v1.LDAPAttributes
-	(idp.SAMLBinding)(0),                                                    // 468: zitadel.idp.v1.SAMLBinding
-	(idp.SAMLNameIDFormat)(0),                                               // 469: zitadel.idp.v1.SAMLNameIDFormat
-	(idp.SAMLSignatureAlgorithm)(0),                                         // 470: zitadel.idp.v1.SAMLSignatureAlgorithm
-	(*policy.OrgIAMPolicy)(nil),                                             // 471: zitadel.policy.v1.OrgIAMPolicy
-	(*policy.DomainPolicy)(nil),                                             // 472: zitadel.policy.v1.DomainPolicy
-	(*policy.LabelPolicy)(nil),                                              // 473: zitadel.policy.v1.LabelPolicy
-	(policy.ThemeMode)(0),                                                   // 474: zitadel.policy.v1.ThemeMode
-	(*policy.LoginPolicy)(nil),                                              // 475: zitadel.policy.v1.LoginPolicy
-	(policy.PasswordlessType)(0),                                            // 476: zitadel.policy.v1.PasswordlessType
-	(*idp.IDPLoginPolicyLink)(nil),                                          // 477: zitadel.idp.v1.IDPLoginPolicyLink
-	(policy.SecondFactorType)(0),                                            // 478: zitadel.policy.v1.SecondFactorType
-	(policy.MultiFactorType)(0),                                             // 479: zitadel.policy.v1.MultiFactorType
-	(*policy.PasswordComplexityPolicy)(nil),                                 // 480: zitadel.policy.v1.PasswordComplexityPolicy
-	(*policy.PasswordAgePolicy)(nil),                                        // 481: zitadel.policy.v1.PasswordAgePolicy
-	(*policy.LockoutPolicy)(nil),                                            // 482: zitadel.policy.v1.LockoutPolicy
-	(*policy.PrivacyPolicy)(nil),                                            // 483: zitadel.policy.v1.PrivacyPolicy
-	(*policy.NotificationPolicy)(nil),                                       // 484: zitadel.policy.v1.NotificationPolicy
-	(*text.MessageCustomText)(nil),                                          // 485: zitadel.text.v1.MessageCustomText
-	(*text.LoginCustomText)(nil),                                            // 486: zitadel.text.v1.LoginCustomText
-	(*text.SelectAccountScreenText)(nil),                                    // 487: zitadel.text.v1.SelectAccountScreenText
-	(*text.LoginScreenText)(nil),                                            // 488: zitadel.text.v1.LoginScreenText
-	(*text.PasswordScreenText)(nil),                                         // 489: zitadel.text.v1.PasswordScreenText
-	(*text.UsernameChangeScreenText)(nil),                                   // 490: zitadel.text.v1.UsernameChangeScreenText
-	(*text.UsernameChangeDoneScreenText)(nil),                               // 491: zitadel.text.v1.UsernameChangeDoneScreenText
-	(*text.InitPasswordScreenText)(nil),                                     // 492: zitadel.text.v1.InitPasswordScreenText
-	(*text.InitPasswordDoneScreenText)(nil),                                 // 493: zitadel.text.v1.InitPasswordDoneScreenText
-	(*text.EmailVerificationScreenText)(nil),                                // 494: zitadel.text.v1.EmailVerificationScreenText
-	(*text.EmailVerificationDoneScreenText)(nil),                            // 495: zitadel.text.v1.EmailVerificationDoneScreenText
-	(*text.InitializeUserScreenText)(nil),                                   // 496: zitadel.text.v1.InitializeUserScreenText
-	(*text.InitializeUserDoneScreenText)(nil),                               // 497: zitadel.text.v1.InitializeUserDoneScreenText
-	(*text.InitMFAPromptScreenText)(nil),                                    // 498: zitadel.text.v1.InitMFAPromptScreenText
-	(*text.InitMFAOTPScreenText)(nil),                                       // 499: zitadel.text.v1.InitMFAOTPScreenText
-	(*text.InitMFAU2FScreenText)(nil),                                       // 500: zitadel.text.v1.InitMFAU2FScreenText
-	(*text.InitMFADoneScreenText)(nil),                                      // 501: zitadel.text.v1.InitMFADoneScreenText
-	(*text.MFAProvidersText)(nil),                                           // 502: zitadel.text.v1.MFAProvidersText
-	(*text.VerifyMFAOTPScreenText)(nil),                                     // 503: zitadel.text.v1.VerifyMFAOTPScreenText
-	(*text.VerifyMFAU2FScreenText)(nil),                                     // 504: zitadel.text.v1.VerifyMFAU2FScreenText
-	(*text.PasswordlessScreenText)(nil),                                     // 505: zitadel.text.v1.PasswordlessScreenText
-	(*text.PasswordChangeScreenText)(nil),                                   // 506: zitadel.text.v1.PasswordChangeScreenText
-	(*text.PasswordChangeDoneScreenText)(nil),                               // 507: zitadel.text.v1.PasswordChangeDoneScreenText
-	(*text.PasswordResetDoneScreenText)(nil),                                // 508: zitadel.text.v1.PasswordResetDoneScreenText
-	(*text.RegistrationOptionScreenText)(nil),                               // 509: zitadel.text.v1.RegistrationOptionScreenText
-	(*text.RegistrationUserScreenText)(nil),                                 // 510: zitadel.text.v1.RegistrationUserScreenText
-	(*text.RegistrationOrgScreenText)(nil),                                  // 511: zitadel.text.v1.RegistrationOrgScreenText
-	(*text.LinkingUserDoneScreenText)(nil),                                  // 512: zitadel.text.v1.LinkingUserDoneScreenText
-	(*text.ExternalUserNotFoundScreenText)(nil),                             // 513: zitadel.text.v1.ExternalUserNotFoundScreenText
-	(*text.SuccessLoginScreenText)(nil),                                     // 514: zitadel.text.v1.SuccessLoginScreenText
-	(*text.LogoutDoneScreenText)(nil),                                       // 515: zitadel.text.v1.LogoutDoneScreenText
-	(*text.FooterText)(nil),                                                 // 516: zitadel.text.v1.FooterText
-	(*text.PasswordlessPromptScreenText)(nil),                               // 517: zitadel.text.v1.PasswordlessPromptScreenText
-	(*text.PasswordlessRegistrationScreenText)(nil),                         // 518: zitadel.text.v1.PasswordlessRegistrationScreenText
-	(*text.PasswordlessRegistrationDoneScreenText)(nil),                     // 519: zitadel.text.v1.PasswordlessRegistrationDoneScreenText
-	(*text.ExternalRegistrationUserOverviewScreenText)(nil),                 // 520: zitadel.text.v1.ExternalRegistrationUserOverviewScreenText
-	(*text.LinkingUserPromptScreenText)(nil),                                // 521: zitadel.text.v1.LinkingUserPromptScreenText
-	(*member.SearchQuery)(nil),                                              // 522: zitadel.member.v1.SearchQuery
-	(member.MemberFieldColumnName)(0),                                       // 523: zitadel.member.v1.MemberFieldColumnName
-	(*member.Member)(nil),                                                   // 524: zitadel.member.v1.Member
-	(*timestamppb.Timestamp)(nil),                                           // 525: google.protobuf.Timestamp
-	(*v1.ImportDataOrg)(nil),                                                // 526: zitadel.v1.v1.ImportDataOrg
-	(*management.AddOrgRequest)(nil),                                        // 527: zitadel.management.v1.AddOrgRequest
-	(*management.AddCustomLabelPolicyRequest)(nil),                          // 528: zitadel.management.v1.AddCustomLabelPolicyRequest
-	(*management.AddCustomLockoutPolicyRequest)(nil),                        // 529: zitadel.management.v1.AddCustomLockoutPolicyRequest
-	(*management.AddCustomLoginPolicyRequest)(nil),                          // 530: zitadel.management.v1.AddCustomLoginPolicyRequest
-	(*management.AddCustomPasswordComplexityPolicyRequest)(nil),             // 531: zitadel.management.v1.AddCustomPasswordComplexityPolicyRequest
-	(*management.AddCustomPrivacyPolicyRequest)(nil),                        // 532: zitadel.management.v1.AddCustomPrivacyPolicyRequest
-	(*v1.DataProject)(nil),                                                  // 533: zitadel.v1.v1.DataProject
-	(*management.AddProjectRoleRequest)(nil),                                // 534: zitadel.management.v1.AddProjectRoleRequest
-	(*v1.DataAPIApplication)(nil),                                           // 535: zitadel.v1.v1.DataAPIApplication
-	(*v1.DataOIDCApplication)(nil),                                          // 536: zitadel.v1.v1.DataOIDCApplication
-	(*v1.DataHumanUser)(nil),                                                // 537: zitadel.v1.v1.DataHumanUser
-	(*v1.DataMachineUser)(nil),                                              // 538: zitadel.v1.v1.DataMachineUser
-	(*management.SetTriggerActionsRequest)(nil),                             // 539: zitadel.management.v1.SetTriggerActionsRequest
-	(*v1.DataAction)(nil),                                                   // 540: zitadel.v1.v1.DataAction
-	(*v1.DataProjectGrant)(nil),                                             // 541: zitadel.v1.v1.DataProjectGrant
-	(*management.AddUserGrantRequest)(nil),                                  // 542: zitadel.management.v1.AddUserGrantRequest
-	(*management.AddOrgMemberRequest)(nil),                                  // 543: zitadel.management.v1.AddOrgMemberRequest
-	(*management.AddProjectMemberRequest)(nil),                              // 544: zitadel.management.v1.AddProjectMemberRequest
-	(*management.AddProjectGrantMemberRequest)(nil),                         // 545: zitadel.management.v1.AddProjectGrantMemberRequest
-	(*management.SetUserMetadataRequest)(nil),                               // 546: zitadel.management.v1.SetUserMetadataRequest
-	(*management.SetCustomLoginTextsRequest)(nil),                           // 547: zitadel.management.v1.SetCustomLoginTextsRequest
-	(*management.SetCustomInitMessageTextRequest)(nil),                      // 548: zitadel.management.v1.SetCustomInitMessageTextRequest
-	(*management.SetCustomPasswordResetMessageTextRequest)(nil),             // 549: zitadel.management.v1.SetCustomPasswordResetMessageTextRequest
-	(*management.SetCustomVerifyEmailMessageTextRequest)(nil),               // 550: zitadel.management.v1.SetCustomVerifyEmailMessageTextRequest
-	(*management.SetCustomVerifyPhoneMessageTextRequest)(nil),               // 551: zitadel.management.v1.SetCustomVerifyPhoneMessageTextRequest
-	(*management.SetCustomDomainClaimedMessageTextRequest)(nil),             // 552: zitadel.management.v1.SetCustomDomainClaimedMessageTextRequest
-	(*management.SetCustomPasswordlessRegistrationMessageTextRequest)(nil),  // 553: zitadel.management.v1.SetCustomPasswordlessRegistrationMessageTextRequest
-	(*v1.DataOIDCIDP)(nil),                                                  // 554: zitadel.v1.v1.DataOIDCIDP
-	(*v1.DataJWTIDP)(nil),                                                   // 555: zitadel.v1.v1.DataJWTIDP
-	(*idp.IDPUserLink)(nil),                                                 // 556: zitadel.idp.v1.IDPUserLink
-	(*org.Domain)(nil),                                                      // 557: zitadel.org.v1.Domain
-	(*v1.DataAppKey)(nil),                                                   // 558: zitadel.v1.v1.DataAppKey
-	(*v1.DataMachineKey)(nil),                                               // 559: zitadel.v1.v1.DataMachineKey
-	(*management.SetCustomVerifySMSOTPMessageTextRequest)(nil),              // 560: zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest
-	(*management.SetCustomVerifyEmailOTPMessageTextRequest)(nil),            // 561: zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest
-	(*management.SetCustomInviteUserMessageTextRequest)(nil),                // 562: zitadel.management.v1.SetCustomInviteUserMessageTextRequest
-	(org.OrgState)(0),                                                       // 563: zitadel.org.v1.OrgState
-	(*event.Event)(nil),                                                     // 564: zitadel.event.v1.Event
-	(*event.EventType)(nil),                                                 // 565: zitadel.event.v1.EventType
-	(*event.AggregateType)(nil),                                             // 566: zitadel.event.v1.AggregateType
-	(milestone.MilestoneFieldName)(0),                                       // 567: zitadel.milestone.v1.MilestoneFieldName
-	(*milestone.MilestoneQuery)(nil),                                        // 568: zitadel.milestone.v1.MilestoneQuery
-	(*milestone.Milestone)(nil),                                             // 569: zitadel.milestone.v1.Milestone
-	(user.Gender)(0),                                                        // 570: zitadel.user.v1.Gender
+	(*SMTPNoAuth)(nil),                                                      // 59: zitadel.admin.v1.SMTPNoAuth
+	(*SMTPPlainAuth)(nil),                                                   // 60: zitadel.admin.v1.SMTPPlainAuth
+	(*SMTPXOAuth2Auth)(nil),                                                 // 61: zitadel.admin.v1.SMTPXOAuth2Auth
+	(*AddEmailProviderSMTPResponse)(nil),                                    // 62: zitadel.admin.v1.AddEmailProviderSMTPResponse
+	(*UpdateEmailProviderSMTPRequest)(nil),                                  // 63: zitadel.admin.v1.UpdateEmailProviderSMTPRequest
+	(*UpdateEmailProviderSMTPResponse)(nil),                                 // 64: zitadel.admin.v1.UpdateEmailProviderSMTPResponse
+	(*UpdateEmailProviderSMTPPasswordRequest)(nil),                          // 65: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordRequest
+	(*UpdateEmailProviderSMTPPasswordResponse)(nil),                         // 66: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse
+	(*AddEmailProviderHTTPRequest)(nil),                                     // 67: zitadel.admin.v1.AddEmailProviderHTTPRequest
+	(*AddEmailProviderHTTPResponse)(nil),                                    // 68: zitadel.admin.v1.AddEmailProviderHTTPResponse
+	(*UpdateEmailProviderHTTPRequest)(nil),                                  // 69: zitadel.admin.v1.UpdateEmailProviderHTTPRequest
+	(*UpdateEmailProviderHTTPResponse)(nil),                                 // 70: zitadel.admin.v1.UpdateEmailProviderHTTPResponse
+	(*ActivateEmailProviderRequest)(nil),                                    // 71: zitadel.admin.v1.ActivateEmailProviderRequest
+	(*ActivateEmailProviderResponse)(nil),                                   // 72: zitadel.admin.v1.ActivateEmailProviderResponse
+	(*DeactivateEmailProviderRequest)(nil),                                  // 73: zitadel.admin.v1.DeactivateEmailProviderRequest
+	(*DeactivateEmailProviderResponse)(nil),                                 // 74: zitadel.admin.v1.DeactivateEmailProviderResponse
+	(*RemoveEmailProviderRequest)(nil),                                      // 75: zitadel.admin.v1.RemoveEmailProviderRequest
+	(*RemoveEmailProviderResponse)(nil),                                     // 76: zitadel.admin.v1.RemoveEmailProviderResponse
+	(*TestEmailProviderSMTPByIdRequest)(nil),                                // 77: zitadel.admin.v1.TestEmailProviderSMTPByIdRequest
+	(*TestEmailProviderSMTPByIdResponse)(nil),                               // 78: zitadel.admin.v1.TestEmailProviderSMTPByIdResponse
+	(*TestEmailProviderSMTPRequest)(nil),                                    // 79: zitadel.admin.v1.TestEmailProviderSMTPRequest
+	(*TestEmailProviderSMTPResponse)(nil),                                   // 80: zitadel.admin.v1.TestEmailProviderSMTPResponse
+	(*ListSMSProvidersRequest)(nil),                                         // 81: zitadel.admin.v1.ListSMSProvidersRequest
+	(*ListSMSProvidersResponse)(nil),                                        // 82: zitadel.admin.v1.ListSMSProvidersResponse
+	(*GetSMSProviderRequest)(nil),                                           // 83: zitadel.admin.v1.GetSMSProviderRequest
+	(*GetSMSProviderResponse)(nil),                                          // 84: zitadel.admin.v1.GetSMSProviderResponse
+	(*AddSMSProviderTwilioRequest)(nil),                                     // 85: zitadel.admin.v1.AddSMSProviderTwilioRequest
+	(*AddSMSProviderTwilioResponse)(nil),                                    // 86: zitadel.admin.v1.AddSMSProviderTwilioResponse
+	(*UpdateSMSProviderTwilioRequest)(nil),                                  // 87: zitadel.admin.v1.UpdateSMSProviderTwilioRequest
+	(*UpdateSMSProviderTwilioResponse)(nil),                                 // 88: zitadel.admin.v1.UpdateSMSProviderTwilioResponse
+	(*UpdateSMSProviderTwilioTokenRequest)(nil),                             // 89: zitadel.admin.v1.UpdateSMSProviderTwilioTokenRequest
+	(*UpdateSMSProviderTwilioTokenResponse)(nil),                            // 90: zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse
+	(*AddSMSProviderHTTPRequest)(nil),                                       // 91: zitadel.admin.v1.AddSMSProviderHTTPRequest
+	(*AddSMSProviderHTTPResponse)(nil),                                      // 92: zitadel.admin.v1.AddSMSProviderHTTPResponse
+	(*UpdateSMSProviderHTTPRequest)(nil),                                    // 93: zitadel.admin.v1.UpdateSMSProviderHTTPRequest
+	(*UpdateSMSProviderHTTPResponse)(nil),                                   // 94: zitadel.admin.v1.UpdateSMSProviderHTTPResponse
+	(*ActivateSMSProviderRequest)(nil),                                      // 95: zitadel.admin.v1.ActivateSMSProviderRequest
+	(*ActivateSMSProviderResponse)(nil),                                     // 96: zitadel.admin.v1.ActivateSMSProviderResponse
+	(*DeactivateSMSProviderRequest)(nil),                                    // 97: zitadel.admin.v1.DeactivateSMSProviderRequest
+	(*DeactivateSMSProviderResponse)(nil),                                   // 98: zitadel.admin.v1.DeactivateSMSProviderResponse
+	(*RemoveSMSProviderRequest)(nil),                                        // 99: zitadel.admin.v1.RemoveSMSProviderRequest
+	(*RemoveSMSProviderResponse)(nil),                                       // 100: zitadel.admin.v1.RemoveSMSProviderResponse
+	(*GetFileSystemNotificationProviderRequest)(nil),                        // 101: zitadel.admin.v1.GetFileSystemNotificationProviderRequest
+	(*GetFileSystemNotificationProviderResponse)(nil),                       // 102: zitadel.admin.v1.GetFileSystemNotificationProviderResponse
+	(*GetLogNotificationProviderRequest)(nil),                               // 103: zitadel.admin.v1.GetLogNotificationProviderRequest
+	(*GetLogNotificationProviderResponse)(nil),                              // 104: zitadel.admin.v1.GetLogNotificationProviderResponse
+	(*GetOIDCSettingsRequest)(nil),                                          // 105: zitadel.admin.v1.GetOIDCSettingsRequest
+	(*GetOIDCSettingsResponse)(nil),                                         // 106: zitadel.admin.v1.GetOIDCSettingsResponse
+	(*AddOIDCSettingsRequest)(nil),                                          // 107: zitadel.admin.v1.AddOIDCSettingsRequest
+	(*AddOIDCSettingsResponse)(nil),                                         // 108: zitadel.admin.v1.AddOIDCSettingsResponse
+	(*UpdateOIDCSettingsRequest)(nil),                                       // 109: zitadel.admin.v1.UpdateOIDCSettingsRequest
+	(*UpdateOIDCSettingsResponse)(nil),                                      // 110: zitadel.admin.v1.UpdateOIDCSettingsResponse
+	(*GetSecurityPolicyRequest)(nil),                                        // 111: zitadel.admin.v1.GetSecurityPolicyRequest
+	(*GetSecurityPolicyResponse)(nil),                                       // 112: zitadel.admin.v1.GetSecurityPolicyResponse
+	(*SetSecurityPolicyRequest)(nil),                                        // 113: zitadel.admin.v1.SetSecurityPolicyRequest
+	(*SetSecurityPolicyResponse)(nil),                                       // 114: zitadel.admin.v1.SetSecurityPolicyResponse
+	(*IsOrgUniqueRequest)(nil),                                              // 115: zitadel.admin.v1.IsOrgUniqueRequest
+	(*IsOrgUniqueResponse)(nil),                                             // 116: zitadel.admin.v1.IsOrgUniqueResponse
+	(*GetOrgByIDRequest)(nil),                                               // 117: zitadel.admin.v1.GetOrgByIDRequest
+	(*GetOrgByIDResponse)(nil),                                              // 118: zitadel.admin.v1.GetOrgByIDResponse
+	(*ListOrgsRequest)(nil),                                                 // 119: zitadel.admin.v1.ListOrgsRequest
+	(*ListOrgsResponse)(nil),                                                // 120: zitadel.admin.v1.ListOrgsResponse
+	(*SetUpOrgRequest)(nil),                                                 // 121: zitadel.admin.v1.SetUpOrgRequest
+	(*SetUpOrgResponse)(nil),                                                // 122: zitadel.admin.v1.SetUpOrgResponse
+	(*RemoveOrgRequest)(nil),                                                // 123: zitadel.admin.v1.RemoveOrgRequest
+	(*RemoveOrgResponse)(nil),                                               // 124: zitadel.admin.v1.RemoveOrgResponse
+	(*GetIDPByIDRequest)(nil),                                               // 125: zitadel.admin.v1.GetIDPByIDRequest
+	(*GetIDPByIDResponse)(nil),                                              // 126: zitadel.admin.v1.GetIDPByIDResponse
+	(*ListIDPsRequest)(nil),                                                 // 127: zitadel.admin.v1.ListIDPsRequest
+	(*IDPQuery)(nil),                                                        // 128: zitadel.admin.v1.IDPQuery
+	(*ListIDPsResponse)(nil),                                                // 129: zitadel.admin.v1.ListIDPsResponse
+	(*AddOIDCIDPRequest)(nil),                                               // 130: zitadel.admin.v1.AddOIDCIDPRequest
+	(*AddOIDCIDPResponse)(nil),                                              // 131: zitadel.admin.v1.AddOIDCIDPResponse
+	(*AddJWTIDPRequest)(nil),                                                // 132: zitadel.admin.v1.AddJWTIDPRequest
+	(*AddJWTIDPResponse)(nil),                                               // 133: zitadel.admin.v1.AddJWTIDPResponse
+	(*UpdateIDPRequest)(nil),                                                // 134: zitadel.admin.v1.UpdateIDPRequest
+	(*UpdateIDPResponse)(nil),                                               // 135: zitadel.admin.v1.UpdateIDPResponse
+	(*DeactivateIDPRequest)(nil),                                            // 136: zitadel.admin.v1.DeactivateIDPRequest
+	(*DeactivateIDPResponse)(nil),                                           // 137: zitadel.admin.v1.DeactivateIDPResponse
+	(*ReactivateIDPRequest)(nil),                                            // 138: zitadel.admin.v1.ReactivateIDPRequest
+	(*ReactivateIDPResponse)(nil),                                           // 139: zitadel.admin.v1.ReactivateIDPResponse
+	(*RemoveIDPRequest)(nil),                                                // 140: zitadel.admin.v1.RemoveIDPRequest
+	(*RemoveIDPResponse)(nil),                                               // 141: zitadel.admin.v1.RemoveIDPResponse
+	(*UpdateIDPOIDCConfigRequest)(nil),                                      // 142: zitadel.admin.v1.UpdateIDPOIDCConfigRequest
+	(*UpdateIDPOIDCConfigResponse)(nil),                                     // 143: zitadel.admin.v1.UpdateIDPOIDCConfigResponse
+	(*UpdateIDPJWTConfigRequest)(nil),                                       // 144: zitadel.admin.v1.UpdateIDPJWTConfigRequest
+	(*UpdateIDPJWTConfigResponse)(nil),                                      // 145: zitadel.admin.v1.UpdateIDPJWTConfigResponse
+	(*ListProvidersRequest)(nil),                                            // 146: zitadel.admin.v1.ListProvidersRequest
+	(*ProviderQuery)(nil),                                                   // 147: zitadel.admin.v1.ProviderQuery
+	(*ListProvidersResponse)(nil),                                           // 148: zitadel.admin.v1.ListProvidersResponse
+	(*GetProviderByIDRequest)(nil),                                          // 149: zitadel.admin.v1.GetProviderByIDRequest
+	(*GetProviderByIDResponse)(nil),                                         // 150: zitadel.admin.v1.GetProviderByIDResponse
+	(*AddGenericOAuthProviderRequest)(nil),                                  // 151: zitadel.admin.v1.AddGenericOAuthProviderRequest
+	(*AddGenericOAuthProviderResponse)(nil),                                 // 152: zitadel.admin.v1.AddGenericOAuthProviderResponse
+	(*UpdateGenericOAuthProviderRequest)(nil),                               // 153: zitadel.admin.v1.UpdateGenericOAuthProviderRequest
+	(*UpdateGenericOAuthProviderResponse)(nil),                              // 154: zitadel.admin.v1.UpdateGenericOAuthProviderResponse
+	(*AddGenericOIDCProviderRequest)(nil),                                   // 155: zitadel.admin.v1.AddGenericOIDCProviderRequest
+	(*AddGenericOIDCProviderResponse)(nil),                                  // 156: zitadel.admin.v1.AddGenericOIDCProviderResponse
+	(*UpdateGenericOIDCProviderRequest)(nil),                                // 157: zitadel.admin.v1.UpdateGenericOIDCProviderRequest
+	(*UpdateGenericOIDCProviderResponse)(nil),                               // 158: zitadel.admin.v1.UpdateGenericOIDCProviderResponse
+	(*MigrateGenericOIDCProviderRequest)(nil),                               // 159: zitadel.admin.v1.MigrateGenericOIDCProviderRequest
+	(*MigrateGenericOIDCProviderResponse)(nil),                              // 160: zitadel.admin.v1.MigrateGenericOIDCProviderResponse
+	(*AddJWTProviderRequest)(nil),                                           // 161: zitadel.admin.v1.AddJWTProviderRequest
+	(*AddJWTProviderResponse)(nil),                                          // 162: zitadel.admin.v1.AddJWTProviderResponse
+	(*UpdateJWTProviderRequest)(nil),                                        // 163: zitadel.admin.v1.UpdateJWTProviderRequest
+	(*UpdateJWTProviderResponse)(nil),                                       // 164: zitadel.admin.v1.UpdateJWTProviderResponse
+	(*AddAzureADProviderRequest)(nil),                                       // 165: zitadel.admin.v1.AddAzureADProviderRequest
+	(*AddAzureADProviderResponse)(nil),                                      // 166: zitadel.admin.v1.AddAzureADProviderResponse
+	(*UpdateAzureADProviderRequest)(nil),                                    // 167: zitadel.admin.v1.UpdateAzureADProviderRequest
+	(*UpdateAzureADProviderResponse)(nil),                                   // 168: zitadel.admin.v1.UpdateAzureADProviderResponse
+	(*AddGitHubProviderRequest)(nil),                                        // 169: zitadel.admin.v1.AddGitHubProviderRequest
+	(*AddGitHubProviderResponse)(nil),                                       // 170: zitadel.admin.v1.AddGitHubProviderResponse
+	(*UpdateGitHubProviderRequest)(nil),                                     // 171: zitadel.admin.v1.UpdateGitHubProviderRequest
+	(*UpdateGitHubProviderResponse)(nil),                                    // 172: zitadel.admin.v1.UpdateGitHubProviderResponse
+	(*AddGitHubEnterpriseServerProviderRequest)(nil),                        // 173: zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest
+	(*AddGitHubEnterpriseServerProviderResponse)(nil),                       // 174: zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse
+	(*UpdateGitHubEnterpriseServerProviderRequest)(nil),                     // 175: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest
+	(*UpdateGitHubEnterpriseServerProviderResponse)(nil),                    // 176: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse
+	(*AddGitLabProviderRequest)(nil),                                        // 177: zitadel.admin.v1.AddGitLabProviderRequest
+	(*AddGitLabProviderResponse)(nil),                                       // 178: zitadel.admin.v1.AddGitLabProviderResponse
+	(*UpdateGitLabProviderRequest)(nil),                                     // 179: zitadel.admin.v1.UpdateGitLabProviderRequest
+	(*UpdateGitLabProviderResponse)(nil),                                    // 180: zitadel.admin.v1.UpdateGitLabProviderResponse
+	(*AddGitLabSelfHostedProviderRequest)(nil),                              // 181: zitadel.admin.v1.AddGitLabSelfHostedProviderRequest
+	(*AddGitLabSelfHostedProviderResponse)(nil),                             // 182: zitadel.admin.v1.AddGitLabSelfHostedProviderResponse
+	(*UpdateGitLabSelfHostedProviderRequest)(nil),                           // 183: zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest
+	(*UpdateGitLabSelfHostedProviderResponse)(nil),                          // 184: zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse
+	(*AddGoogleProviderRequest)(nil),                                        // 185: zitadel.admin.v1.AddGoogleProviderRequest
+	(*AddGoogleProviderResponse)(nil),                                       // 186: zitadel.admin.v1.AddGoogleProviderResponse
+	(*UpdateGoogleProviderRequest)(nil),                                     // 187: zitadel.admin.v1.UpdateGoogleProviderRequest
+	(*UpdateGoogleProviderResponse)(nil),                                    // 188: zitadel.admin.v1.UpdateGoogleProviderResponse
+	(*AddLDAPProviderRequest)(nil),                                          // 189: zitadel.admin.v1.AddLDAPProviderRequest
+	(*AddLDAPProviderResponse)(nil),                                         // 190: zitadel.admin.v1.AddLDAPProviderResponse
+	(*UpdateLDAPProviderRequest)(nil),                                       // 191: zitadel.admin.v1.UpdateLDAPProviderRequest
+	(*UpdateLDAPProviderResponse)(nil),                                      // 192: zitadel.admin.v1.UpdateLDAPProviderResponse
+	(*AddAppleProviderRequest)(nil),                                         // 193: zitadel.admin.v1.AddAppleProviderRequest
+	(*AddAppleProviderResponse)(nil),                                        // 194: zitadel.admin.v1.AddAppleProviderResponse
+	(*UpdateAppleProviderRequest)(nil),                                      // 195: zitadel.admin.v1.UpdateAppleProviderRequest
+	(*UpdateAppleProviderResponse)(nil),                                     // 196: zitadel.admin.v1.UpdateAppleProviderResponse
+	(*AddSAMLProviderRequest)(nil),                                          // 197: zitadel.admin.v1.AddSAMLProviderRequest
+	(*AddSAMLProviderResponse)(nil),                                         // 198: zitadel.admin.v1.AddSAMLProviderResponse
+	(*UpdateSAMLProviderRequest)(nil),                                       // 199: zitadel.admin.v1.UpdateSAMLProviderRequest
+	(*UpdateSAMLProviderResponse)(nil),                                      // 200: zitadel.admin.v1.UpdateSAMLProviderResponse
+	(*RegenerateSAMLProviderCertificateRequest)(nil),                        // 201: zitadel.admin.v1.RegenerateSAMLProviderCertificateRequest
+	(*RegenerateSAMLProviderCertificateResponse)(nil),                       // 202: zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse
+	(*DeleteProviderRequest)(nil),                                           // 203: zitadel.admin.v1.DeleteProviderRequest
+	(*DeleteProviderResponse)(nil),                                          // 204: zitadel.admin.v1.DeleteProviderResponse
+	(*GetOrgIAMPolicyRequest)(nil),                                          // 205: zitadel.admin.v1.GetOrgIAMPolicyRequest
+	(*GetOrgIAMPolicyResponse)(nil),                                         // 206: zitadel.admin.v1.GetOrgIAMPolicyResponse
+	(*UpdateOrgIAMPolicyRequest)(nil),                                       // 207: zitadel.admin.v1.UpdateOrgIAMPolicyRequest
+	(*UpdateOrgIAMPolicyResponse)(nil),                                      // 208: zitadel.admin.v1.UpdateOrgIAMPolicyResponse
+	(*GetCustomOrgIAMPolicyRequest)(nil),                                    // 209: zitadel.admin.v1.GetCustomOrgIAMPolicyRequest
+	(*GetCustomOrgIAMPolicyResponse)(nil),                                   // 210: zitadel.admin.v1.GetCustomOrgIAMPolicyResponse
+	(*AddCustomOrgIAMPolicyRequest)(nil),                                    // 211: zitadel.admin.v1.AddCustomOrgIAMPolicyRequest
+	(*AddCustomOrgIAMPolicyResponse)(nil),                                   // 212: zitadel.admin.v1.AddCustomOrgIAMPolicyResponse
+	(*UpdateCustomOrgIAMPolicyRequest)(nil),                                 // 213: zitadel.admin.v1.UpdateCustomOrgIAMPolicyRequest
+	(*UpdateCustomOrgIAMPolicyResponse)(nil),                                // 214: zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse
+	(*ResetCustomOrgIAMPolicyToDefaultRequest)(nil),                         // 215: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultRequest
+	(*ResetCustomOrgIAMPolicyToDefaultResponse)(nil),                        // 216: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse
+	(*GetDomainPolicyRequest)(nil),                                          // 217: zitadel.admin.v1.GetDomainPolicyRequest
+	(*GetDomainPolicyResponse)(nil),                                         // 218: zitadel.admin.v1.GetDomainPolicyResponse
+	(*UpdateDomainPolicyRequest)(nil),                                       // 219: zitadel.admin.v1.UpdateDomainPolicyRequest
+	(*UpdateDomainPolicyResponse)(nil),                                      // 220: zitadel.admin.v1.UpdateDomainPolicyResponse
+	(*GetCustomDomainPolicyRequest)(nil),                                    // 221: zitadel.admin.v1.GetCustomDomainPolicyRequest
+	(*GetCustomDomainPolicyResponse)(nil),                                   // 222: zitadel.admin.v1.GetCustomDomainPolicyResponse
+	(*AddCustomDomainPolicyRequest)(nil),                                    // 223: zitadel.admin.v1.AddCustomDomainPolicyRequest
+	(*AddCustomDomainPolicyResponse)(nil),                                   // 224: zitadel.admin.v1.AddCustomDomainPolicyResponse
+	(*UpdateCustomDomainPolicyRequest)(nil),                                 // 225: zitadel.admin.v1.UpdateCustomDomainPolicyRequest
+	(*UpdateCustomDomainPolicyResponse)(nil),                                // 226: zitadel.admin.v1.UpdateCustomDomainPolicyResponse
+	(*ResetCustomDomainPolicyToDefaultRequest)(nil),                         // 227: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultRequest
+	(*ResetCustomDomainPolicyToDefaultResponse)(nil),                        // 228: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse
+	(*GetLabelPolicyRequest)(nil),                                           // 229: zitadel.admin.v1.GetLabelPolicyRequest
+	(*GetLabelPolicyResponse)(nil),                                          // 230: zitadel.admin.v1.GetLabelPolicyResponse
+	(*GetPreviewLabelPolicyRequest)(nil),                                    // 231: zitadel.admin.v1.GetPreviewLabelPolicyRequest
+	(*GetPreviewLabelPolicyResponse)(nil),                                   // 232: zitadel.admin.v1.GetPreviewLabelPolicyResponse
+	(*UpdateLabelPolicyRequest)(nil),                                        // 233: zitadel.admin.v1.UpdateLabelPolicyRequest
+	(*UpdateLabelPolicyResponse)(nil),                                       // 234: zitadel.admin.v1.UpdateLabelPolicyResponse
+	(*ActivateLabelPolicyRequest)(nil),                                      // 235: zitadel.admin.v1.ActivateLabelPolicyRequest
+	(*ActivateLabelPolicyResponse)(nil),                                     // 236: zitadel.admin.v1.ActivateLabelPolicyResponse
+	(*RemoveLabelPolicyLogoRequest)(nil),                                    // 237: zitadel.admin.v1.RemoveLabelPolicyLogoRequest
+	(*RemoveLabelPolicyLogoResponse)(nil),                                   // 238: zitadel.admin.v1.RemoveLabelPolicyLogoResponse
+	(*RemoveLabelPolicyLogoDarkRequest)(nil),                                // 239: zitadel.admin.v1.RemoveLabelPolicyLogoDarkRequest
+	(*RemoveLabelPolicyLogoDarkResponse)(nil),                               // 240: zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse
+	(*RemoveLabelPolicyIconRequest)(nil),                                    // 241: zitadel.admin.v1.RemoveLabelPolicyIconRequest
+	(*RemoveLabelPolicyIconResponse)(nil),                                   // 242: zitadel.admin.v1.RemoveLabelPolicyIconResponse
+	(*RemoveLabelPolicyIconDarkRequest)(nil),                                // 243: zitadel.admin.v1.RemoveLabelPolicyIconDarkRequest
+	(*RemoveLabelPolicyIconDarkResponse)(nil),                               // 244: zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse
+	(*RemoveLabelPolicyFontRequest)(nil),                                    // 245: zitadel.admin.v1.RemoveLabelPolicyFontRequest
+	(*RemoveLabelPolicyFontResponse)(nil),                                   // 246: zitadel.admin.v1.RemoveLabelPolicyFontResponse
+	(*GetLoginPolicyRequest)(nil),                                           // 247: zitadel.admin.v1.GetLoginPolicyRequest
+	(*GetLoginPolicyResponse)(nil),                                          // 248: zitadel.admin.v1.GetLoginPolicyResponse
+	(*UpdateLoginPolicyRequest)(nil),                                        // 249: zitadel.admin.v1.UpdateLoginPolicyRequest
+	(*UpdateLoginPolicyResponse)(nil),                                       // 250: zitadel.admin.v1.UpdateLoginPolicyResponse
+	(*ListLoginPolicyIDPsRequest)(nil),                                      // 251: zitadel.admin.v1.ListLoginPolicyIDPsRequest
+	(*ListLoginPolicyIDPsResponse)(nil),                                     // 252: zitadel.admin.v1.ListLoginPolicyIDPsResponse
+	(*AddIDPToLoginPolicyRequest)(nil),                                      // 253: zitadel.admin.v1.AddIDPToLoginPolicyRequest
+	(*AddIDPToLoginPolicyResponse)(nil),                                     // 254: zitadel.admin.v1.AddIDPToLoginPolicyResponse
+	(*RemoveIDPFromLoginPolicyRequest)(nil),                                 // 255: zitadel.admin.v1.RemoveIDPFromLoginPolicyRequest
+	(*RemoveIDPFromLoginPolicyResponse)(nil),                                // 256: zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse
+	(*ListLoginPolicySecondFactorsRequest)(nil),                             // 257: zitadel.admin.v1.ListLoginPolicySecondFactorsRequest
+	(*ListLoginPolicySecondFactorsResponse)(nil),                            // 258: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse
+	(*AddSecondFactorToLoginPolicyRequest)(nil),                             // 259: zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest
+	(*AddSecondFactorToLoginPolicyResponse)(nil),                            // 260: zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse
+	(*RemoveSecondFactorFromLoginPolicyRequest)(nil),                        // 261: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest
+	(*RemoveSecondFactorFromLoginPolicyResponse)(nil),                       // 262: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse
+	(*ListLoginPolicyMultiFactorsRequest)(nil),                              // 263: zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest
+	(*ListLoginPolicyMultiFactorsResponse)(nil),                             // 264: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse
+	(*AddMultiFactorToLoginPolicyRequest)(nil),                              // 265: zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest
+	(*AddMultiFactorToLoginPolicyResponse)(nil),                             // 266: zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse
+	(*RemoveMultiFactorFromLoginPolicyRequest)(nil),                         // 267: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest
+	(*RemoveMultiFactorFromLoginPolicyResponse)(nil),                        // 268: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse
+	(*GetPasswordComplexityPolicyRequest)(nil),                              // 269: zitadel.admin.v1.GetPasswordComplexityPolicyRequest
+	(*GetPasswordComplexityPolicyResponse)(nil),                             // 270: zitadel.admin.v1.GetPasswordComplexityPolicyResponse
+	(*UpdatePasswordComplexityPolicyRequest)(nil),                           // 271: zitadel.admin.v1.UpdatePasswordComplexityPolicyRequest
+	(*UpdatePasswordComplexityPolicyResponse)(nil),                          // 272: zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse
+	(*GetPasswordAgePolicyRequest)(nil),                                     // 273: zitadel.admin.v1.GetPasswordAgePolicyRequest
+	(*GetPasswordAgePolicyResponse)(nil),                                    // 274: zitadel.admin.v1.GetPasswordAgePolicyResponse
+	(*UpdatePasswordAgePolicyRequest)(nil),                                  // 275: zitadel.admin.v1.UpdatePasswordAgePolicyRequest
+	(*UpdatePasswordAgePolicyResponse)(nil),                                 // 276: zitadel.admin.v1.UpdatePasswordAgePolicyResponse
+	(*GetLockoutPolicyRequest)(nil),                                         // 277: zitadel.admin.v1.GetLockoutPolicyRequest
+	(*GetLockoutPolicyResponse)(nil),                                        // 278: zitadel.admin.v1.GetLockoutPolicyResponse
+	(*UpdateLockoutPolicyRequest)(nil),                                      // 279: zitadel.admin.v1.UpdateLockoutPolicyRequest
+	(*UpdateLockoutPolicyResponse)(nil),                                     // 280: zitadel.admin.v1.UpdateLockoutPolicyResponse
+	(*GetPrivacyPolicyRequest)(nil),                                         // 281: zitadel.admin.v1.GetPrivacyPolicyRequest
+	(*GetPrivacyPolicyResponse)(nil),                                        // 282: zitadel.admin.v1.GetPrivacyPolicyResponse
+	(*UpdatePrivacyPolicyRequest)(nil),                                      // 283: zitadel.admin.v1.UpdatePrivacyPolicyRequest
+	(*UpdatePrivacyPolicyResponse)(nil),                                     // 284: zitadel.admin.v1.UpdatePrivacyPolicyResponse
+	(*AddNotificationPolicyRequest)(nil),                                    // 285: zitadel.admin.v1.AddNotificationPolicyRequest
+	(*AddNotificationPolicyResponse)(nil),                                   // 286: zitadel.admin.v1.AddNotificationPolicyResponse
+	(*GetNotificationPolicyRequest)(nil),                                    // 287: zitadel.admin.v1.GetNotificationPolicyRequest
+	(*GetNotificationPolicyResponse)(nil),                                   // 288: zitadel.admin.v1.GetNotificationPolicyResponse
+	(*UpdateNotificationPolicyRequest)(nil),                                 // 289: zitadel.admin.v1.UpdateNotificationPolicyRequest
+	(*UpdateNotificationPolicyResponse)(nil),                                // 290: zitadel.admin.v1.UpdateNotificationPolicyResponse
+	(*GetDefaultInitMessageTextRequest)(nil),                                // 291: zitadel.admin.v1.GetDefaultInitMessageTextRequest
+	(*GetDefaultInitMessageTextResponse)(nil),                               // 292: zitadel.admin.v1.GetDefaultInitMessageTextResponse
+	(*GetCustomInitMessageTextRequest)(nil),                                 // 293: zitadel.admin.v1.GetCustomInitMessageTextRequest
+	(*GetCustomInitMessageTextResponse)(nil),                                // 294: zitadel.admin.v1.GetCustomInitMessageTextResponse
+	(*SetDefaultInitMessageTextRequest)(nil),                                // 295: zitadel.admin.v1.SetDefaultInitMessageTextRequest
+	(*SetDefaultInitMessageTextResponse)(nil),                               // 296: zitadel.admin.v1.SetDefaultInitMessageTextResponse
+	(*ResetCustomInitMessageTextToDefaultRequest)(nil),                      // 297: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultRequest
+	(*ResetCustomInitMessageTextToDefaultResponse)(nil),                     // 298: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse
+	(*GetDefaultPasswordResetMessageTextRequest)(nil),                       // 299: zitadel.admin.v1.GetDefaultPasswordResetMessageTextRequest
+	(*GetDefaultPasswordResetMessageTextResponse)(nil),                      // 300: zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse
+	(*GetCustomPasswordResetMessageTextRequest)(nil),                        // 301: zitadel.admin.v1.GetCustomPasswordResetMessageTextRequest
+	(*GetCustomPasswordResetMessageTextResponse)(nil),                       // 302: zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse
+	(*SetDefaultPasswordResetMessageTextRequest)(nil),                       // 303: zitadel.admin.v1.SetDefaultPasswordResetMessageTextRequest
+	(*SetDefaultPasswordResetMessageTextResponse)(nil),                      // 304: zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse
+	(*ResetCustomPasswordResetMessageTextToDefaultRequest)(nil),             // 305: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultRequest
+	(*ResetCustomPasswordResetMessageTextToDefaultResponse)(nil),            // 306: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse
+	(*GetDefaultVerifyEmailMessageTextRequest)(nil),                         // 307: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextRequest
+	(*GetDefaultVerifyEmailMessageTextResponse)(nil),                        // 308: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse
+	(*GetCustomVerifyEmailMessageTextRequest)(nil),                          // 309: zitadel.admin.v1.GetCustomVerifyEmailMessageTextRequest
+	(*GetCustomVerifyEmailMessageTextResponse)(nil),                         // 310: zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse
+	(*SetDefaultVerifyEmailMessageTextRequest)(nil),                         // 311: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextRequest
+	(*SetDefaultVerifyEmailMessageTextResponse)(nil),                        // 312: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse
+	(*ResetCustomVerifyEmailMessageTextToDefaultRequest)(nil),               // 313: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultRequest
+	(*ResetCustomVerifyEmailMessageTextToDefaultResponse)(nil),              // 314: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse
+	(*GetDefaultVerifyPhoneMessageTextRequest)(nil),                         // 315: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextRequest
+	(*GetDefaultVerifyPhoneMessageTextResponse)(nil),                        // 316: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse
+	(*GetCustomVerifyPhoneMessageTextRequest)(nil),                          // 317: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextRequest
+	(*GetCustomVerifyPhoneMessageTextResponse)(nil),                         // 318: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse
+	(*SetDefaultVerifyPhoneMessageTextRequest)(nil),                         // 319: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextRequest
+	(*SetDefaultVerifyPhoneMessageTextResponse)(nil),                        // 320: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse
+	(*ResetCustomVerifyPhoneMessageTextToDefaultRequest)(nil),               // 321: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest
+	(*ResetCustomVerifyPhoneMessageTextToDefaultResponse)(nil),              // 322: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse
+	(*GetCustomVerifySMSOTPMessageTextRequest)(nil),                         // 323: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest
+	(*GetCustomVerifySMSOTPMessageTextResponse)(nil),                        // 324: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse
+	(*GetDefaultVerifySMSOTPMessageTextRequest)(nil),                        // 325: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest
+	(*GetDefaultVerifySMSOTPMessageTextResponse)(nil),                       // 326: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse
+	(*SetDefaultVerifySMSOTPMessageTextRequest)(nil),                        // 327: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest
+	(*SetDefaultVerifySMSOTPMessageTextResponse)(nil),                       // 328: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse
+	(*ResetCustomVerifySMSOTPMessageTextToDefaultRequest)(nil),              // 329: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest
+	(*ResetCustomVerifySMSOTPMessageTextToDefaultResponse)(nil),             // 330: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse
+	(*GetCustomVerifyEmailOTPMessageTextRequest)(nil),                       // 331: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest
+	(*GetCustomVerifyEmailOTPMessageTextResponse)(nil),                      // 332: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse
+	(*GetDefaultVerifyEmailOTPMessageTextRequest)(nil),                      // 333: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest
+	(*GetDefaultVerifyEmailOTPMessageTextResponse)(nil),                     // 334: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse
+	(*SetDefaultVerifyEmailOTPMessageTextRequest)(nil),                      // 335: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest
+	(*SetDefaultVerifyEmailOTPMessageTextResponse)(nil),                     // 336: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse
+	(*ResetCustomVerifyEmailOTPMessageTextToDefaultRequest)(nil),            // 337: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest
+	(*ResetCustomVerifyEmailOTPMessageTextToDefaultResponse)(nil),           // 338: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse
+	(*GetDefaultDomainClaimedMessageTextRequest)(nil),                       // 339: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest
+	(*GetDefaultDomainClaimedMessageTextResponse)(nil),                      // 340: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse
+	(*GetCustomDomainClaimedMessageTextRequest)(nil),                        // 341: zitadel.admin.v1.GetCustomDomainClaimedMessageTextRequest
+	(*GetCustomDomainClaimedMessageTextResponse)(nil),                       // 342: zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse
+	(*SetDefaultDomainClaimedMessageTextRequest)(nil),                       // 343: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextRequest
+	(*SetDefaultDomainClaimedMessageTextResponse)(nil),                      // 344: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse
+	(*ResetCustomDomainClaimedMessageTextToDefaultRequest)(nil),             // 345: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultRequest
+	(*ResetCustomDomainClaimedMessageTextToDefaultResponse)(nil),            // 346: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse
+	(*GetDefaultPasswordChangeMessageTextRequest)(nil),                      // 347: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest
+	(*GetDefaultPasswordChangeMessageTextResponse)(nil),                     // 348: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse
+	(*GetCustomPasswordChangeMessageTextRequest)(nil),                       // 349: zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest
+	(*GetCustomPasswordChangeMessageTextResponse)(nil),                      // 350: zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse
+	(*SetDefaultPasswordChangeMessageTextRequest)(nil),                      // 351: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextRequest
+	(*SetDefaultPasswordChangeMessageTextResponse)(nil),                     // 352: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse
+	(*ResetCustomPasswordChangeMessageTextToDefaultRequest)(nil),            // 353: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultRequest
+	(*ResetCustomPasswordChangeMessageTextToDefaultResponse)(nil),           // 354: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse
+	(*GetDefaultInviteUserMessageTextRequest)(nil),                          // 355: zitadel.admin.v1.GetDefaultInviteUserMessageTextRequest
+	(*GetDefaultInviteUserMessageTextResponse)(nil),                         // 356: zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse
+	(*GetCustomInviteUserMessageTextRequest)(nil),                           // 357: zitadel.admin.v1.GetCustomInviteUserMessageTextRequest
+	(*GetCustomInviteUserMessageTextResponse)(nil),                          // 358: zitadel.admin.v1.GetCustomInviteUserMessageTextResponse
+	(*SetDefaultInviteUserMessageTextRequest)(nil),                          // 359: zitadel.admin.v1.SetDefaultInviteUserMessageTextRequest
+	(*SetDefaultInviteUserMessageTextResponse)(nil),                         // 360: zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse
+	(*ResetCustomInviteUserMessageTextToDefaultRequest)(nil),                // 361: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultRequest
+	(*ResetCustomInviteUserMessageTextToDefaultResponse)(nil),               // 362: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse
+	(*GetDefaultPasswordlessRegistrationMessageTextRequest)(nil),            // 363: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextRequest
+	(*GetDefaultPasswordlessRegistrationMessageTextResponse)(nil),           // 364: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse
+	(*GetCustomPasswordlessRegistrationMessageTextRequest)(nil),             // 365: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextRequest
+	(*GetCustomPasswordlessRegistrationMessageTextResponse)(nil),            // 366: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse
+	(*SetDefaultPasswordlessRegistrationMessageTextRequest)(nil),            // 367: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextRequest
+	(*SetDefaultPasswordlessRegistrationMessageTextResponse)(nil),           // 368: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse
+	(*ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest)(nil),  // 369: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest
+	(*ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse)(nil), // 370: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse
+	(*GetDefaultLoginTextsRequest)(nil),                                     // 371: zitadel.admin.v1.GetDefaultLoginTextsRequest
+	(*GetDefaultLoginTextsResponse)(nil),                                    // 372: zitadel.admin.v1.GetDefaultLoginTextsResponse
+	(*GetCustomLoginTextsRequest)(nil),                                      // 373: zitadel.admin.v1.GetCustomLoginTextsRequest
+	(*GetCustomLoginTextsResponse)(nil),                                     // 374: zitadel.admin.v1.GetCustomLoginTextsResponse
+	(*SetCustomLoginTextsRequest)(nil),                                      // 375: zitadel.admin.v1.SetCustomLoginTextsRequest
+	(*SetCustomLoginTextsResponse)(nil),                                     // 376: zitadel.admin.v1.SetCustomLoginTextsResponse
+	(*ResetCustomLoginTextsToDefaultRequest)(nil),                           // 377: zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest
+	(*ResetCustomLoginTextsToDefaultResponse)(nil),                          // 378: zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse
+	(*AddIAMMemberRequest)(nil),                                             // 379: zitadel.admin.v1.AddIAMMemberRequest
+	(*AddIAMMemberResponse)(nil),                                            // 380: zitadel.admin.v1.AddIAMMemberResponse
+	(*UpdateIAMMemberRequest)(nil),                                          // 381: zitadel.admin.v1.UpdateIAMMemberRequest
+	(*UpdateIAMMemberResponse)(nil),                                         // 382: zitadel.admin.v1.UpdateIAMMemberResponse
+	(*RemoveIAMMemberRequest)(nil),                                          // 383: zitadel.admin.v1.RemoveIAMMemberRequest
+	(*RemoveIAMMemberResponse)(nil),                                         // 384: zitadel.admin.v1.RemoveIAMMemberResponse
+	(*ListIAMMemberRolesRequest)(nil),                                       // 385: zitadel.admin.v1.ListIAMMemberRolesRequest
+	(*ListIAMMemberRolesResponse)(nil),                                      // 386: zitadel.admin.v1.ListIAMMemberRolesResponse
+	(*ListIAMMembersRequest)(nil),                                           // 387: zitadel.admin.v1.ListIAMMembersRequest
+	(*ListIAMMembersResponse)(nil),                                          // 388: zitadel.admin.v1.ListIAMMembersResponse
+	(*ListViewsRequest)(nil),                                                // 389: zitadel.admin.v1.ListViewsRequest
+	(*ListViewsResponse)(nil),                                               // 390: zitadel.admin.v1.ListViewsResponse
+	(*ListFailedEventsRequest)(nil),                                         // 391: zitadel.admin.v1.ListFailedEventsRequest
+	(*ListFailedEventsResponse)(nil),                                        // 392: zitadel.admin.v1.ListFailedEventsResponse
+	(*RemoveFailedEventRequest)(nil),                                        // 393: zitadel.admin.v1.RemoveFailedEventRequest
+	(*RemoveFailedEventResponse)(nil),                                       // 394: zitadel.admin.v1.RemoveFailedEventResponse
+	(*View)(nil),                                                            // 395: zitadel.admin.v1.View
+	(*FailedEvent)(nil),                                                     // 396: zitadel.admin.v1.FailedEvent
+	(*ImportDataRequest)(nil),                                               // 397: zitadel.admin.v1.ImportDataRequest
+	(*ImportDataOrg)(nil),                                                   // 398: zitadel.admin.v1.ImportDataOrg
+	(*DataOrg)(nil),                                                         // 399: zitadel.admin.v1.DataOrg
+	(*ImportDataResponse)(nil),                                              // 400: zitadel.admin.v1.ImportDataResponse
+	(*ImportDataError)(nil),                                                 // 401: zitadel.admin.v1.ImportDataError
+	(*ImportDataSuccess)(nil),                                               // 402: zitadel.admin.v1.ImportDataSuccess
+	(*ImportDataSuccessOrg)(nil),                                            // 403: zitadel.admin.v1.ImportDataSuccessOrg
+	(*ImportDataSuccessProjectGrant)(nil),                                   // 404: zitadel.admin.v1.ImportDataSuccessProjectGrant
+	(*ImportDataSuccessUserGrant)(nil),                                      // 405: zitadel.admin.v1.ImportDataSuccessUserGrant
+	(*ImportDataSuccessProjectMember)(nil),                                  // 406: zitadel.admin.v1.ImportDataSuccessProjectMember
+	(*ImportDataSuccessProjectGrantMember)(nil),                             // 407: zitadel.admin.v1.ImportDataSuccessProjectGrantMember
+	(*ImportDataSuccessUserLinks)(nil),                                      // 408: zitadel.admin.v1.ImportDataSuccessUserLinks
+	(*ImportDataSuccessUserMetadata)(nil),                                   // 409: zitadel.admin.v1.ImportDataSuccessUserMetadata
+	(*ExportDataRequest)(nil),                                               // 410: zitadel.admin.v1.ExportDataRequest
+	(*ExportDataResponse)(nil),                                              // 411: zitadel.admin.v1.ExportDataResponse
+	(*ListEventsRequest)(nil),                                               // 412: zitadel.admin.v1.ListEventsRequest
+	(*ListEventsResponse)(nil),                                              // 413: zitadel.admin.v1.ListEventsResponse
+	(*ListEventTypesRequest)(nil),                                           // 414: zitadel.admin.v1.ListEventTypesRequest
+	(*ListEventTypesResponse)(nil),                                          // 415: zitadel.admin.v1.ListEventTypesResponse
+	(*ListAggregateTypesRequest)(nil),                                       // 416: zitadel.admin.v1.ListAggregateTypesRequest
+	(*ListAggregateTypesResponse)(nil),                                      // 417: zitadel.admin.v1.ListAggregateTypesResponse
+	(*ActivateFeatureLoginDefaultOrgRequest)(nil),                           // 418: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgRequest
+	(*ActivateFeatureLoginDefaultOrgResponse)(nil),                          // 419: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse
+	(*ListMilestonesRequest)(nil),                                           // 420: zitadel.admin.v1.ListMilestonesRequest
+	(*ListMilestonesResponse)(nil),                                          // 421: zitadel.admin.v1.ListMilestonesResponse
+	(*SetRestrictionsRequest)(nil),                                          // 422: zitadel.admin.v1.SetRestrictionsRequest
+	(*SelectLanguages)(nil),                                                 // 423: zitadel.admin.v1.SelectLanguages
+	(*SetRestrictionsResponse)(nil),                                         // 424: zitadel.admin.v1.SetRestrictionsResponse
+	(*GetRestrictionsRequest)(nil),                                          // 425: zitadel.admin.v1.GetRestrictionsRequest
+	(*GetRestrictionsResponse)(nil),                                         // 426: zitadel.admin.v1.GetRestrictionsResponse
+	(*SMTPXOAuth2Auth_ClientCredentials)(nil),                               // 427: zitadel.admin.v1.SMTPXOAuth2Auth.ClientCredentials
+	(*SetUpOrgRequest_Org)(nil),                                             // 428: zitadel.admin.v1.SetUpOrgRequest.Org
+	(*SetUpOrgRequest_Human)(nil),                                           // 429: zitadel.admin.v1.SetUpOrgRequest.Human
+	(*SetUpOrgRequest_Human_Profile)(nil),                                   // 430: zitadel.admin.v1.SetUpOrgRequest.Human.Profile
+	(*SetUpOrgRequest_Human_Email)(nil),                                     // 431: zitadel.admin.v1.SetUpOrgRequest.Human.Email
+	(*SetUpOrgRequest_Human_Phone)(nil),                                     // 432: zitadel.admin.v1.SetUpOrgRequest.Human.Phone
+	(*ImportDataRequest_LocalInput)(nil),                                    // 433: zitadel.admin.v1.ImportDataRequest.LocalInput
+	(*ImportDataRequest_S3Input)(nil),                                       // 434: zitadel.admin.v1.ImportDataRequest.S3Input
+	(*ImportDataRequest_GCSInput)(nil),                                      // 435: zitadel.admin.v1.ImportDataRequest.GCSInput
+	(*ExportDataRequest_LocalOutput)(nil),                                   // 436: zitadel.admin.v1.ExportDataRequest.LocalOutput
+	(*ExportDataRequest_S3Output)(nil),                                      // 437: zitadel.admin.v1.ExportDataRequest.S3Output
+	(*ExportDataRequest_GCSOutput)(nil),                                     // 438: zitadel.admin.v1.ExportDataRequest.GCSOutput
+	(*ListEventsRequestCreationDateRange)(nil),                              // 439: zitadel.admin.v1.ListEventsRequest.creation_date_range
+	(*object.ObjectDetails)(nil),                                            // 440: zitadel.v1.ObjectDetails
+	(*org.Org)(nil),                                                         // 441: zitadel.org.v1.Org
+	(*instance.InstanceDetail)(nil),                                         // 442: zitadel.instance.v1.InstanceDetail
+	(*object.ListQuery)(nil),                                                // 443: zitadel.v1.ListQuery
+	(instance.DomainFieldName)(0),                                           // 444: zitadel.instance.v1.DomainFieldName
+	(*instance.DomainSearchQuery)(nil),                                      // 445: zitadel.instance.v1.DomainSearchQuery
+	(*object.ListDetails)(nil),                                              // 446: zitadel.v1.ListDetails
+	(*instance.Domain)(nil),                                                 // 447: zitadel.instance.v1.Domain
+	(*instance.TrustedDomainSearchQuery)(nil),                               // 448: zitadel.instance.v1.TrustedDomainSearchQuery
+	(*instance.TrustedDomain)(nil),                                          // 449: zitadel.instance.v1.TrustedDomain
+	(*settings.SecretGeneratorQuery)(nil),                                   // 450: zitadel.settings.v1.SecretGeneratorQuery
+	(*settings.SecretGenerator)(nil),                                        // 451: zitadel.settings.v1.SecretGenerator
+	(settings.SecretGeneratorType)(0),                                       // 452: zitadel.settings.v1.SecretGeneratorType
+	(*durationpb.Duration)(nil),                                             // 453: google.protobuf.Duration
+	(*settings.SMTPConfig)(nil),                                             // 454: zitadel.settings.v1.SMTPConfig
+	(*settings.EmailProvider)(nil),                                          // 455: zitadel.settings.v1.EmailProvider
+	(*settings.SMSProvider)(nil),                                            // 456: zitadel.settings.v1.SMSProvider
+	(*settings.DebugNotificationProvider)(nil),                              // 457: zitadel.settings.v1.DebugNotificationProvider
+	(*settings.OIDCSettings)(nil),                                           // 458: zitadel.settings.v1.OIDCSettings
+	(*settings.SecurityPolicy)(nil),                                         // 459: zitadel.settings.v1.SecurityPolicy
+	(org.OrgFieldName)(0),                                                   // 460: zitadel.org.v1.OrgFieldName
+	(*org.OrgQuery)(nil),                                                    // 461: zitadel.org.v1.OrgQuery
+	(*idp.IDP)(nil),                                                         // 462: zitadel.idp.v1.IDP
+	(idp.IDPFieldName)(0),                                                   // 463: zitadel.idp.v1.IDPFieldName
+	(*idp.IDPIDQuery)(nil),                                                  // 464: zitadel.idp.v1.IDPIDQuery
+	(*idp.IDPNameQuery)(nil),                                                // 465: zitadel.idp.v1.IDPNameQuery
+	(idp.IDPStylingType)(0),                                                 // 466: zitadel.idp.v1.IDPStylingType
+	(idp.OIDCMappingField)(0),                                               // 467: zitadel.idp.v1.OIDCMappingField
+	(*idp.Provider)(nil),                                                    // 468: zitadel.idp.v1.Provider
+	(*idp.Options)(nil),                                                     // 469: zitadel.idp.v1.Options
+	(*idp.AzureADTenant)(nil),                                               // 470: zitadel.idp.v1.AzureADTenant
+	(*idp.LDAPAttributes)(nil),                                              // 471: zitadel.idp.v1.LDAPAttributes
+	(idp.SAMLBinding)(0),                                                    // 472: zitadel.idp.v1.SAMLBinding
+	(idp.SAMLNameIDFormat)(0),                                               // 473: zitadel.idp.v1.SAMLNameIDFormat
+	(idp.SAMLSignatureAlgorithm)(0),                                         // 474: zitadel.idp.v1.SAMLSignatureAlgorithm
+	(*policy.OrgIAMPolicy)(nil),                                             // 475: zitadel.policy.v1.OrgIAMPolicy
+	(*policy.DomainPolicy)(nil),                                             // 476: zitadel.policy.v1.DomainPolicy
+	(*policy.LabelPolicy)(nil),                                              // 477: zitadel.policy.v1.LabelPolicy
+	(policy.ThemeMode)(0),                                                   // 478: zitadel.policy.v1.ThemeMode
+	(*policy.LoginPolicy)(nil),                                              // 479: zitadel.policy.v1.LoginPolicy
+	(policy.PasswordlessType)(0),                                            // 480: zitadel.policy.v1.PasswordlessType
+	(*idp.IDPLoginPolicyLink)(nil),                                          // 481: zitadel.idp.v1.IDPLoginPolicyLink
+	(policy.SecondFactorType)(0),                                            // 482: zitadel.policy.v1.SecondFactorType
+	(policy.MultiFactorType)(0),                                             // 483: zitadel.policy.v1.MultiFactorType
+	(*policy.PasswordComplexityPolicy)(nil),                                 // 484: zitadel.policy.v1.PasswordComplexityPolicy
+	(*policy.PasswordAgePolicy)(nil),                                        // 485: zitadel.policy.v1.PasswordAgePolicy
+	(*policy.LockoutPolicy)(nil),                                            // 486: zitadel.policy.v1.LockoutPolicy
+	(*policy.PrivacyPolicy)(nil),                                            // 487: zitadel.policy.v1.PrivacyPolicy
+	(*policy.NotificationPolicy)(nil),                                       // 488: zitadel.policy.v1.NotificationPolicy
+	(*text.MessageCustomText)(nil),                                          // 489: zitadel.text.v1.MessageCustomText
+	(*text.LoginCustomText)(nil),                                            // 490: zitadel.text.v1.LoginCustomText
+	(*text.SelectAccountScreenText)(nil),                                    // 491: zitadel.text.v1.SelectAccountScreenText
+	(*text.LoginScreenText)(nil),                                            // 492: zitadel.text.v1.LoginScreenText
+	(*text.PasswordScreenText)(nil),                                         // 493: zitadel.text.v1.PasswordScreenText
+	(*text.UsernameChangeScreenText)(nil),                                   // 494: zitadel.text.v1.UsernameChangeScreenText
+	(*text.UsernameChangeDoneScreenText)(nil),                               // 495: zitadel.text.v1.UsernameChangeDoneScreenText
+	(*text.InitPasswordScreenText)(nil),                                     // 496: zitadel.text.v1.InitPasswordScreenText
+	(*text.InitPasswordDoneScreenText)(nil),                                 // 497: zitadel.text.v1.InitPasswordDoneScreenText
+	(*text.EmailVerificationScreenText)(nil),                                // 498: zitadel.text.v1.EmailVerificationScreenText
+	(*text.EmailVerificationDoneScreenText)(nil),                            // 499: zitadel.text.v1.EmailVerificationDoneScreenText
+	(*text.InitializeUserScreenText)(nil),                                   // 500: zitadel.text.v1.InitializeUserScreenText
+	(*text.InitializeUserDoneScreenText)(nil),                               // 501: zitadel.text.v1.InitializeUserDoneScreenText
+	(*text.InitMFAPromptScreenText)(nil),                                    // 502: zitadel.text.v1.InitMFAPromptScreenText
+	(*text.InitMFAOTPScreenText)(nil),                                       // 503: zitadel.text.v1.InitMFAOTPScreenText
+	(*text.InitMFAU2FScreenText)(nil),                                       // 504: zitadel.text.v1.InitMFAU2FScreenText
+	(*text.InitMFADoneScreenText)(nil),                                      // 505: zitadel.text.v1.InitMFADoneScreenText
+	(*text.MFAProvidersText)(nil),                                           // 506: zitadel.text.v1.MFAProvidersText
+	(*text.VerifyMFAOTPScreenText)(nil),                                     // 507: zitadel.text.v1.VerifyMFAOTPScreenText
+	(*text.VerifyMFAU2FScreenText)(nil),                                     // 508: zitadel.text.v1.VerifyMFAU2FScreenText
+	(*text.PasswordlessScreenText)(nil),                                     // 509: zitadel.text.v1.PasswordlessScreenText
+	(*text.PasswordChangeScreenText)(nil),                                   // 510: zitadel.text.v1.PasswordChangeScreenText
+	(*text.PasswordChangeDoneScreenText)(nil),                               // 511: zitadel.text.v1.PasswordChangeDoneScreenText
+	(*text.PasswordResetDoneScreenText)(nil),                                // 512: zitadel.text.v1.PasswordResetDoneScreenText
+	(*text.RegistrationOptionScreenText)(nil),                               // 513: zitadel.text.v1.RegistrationOptionScreenText
+	(*text.RegistrationUserScreenText)(nil),                                 // 514: zitadel.text.v1.RegistrationUserScreenText
+	(*text.RegistrationOrgScreenText)(nil),                                  // 515: zitadel.text.v1.RegistrationOrgScreenText
+	(*text.LinkingUserDoneScreenText)(nil),                                  // 516: zitadel.text.v1.LinkingUserDoneScreenText
+	(*text.ExternalUserNotFoundScreenText)(nil),                             // 517: zitadel.text.v1.ExternalUserNotFoundScreenText
+	(*text.SuccessLoginScreenText)(nil),                                     // 518: zitadel.text.v1.SuccessLoginScreenText
+	(*text.LogoutDoneScreenText)(nil),                                       // 519: zitadel.text.v1.LogoutDoneScreenText
+	(*text.FooterText)(nil),                                                 // 520: zitadel.text.v1.FooterText
+	(*text.PasswordlessPromptScreenText)(nil),                               // 521: zitadel.text.v1.PasswordlessPromptScreenText
+	(*text.PasswordlessRegistrationScreenText)(nil),                         // 522: zitadel.text.v1.PasswordlessRegistrationScreenText
+	(*text.PasswordlessRegistrationDoneScreenText)(nil),                     // 523: zitadel.text.v1.PasswordlessRegistrationDoneScreenText
+	(*text.ExternalRegistrationUserOverviewScreenText)(nil),                 // 524: zitadel.text.v1.ExternalRegistrationUserOverviewScreenText
+	(*text.LinkingUserPromptScreenText)(nil),                                // 525: zitadel.text.v1.LinkingUserPromptScreenText
+	(*member.SearchQuery)(nil),                                              // 526: zitadel.member.v1.SearchQuery
+	(member.MemberFieldColumnName)(0),                                       // 527: zitadel.member.v1.MemberFieldColumnName
+	(*member.Member)(nil),                                                   // 528: zitadel.member.v1.Member
+	(*timestamppb.Timestamp)(nil),                                           // 529: google.protobuf.Timestamp
+	(*v1.ImportDataOrg)(nil),                                                // 530: zitadel.v1.v1.ImportDataOrg
+	(*management.AddOrgRequest)(nil),                                        // 531: zitadel.management.v1.AddOrgRequest
+	(*management.AddCustomLabelPolicyRequest)(nil),                          // 532: zitadel.management.v1.AddCustomLabelPolicyRequest
+	(*management.AddCustomLockoutPolicyRequest)(nil),                        // 533: zitadel.management.v1.AddCustomLockoutPolicyRequest
+	(*management.AddCustomLoginPolicyRequest)(nil),                          // 534: zitadel.management.v1.AddCustomLoginPolicyRequest
+	(*management.AddCustomPasswordComplexityPolicyRequest)(nil),             // 535: zitadel.management.v1.AddCustomPasswordComplexityPolicyRequest
+	(*management.AddCustomPrivacyPolicyRequest)(nil),                        // 536: zitadel.management.v1.AddCustomPrivacyPolicyRequest
+	(*v1.DataProject)(nil),                                                  // 537: zitadel.v1.v1.DataProject
+	(*management.AddProjectRoleRequest)(nil),                                // 538: zitadel.management.v1.AddProjectRoleRequest
+	(*v1.DataAPIApplication)(nil),                                           // 539: zitadel.v1.v1.DataAPIApplication
+	(*v1.DataOIDCApplication)(nil),                                          // 540: zitadel.v1.v1.DataOIDCApplication
+	(*v1.DataHumanUser)(nil),                                                // 541: zitadel.v1.v1.DataHumanUser
+	(*v1.DataMachineUser)(nil),                                              // 542: zitadel.v1.v1.DataMachineUser
+	(*management.SetTriggerActionsRequest)(nil),                             // 543: zitadel.management.v1.SetTriggerActionsRequest
+	(*v1.DataAction)(nil),                                                   // 544: zitadel.v1.v1.DataAction
+	(*v1.DataProjectGrant)(nil),                                             // 545: zitadel.v1.v1.DataProjectGrant
+	(*management.AddUserGrantRequest)(nil),                                  // 546: zitadel.management.v1.AddUserGrantRequest
+	(*management.AddOrgMemberRequest)(nil),                                  // 547: zitadel.management.v1.AddOrgMemberRequest
+	(*management.AddProjectMemberRequest)(nil),                              // 548: zitadel.management.v1.AddProjectMemberRequest
+	(*management.AddProjectGrantMemberRequest)(nil),                         // 549: zitadel.management.v1.AddProjectGrantMemberRequest
+	(*management.SetUserMetadataRequest)(nil),                               // 550: zitadel.management.v1.SetUserMetadataRequest
+	(*management.SetCustomLoginTextsRequest)(nil),                           // 551: zitadel.management.v1.SetCustomLoginTextsRequest
+	(*management.SetCustomInitMessageTextRequest)(nil),                      // 552: zitadel.management.v1.SetCustomInitMessageTextRequest
+	(*management.SetCustomPasswordResetMessageTextRequest)(nil),             // 553: zitadel.management.v1.SetCustomPasswordResetMessageTextRequest
+	(*management.SetCustomVerifyEmailMessageTextRequest)(nil),               // 554: zitadel.management.v1.SetCustomVerifyEmailMessageTextRequest
+	(*management.SetCustomVerifyPhoneMessageTextRequest)(nil),               // 555: zitadel.management.v1.SetCustomVerifyPhoneMessageTextRequest
+	(*management.SetCustomDomainClaimedMessageTextRequest)(nil),             // 556: zitadel.management.v1.SetCustomDomainClaimedMessageTextRequest
+	(*management.SetCustomPasswordlessRegistrationMessageTextRequest)(nil),  // 557: zitadel.management.v1.SetCustomPasswordlessRegistrationMessageTextRequest
+	(*v1.DataOIDCIDP)(nil),                                                  // 558: zitadel.v1.v1.DataOIDCIDP
+	(*v1.DataJWTIDP)(nil),                                                   // 559: zitadel.v1.v1.DataJWTIDP
+	(*idp.IDPUserLink)(nil),                                                 // 560: zitadel.idp.v1.IDPUserLink
+	(*org.Domain)(nil),                                                      // 561: zitadel.org.v1.Domain
+	(*v1.DataAppKey)(nil),                                                   // 562: zitadel.v1.v1.DataAppKey
+	(*v1.DataMachineKey)(nil),                                               // 563: zitadel.v1.v1.DataMachineKey
+	(*management.SetCustomVerifySMSOTPMessageTextRequest)(nil),              // 564: zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest
+	(*management.SetCustomVerifyEmailOTPMessageTextRequest)(nil),            // 565: zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest
+	(*management.SetCustomInviteUserMessageTextRequest)(nil),                // 566: zitadel.management.v1.SetCustomInviteUserMessageTextRequest
+	(org.OrgState)(0),                                                       // 567: zitadel.org.v1.OrgState
+	(*event.Event)(nil),                                                     // 568: zitadel.event.v1.Event
+	(*event.EventType)(nil),                                                 // 569: zitadel.event.v1.EventType
+	(*event.AggregateType)(nil),                                             // 570: zitadel.event.v1.AggregateType
+	(milestone.MilestoneFieldName)(0),                                       // 571: zitadel.milestone.v1.MilestoneFieldName
+	(*milestone.MilestoneQuery)(nil),                                        // 572: zitadel.milestone.v1.MilestoneQuery
+	(*milestone.Milestone)(nil),                                             // 573: zitadel.milestone.v1.Milestone
+	(user.Gender)(0),                                                        // 574: zitadel.user.v1.Gender
 }
 var file_zitadel_admin_proto_depIdxs = []int32{
-	436, // 0: zitadel.admin.v1.SetDefaultLanguageResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 1: zitadel.admin.v1.SetDefaultOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
-	437, // 2: zitadel.admin.v1.GetDefaultOrgResponse.org:type_name -> zitadel.org.v1.Org
-	438, // 3: zitadel.admin.v1.GetMyInstanceResponse.instance:type_name -> zitadel.instance.v1.InstanceDetail
-	439, // 4: zitadel.admin.v1.ListInstanceDomainsRequest.query:type_name -> zitadel.v1.ListQuery
-	440, // 5: zitadel.admin.v1.ListInstanceDomainsRequest.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
-	441, // 6: zitadel.admin.v1.ListInstanceDomainsRequest.queries:type_name -> zitadel.instance.v1.DomainSearchQuery
-	442, // 7: zitadel.admin.v1.ListInstanceDomainsResponse.details:type_name -> zitadel.v1.ListDetails
-	440, // 8: zitadel.admin.v1.ListInstanceDomainsResponse.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
-	443, // 9: zitadel.admin.v1.ListInstanceDomainsResponse.result:type_name -> zitadel.instance.v1.Domain
-	439, // 10: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.query:type_name -> zitadel.v1.ListQuery
-	440, // 11: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
-	444, // 12: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.queries:type_name -> zitadel.instance.v1.TrustedDomainSearchQuery
-	442, // 13: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.details:type_name -> zitadel.v1.ListDetails
-	440, // 14: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
-	445, // 15: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.result:type_name -> zitadel.instance.v1.TrustedDomain
-	436, // 16: zitadel.admin.v1.AddInstanceTrustedDomainResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 17: zitadel.admin.v1.RemoveInstanceTrustedDomainResponse.details:type_name -> zitadel.v1.ObjectDetails
-	439, // 18: zitadel.admin.v1.ListSecretGeneratorsRequest.query:type_name -> zitadel.v1.ListQuery
-	446, // 19: zitadel.admin.v1.ListSecretGeneratorsRequest.queries:type_name -> zitadel.settings.v1.SecretGeneratorQuery
-	442, // 20: zitadel.admin.v1.ListSecretGeneratorsResponse.details:type_name -> zitadel.v1.ListDetails
-	447, // 21: zitadel.admin.v1.ListSecretGeneratorsResponse.result:type_name -> zitadel.settings.v1.SecretGenerator
-	448, // 22: zitadel.admin.v1.GetSecretGeneratorRequest.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
-	447, // 23: zitadel.admin.v1.GetSecretGeneratorResponse.secret_generator:type_name -> zitadel.settings.v1.SecretGenerator
-	448, // 24: zitadel.admin.v1.UpdateSecretGeneratorRequest.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
-	449, // 25: zitadel.admin.v1.UpdateSecretGeneratorRequest.expiry:type_name -> google.protobuf.Duration
-	436, // 26: zitadel.admin.v1.UpdateSecretGeneratorResponse.details:type_name -> zitadel.v1.ObjectDetails
-	450, // 27: zitadel.admin.v1.GetSMTPConfigResponse.smtp_config:type_name -> zitadel.settings.v1.SMTPConfig
-	450, // 28: zitadel.admin.v1.GetSMTPConfigByIdResponse.smtp_config:type_name -> zitadel.settings.v1.SMTPConfig
-	439, // 29: zitadel.admin.v1.ListSMTPConfigsRequest.query:type_name -> zitadel.v1.ListQuery
-	442, // 30: zitadel.admin.v1.ListSMTPConfigsResponse.details:type_name -> zitadel.v1.ListDetails
-	450, // 31: zitadel.admin.v1.ListSMTPConfigsResponse.result:type_name -> zitadel.settings.v1.SMTPConfig
-	436, // 32: zitadel.admin.v1.AddSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 33: zitadel.admin.v1.UpdateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 34: zitadel.admin.v1.UpdateSMTPConfigPasswordResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 35: zitadel.admin.v1.ActivateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 36: zitadel.admin.v1.DeactivateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 37: zitadel.admin.v1.RemoveSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	451, // 38: zitadel.admin.v1.GetEmailProviderResponse.config:type_name -> zitadel.settings.v1.EmailProvider
-	451, // 39: zitadel.admin.v1.GetEmailProviderByIdResponse.config:type_name -> zitadel.settings.v1.EmailProvider
-	439, // 40: zitadel.admin.v1.ListEmailProvidersRequest.query:type_name -> zitadel.v1.ListQuery
-	442, // 41: zitadel.admin.v1.ListEmailProvidersResponse.details:type_name -> zitadel.v1.ListDetails
-	451, // 42: zitadel.admin.v1.ListEmailProvidersResponse.result:type_name -> zitadel.settings.v1.EmailProvider
-	436, // 43: zitadel.admin.v1.AddEmailProviderSMTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 44: zitadel.admin.v1.UpdateEmailProviderSMTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 45: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 46: zitadel.admin.v1.AddEmailProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	449, // 47: zitadel.admin.v1.UpdateEmailProviderHTTPRequest.expiration_signing_key:type_name -> google.protobuf.Duration
-	436, // 48: zitadel.admin.v1.UpdateEmailProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 49: zitadel.admin.v1.ActivateEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 50: zitadel.admin.v1.DeactivateEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 51: zitadel.admin.v1.RemoveEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	439, // 52: zitadel.admin.v1.ListSMSProvidersRequest.query:type_name -> zitadel.v1.ListQuery
-	442, // 53: zitadel.admin.v1.ListSMSProvidersResponse.details:type_name -> zitadel.v1.ListDetails
-	452, // 54: zitadel.admin.v1.ListSMSProvidersResponse.result:type_name -> zitadel.settings.v1.SMSProvider
-	452, // 55: zitadel.admin.v1.GetSMSProviderResponse.config:type_name -> zitadel.settings.v1.SMSProvider
-	436, // 56: zitadel.admin.v1.AddSMSProviderTwilioResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 57: zitadel.admin.v1.UpdateSMSProviderTwilioResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 58: zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 59: zitadel.admin.v1.AddSMSProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	449, // 60: zitadel.admin.v1.UpdateSMSProviderHTTPRequest.expiration_signing_key:type_name -> google.protobuf.Duration
-	436, // 61: zitadel.admin.v1.UpdateSMSProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 62: zitadel.admin.v1.ActivateSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 63: zitadel.admin.v1.DeactivateSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 64: zitadel.admin.v1.RemoveSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	453, // 65: zitadel.admin.v1.GetFileSystemNotificationProviderResponse.provider:type_name -> zitadel.settings.v1.DebugNotificationProvider
-	453, // 66: zitadel.admin.v1.GetLogNotificationProviderResponse.provider:type_name -> zitadel.settings.v1.DebugNotificationProvider
-	454, // 67: zitadel.admin.v1.GetOIDCSettingsResponse.settings:type_name -> zitadel.settings.v1.OIDCSettings
-	449, // 68: zitadel.admin.v1.AddOIDCSettingsRequest.access_token_lifetime:type_name -> google.protobuf.Duration
-	449, // 69: zitadel.admin.v1.AddOIDCSettingsRequest.id_token_lifetime:type_name -> google.protobuf.Duration
-	449, // 70: zitadel.admin.v1.AddOIDCSettingsRequest.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
-	449, // 71: zitadel.admin.v1.AddOIDCSettingsRequest.refresh_token_expiration:type_name -> google.protobuf.Duration
-	436, // 72: zitadel.admin.v1.AddOIDCSettingsResponse.details:type_name -> zitadel.v1.ObjectDetails
-	449, // 73: zitadel.admin.v1.UpdateOIDCSettingsRequest.access_token_lifetime:type_name -> google.protobuf.Duration
-	449, // 74: zitadel.admin.v1.UpdateOIDCSettingsRequest.id_token_lifetime:type_name -> google.protobuf.Duration
-	449, // 75: zitadel.admin.v1.UpdateOIDCSettingsRequest.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
-	449, // 76: zitadel.admin.v1.UpdateOIDCSettingsRequest.refresh_token_expiration:type_name -> google.protobuf.Duration
-	436, // 77: zitadel.admin.v1.UpdateOIDCSettingsResponse.details:type_name -> zitadel.v1.ObjectDetails
-	455, // 78: zitadel.admin.v1.GetSecurityPolicyResponse.policy:type_name -> zitadel.settings.v1.SecurityPolicy
-	436, // 79: zitadel.admin.v1.SetSecurityPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	437, // 80: zitadel.admin.v1.GetOrgByIDResponse.org:type_name -> zitadel.org.v1.Org
-	439, // 81: zitadel.admin.v1.ListOrgsRequest.query:type_name -> zitadel.v1.ListQuery
-	456, // 82: zitadel.admin.v1.ListOrgsRequest.sorting_column:type_name -> zitadel.org.v1.OrgFieldName
-	457, // 83: zitadel.admin.v1.ListOrgsRequest.queries:type_name -> zitadel.org.v1.OrgQuery
-	442, // 84: zitadel.admin.v1.ListOrgsResponse.details:type_name -> zitadel.v1.ListDetails
-	456, // 85: zitadel.admin.v1.ListOrgsResponse.sorting_column:type_name -> zitadel.org.v1.OrgFieldName
-	437, // 86: zitadel.admin.v1.ListOrgsResponse.result:type_name -> zitadel.org.v1.Org
-	424, // 87: zitadel.admin.v1.SetUpOrgRequest.org:type_name -> zitadel.admin.v1.SetUpOrgRequest.Org
-	425, // 88: zitadel.admin.v1.SetUpOrgRequest.human:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human
-	436, // 89: zitadel.admin.v1.SetUpOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 90: zitadel.admin.v1.RemoveOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
-	458, // 91: zitadel.admin.v1.GetIDPByIDResponse.idp:type_name -> zitadel.idp.v1.IDP
-	439, // 92: zitadel.admin.v1.ListIDPsRequest.query:type_name -> zitadel.v1.ListQuery
-	459, // 93: zitadel.admin.v1.ListIDPsRequest.sorting_column:type_name -> zitadel.idp.v1.IDPFieldName
-	125, // 94: zitadel.admin.v1.ListIDPsRequest.queries:type_name -> zitadel.admin.v1.IDPQuery
-	460, // 95: zitadel.admin.v1.IDPQuery.idp_id_query:type_name -> zitadel.idp.v1.IDPIDQuery
-	461, // 96: zitadel.admin.v1.IDPQuery.idp_name_query:type_name -> zitadel.idp.v1.IDPNameQuery
-	442, // 97: zitadel.admin.v1.ListIDPsResponse.details:type_name -> zitadel.v1.ListDetails
-	459, // 98: zitadel.admin.v1.ListIDPsResponse.sorting_column:type_name -> zitadel.idp.v1.IDPFieldName
-	458, // 99: zitadel.admin.v1.ListIDPsResponse.result:type_name -> zitadel.idp.v1.IDP
-	462, // 100: zitadel.admin.v1.AddOIDCIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
-	463, // 101: zitadel.admin.v1.AddOIDCIDPRequest.display_name_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
-	463, // 102: zitadel.admin.v1.AddOIDCIDPRequest.username_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
-	436, // 103: zitadel.admin.v1.AddOIDCIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	462, // 104: zitadel.admin.v1.AddJWTIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
-	436, // 105: zitadel.admin.v1.AddJWTIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	462, // 106: zitadel.admin.v1.UpdateIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
-	436, // 107: zitadel.admin.v1.UpdateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 108: zitadel.admin.v1.DeactivateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 109: zitadel.admin.v1.ReactivateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 110: zitadel.admin.v1.RemoveIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
-	463, // 111: zitadel.admin.v1.UpdateIDPOIDCConfigRequest.display_name_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
-	463, // 112: zitadel.admin.v1.UpdateIDPOIDCConfigRequest.username_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
-	436, // 113: zitadel.admin.v1.UpdateIDPOIDCConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 114: zitadel.admin.v1.UpdateIDPJWTConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
-	439, // 115: zitadel.admin.v1.ListProvidersRequest.query:type_name -> zitadel.v1.ListQuery
-	144, // 116: zitadel.admin.v1.ListProvidersRequest.queries:type_name -> zitadel.admin.v1.ProviderQuery
-	460, // 117: zitadel.admin.v1.ProviderQuery.idp_id_query:type_name -> zitadel.idp.v1.IDPIDQuery
-	461, // 118: zitadel.admin.v1.ProviderQuery.idp_name_query:type_name -> zitadel.idp.v1.IDPNameQuery
-	442, // 119: zitadel.admin.v1.ListProvidersResponse.details:type_name -> zitadel.v1.ListDetails
-	464, // 120: zitadel.admin.v1.ListProvidersResponse.result:type_name -> zitadel.idp.v1.Provider
-	464, // 121: zitadel.admin.v1.GetProviderByIDResponse.idp:type_name -> zitadel.idp.v1.Provider
-	465, // 122: zitadel.admin.v1.AddGenericOAuthProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 123: zitadel.admin.v1.AddGenericOAuthProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 124: zitadel.admin.v1.UpdateGenericOAuthProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 125: zitadel.admin.v1.UpdateGenericOAuthProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 126: zitadel.admin.v1.AddGenericOIDCProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 127: zitadel.admin.v1.AddGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 128: zitadel.admin.v1.UpdateGenericOIDCProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 129: zitadel.admin.v1.UpdateGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	162, // 130: zitadel.admin.v1.MigrateGenericOIDCProviderRequest.azure:type_name -> zitadel.admin.v1.AddAzureADProviderRequest
-	182, // 131: zitadel.admin.v1.MigrateGenericOIDCProviderRequest.google:type_name -> zitadel.admin.v1.AddGoogleProviderRequest
-	436, // 132: zitadel.admin.v1.MigrateGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 133: zitadel.admin.v1.AddJWTProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 134: zitadel.admin.v1.AddJWTProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 135: zitadel.admin.v1.UpdateJWTProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 136: zitadel.admin.v1.UpdateJWTProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	466, // 137: zitadel.admin.v1.AddAzureADProviderRequest.tenant:type_name -> zitadel.idp.v1.AzureADTenant
-	465, // 138: zitadel.admin.v1.AddAzureADProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 139: zitadel.admin.v1.AddAzureADProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	466, // 140: zitadel.admin.v1.UpdateAzureADProviderRequest.tenant:type_name -> zitadel.idp.v1.AzureADTenant
-	465, // 141: zitadel.admin.v1.UpdateAzureADProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 142: zitadel.admin.v1.UpdateAzureADProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 143: zitadel.admin.v1.AddGitHubProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 144: zitadel.admin.v1.AddGitHubProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 145: zitadel.admin.v1.UpdateGitHubProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 146: zitadel.admin.v1.UpdateGitHubProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 147: zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 148: zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 149: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 150: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 151: zitadel.admin.v1.AddGitLabProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 152: zitadel.admin.v1.AddGitLabProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 153: zitadel.admin.v1.UpdateGitLabProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 154: zitadel.admin.v1.UpdateGitLabProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 155: zitadel.admin.v1.AddGitLabSelfHostedProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 156: zitadel.admin.v1.AddGitLabSelfHostedProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 157: zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 158: zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 159: zitadel.admin.v1.AddGoogleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 160: zitadel.admin.v1.AddGoogleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 161: zitadel.admin.v1.UpdateGoogleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 162: zitadel.admin.v1.UpdateGoogleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	449, // 163: zitadel.admin.v1.AddLDAPProviderRequest.timeout:type_name -> google.protobuf.Duration
-	467, // 164: zitadel.admin.v1.AddLDAPProviderRequest.attributes:type_name -> zitadel.idp.v1.LDAPAttributes
-	465, // 165: zitadel.admin.v1.AddLDAPProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 166: zitadel.admin.v1.AddLDAPProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	449, // 167: zitadel.admin.v1.UpdateLDAPProviderRequest.timeout:type_name -> google.protobuf.Duration
-	467, // 168: zitadel.admin.v1.UpdateLDAPProviderRequest.attributes:type_name -> zitadel.idp.v1.LDAPAttributes
-	465, // 169: zitadel.admin.v1.UpdateLDAPProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 170: zitadel.admin.v1.UpdateLDAPProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 171: zitadel.admin.v1.AddAppleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 172: zitadel.admin.v1.AddAppleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	465, // 173: zitadel.admin.v1.UpdateAppleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	436, // 174: zitadel.admin.v1.UpdateAppleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	468, // 175: zitadel.admin.v1.AddSAMLProviderRequest.binding:type_name -> zitadel.idp.v1.SAMLBinding
-	465, // 176: zitadel.admin.v1.AddSAMLProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	469, // 177: zitadel.admin.v1.AddSAMLProviderRequest.name_id_format:type_name -> zitadel.idp.v1.SAMLNameIDFormat
-	470, // 178: zitadel.admin.v1.AddSAMLProviderRequest.signature_algorithm:type_name -> zitadel.idp.v1.SAMLSignatureAlgorithm
-	436, // 179: zitadel.admin.v1.AddSAMLProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	468, // 180: zitadel.admin.v1.UpdateSAMLProviderRequest.binding:type_name -> zitadel.idp.v1.SAMLBinding
-	465, // 181: zitadel.admin.v1.UpdateSAMLProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
-	469, // 182: zitadel.admin.v1.UpdateSAMLProviderRequest.name_id_format:type_name -> zitadel.idp.v1.SAMLNameIDFormat
-	470, // 183: zitadel.admin.v1.UpdateSAMLProviderRequest.signature_algorithm:type_name -> zitadel.idp.v1.SAMLSignatureAlgorithm
-	436, // 184: zitadel.admin.v1.UpdateSAMLProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 185: zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 186: zitadel.admin.v1.DeleteProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
-	471, // 187: zitadel.admin.v1.GetOrgIAMPolicyResponse.policy:type_name -> zitadel.policy.v1.OrgIAMPolicy
-	436, // 188: zitadel.admin.v1.UpdateOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	471, // 189: zitadel.admin.v1.GetCustomOrgIAMPolicyResponse.policy:type_name -> zitadel.policy.v1.OrgIAMPolicy
-	436, // 190: zitadel.admin.v1.AddCustomOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 191: zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 192: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	472, // 193: zitadel.admin.v1.GetDomainPolicyResponse.policy:type_name -> zitadel.policy.v1.DomainPolicy
-	436, // 194: zitadel.admin.v1.UpdateDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	472, // 195: zitadel.admin.v1.GetCustomDomainPolicyResponse.policy:type_name -> zitadel.policy.v1.DomainPolicy
-	436, // 196: zitadel.admin.v1.AddCustomDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 197: zitadel.admin.v1.UpdateCustomDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 198: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	473, // 199: zitadel.admin.v1.GetLabelPolicyResponse.policy:type_name -> zitadel.policy.v1.LabelPolicy
-	473, // 200: zitadel.admin.v1.GetPreviewLabelPolicyResponse.policy:type_name -> zitadel.policy.v1.LabelPolicy
-	474, // 201: zitadel.admin.v1.UpdateLabelPolicyRequest.theme_mode:type_name -> zitadel.policy.v1.ThemeMode
-	436, // 202: zitadel.admin.v1.UpdateLabelPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 203: zitadel.admin.v1.ActivateLabelPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 204: zitadel.admin.v1.RemoveLabelPolicyLogoResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 205: zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 206: zitadel.admin.v1.RemoveLabelPolicyIconResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 207: zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 208: zitadel.admin.v1.RemoveLabelPolicyFontResponse.details:type_name -> zitadel.v1.ObjectDetails
-	475, // 209: zitadel.admin.v1.GetLoginPolicyResponse.policy:type_name -> zitadel.policy.v1.LoginPolicy
-	476, // 210: zitadel.admin.v1.UpdateLoginPolicyRequest.passwordless_type:type_name -> zitadel.policy.v1.PasswordlessType
-	449, // 211: zitadel.admin.v1.UpdateLoginPolicyRequest.password_check_lifetime:type_name -> google.protobuf.Duration
-	449, // 212: zitadel.admin.v1.UpdateLoginPolicyRequest.external_login_check_lifetime:type_name -> google.protobuf.Duration
-	449, // 213: zitadel.admin.v1.UpdateLoginPolicyRequest.mfa_init_skip_lifetime:type_name -> google.protobuf.Duration
-	449, // 214: zitadel.admin.v1.UpdateLoginPolicyRequest.second_factor_check_lifetime:type_name -> google.protobuf.Duration
-	449, // 215: zitadel.admin.v1.UpdateLoginPolicyRequest.multi_factor_check_lifetime:type_name -> google.protobuf.Duration
-	436, // 216: zitadel.admin.v1.UpdateLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	439, // 217: zitadel.admin.v1.ListLoginPolicyIDPsRequest.query:type_name -> zitadel.v1.ListQuery
-	442, // 218: zitadel.admin.v1.ListLoginPolicyIDPsResponse.details:type_name -> zitadel.v1.ListDetails
-	477, // 219: zitadel.admin.v1.ListLoginPolicyIDPsResponse.result:type_name -> zitadel.idp.v1.IDPLoginPolicyLink
-	436, // 220: zitadel.admin.v1.AddIDPToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 221: zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	442, // 222: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse.details:type_name -> zitadel.v1.ListDetails
-	478, // 223: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse.result:type_name -> zitadel.policy.v1.SecondFactorType
-	478, // 224: zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest.type:type_name -> zitadel.policy.v1.SecondFactorType
-	436, // 225: zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	478, // 226: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest.type:type_name -> zitadel.policy.v1.SecondFactorType
-	436, // 227: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	442, // 228: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse.details:type_name -> zitadel.v1.ListDetails
-	479, // 229: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse.result:type_name -> zitadel.policy.v1.MultiFactorType
-	479, // 230: zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest.type:type_name -> zitadel.policy.v1.MultiFactorType
-	436, // 231: zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	479, // 232: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest.type:type_name -> zitadel.policy.v1.MultiFactorType
-	436, // 233: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	480, // 234: zitadel.admin.v1.GetPasswordComplexityPolicyResponse.policy:type_name -> zitadel.policy.v1.PasswordComplexityPolicy
-	436, // 235: zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	481, // 236: zitadel.admin.v1.GetPasswordAgePolicyResponse.policy:type_name -> zitadel.policy.v1.PasswordAgePolicy
-	436, // 237: zitadel.admin.v1.UpdatePasswordAgePolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	482, // 238: zitadel.admin.v1.GetLockoutPolicyResponse.policy:type_name -> zitadel.policy.v1.LockoutPolicy
-	436, // 239: zitadel.admin.v1.UpdateLockoutPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	483, // 240: zitadel.admin.v1.GetPrivacyPolicyResponse.policy:type_name -> zitadel.policy.v1.PrivacyPolicy
-	436, // 241: zitadel.admin.v1.UpdatePrivacyPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 242: zitadel.admin.v1.AddNotificationPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	484, // 243: zitadel.admin.v1.GetNotificationPolicyResponse.policy:type_name -> zitadel.policy.v1.NotificationPolicy
-	436, // 244: zitadel.admin.v1.UpdateNotificationPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 245: zitadel.admin.v1.GetDefaultInitMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 246: zitadel.admin.v1.GetCustomInitMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 247: zitadel.admin.v1.SetDefaultInitMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 248: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 249: zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 250: zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 251: zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 252: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 253: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 254: zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 255: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 256: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 257: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 258: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 259: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 260: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 261: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 262: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 263: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 264: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 265: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 266: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 267: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 268: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 269: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 270: zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 271: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 272: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 273: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 274: zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 275: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 276: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 277: zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 278: zitadel.admin.v1.GetCustomInviteUserMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 279: zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 280: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	485, // 281: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	485, // 282: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
-	436, // 283: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 284: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	486, // 285: zitadel.admin.v1.GetDefaultLoginTextsResponse.custom_text:type_name -> zitadel.text.v1.LoginCustomText
-	486, // 286: zitadel.admin.v1.GetCustomLoginTextsResponse.custom_text:type_name -> zitadel.text.v1.LoginCustomText
-	487, // 287: zitadel.admin.v1.SetCustomLoginTextsRequest.select_account_text:type_name -> zitadel.text.v1.SelectAccountScreenText
-	488, // 288: zitadel.admin.v1.SetCustomLoginTextsRequest.login_text:type_name -> zitadel.text.v1.LoginScreenText
-	489, // 289: zitadel.admin.v1.SetCustomLoginTextsRequest.password_text:type_name -> zitadel.text.v1.PasswordScreenText
-	490, // 290: zitadel.admin.v1.SetCustomLoginTextsRequest.username_change_text:type_name -> zitadel.text.v1.UsernameChangeScreenText
-	491, // 291: zitadel.admin.v1.SetCustomLoginTextsRequest.username_change_done_text:type_name -> zitadel.text.v1.UsernameChangeDoneScreenText
-	492, // 292: zitadel.admin.v1.SetCustomLoginTextsRequest.init_password_text:type_name -> zitadel.text.v1.InitPasswordScreenText
-	493, // 293: zitadel.admin.v1.SetCustomLoginTextsRequest.init_password_done_text:type_name -> zitadel.text.v1.InitPasswordDoneScreenText
-	494, // 294: zitadel.admin.v1.SetCustomLoginTextsRequest.email_verification_text:type_name -> zitadel.text.v1.EmailVerificationScreenText
-	495, // 295: zitadel.admin.v1.SetCustomLoginTextsRequest.email_verification_done_text:type_name -> zitadel.text.v1.EmailVerificationDoneScreenText
-	496, // 296: zitadel.admin.v1.SetCustomLoginTextsRequest.initialize_user_text:type_name -> zitadel.text.v1.InitializeUserScreenText
-	497, // 297: zitadel.admin.v1.SetCustomLoginTextsRequest.initialize_done_text:type_name -> zitadel.text.v1.InitializeUserDoneScreenText
-	498, // 298: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_prompt_text:type_name -> zitadel.text.v1.InitMFAPromptScreenText
-	499, // 299: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_otp_text:type_name -> zitadel.text.v1.InitMFAOTPScreenText
-	500, // 300: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_u2f_text:type_name -> zitadel.text.v1.InitMFAU2FScreenText
-	501, // 301: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_done_text:type_name -> zitadel.text.v1.InitMFADoneScreenText
-	502, // 302: zitadel.admin.v1.SetCustomLoginTextsRequest.mfa_providers_text:type_name -> zitadel.text.v1.MFAProvidersText
-	503, // 303: zitadel.admin.v1.SetCustomLoginTextsRequest.verify_mfa_otp_text:type_name -> zitadel.text.v1.VerifyMFAOTPScreenText
-	504, // 304: zitadel.admin.v1.SetCustomLoginTextsRequest.verify_mfa_u2f_text:type_name -> zitadel.text.v1.VerifyMFAU2FScreenText
-	505, // 305: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_text:type_name -> zitadel.text.v1.PasswordlessScreenText
-	506, // 306: zitadel.admin.v1.SetCustomLoginTextsRequest.password_change_text:type_name -> zitadel.text.v1.PasswordChangeScreenText
-	507, // 307: zitadel.admin.v1.SetCustomLoginTextsRequest.password_change_done_text:type_name -> zitadel.text.v1.PasswordChangeDoneScreenText
-	508, // 308: zitadel.admin.v1.SetCustomLoginTextsRequest.password_reset_done_text:type_name -> zitadel.text.v1.PasswordResetDoneScreenText
-	509, // 309: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_option_text:type_name -> zitadel.text.v1.RegistrationOptionScreenText
-	510, // 310: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_user_text:type_name -> zitadel.text.v1.RegistrationUserScreenText
-	511, // 311: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_org_text:type_name -> zitadel.text.v1.RegistrationOrgScreenText
-	512, // 312: zitadel.admin.v1.SetCustomLoginTextsRequest.linking_user_done_text:type_name -> zitadel.text.v1.LinkingUserDoneScreenText
-	513, // 313: zitadel.admin.v1.SetCustomLoginTextsRequest.external_user_not_found_text:type_name -> zitadel.text.v1.ExternalUserNotFoundScreenText
-	514, // 314: zitadel.admin.v1.SetCustomLoginTextsRequest.success_login_text:type_name -> zitadel.text.v1.SuccessLoginScreenText
-	515, // 315: zitadel.admin.v1.SetCustomLoginTextsRequest.logout_text:type_name -> zitadel.text.v1.LogoutDoneScreenText
-	516, // 316: zitadel.admin.v1.SetCustomLoginTextsRequest.footer_text:type_name -> zitadel.text.v1.FooterText
-	517, // 317: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_prompt_text:type_name -> zitadel.text.v1.PasswordlessPromptScreenText
-	518, // 318: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_registration_text:type_name -> zitadel.text.v1.PasswordlessRegistrationScreenText
-	519, // 319: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_registration_done_text:type_name -> zitadel.text.v1.PasswordlessRegistrationDoneScreenText
-	520, // 320: zitadel.admin.v1.SetCustomLoginTextsRequest.external_registration_user_overview_text:type_name -> zitadel.text.v1.ExternalRegistrationUserOverviewScreenText
-	521, // 321: zitadel.admin.v1.SetCustomLoginTextsRequest.linking_user_prompt_text:type_name -> zitadel.text.v1.LinkingUserPromptScreenText
-	436, // 322: zitadel.admin.v1.SetCustomLoginTextsResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 323: zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 324: zitadel.admin.v1.AddIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 325: zitadel.admin.v1.UpdateIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 326: zitadel.admin.v1.RemoveIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
-	442, // 327: zitadel.admin.v1.ListIAMMemberRolesResponse.details:type_name -> zitadel.v1.ListDetails
-	439, // 328: zitadel.admin.v1.ListIAMMembersRequest.query:type_name -> zitadel.v1.ListQuery
-	522, // 329: zitadel.admin.v1.ListIAMMembersRequest.queries:type_name -> zitadel.member.v1.SearchQuery
-	523, // 330: zitadel.admin.v1.ListIAMMembersRequest.sorting_column:type_name -> zitadel.member.v1.MemberFieldColumnName
-	442, // 331: zitadel.admin.v1.ListIAMMembersResponse.details:type_name -> zitadel.v1.ListDetails
-	524, // 332: zitadel.admin.v1.ListIAMMembersResponse.result:type_name -> zitadel.member.v1.Member
-	392, // 333: zitadel.admin.v1.ListViewsResponse.result:type_name -> zitadel.admin.v1.View
-	393, // 334: zitadel.admin.v1.ListFailedEventsResponse.result:type_name -> zitadel.admin.v1.FailedEvent
-	525, // 335: zitadel.admin.v1.View.event_timestamp:type_name -> google.protobuf.Timestamp
-	525, // 336: zitadel.admin.v1.View.last_successful_spooler_run:type_name -> google.protobuf.Timestamp
-	525, // 337: zitadel.admin.v1.FailedEvent.last_failed:type_name -> google.protobuf.Timestamp
-	395, // 338: zitadel.admin.v1.ImportDataRequest.data_orgs:type_name -> zitadel.admin.v1.ImportDataOrg
-	526, // 339: zitadel.admin.v1.ImportDataRequest.data_orgsv1:type_name -> zitadel.v1.v1.ImportDataOrg
-	429, // 340: zitadel.admin.v1.ImportDataRequest.data_orgs_local:type_name -> zitadel.admin.v1.ImportDataRequest.LocalInput
-	429, // 341: zitadel.admin.v1.ImportDataRequest.data_orgsv1_local:type_name -> zitadel.admin.v1.ImportDataRequest.LocalInput
-	430, // 342: zitadel.admin.v1.ImportDataRequest.data_orgs_s3:type_name -> zitadel.admin.v1.ImportDataRequest.S3Input
-	430, // 343: zitadel.admin.v1.ImportDataRequest.data_orgsv1_s3:type_name -> zitadel.admin.v1.ImportDataRequest.S3Input
-	431, // 344: zitadel.admin.v1.ImportDataRequest.data_orgs_gcs:type_name -> zitadel.admin.v1.ImportDataRequest.GCSInput
-	431, // 345: zitadel.admin.v1.ImportDataRequest.data_orgsv1_gcs:type_name -> zitadel.admin.v1.ImportDataRequest.GCSInput
-	396, // 346: zitadel.admin.v1.ImportDataOrg.orgs:type_name -> zitadel.admin.v1.DataOrg
-	527, // 347: zitadel.admin.v1.DataOrg.org:type_name -> zitadel.management.v1.AddOrgRequest
-	220, // 348: zitadel.admin.v1.DataOrg.domain_policy:type_name -> zitadel.admin.v1.AddCustomDomainPolicyRequest
-	528, // 349: zitadel.admin.v1.DataOrg.label_policy:type_name -> zitadel.management.v1.AddCustomLabelPolicyRequest
-	529, // 350: zitadel.admin.v1.DataOrg.lockout_policy:type_name -> zitadel.management.v1.AddCustomLockoutPolicyRequest
-	530, // 351: zitadel.admin.v1.DataOrg.login_policy:type_name -> zitadel.management.v1.AddCustomLoginPolicyRequest
-	531, // 352: zitadel.admin.v1.DataOrg.password_complexity_policy:type_name -> zitadel.management.v1.AddCustomPasswordComplexityPolicyRequest
-	532, // 353: zitadel.admin.v1.DataOrg.privacy_policy:type_name -> zitadel.management.v1.AddCustomPrivacyPolicyRequest
-	533, // 354: zitadel.admin.v1.DataOrg.projects:type_name -> zitadel.v1.v1.DataProject
-	534, // 355: zitadel.admin.v1.DataOrg.project_roles:type_name -> zitadel.management.v1.AddProjectRoleRequest
-	535, // 356: zitadel.admin.v1.DataOrg.api_apps:type_name -> zitadel.v1.v1.DataAPIApplication
-	536, // 357: zitadel.admin.v1.DataOrg.oidc_apps:type_name -> zitadel.v1.v1.DataOIDCApplication
-	537, // 358: zitadel.admin.v1.DataOrg.human_users:type_name -> zitadel.v1.v1.DataHumanUser
-	538, // 359: zitadel.admin.v1.DataOrg.machine_users:type_name -> zitadel.v1.v1.DataMachineUser
-	539, // 360: zitadel.admin.v1.DataOrg.trigger_actions:type_name -> zitadel.management.v1.SetTriggerActionsRequest
-	540, // 361: zitadel.admin.v1.DataOrg.actions:type_name -> zitadel.v1.v1.DataAction
-	541, // 362: zitadel.admin.v1.DataOrg.project_grants:type_name -> zitadel.v1.v1.DataProjectGrant
-	542, // 363: zitadel.admin.v1.DataOrg.user_grants:type_name -> zitadel.management.v1.AddUserGrantRequest
-	543, // 364: zitadel.admin.v1.DataOrg.org_members:type_name -> zitadel.management.v1.AddOrgMemberRequest
-	544, // 365: zitadel.admin.v1.DataOrg.project_members:type_name -> zitadel.management.v1.AddProjectMemberRequest
-	545, // 366: zitadel.admin.v1.DataOrg.project_grant_members:type_name -> zitadel.management.v1.AddProjectGrantMemberRequest
-	546, // 367: zitadel.admin.v1.DataOrg.user_metadata:type_name -> zitadel.management.v1.SetUserMetadataRequest
-	547, // 368: zitadel.admin.v1.DataOrg.login_texts:type_name -> zitadel.management.v1.SetCustomLoginTextsRequest
-	548, // 369: zitadel.admin.v1.DataOrg.init_messages:type_name -> zitadel.management.v1.SetCustomInitMessageTextRequest
-	549, // 370: zitadel.admin.v1.DataOrg.password_reset_messages:type_name -> zitadel.management.v1.SetCustomPasswordResetMessageTextRequest
-	550, // 371: zitadel.admin.v1.DataOrg.verify_email_messages:type_name -> zitadel.management.v1.SetCustomVerifyEmailMessageTextRequest
-	551, // 372: zitadel.admin.v1.DataOrg.verify_phone_messages:type_name -> zitadel.management.v1.SetCustomVerifyPhoneMessageTextRequest
-	552, // 373: zitadel.admin.v1.DataOrg.domain_claimed_messages:type_name -> zitadel.management.v1.SetCustomDomainClaimedMessageTextRequest
-	553, // 374: zitadel.admin.v1.DataOrg.passwordless_registration_messages:type_name -> zitadel.management.v1.SetCustomPasswordlessRegistrationMessageTextRequest
-	554, // 375: zitadel.admin.v1.DataOrg.oidc_idps:type_name -> zitadel.v1.v1.DataOIDCIDP
-	555, // 376: zitadel.admin.v1.DataOrg.jwt_idps:type_name -> zitadel.v1.v1.DataJWTIDP
-	556, // 377: zitadel.admin.v1.DataOrg.user_links:type_name -> zitadel.idp.v1.IDPUserLink
-	557, // 378: zitadel.admin.v1.DataOrg.domains:type_name -> zitadel.org.v1.Domain
-	558, // 379: zitadel.admin.v1.DataOrg.app_keys:type_name -> zitadel.v1.v1.DataAppKey
-	559, // 380: zitadel.admin.v1.DataOrg.machine_keys:type_name -> zitadel.v1.v1.DataMachineKey
-	560, // 381: zitadel.admin.v1.DataOrg.verify_sms_otp_messages:type_name -> zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest
-	561, // 382: zitadel.admin.v1.DataOrg.verify_email_otp_messages:type_name -> zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest
-	562, // 383: zitadel.admin.v1.DataOrg.invite_user_messages:type_name -> zitadel.management.v1.SetCustomInviteUserMessageTextRequest
-	563, // 384: zitadel.admin.v1.DataOrg.org_state:type_name -> zitadel.org.v1.OrgState
-	398, // 385: zitadel.admin.v1.ImportDataResponse.errors:type_name -> zitadel.admin.v1.ImportDataError
-	399, // 386: zitadel.admin.v1.ImportDataResponse.success:type_name -> zitadel.admin.v1.ImportDataSuccess
-	400, // 387: zitadel.admin.v1.ImportDataSuccess.orgs:type_name -> zitadel.admin.v1.ImportDataSuccessOrg
-	539, // 388: zitadel.admin.v1.ImportDataSuccessOrg.trigger_actions:type_name -> zitadel.management.v1.SetTriggerActionsRequest
-	401, // 389: zitadel.admin.v1.ImportDataSuccessOrg.project_grants:type_name -> zitadel.admin.v1.ImportDataSuccessProjectGrant
-	402, // 390: zitadel.admin.v1.ImportDataSuccessOrg.user_grants:type_name -> zitadel.admin.v1.ImportDataSuccessUserGrant
-	403, // 391: zitadel.admin.v1.ImportDataSuccessOrg.project_members:type_name -> zitadel.admin.v1.ImportDataSuccessProjectMember
-	404, // 392: zitadel.admin.v1.ImportDataSuccessOrg.project_grant_members:type_name -> zitadel.admin.v1.ImportDataSuccessProjectGrantMember
-	405, // 393: zitadel.admin.v1.ImportDataSuccessOrg.user_links:type_name -> zitadel.admin.v1.ImportDataSuccessUserLinks
-	406, // 394: zitadel.admin.v1.ImportDataSuccessOrg.user_metadata:type_name -> zitadel.admin.v1.ImportDataSuccessUserMetadata
-	432, // 395: zitadel.admin.v1.ExportDataRequest.local_output:type_name -> zitadel.admin.v1.ExportDataRequest.LocalOutput
-	433, // 396: zitadel.admin.v1.ExportDataRequest.s3_output:type_name -> zitadel.admin.v1.ExportDataRequest.S3Output
-	434, // 397: zitadel.admin.v1.ExportDataRequest.gcs_output:type_name -> zitadel.admin.v1.ExportDataRequest.GCSOutput
-	396, // 398: zitadel.admin.v1.ExportDataResponse.orgs:type_name -> zitadel.admin.v1.DataOrg
-	525, // 399: zitadel.admin.v1.ListEventsRequest.creation_date:type_name -> google.protobuf.Timestamp
-	435, // 400: zitadel.admin.v1.ListEventsRequest.range:type_name -> zitadel.admin.v1.ListEventsRequest.creation_date_range
-	525, // 401: zitadel.admin.v1.ListEventsRequest.from:type_name -> google.protobuf.Timestamp
-	564, // 402: zitadel.admin.v1.ListEventsResponse.events:type_name -> zitadel.event.v1.Event
-	565, // 403: zitadel.admin.v1.ListEventTypesResponse.event_types:type_name -> zitadel.event.v1.EventType
-	566, // 404: zitadel.admin.v1.ListAggregateTypesResponse.aggregate_types:type_name -> zitadel.event.v1.AggregateType
-	436, // 405: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
-	439, // 406: zitadel.admin.v1.ListMilestonesRequest.query:type_name -> zitadel.v1.ListQuery
-	567, // 407: zitadel.admin.v1.ListMilestonesRequest.sorting_column:type_name -> zitadel.milestone.v1.MilestoneFieldName
-	568, // 408: zitadel.admin.v1.ListMilestonesRequest.queries:type_name -> zitadel.milestone.v1.MilestoneQuery
-	442, // 409: zitadel.admin.v1.ListMilestonesResponse.details:type_name -> zitadel.v1.ListDetails
-	569, // 410: zitadel.admin.v1.ListMilestonesResponse.result:type_name -> zitadel.milestone.v1.Milestone
-	420, // 411: zitadel.admin.v1.SetRestrictionsRequest.allowed_languages:type_name -> zitadel.admin.v1.SelectLanguages
-	436, // 412: zitadel.admin.v1.SetRestrictionsResponse.details:type_name -> zitadel.v1.ObjectDetails
-	436, // 413: zitadel.admin.v1.GetRestrictionsResponse.details:type_name -> zitadel.v1.ObjectDetails
-	426, // 414: zitadel.admin.v1.SetUpOrgRequest.Human.profile:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Profile
-	427, // 415: zitadel.admin.v1.SetUpOrgRequest.Human.email:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Email
-	428, // 416: zitadel.admin.v1.SetUpOrgRequest.Human.phone:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Phone
-	570, // 417: zitadel.admin.v1.SetUpOrgRequest.Human.Profile.gender:type_name -> zitadel.user.v1.Gender
-	525, // 418: zitadel.admin.v1.ListEventsRequest.creation_date_range.since:type_name -> google.protobuf.Timestamp
-	525, // 419: zitadel.admin.v1.ListEventsRequest.creation_date_range.until:type_name -> google.protobuf.Timestamp
-	0,   // 420: zitadel.admin.v1.AdminService.Healthz:input_type -> zitadel.admin.v1.HealthzRequest
-	2,   // 421: zitadel.admin.v1.AdminService.GetSupportedLanguages:input_type -> zitadel.admin.v1.GetSupportedLanguagesRequest
-	4,   // 422: zitadel.admin.v1.AdminService.GetAllowedLanguages:input_type -> zitadel.admin.v1.GetAllowedLanguagesRequest
-	6,   // 423: zitadel.admin.v1.AdminService.SetDefaultLanguage:input_type -> zitadel.admin.v1.SetDefaultLanguageRequest
-	8,   // 424: zitadel.admin.v1.AdminService.GetDefaultLanguage:input_type -> zitadel.admin.v1.GetDefaultLanguageRequest
-	14,  // 425: zitadel.admin.v1.AdminService.GetMyInstance:input_type -> zitadel.admin.v1.GetMyInstanceRequest
-	16,  // 426: zitadel.admin.v1.AdminService.ListInstanceDomains:input_type -> zitadel.admin.v1.ListInstanceDomainsRequest
-	18,  // 427: zitadel.admin.v1.AdminService.ListInstanceTrustedDomains:input_type -> zitadel.admin.v1.ListInstanceTrustedDomainsRequest
-	20,  // 428: zitadel.admin.v1.AdminService.AddInstanceTrustedDomain:input_type -> zitadel.admin.v1.AddInstanceTrustedDomainRequest
-	22,  // 429: zitadel.admin.v1.AdminService.RemoveInstanceTrustedDomain:input_type -> zitadel.admin.v1.RemoveInstanceTrustedDomainRequest
-	24,  // 430: zitadel.admin.v1.AdminService.ListSecretGenerators:input_type -> zitadel.admin.v1.ListSecretGeneratorsRequest
-	26,  // 431: zitadel.admin.v1.AdminService.GetSecretGenerator:input_type -> zitadel.admin.v1.GetSecretGeneratorRequest
-	28,  // 432: zitadel.admin.v1.AdminService.UpdateSecretGenerator:input_type -> zitadel.admin.v1.UpdateSecretGeneratorRequest
-	30,  // 433: zitadel.admin.v1.AdminService.GetSMTPConfig:input_type -> zitadel.admin.v1.GetSMTPConfigRequest
-	32,  // 434: zitadel.admin.v1.AdminService.GetSMTPConfigById:input_type -> zitadel.admin.v1.GetSMTPConfigByIdRequest
-	36,  // 435: zitadel.admin.v1.AdminService.AddSMTPConfig:input_type -> zitadel.admin.v1.AddSMTPConfigRequest
-	38,  // 436: zitadel.admin.v1.AdminService.UpdateSMTPConfig:input_type -> zitadel.admin.v1.UpdateSMTPConfigRequest
-	40,  // 437: zitadel.admin.v1.AdminService.UpdateSMTPConfigPassword:input_type -> zitadel.admin.v1.UpdateSMTPConfigPasswordRequest
-	42,  // 438: zitadel.admin.v1.AdminService.ActivateSMTPConfig:input_type -> zitadel.admin.v1.ActivateSMTPConfigRequest
-	44,  // 439: zitadel.admin.v1.AdminService.DeactivateSMTPConfig:input_type -> zitadel.admin.v1.DeactivateSMTPConfigRequest
-	46,  // 440: zitadel.admin.v1.AdminService.RemoveSMTPConfig:input_type -> zitadel.admin.v1.RemoveSMTPConfigRequest
-	48,  // 441: zitadel.admin.v1.AdminService.TestSMTPConfigById:input_type -> zitadel.admin.v1.TestSMTPConfigByIdRequest
-	50,  // 442: zitadel.admin.v1.AdminService.TestSMTPConfig:input_type -> zitadel.admin.v1.TestSMTPConfigRequest
-	34,  // 443: zitadel.admin.v1.AdminService.ListSMTPConfigs:input_type -> zitadel.admin.v1.ListSMTPConfigsRequest
-	56,  // 444: zitadel.admin.v1.AdminService.ListEmailProviders:input_type -> zitadel.admin.v1.ListEmailProvidersRequest
-	52,  // 445: zitadel.admin.v1.AdminService.GetEmailProvider:input_type -> zitadel.admin.v1.GetEmailProviderRequest
-	54,  // 446: zitadel.admin.v1.AdminService.GetEmailProviderById:input_type -> zitadel.admin.v1.GetEmailProviderByIdRequest
-	58,  // 447: zitadel.admin.v1.AdminService.AddEmailProviderSMTP:input_type -> zitadel.admin.v1.AddEmailProviderSMTPRequest
-	60,  // 448: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTP:input_type -> zitadel.admin.v1.UpdateEmailProviderSMTPRequest
-	64,  // 449: zitadel.admin.v1.AdminService.AddEmailProviderHTTP:input_type -> zitadel.admin.v1.AddEmailProviderHTTPRequest
-	66,  // 450: zitadel.admin.v1.AdminService.UpdateEmailProviderHTTP:input_type -> zitadel.admin.v1.UpdateEmailProviderHTTPRequest
-	62,  // 451: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTPPassword:input_type -> zitadel.admin.v1.UpdateEmailProviderSMTPPasswordRequest
-	68,  // 452: zitadel.admin.v1.AdminService.ActivateEmailProvider:input_type -> zitadel.admin.v1.ActivateEmailProviderRequest
-	70,  // 453: zitadel.admin.v1.AdminService.DeactivateEmailProvider:input_type -> zitadel.admin.v1.DeactivateEmailProviderRequest
-	72,  // 454: zitadel.admin.v1.AdminService.RemoveEmailProvider:input_type -> zitadel.admin.v1.RemoveEmailProviderRequest
-	74,  // 455: zitadel.admin.v1.AdminService.TestEmailProviderSMTPById:input_type -> zitadel.admin.v1.TestEmailProviderSMTPByIdRequest
-	76,  // 456: zitadel.admin.v1.AdminService.TestEmailProviderSMTP:input_type -> zitadel.admin.v1.TestEmailProviderSMTPRequest
-	78,  // 457: zitadel.admin.v1.AdminService.ListSMSProviders:input_type -> zitadel.admin.v1.ListSMSProvidersRequest
-	80,  // 458: zitadel.admin.v1.AdminService.GetSMSProvider:input_type -> zitadel.admin.v1.GetSMSProviderRequest
-	82,  // 459: zitadel.admin.v1.AdminService.AddSMSProviderTwilio:input_type -> zitadel.admin.v1.AddSMSProviderTwilioRequest
-	84,  // 460: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilio:input_type -> zitadel.admin.v1.UpdateSMSProviderTwilioRequest
-	86,  // 461: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilioToken:input_type -> zitadel.admin.v1.UpdateSMSProviderTwilioTokenRequest
-	88,  // 462: zitadel.admin.v1.AdminService.AddSMSProviderHTTP:input_type -> zitadel.admin.v1.AddSMSProviderHTTPRequest
-	90,  // 463: zitadel.admin.v1.AdminService.UpdateSMSProviderHTTP:input_type -> zitadel.admin.v1.UpdateSMSProviderHTTPRequest
-	92,  // 464: zitadel.admin.v1.AdminService.ActivateSMSProvider:input_type -> zitadel.admin.v1.ActivateSMSProviderRequest
-	94,  // 465: zitadel.admin.v1.AdminService.DeactivateSMSProvider:input_type -> zitadel.admin.v1.DeactivateSMSProviderRequest
-	96,  // 466: zitadel.admin.v1.AdminService.RemoveSMSProvider:input_type -> zitadel.admin.v1.RemoveSMSProviderRequest
-	102, // 467: zitadel.admin.v1.AdminService.GetOIDCSettings:input_type -> zitadel.admin.v1.GetOIDCSettingsRequest
-	104, // 468: zitadel.admin.v1.AdminService.AddOIDCSettings:input_type -> zitadel.admin.v1.AddOIDCSettingsRequest
-	106, // 469: zitadel.admin.v1.AdminService.UpdateOIDCSettings:input_type -> zitadel.admin.v1.UpdateOIDCSettingsRequest
-	98,  // 470: zitadel.admin.v1.AdminService.GetFileSystemNotificationProvider:input_type -> zitadel.admin.v1.GetFileSystemNotificationProviderRequest
-	100, // 471: zitadel.admin.v1.AdminService.GetLogNotificationProvider:input_type -> zitadel.admin.v1.GetLogNotificationProviderRequest
-	108, // 472: zitadel.admin.v1.AdminService.GetSecurityPolicy:input_type -> zitadel.admin.v1.GetSecurityPolicyRequest
-	110, // 473: zitadel.admin.v1.AdminService.SetSecurityPolicy:input_type -> zitadel.admin.v1.SetSecurityPolicyRequest
-	114, // 474: zitadel.admin.v1.AdminService.GetOrgByID:input_type -> zitadel.admin.v1.GetOrgByIDRequest
-	112, // 475: zitadel.admin.v1.AdminService.IsOrgUnique:input_type -> zitadel.admin.v1.IsOrgUniqueRequest
-	10,  // 476: zitadel.admin.v1.AdminService.SetDefaultOrg:input_type -> zitadel.admin.v1.SetDefaultOrgRequest
-	12,  // 477: zitadel.admin.v1.AdminService.GetDefaultOrg:input_type -> zitadel.admin.v1.GetDefaultOrgRequest
-	116, // 478: zitadel.admin.v1.AdminService.ListOrgs:input_type -> zitadel.admin.v1.ListOrgsRequest
-	118, // 479: zitadel.admin.v1.AdminService.SetUpOrg:input_type -> zitadel.admin.v1.SetUpOrgRequest
-	120, // 480: zitadel.admin.v1.AdminService.RemoveOrg:input_type -> zitadel.admin.v1.RemoveOrgRequest
-	122, // 481: zitadel.admin.v1.AdminService.GetIDPByID:input_type -> zitadel.admin.v1.GetIDPByIDRequest
-	124, // 482: zitadel.admin.v1.AdminService.ListIDPs:input_type -> zitadel.admin.v1.ListIDPsRequest
-	127, // 483: zitadel.admin.v1.AdminService.AddOIDCIDP:input_type -> zitadel.admin.v1.AddOIDCIDPRequest
-	129, // 484: zitadel.admin.v1.AdminService.AddJWTIDP:input_type -> zitadel.admin.v1.AddJWTIDPRequest
-	131, // 485: zitadel.admin.v1.AdminService.UpdateIDP:input_type -> zitadel.admin.v1.UpdateIDPRequest
-	133, // 486: zitadel.admin.v1.AdminService.DeactivateIDP:input_type -> zitadel.admin.v1.DeactivateIDPRequest
-	135, // 487: zitadel.admin.v1.AdminService.ReactivateIDP:input_type -> zitadel.admin.v1.ReactivateIDPRequest
-	137, // 488: zitadel.admin.v1.AdminService.RemoveIDP:input_type -> zitadel.admin.v1.RemoveIDPRequest
-	139, // 489: zitadel.admin.v1.AdminService.UpdateIDPOIDCConfig:input_type -> zitadel.admin.v1.UpdateIDPOIDCConfigRequest
-	141, // 490: zitadel.admin.v1.AdminService.UpdateIDPJWTConfig:input_type -> zitadel.admin.v1.UpdateIDPJWTConfigRequest
-	143, // 491: zitadel.admin.v1.AdminService.ListProviders:input_type -> zitadel.admin.v1.ListProvidersRequest
-	146, // 492: zitadel.admin.v1.AdminService.GetProviderByID:input_type -> zitadel.admin.v1.GetProviderByIDRequest
-	148, // 493: zitadel.admin.v1.AdminService.AddGenericOAuthProvider:input_type -> zitadel.admin.v1.AddGenericOAuthProviderRequest
-	150, // 494: zitadel.admin.v1.AdminService.UpdateGenericOAuthProvider:input_type -> zitadel.admin.v1.UpdateGenericOAuthProviderRequest
-	152, // 495: zitadel.admin.v1.AdminService.AddGenericOIDCProvider:input_type -> zitadel.admin.v1.AddGenericOIDCProviderRequest
-	154, // 496: zitadel.admin.v1.AdminService.UpdateGenericOIDCProvider:input_type -> zitadel.admin.v1.UpdateGenericOIDCProviderRequest
-	156, // 497: zitadel.admin.v1.AdminService.MigrateGenericOIDCProvider:input_type -> zitadel.admin.v1.MigrateGenericOIDCProviderRequest
-	158, // 498: zitadel.admin.v1.AdminService.AddJWTProvider:input_type -> zitadel.admin.v1.AddJWTProviderRequest
-	160, // 499: zitadel.admin.v1.AdminService.UpdateJWTProvider:input_type -> zitadel.admin.v1.UpdateJWTProviderRequest
-	162, // 500: zitadel.admin.v1.AdminService.AddAzureADProvider:input_type -> zitadel.admin.v1.AddAzureADProviderRequest
-	164, // 501: zitadel.admin.v1.AdminService.UpdateAzureADProvider:input_type -> zitadel.admin.v1.UpdateAzureADProviderRequest
-	166, // 502: zitadel.admin.v1.AdminService.AddGitHubProvider:input_type -> zitadel.admin.v1.AddGitHubProviderRequest
-	168, // 503: zitadel.admin.v1.AdminService.UpdateGitHubProvider:input_type -> zitadel.admin.v1.UpdateGitHubProviderRequest
-	170, // 504: zitadel.admin.v1.AdminService.AddGitHubEnterpriseServerProvider:input_type -> zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest
-	172, // 505: zitadel.admin.v1.AdminService.UpdateGitHubEnterpriseServerProvider:input_type -> zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest
-	174, // 506: zitadel.admin.v1.AdminService.AddGitLabProvider:input_type -> zitadel.admin.v1.AddGitLabProviderRequest
-	176, // 507: zitadel.admin.v1.AdminService.UpdateGitLabProvider:input_type -> zitadel.admin.v1.UpdateGitLabProviderRequest
-	178, // 508: zitadel.admin.v1.AdminService.AddGitLabSelfHostedProvider:input_type -> zitadel.admin.v1.AddGitLabSelfHostedProviderRequest
-	180, // 509: zitadel.admin.v1.AdminService.UpdateGitLabSelfHostedProvider:input_type -> zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest
-	182, // 510: zitadel.admin.v1.AdminService.AddGoogleProvider:input_type -> zitadel.admin.v1.AddGoogleProviderRequest
-	184, // 511: zitadel.admin.v1.AdminService.UpdateGoogleProvider:input_type -> zitadel.admin.v1.UpdateGoogleProviderRequest
-	186, // 512: zitadel.admin.v1.AdminService.AddLDAPProvider:input_type -> zitadel.admin.v1.AddLDAPProviderRequest
-	188, // 513: zitadel.admin.v1.AdminService.UpdateLDAPProvider:input_type -> zitadel.admin.v1.UpdateLDAPProviderRequest
-	190, // 514: zitadel.admin.v1.AdminService.AddAppleProvider:input_type -> zitadel.admin.v1.AddAppleProviderRequest
-	192, // 515: zitadel.admin.v1.AdminService.UpdateAppleProvider:input_type -> zitadel.admin.v1.UpdateAppleProviderRequest
-	194, // 516: zitadel.admin.v1.AdminService.AddSAMLProvider:input_type -> zitadel.admin.v1.AddSAMLProviderRequest
-	196, // 517: zitadel.admin.v1.AdminService.UpdateSAMLProvider:input_type -> zitadel.admin.v1.UpdateSAMLProviderRequest
-	198, // 518: zitadel.admin.v1.AdminService.RegenerateSAMLProviderCertificate:input_type -> zitadel.admin.v1.RegenerateSAMLProviderCertificateRequest
-	200, // 519: zitadel.admin.v1.AdminService.DeleteProvider:input_type -> zitadel.admin.v1.DeleteProviderRequest
-	202, // 520: zitadel.admin.v1.AdminService.GetOrgIAMPolicy:input_type -> zitadel.admin.v1.GetOrgIAMPolicyRequest
-	204, // 521: zitadel.admin.v1.AdminService.UpdateOrgIAMPolicy:input_type -> zitadel.admin.v1.UpdateOrgIAMPolicyRequest
-	206, // 522: zitadel.admin.v1.AdminService.GetCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.GetCustomOrgIAMPolicyRequest
-	208, // 523: zitadel.admin.v1.AdminService.AddCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.AddCustomOrgIAMPolicyRequest
-	210, // 524: zitadel.admin.v1.AdminService.UpdateCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.UpdateCustomOrgIAMPolicyRequest
-	212, // 525: zitadel.admin.v1.AdminService.ResetCustomOrgIAMPolicyToDefault:input_type -> zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultRequest
-	214, // 526: zitadel.admin.v1.AdminService.GetDomainPolicy:input_type -> zitadel.admin.v1.GetDomainPolicyRequest
-	216, // 527: zitadel.admin.v1.AdminService.UpdateDomainPolicy:input_type -> zitadel.admin.v1.UpdateDomainPolicyRequest
-	218, // 528: zitadel.admin.v1.AdminService.GetCustomDomainPolicy:input_type -> zitadel.admin.v1.GetCustomDomainPolicyRequest
-	220, // 529: zitadel.admin.v1.AdminService.AddCustomDomainPolicy:input_type -> zitadel.admin.v1.AddCustomDomainPolicyRequest
-	222, // 530: zitadel.admin.v1.AdminService.UpdateCustomDomainPolicy:input_type -> zitadel.admin.v1.UpdateCustomDomainPolicyRequest
-	224, // 531: zitadel.admin.v1.AdminService.ResetCustomDomainPolicyToDefault:input_type -> zitadel.admin.v1.ResetCustomDomainPolicyToDefaultRequest
-	226, // 532: zitadel.admin.v1.AdminService.GetLabelPolicy:input_type -> zitadel.admin.v1.GetLabelPolicyRequest
-	228, // 533: zitadel.admin.v1.AdminService.GetPreviewLabelPolicy:input_type -> zitadel.admin.v1.GetPreviewLabelPolicyRequest
-	230, // 534: zitadel.admin.v1.AdminService.UpdateLabelPolicy:input_type -> zitadel.admin.v1.UpdateLabelPolicyRequest
-	232, // 535: zitadel.admin.v1.AdminService.ActivateLabelPolicy:input_type -> zitadel.admin.v1.ActivateLabelPolicyRequest
-	234, // 536: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogo:input_type -> zitadel.admin.v1.RemoveLabelPolicyLogoRequest
-	236, // 537: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogoDark:input_type -> zitadel.admin.v1.RemoveLabelPolicyLogoDarkRequest
-	238, // 538: zitadel.admin.v1.AdminService.RemoveLabelPolicyIcon:input_type -> zitadel.admin.v1.RemoveLabelPolicyIconRequest
-	240, // 539: zitadel.admin.v1.AdminService.RemoveLabelPolicyIconDark:input_type -> zitadel.admin.v1.RemoveLabelPolicyIconDarkRequest
-	242, // 540: zitadel.admin.v1.AdminService.RemoveLabelPolicyFont:input_type -> zitadel.admin.v1.RemoveLabelPolicyFontRequest
-	244, // 541: zitadel.admin.v1.AdminService.GetLoginPolicy:input_type -> zitadel.admin.v1.GetLoginPolicyRequest
-	246, // 542: zitadel.admin.v1.AdminService.UpdateLoginPolicy:input_type -> zitadel.admin.v1.UpdateLoginPolicyRequest
-	248, // 543: zitadel.admin.v1.AdminService.ListLoginPolicyIDPs:input_type -> zitadel.admin.v1.ListLoginPolicyIDPsRequest
-	250, // 544: zitadel.admin.v1.AdminService.AddIDPToLoginPolicy:input_type -> zitadel.admin.v1.AddIDPToLoginPolicyRequest
-	252, // 545: zitadel.admin.v1.AdminService.RemoveIDPFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveIDPFromLoginPolicyRequest
-	254, // 546: zitadel.admin.v1.AdminService.ListLoginPolicySecondFactors:input_type -> zitadel.admin.v1.ListLoginPolicySecondFactorsRequest
-	256, // 547: zitadel.admin.v1.AdminService.AddSecondFactorToLoginPolicy:input_type -> zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest
-	258, // 548: zitadel.admin.v1.AdminService.RemoveSecondFactorFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest
-	260, // 549: zitadel.admin.v1.AdminService.ListLoginPolicyMultiFactors:input_type -> zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest
-	262, // 550: zitadel.admin.v1.AdminService.AddMultiFactorToLoginPolicy:input_type -> zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest
-	264, // 551: zitadel.admin.v1.AdminService.RemoveMultiFactorFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest
-	266, // 552: zitadel.admin.v1.AdminService.GetPasswordComplexityPolicy:input_type -> zitadel.admin.v1.GetPasswordComplexityPolicyRequest
-	268, // 553: zitadel.admin.v1.AdminService.UpdatePasswordComplexityPolicy:input_type -> zitadel.admin.v1.UpdatePasswordComplexityPolicyRequest
-	270, // 554: zitadel.admin.v1.AdminService.GetPasswordAgePolicy:input_type -> zitadel.admin.v1.GetPasswordAgePolicyRequest
-	272, // 555: zitadel.admin.v1.AdminService.UpdatePasswordAgePolicy:input_type -> zitadel.admin.v1.UpdatePasswordAgePolicyRequest
-	274, // 556: zitadel.admin.v1.AdminService.GetLockoutPolicy:input_type -> zitadel.admin.v1.GetLockoutPolicyRequest
-	276, // 557: zitadel.admin.v1.AdminService.UpdateLockoutPolicy:input_type -> zitadel.admin.v1.UpdateLockoutPolicyRequest
-	278, // 558: zitadel.admin.v1.AdminService.GetPrivacyPolicy:input_type -> zitadel.admin.v1.GetPrivacyPolicyRequest
-	280, // 559: zitadel.admin.v1.AdminService.UpdatePrivacyPolicy:input_type -> zitadel.admin.v1.UpdatePrivacyPolicyRequest
-	282, // 560: zitadel.admin.v1.AdminService.AddNotificationPolicy:input_type -> zitadel.admin.v1.AddNotificationPolicyRequest
-	284, // 561: zitadel.admin.v1.AdminService.GetNotificationPolicy:input_type -> zitadel.admin.v1.GetNotificationPolicyRequest
-	286, // 562: zitadel.admin.v1.AdminService.UpdateNotificationPolicy:input_type -> zitadel.admin.v1.UpdateNotificationPolicyRequest
-	288, // 563: zitadel.admin.v1.AdminService.GetDefaultInitMessageText:input_type -> zitadel.admin.v1.GetDefaultInitMessageTextRequest
-	290, // 564: zitadel.admin.v1.AdminService.GetCustomInitMessageText:input_type -> zitadel.admin.v1.GetCustomInitMessageTextRequest
-	292, // 565: zitadel.admin.v1.AdminService.SetDefaultInitMessageText:input_type -> zitadel.admin.v1.SetDefaultInitMessageTextRequest
-	294, // 566: zitadel.admin.v1.AdminService.ResetCustomInitMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomInitMessageTextToDefaultRequest
-	296, // 567: zitadel.admin.v1.AdminService.GetDefaultPasswordResetMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordResetMessageTextRequest
-	298, // 568: zitadel.admin.v1.AdminService.GetCustomPasswordResetMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordResetMessageTextRequest
-	300, // 569: zitadel.admin.v1.AdminService.SetDefaultPasswordResetMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordResetMessageTextRequest
-	302, // 570: zitadel.admin.v1.AdminService.ResetCustomPasswordResetMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultRequest
-	304, // 571: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyEmailMessageTextRequest
-	306, // 572: zitadel.admin.v1.AdminService.GetCustomVerifyEmailMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyEmailMessageTextRequest
-	308, // 573: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyEmailMessageTextRequest
-	310, // 574: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultRequest
-	312, // 575: zitadel.admin.v1.AdminService.GetDefaultVerifyPhoneMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextRequest
-	314, // 576: zitadel.admin.v1.AdminService.GetCustomVerifyPhoneMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyPhoneMessageTextRequest
-	316, // 577: zitadel.admin.v1.AdminService.SetDefaultVerifyPhoneMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextRequest
-	318, // 578: zitadel.admin.v1.AdminService.ResetCustomVerifyPhoneMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest
-	322, // 579: zitadel.admin.v1.AdminService.GetDefaultVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest
-	320, // 580: zitadel.admin.v1.AdminService.GetCustomVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest
-	324, // 581: zitadel.admin.v1.AdminService.SetDefaultVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest
-	326, // 582: zitadel.admin.v1.AdminService.ResetCustomVerifySMSOTPMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest
-	330, // 583: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest
-	328, // 584: zitadel.admin.v1.AdminService.GetCustomVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest
-	332, // 585: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest
-	334, // 586: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailOTPMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest
-	336, // 587: zitadel.admin.v1.AdminService.GetDefaultDomainClaimedMessageText:input_type -> zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest
-	338, // 588: zitadel.admin.v1.AdminService.GetCustomDomainClaimedMessageText:input_type -> zitadel.admin.v1.GetCustomDomainClaimedMessageTextRequest
-	340, // 589: zitadel.admin.v1.AdminService.SetDefaultDomainClaimedMessageText:input_type -> zitadel.admin.v1.SetDefaultDomainClaimedMessageTextRequest
-	342, // 590: zitadel.admin.v1.AdminService.ResetCustomDomainClaimedMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultRequest
-	360, // 591: zitadel.admin.v1.AdminService.GetDefaultPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextRequest
-	362, // 592: zitadel.admin.v1.AdminService.GetCustomPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextRequest
-	364, // 593: zitadel.admin.v1.AdminService.SetDefaultPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextRequest
-	366, // 594: zitadel.admin.v1.AdminService.ResetCustomPasswordlessRegistrationMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest
-	344, // 595: zitadel.admin.v1.AdminService.GetDefaultPasswordChangeMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest
-	346, // 596: zitadel.admin.v1.AdminService.GetCustomPasswordChangeMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest
-	348, // 597: zitadel.admin.v1.AdminService.SetDefaultPasswordChangeMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordChangeMessageTextRequest
-	350, // 598: zitadel.admin.v1.AdminService.ResetCustomPasswordChangeMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultRequest
-	352, // 599: zitadel.admin.v1.AdminService.GetDefaultInviteUserMessageText:input_type -> zitadel.admin.v1.GetDefaultInviteUserMessageTextRequest
-	354, // 600: zitadel.admin.v1.AdminService.GetCustomInviteUserMessageText:input_type -> zitadel.admin.v1.GetCustomInviteUserMessageTextRequest
-	356, // 601: zitadel.admin.v1.AdminService.SetDefaultInviteUserMessageText:input_type -> zitadel.admin.v1.SetDefaultInviteUserMessageTextRequest
-	358, // 602: zitadel.admin.v1.AdminService.ResetCustomInviteUserMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultRequest
-	368, // 603: zitadel.admin.v1.AdminService.GetDefaultLoginTexts:input_type -> zitadel.admin.v1.GetDefaultLoginTextsRequest
-	370, // 604: zitadel.admin.v1.AdminService.GetCustomLoginTexts:input_type -> zitadel.admin.v1.GetCustomLoginTextsRequest
-	372, // 605: zitadel.admin.v1.AdminService.SetCustomLoginText:input_type -> zitadel.admin.v1.SetCustomLoginTextsRequest
-	374, // 606: zitadel.admin.v1.AdminService.ResetCustomLoginTextToDefault:input_type -> zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest
-	382, // 607: zitadel.admin.v1.AdminService.ListIAMMemberRoles:input_type -> zitadel.admin.v1.ListIAMMemberRolesRequest
-	384, // 608: zitadel.admin.v1.AdminService.ListIAMMembers:input_type -> zitadel.admin.v1.ListIAMMembersRequest
-	376, // 609: zitadel.admin.v1.AdminService.AddIAMMember:input_type -> zitadel.admin.v1.AddIAMMemberRequest
-	378, // 610: zitadel.admin.v1.AdminService.UpdateIAMMember:input_type -> zitadel.admin.v1.UpdateIAMMemberRequest
-	380, // 611: zitadel.admin.v1.AdminService.RemoveIAMMember:input_type -> zitadel.admin.v1.RemoveIAMMemberRequest
-	386, // 612: zitadel.admin.v1.AdminService.ListViews:input_type -> zitadel.admin.v1.ListViewsRequest
-	388, // 613: zitadel.admin.v1.AdminService.ListFailedEvents:input_type -> zitadel.admin.v1.ListFailedEventsRequest
-	390, // 614: zitadel.admin.v1.AdminService.RemoveFailedEvent:input_type -> zitadel.admin.v1.RemoveFailedEventRequest
-	394, // 615: zitadel.admin.v1.AdminService.ImportData:input_type -> zitadel.admin.v1.ImportDataRequest
-	407, // 616: zitadel.admin.v1.AdminService.ExportData:input_type -> zitadel.admin.v1.ExportDataRequest
-	411, // 617: zitadel.admin.v1.AdminService.ListEventTypes:input_type -> zitadel.admin.v1.ListEventTypesRequest
-	409, // 618: zitadel.admin.v1.AdminService.ListEvents:input_type -> zitadel.admin.v1.ListEventsRequest
-	413, // 619: zitadel.admin.v1.AdminService.ListAggregateTypes:input_type -> zitadel.admin.v1.ListAggregateTypesRequest
-	415, // 620: zitadel.admin.v1.AdminService.ActivateFeatureLoginDefaultOrg:input_type -> zitadel.admin.v1.ActivateFeatureLoginDefaultOrgRequest
-	417, // 621: zitadel.admin.v1.AdminService.ListMilestones:input_type -> zitadel.admin.v1.ListMilestonesRequest
-	419, // 622: zitadel.admin.v1.AdminService.SetRestrictions:input_type -> zitadel.admin.v1.SetRestrictionsRequest
-	422, // 623: zitadel.admin.v1.AdminService.GetRestrictions:input_type -> zitadel.admin.v1.GetRestrictionsRequest
-	1,   // 624: zitadel.admin.v1.AdminService.Healthz:output_type -> zitadel.admin.v1.HealthzResponse
-	3,   // 625: zitadel.admin.v1.AdminService.GetSupportedLanguages:output_type -> zitadel.admin.v1.GetSupportedLanguagesResponse
-	5,   // 626: zitadel.admin.v1.AdminService.GetAllowedLanguages:output_type -> zitadel.admin.v1.GetAllowedLanguagesResponse
-	7,   // 627: zitadel.admin.v1.AdminService.SetDefaultLanguage:output_type -> zitadel.admin.v1.SetDefaultLanguageResponse
-	9,   // 628: zitadel.admin.v1.AdminService.GetDefaultLanguage:output_type -> zitadel.admin.v1.GetDefaultLanguageResponse
-	15,  // 629: zitadel.admin.v1.AdminService.GetMyInstance:output_type -> zitadel.admin.v1.GetMyInstanceResponse
-	17,  // 630: zitadel.admin.v1.AdminService.ListInstanceDomains:output_type -> zitadel.admin.v1.ListInstanceDomainsResponse
-	19,  // 631: zitadel.admin.v1.AdminService.ListInstanceTrustedDomains:output_type -> zitadel.admin.v1.ListInstanceTrustedDomainsResponse
-	21,  // 632: zitadel.admin.v1.AdminService.AddInstanceTrustedDomain:output_type -> zitadel.admin.v1.AddInstanceTrustedDomainResponse
-	23,  // 633: zitadel.admin.v1.AdminService.RemoveInstanceTrustedDomain:output_type -> zitadel.admin.v1.RemoveInstanceTrustedDomainResponse
-	25,  // 634: zitadel.admin.v1.AdminService.ListSecretGenerators:output_type -> zitadel.admin.v1.ListSecretGeneratorsResponse
-	27,  // 635: zitadel.admin.v1.AdminService.GetSecretGenerator:output_type -> zitadel.admin.v1.GetSecretGeneratorResponse
-	29,  // 636: zitadel.admin.v1.AdminService.UpdateSecretGenerator:output_type -> zitadel.admin.v1.UpdateSecretGeneratorResponse
-	31,  // 637: zitadel.admin.v1.AdminService.GetSMTPConfig:output_type -> zitadel.admin.v1.GetSMTPConfigResponse
-	33,  // 638: zitadel.admin.v1.AdminService.GetSMTPConfigById:output_type -> zitadel.admin.v1.GetSMTPConfigByIdResponse
-	37,  // 639: zitadel.admin.v1.AdminService.AddSMTPConfig:output_type -> zitadel.admin.v1.AddSMTPConfigResponse
-	39,  // 640: zitadel.admin.v1.AdminService.UpdateSMTPConfig:output_type -> zitadel.admin.v1.UpdateSMTPConfigResponse
-	41,  // 641: zitadel.admin.v1.AdminService.UpdateSMTPConfigPassword:output_type -> zitadel.admin.v1.UpdateSMTPConfigPasswordResponse
-	43,  // 642: zitadel.admin.v1.AdminService.ActivateSMTPConfig:output_type -> zitadel.admin.v1.ActivateSMTPConfigResponse
-	45,  // 643: zitadel.admin.v1.AdminService.DeactivateSMTPConfig:output_type -> zitadel.admin.v1.DeactivateSMTPConfigResponse
-	47,  // 644: zitadel.admin.v1.AdminService.RemoveSMTPConfig:output_type -> zitadel.admin.v1.RemoveSMTPConfigResponse
-	49,  // 645: zitadel.admin.v1.AdminService.TestSMTPConfigById:output_type -> zitadel.admin.v1.TestSMTPConfigByIdResponse
-	51,  // 646: zitadel.admin.v1.AdminService.TestSMTPConfig:output_type -> zitadel.admin.v1.TestSMTPConfigResponse
-	35,  // 647: zitadel.admin.v1.AdminService.ListSMTPConfigs:output_type -> zitadel.admin.v1.ListSMTPConfigsResponse
-	57,  // 648: zitadel.admin.v1.AdminService.ListEmailProviders:output_type -> zitadel.admin.v1.ListEmailProvidersResponse
-	53,  // 649: zitadel.admin.v1.AdminService.GetEmailProvider:output_type -> zitadel.admin.v1.GetEmailProviderResponse
-	55,  // 650: zitadel.admin.v1.AdminService.GetEmailProviderById:output_type -> zitadel.admin.v1.GetEmailProviderByIdResponse
-	59,  // 651: zitadel.admin.v1.AdminService.AddEmailProviderSMTP:output_type -> zitadel.admin.v1.AddEmailProviderSMTPResponse
-	61,  // 652: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTP:output_type -> zitadel.admin.v1.UpdateEmailProviderSMTPResponse
-	65,  // 653: zitadel.admin.v1.AdminService.AddEmailProviderHTTP:output_type -> zitadel.admin.v1.AddEmailProviderHTTPResponse
-	67,  // 654: zitadel.admin.v1.AdminService.UpdateEmailProviderHTTP:output_type -> zitadel.admin.v1.UpdateEmailProviderHTTPResponse
-	63,  // 655: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTPPassword:output_type -> zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse
-	69,  // 656: zitadel.admin.v1.AdminService.ActivateEmailProvider:output_type -> zitadel.admin.v1.ActivateEmailProviderResponse
-	71,  // 657: zitadel.admin.v1.AdminService.DeactivateEmailProvider:output_type -> zitadel.admin.v1.DeactivateEmailProviderResponse
-	73,  // 658: zitadel.admin.v1.AdminService.RemoveEmailProvider:output_type -> zitadel.admin.v1.RemoveEmailProviderResponse
-	75,  // 659: zitadel.admin.v1.AdminService.TestEmailProviderSMTPById:output_type -> zitadel.admin.v1.TestEmailProviderSMTPByIdResponse
-	77,  // 660: zitadel.admin.v1.AdminService.TestEmailProviderSMTP:output_type -> zitadel.admin.v1.TestEmailProviderSMTPResponse
-	79,  // 661: zitadel.admin.v1.AdminService.ListSMSProviders:output_type -> zitadel.admin.v1.ListSMSProvidersResponse
-	81,  // 662: zitadel.admin.v1.AdminService.GetSMSProvider:output_type -> zitadel.admin.v1.GetSMSProviderResponse
-	83,  // 663: zitadel.admin.v1.AdminService.AddSMSProviderTwilio:output_type -> zitadel.admin.v1.AddSMSProviderTwilioResponse
-	85,  // 664: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilio:output_type -> zitadel.admin.v1.UpdateSMSProviderTwilioResponse
-	87,  // 665: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilioToken:output_type -> zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse
-	89,  // 666: zitadel.admin.v1.AdminService.AddSMSProviderHTTP:output_type -> zitadel.admin.v1.AddSMSProviderHTTPResponse
-	91,  // 667: zitadel.admin.v1.AdminService.UpdateSMSProviderHTTP:output_type -> zitadel.admin.v1.UpdateSMSProviderHTTPResponse
-	93,  // 668: zitadel.admin.v1.AdminService.ActivateSMSProvider:output_type -> zitadel.admin.v1.ActivateSMSProviderResponse
-	95,  // 669: zitadel.admin.v1.AdminService.DeactivateSMSProvider:output_type -> zitadel.admin.v1.DeactivateSMSProviderResponse
-	97,  // 670: zitadel.admin.v1.AdminService.RemoveSMSProvider:output_type -> zitadel.admin.v1.RemoveSMSProviderResponse
-	103, // 671: zitadel.admin.v1.AdminService.GetOIDCSettings:output_type -> zitadel.admin.v1.GetOIDCSettingsResponse
-	105, // 672: zitadel.admin.v1.AdminService.AddOIDCSettings:output_type -> zitadel.admin.v1.AddOIDCSettingsResponse
-	107, // 673: zitadel.admin.v1.AdminService.UpdateOIDCSettings:output_type -> zitadel.admin.v1.UpdateOIDCSettingsResponse
-	99,  // 674: zitadel.admin.v1.AdminService.GetFileSystemNotificationProvider:output_type -> zitadel.admin.v1.GetFileSystemNotificationProviderResponse
-	101, // 675: zitadel.admin.v1.AdminService.GetLogNotificationProvider:output_type -> zitadel.admin.v1.GetLogNotificationProviderResponse
-	109, // 676: zitadel.admin.v1.AdminService.GetSecurityPolicy:output_type -> zitadel.admin.v1.GetSecurityPolicyResponse
-	111, // 677: zitadel.admin.v1.AdminService.SetSecurityPolicy:output_type -> zitadel.admin.v1.SetSecurityPolicyResponse
-	115, // 678: zitadel.admin.v1.AdminService.GetOrgByID:output_type -> zitadel.admin.v1.GetOrgByIDResponse
-	113, // 679: zitadel.admin.v1.AdminService.IsOrgUnique:output_type -> zitadel.admin.v1.IsOrgUniqueResponse
-	11,  // 680: zitadel.admin.v1.AdminService.SetDefaultOrg:output_type -> zitadel.admin.v1.SetDefaultOrgResponse
-	13,  // 681: zitadel.admin.v1.AdminService.GetDefaultOrg:output_type -> zitadel.admin.v1.GetDefaultOrgResponse
-	117, // 682: zitadel.admin.v1.AdminService.ListOrgs:output_type -> zitadel.admin.v1.ListOrgsResponse
-	119, // 683: zitadel.admin.v1.AdminService.SetUpOrg:output_type -> zitadel.admin.v1.SetUpOrgResponse
-	121, // 684: zitadel.admin.v1.AdminService.RemoveOrg:output_type -> zitadel.admin.v1.RemoveOrgResponse
-	123, // 685: zitadel.admin.v1.AdminService.GetIDPByID:output_type -> zitadel.admin.v1.GetIDPByIDResponse
-	126, // 686: zitadel.admin.v1.AdminService.ListIDPs:output_type -> zitadel.admin.v1.ListIDPsResponse
-	128, // 687: zitadel.admin.v1.AdminService.AddOIDCIDP:output_type -> zitadel.admin.v1.AddOIDCIDPResponse
-	130, // 688: zitadel.admin.v1.AdminService.AddJWTIDP:output_type -> zitadel.admin.v1.AddJWTIDPResponse
-	132, // 689: zitadel.admin.v1.AdminService.UpdateIDP:output_type -> zitadel.admin.v1.UpdateIDPResponse
-	134, // 690: zitadel.admin.v1.AdminService.DeactivateIDP:output_type -> zitadel.admin.v1.DeactivateIDPResponse
-	136, // 691: zitadel.admin.v1.AdminService.ReactivateIDP:output_type -> zitadel.admin.v1.ReactivateIDPResponse
-	138, // 692: zitadel.admin.v1.AdminService.RemoveIDP:output_type -> zitadel.admin.v1.RemoveIDPResponse
-	140, // 693: zitadel.admin.v1.AdminService.UpdateIDPOIDCConfig:output_type -> zitadel.admin.v1.UpdateIDPOIDCConfigResponse
-	142, // 694: zitadel.admin.v1.AdminService.UpdateIDPJWTConfig:output_type -> zitadel.admin.v1.UpdateIDPJWTConfigResponse
-	145, // 695: zitadel.admin.v1.AdminService.ListProviders:output_type -> zitadel.admin.v1.ListProvidersResponse
-	147, // 696: zitadel.admin.v1.AdminService.GetProviderByID:output_type -> zitadel.admin.v1.GetProviderByIDResponse
-	149, // 697: zitadel.admin.v1.AdminService.AddGenericOAuthProvider:output_type -> zitadel.admin.v1.AddGenericOAuthProviderResponse
-	151, // 698: zitadel.admin.v1.AdminService.UpdateGenericOAuthProvider:output_type -> zitadel.admin.v1.UpdateGenericOAuthProviderResponse
-	153, // 699: zitadel.admin.v1.AdminService.AddGenericOIDCProvider:output_type -> zitadel.admin.v1.AddGenericOIDCProviderResponse
-	155, // 700: zitadel.admin.v1.AdminService.UpdateGenericOIDCProvider:output_type -> zitadel.admin.v1.UpdateGenericOIDCProviderResponse
-	157, // 701: zitadel.admin.v1.AdminService.MigrateGenericOIDCProvider:output_type -> zitadel.admin.v1.MigrateGenericOIDCProviderResponse
-	159, // 702: zitadel.admin.v1.AdminService.AddJWTProvider:output_type -> zitadel.admin.v1.AddJWTProviderResponse
-	161, // 703: zitadel.admin.v1.AdminService.UpdateJWTProvider:output_type -> zitadel.admin.v1.UpdateJWTProviderResponse
-	163, // 704: zitadel.admin.v1.AdminService.AddAzureADProvider:output_type -> zitadel.admin.v1.AddAzureADProviderResponse
-	165, // 705: zitadel.admin.v1.AdminService.UpdateAzureADProvider:output_type -> zitadel.admin.v1.UpdateAzureADProviderResponse
-	167, // 706: zitadel.admin.v1.AdminService.AddGitHubProvider:output_type -> zitadel.admin.v1.AddGitHubProviderResponse
-	169, // 707: zitadel.admin.v1.AdminService.UpdateGitHubProvider:output_type -> zitadel.admin.v1.UpdateGitHubProviderResponse
-	171, // 708: zitadel.admin.v1.AdminService.AddGitHubEnterpriseServerProvider:output_type -> zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse
-	173, // 709: zitadel.admin.v1.AdminService.UpdateGitHubEnterpriseServerProvider:output_type -> zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse
-	175, // 710: zitadel.admin.v1.AdminService.AddGitLabProvider:output_type -> zitadel.admin.v1.AddGitLabProviderResponse
-	177, // 711: zitadel.admin.v1.AdminService.UpdateGitLabProvider:output_type -> zitadel.admin.v1.UpdateGitLabProviderResponse
-	179, // 712: zitadel.admin.v1.AdminService.AddGitLabSelfHostedProvider:output_type -> zitadel.admin.v1.AddGitLabSelfHostedProviderResponse
-	181, // 713: zitadel.admin.v1.AdminService.UpdateGitLabSelfHostedProvider:output_type -> zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse
-	183, // 714: zitadel.admin.v1.AdminService.AddGoogleProvider:output_type -> zitadel.admin.v1.AddGoogleProviderResponse
-	185, // 715: zitadel.admin.v1.AdminService.UpdateGoogleProvider:output_type -> zitadel.admin.v1.UpdateGoogleProviderResponse
-	187, // 716: zitadel.admin.v1.AdminService.AddLDAPProvider:output_type -> zitadel.admin.v1.AddLDAPProviderResponse
-	189, // 717: zitadel.admin.v1.AdminService.UpdateLDAPProvider:output_type -> zitadel.admin.v1.UpdateLDAPProviderResponse
-	191, // 718: zitadel.admin.v1.AdminService.AddAppleProvider:output_type -> zitadel.admin.v1.AddAppleProviderResponse
-	193, // 719: zitadel.admin.v1.AdminService.UpdateAppleProvider:output_type -> zitadel.admin.v1.UpdateAppleProviderResponse
-	195, // 720: zitadel.admin.v1.AdminService.AddSAMLProvider:output_type -> zitadel.admin.v1.AddSAMLProviderResponse
-	197, // 721: zitadel.admin.v1.AdminService.UpdateSAMLProvider:output_type -> zitadel.admin.v1.UpdateSAMLProviderResponse
-	199, // 722: zitadel.admin.v1.AdminService.RegenerateSAMLProviderCertificate:output_type -> zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse
-	201, // 723: zitadel.admin.v1.AdminService.DeleteProvider:output_type -> zitadel.admin.v1.DeleteProviderResponse
-	203, // 724: zitadel.admin.v1.AdminService.GetOrgIAMPolicy:output_type -> zitadel.admin.v1.GetOrgIAMPolicyResponse
-	205, // 725: zitadel.admin.v1.AdminService.UpdateOrgIAMPolicy:output_type -> zitadel.admin.v1.UpdateOrgIAMPolicyResponse
-	207, // 726: zitadel.admin.v1.AdminService.GetCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.GetCustomOrgIAMPolicyResponse
-	209, // 727: zitadel.admin.v1.AdminService.AddCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.AddCustomOrgIAMPolicyResponse
-	211, // 728: zitadel.admin.v1.AdminService.UpdateCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse
-	213, // 729: zitadel.admin.v1.AdminService.ResetCustomOrgIAMPolicyToDefault:output_type -> zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse
-	215, // 730: zitadel.admin.v1.AdminService.GetDomainPolicy:output_type -> zitadel.admin.v1.GetDomainPolicyResponse
-	217, // 731: zitadel.admin.v1.AdminService.UpdateDomainPolicy:output_type -> zitadel.admin.v1.UpdateDomainPolicyResponse
-	219, // 732: zitadel.admin.v1.AdminService.GetCustomDomainPolicy:output_type -> zitadel.admin.v1.GetCustomDomainPolicyResponse
-	221, // 733: zitadel.admin.v1.AdminService.AddCustomDomainPolicy:output_type -> zitadel.admin.v1.AddCustomDomainPolicyResponse
-	223, // 734: zitadel.admin.v1.AdminService.UpdateCustomDomainPolicy:output_type -> zitadel.admin.v1.UpdateCustomDomainPolicyResponse
-	225, // 735: zitadel.admin.v1.AdminService.ResetCustomDomainPolicyToDefault:output_type -> zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse
-	227, // 736: zitadel.admin.v1.AdminService.GetLabelPolicy:output_type -> zitadel.admin.v1.GetLabelPolicyResponse
-	229, // 737: zitadel.admin.v1.AdminService.GetPreviewLabelPolicy:output_type -> zitadel.admin.v1.GetPreviewLabelPolicyResponse
-	231, // 738: zitadel.admin.v1.AdminService.UpdateLabelPolicy:output_type -> zitadel.admin.v1.UpdateLabelPolicyResponse
-	233, // 739: zitadel.admin.v1.AdminService.ActivateLabelPolicy:output_type -> zitadel.admin.v1.ActivateLabelPolicyResponse
-	235, // 740: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogo:output_type -> zitadel.admin.v1.RemoveLabelPolicyLogoResponse
-	237, // 741: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogoDark:output_type -> zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse
-	239, // 742: zitadel.admin.v1.AdminService.RemoveLabelPolicyIcon:output_type -> zitadel.admin.v1.RemoveLabelPolicyIconResponse
-	241, // 743: zitadel.admin.v1.AdminService.RemoveLabelPolicyIconDark:output_type -> zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse
-	243, // 744: zitadel.admin.v1.AdminService.RemoveLabelPolicyFont:output_type -> zitadel.admin.v1.RemoveLabelPolicyFontResponse
-	245, // 745: zitadel.admin.v1.AdminService.GetLoginPolicy:output_type -> zitadel.admin.v1.GetLoginPolicyResponse
-	247, // 746: zitadel.admin.v1.AdminService.UpdateLoginPolicy:output_type -> zitadel.admin.v1.UpdateLoginPolicyResponse
-	249, // 747: zitadel.admin.v1.AdminService.ListLoginPolicyIDPs:output_type -> zitadel.admin.v1.ListLoginPolicyIDPsResponse
-	251, // 748: zitadel.admin.v1.AdminService.AddIDPToLoginPolicy:output_type -> zitadel.admin.v1.AddIDPToLoginPolicyResponse
-	253, // 749: zitadel.admin.v1.AdminService.RemoveIDPFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse
-	255, // 750: zitadel.admin.v1.AdminService.ListLoginPolicySecondFactors:output_type -> zitadel.admin.v1.ListLoginPolicySecondFactorsResponse
-	257, // 751: zitadel.admin.v1.AdminService.AddSecondFactorToLoginPolicy:output_type -> zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse
-	259, // 752: zitadel.admin.v1.AdminService.RemoveSecondFactorFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse
-	261, // 753: zitadel.admin.v1.AdminService.ListLoginPolicyMultiFactors:output_type -> zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse
-	263, // 754: zitadel.admin.v1.AdminService.AddMultiFactorToLoginPolicy:output_type -> zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse
-	265, // 755: zitadel.admin.v1.AdminService.RemoveMultiFactorFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse
-	267, // 756: zitadel.admin.v1.AdminService.GetPasswordComplexityPolicy:output_type -> zitadel.admin.v1.GetPasswordComplexityPolicyResponse
-	269, // 757: zitadel.admin.v1.AdminService.UpdatePasswordComplexityPolicy:output_type -> zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse
-	271, // 758: zitadel.admin.v1.AdminService.GetPasswordAgePolicy:output_type -> zitadel.admin.v1.GetPasswordAgePolicyResponse
-	273, // 759: zitadel.admin.v1.AdminService.UpdatePasswordAgePolicy:output_type -> zitadel.admin.v1.UpdatePasswordAgePolicyResponse
-	275, // 760: zitadel.admin.v1.AdminService.GetLockoutPolicy:output_type -> zitadel.admin.v1.GetLockoutPolicyResponse
-	277, // 761: zitadel.admin.v1.AdminService.UpdateLockoutPolicy:output_type -> zitadel.admin.v1.UpdateLockoutPolicyResponse
-	279, // 762: zitadel.admin.v1.AdminService.GetPrivacyPolicy:output_type -> zitadel.admin.v1.GetPrivacyPolicyResponse
-	281, // 763: zitadel.admin.v1.AdminService.UpdatePrivacyPolicy:output_type -> zitadel.admin.v1.UpdatePrivacyPolicyResponse
-	283, // 764: zitadel.admin.v1.AdminService.AddNotificationPolicy:output_type -> zitadel.admin.v1.AddNotificationPolicyResponse
-	285, // 765: zitadel.admin.v1.AdminService.GetNotificationPolicy:output_type -> zitadel.admin.v1.GetNotificationPolicyResponse
-	287, // 766: zitadel.admin.v1.AdminService.UpdateNotificationPolicy:output_type -> zitadel.admin.v1.UpdateNotificationPolicyResponse
-	289, // 767: zitadel.admin.v1.AdminService.GetDefaultInitMessageText:output_type -> zitadel.admin.v1.GetDefaultInitMessageTextResponse
-	291, // 768: zitadel.admin.v1.AdminService.GetCustomInitMessageText:output_type -> zitadel.admin.v1.GetCustomInitMessageTextResponse
-	293, // 769: zitadel.admin.v1.AdminService.SetDefaultInitMessageText:output_type -> zitadel.admin.v1.SetDefaultInitMessageTextResponse
-	295, // 770: zitadel.admin.v1.AdminService.ResetCustomInitMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse
-	297, // 771: zitadel.admin.v1.AdminService.GetDefaultPasswordResetMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse
-	299, // 772: zitadel.admin.v1.AdminService.GetCustomPasswordResetMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse
-	301, // 773: zitadel.admin.v1.AdminService.SetDefaultPasswordResetMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse
-	303, // 774: zitadel.admin.v1.AdminService.ResetCustomPasswordResetMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse
-	305, // 775: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse
-	307, // 776: zitadel.admin.v1.AdminService.GetCustomVerifyEmailMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse
-	309, // 777: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse
-	311, // 778: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse
-	313, // 779: zitadel.admin.v1.AdminService.GetDefaultVerifyPhoneMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse
-	315, // 780: zitadel.admin.v1.AdminService.GetCustomVerifyPhoneMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse
-	317, // 781: zitadel.admin.v1.AdminService.SetDefaultVerifyPhoneMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse
-	319, // 782: zitadel.admin.v1.AdminService.ResetCustomVerifyPhoneMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse
-	323, // 783: zitadel.admin.v1.AdminService.GetDefaultVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse
-	321, // 784: zitadel.admin.v1.AdminService.GetCustomVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse
-	325, // 785: zitadel.admin.v1.AdminService.SetDefaultVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse
-	327, // 786: zitadel.admin.v1.AdminService.ResetCustomVerifySMSOTPMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse
-	331, // 787: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse
-	329, // 788: zitadel.admin.v1.AdminService.GetCustomVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse
-	333, // 789: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse
-	335, // 790: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailOTPMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse
-	337, // 791: zitadel.admin.v1.AdminService.GetDefaultDomainClaimedMessageText:output_type -> zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse
-	339, // 792: zitadel.admin.v1.AdminService.GetCustomDomainClaimedMessageText:output_type -> zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse
-	341, // 793: zitadel.admin.v1.AdminService.SetDefaultDomainClaimedMessageText:output_type -> zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse
-	343, // 794: zitadel.admin.v1.AdminService.ResetCustomDomainClaimedMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse
-	361, // 795: zitadel.admin.v1.AdminService.GetDefaultPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse
-	363, // 796: zitadel.admin.v1.AdminService.GetCustomPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse
-	365, // 797: zitadel.admin.v1.AdminService.SetDefaultPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse
-	367, // 798: zitadel.admin.v1.AdminService.ResetCustomPasswordlessRegistrationMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse
-	345, // 799: zitadel.admin.v1.AdminService.GetDefaultPasswordChangeMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse
-	347, // 800: zitadel.admin.v1.AdminService.GetCustomPasswordChangeMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse
-	349, // 801: zitadel.admin.v1.AdminService.SetDefaultPasswordChangeMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse
-	351, // 802: zitadel.admin.v1.AdminService.ResetCustomPasswordChangeMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse
-	353, // 803: zitadel.admin.v1.AdminService.GetDefaultInviteUserMessageText:output_type -> zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse
-	355, // 804: zitadel.admin.v1.AdminService.GetCustomInviteUserMessageText:output_type -> zitadel.admin.v1.GetCustomInviteUserMessageTextResponse
-	357, // 805: zitadel.admin.v1.AdminService.SetDefaultInviteUserMessageText:output_type -> zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse
-	359, // 806: zitadel.admin.v1.AdminService.ResetCustomInviteUserMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse
-	369, // 807: zitadel.admin.v1.AdminService.GetDefaultLoginTexts:output_type -> zitadel.admin.v1.GetDefaultLoginTextsResponse
-	371, // 808: zitadel.admin.v1.AdminService.GetCustomLoginTexts:output_type -> zitadel.admin.v1.GetCustomLoginTextsResponse
-	373, // 809: zitadel.admin.v1.AdminService.SetCustomLoginText:output_type -> zitadel.admin.v1.SetCustomLoginTextsResponse
-	375, // 810: zitadel.admin.v1.AdminService.ResetCustomLoginTextToDefault:output_type -> zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse
-	383, // 811: zitadel.admin.v1.AdminService.ListIAMMemberRoles:output_type -> zitadel.admin.v1.ListIAMMemberRolesResponse
-	385, // 812: zitadel.admin.v1.AdminService.ListIAMMembers:output_type -> zitadel.admin.v1.ListIAMMembersResponse
-	377, // 813: zitadel.admin.v1.AdminService.AddIAMMember:output_type -> zitadel.admin.v1.AddIAMMemberResponse
-	379, // 814: zitadel.admin.v1.AdminService.UpdateIAMMember:output_type -> zitadel.admin.v1.UpdateIAMMemberResponse
-	381, // 815: zitadel.admin.v1.AdminService.RemoveIAMMember:output_type -> zitadel.admin.v1.RemoveIAMMemberResponse
-	387, // 816: zitadel.admin.v1.AdminService.ListViews:output_type -> zitadel.admin.v1.ListViewsResponse
-	389, // 817: zitadel.admin.v1.AdminService.ListFailedEvents:output_type -> zitadel.admin.v1.ListFailedEventsResponse
-	391, // 818: zitadel.admin.v1.AdminService.RemoveFailedEvent:output_type -> zitadel.admin.v1.RemoveFailedEventResponse
-	397, // 819: zitadel.admin.v1.AdminService.ImportData:output_type -> zitadel.admin.v1.ImportDataResponse
-	408, // 820: zitadel.admin.v1.AdminService.ExportData:output_type -> zitadel.admin.v1.ExportDataResponse
-	412, // 821: zitadel.admin.v1.AdminService.ListEventTypes:output_type -> zitadel.admin.v1.ListEventTypesResponse
-	410, // 822: zitadel.admin.v1.AdminService.ListEvents:output_type -> zitadel.admin.v1.ListEventsResponse
-	414, // 823: zitadel.admin.v1.AdminService.ListAggregateTypes:output_type -> zitadel.admin.v1.ListAggregateTypesResponse
-	416, // 824: zitadel.admin.v1.AdminService.ActivateFeatureLoginDefaultOrg:output_type -> zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse
-	418, // 825: zitadel.admin.v1.AdminService.ListMilestones:output_type -> zitadel.admin.v1.ListMilestonesResponse
-	421, // 826: zitadel.admin.v1.AdminService.SetRestrictions:output_type -> zitadel.admin.v1.SetRestrictionsResponse
-	423, // 827: zitadel.admin.v1.AdminService.GetRestrictions:output_type -> zitadel.admin.v1.GetRestrictionsResponse
-	624, // [624:828] is the sub-list for method output_type
-	420, // [420:624] is the sub-list for method input_type
-	420, // [420:420] is the sub-list for extension type_name
-	420, // [420:420] is the sub-list for extension extendee
-	0,   // [0:420] is the sub-list for field type_name
+	440, // 0: zitadel.admin.v1.SetDefaultLanguageResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 1: zitadel.admin.v1.SetDefaultOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
+	441, // 2: zitadel.admin.v1.GetDefaultOrgResponse.org:type_name -> zitadel.org.v1.Org
+	442, // 3: zitadel.admin.v1.GetMyInstanceResponse.instance:type_name -> zitadel.instance.v1.InstanceDetail
+	443, // 4: zitadel.admin.v1.ListInstanceDomainsRequest.query:type_name -> zitadel.v1.ListQuery
+	444, // 5: zitadel.admin.v1.ListInstanceDomainsRequest.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
+	445, // 6: zitadel.admin.v1.ListInstanceDomainsRequest.queries:type_name -> zitadel.instance.v1.DomainSearchQuery
+	446, // 7: zitadel.admin.v1.ListInstanceDomainsResponse.details:type_name -> zitadel.v1.ListDetails
+	444, // 8: zitadel.admin.v1.ListInstanceDomainsResponse.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
+	447, // 9: zitadel.admin.v1.ListInstanceDomainsResponse.result:type_name -> zitadel.instance.v1.Domain
+	443, // 10: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.query:type_name -> zitadel.v1.ListQuery
+	444, // 11: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
+	448, // 12: zitadel.admin.v1.ListInstanceTrustedDomainsRequest.queries:type_name -> zitadel.instance.v1.TrustedDomainSearchQuery
+	446, // 13: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.details:type_name -> zitadel.v1.ListDetails
+	444, // 14: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.sorting_column:type_name -> zitadel.instance.v1.DomainFieldName
+	449, // 15: zitadel.admin.v1.ListInstanceTrustedDomainsResponse.result:type_name -> zitadel.instance.v1.TrustedDomain
+	440, // 16: zitadel.admin.v1.AddInstanceTrustedDomainResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 17: zitadel.admin.v1.RemoveInstanceTrustedDomainResponse.details:type_name -> zitadel.v1.ObjectDetails
+	443, // 18: zitadel.admin.v1.ListSecretGeneratorsRequest.query:type_name -> zitadel.v1.ListQuery
+	450, // 19: zitadel.admin.v1.ListSecretGeneratorsRequest.queries:type_name -> zitadel.settings.v1.SecretGeneratorQuery
+	446, // 20: zitadel.admin.v1.ListSecretGeneratorsResponse.details:type_name -> zitadel.v1.ListDetails
+	451, // 21: zitadel.admin.v1.ListSecretGeneratorsResponse.result:type_name -> zitadel.settings.v1.SecretGenerator
+	452, // 22: zitadel.admin.v1.GetSecretGeneratorRequest.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
+	451, // 23: zitadel.admin.v1.GetSecretGeneratorResponse.secret_generator:type_name -> zitadel.settings.v1.SecretGenerator
+	452, // 24: zitadel.admin.v1.UpdateSecretGeneratorRequest.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
+	453, // 25: zitadel.admin.v1.UpdateSecretGeneratorRequest.expiry:type_name -> google.protobuf.Duration
+	440, // 26: zitadel.admin.v1.UpdateSecretGeneratorResponse.details:type_name -> zitadel.v1.ObjectDetails
+	454, // 27: zitadel.admin.v1.GetSMTPConfigResponse.smtp_config:type_name -> zitadel.settings.v1.SMTPConfig
+	454, // 28: zitadel.admin.v1.GetSMTPConfigByIdResponse.smtp_config:type_name -> zitadel.settings.v1.SMTPConfig
+	443, // 29: zitadel.admin.v1.ListSMTPConfigsRequest.query:type_name -> zitadel.v1.ListQuery
+	446, // 30: zitadel.admin.v1.ListSMTPConfigsResponse.details:type_name -> zitadel.v1.ListDetails
+	454, // 31: zitadel.admin.v1.ListSMTPConfigsResponse.result:type_name -> zitadel.settings.v1.SMTPConfig
+	440, // 32: zitadel.admin.v1.AddSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 33: zitadel.admin.v1.UpdateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 34: zitadel.admin.v1.UpdateSMTPConfigPasswordResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 35: zitadel.admin.v1.ActivateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 36: zitadel.admin.v1.DeactivateSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 37: zitadel.admin.v1.RemoveSMTPConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	455, // 38: zitadel.admin.v1.GetEmailProviderResponse.config:type_name -> zitadel.settings.v1.EmailProvider
+	455, // 39: zitadel.admin.v1.GetEmailProviderByIdResponse.config:type_name -> zitadel.settings.v1.EmailProvider
+	443, // 40: zitadel.admin.v1.ListEmailProvidersRequest.query:type_name -> zitadel.v1.ListQuery
+	446, // 41: zitadel.admin.v1.ListEmailProvidersResponse.details:type_name -> zitadel.v1.ListDetails
+	455, // 42: zitadel.admin.v1.ListEmailProvidersResponse.result:type_name -> zitadel.settings.v1.EmailProvider
+	59,  // 43: zitadel.admin.v1.AddEmailProviderSMTPRequest.none:type_name -> zitadel.admin.v1.SMTPNoAuth
+	60,  // 44: zitadel.admin.v1.AddEmailProviderSMTPRequest.plain:type_name -> zitadel.admin.v1.SMTPPlainAuth
+	61,  // 45: zitadel.admin.v1.AddEmailProviderSMTPRequest.xoauth2:type_name -> zitadel.admin.v1.SMTPXOAuth2Auth
+	427, // 46: zitadel.admin.v1.SMTPXOAuth2Auth.client_credentials:type_name -> zitadel.admin.v1.SMTPXOAuth2Auth.ClientCredentials
+	440, // 47: zitadel.admin.v1.AddEmailProviderSMTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	59,  // 48: zitadel.admin.v1.UpdateEmailProviderSMTPRequest.none:type_name -> zitadel.admin.v1.SMTPNoAuth
+	60,  // 49: zitadel.admin.v1.UpdateEmailProviderSMTPRequest.plain:type_name -> zitadel.admin.v1.SMTPPlainAuth
+	61,  // 50: zitadel.admin.v1.UpdateEmailProviderSMTPRequest.xoauth2:type_name -> zitadel.admin.v1.SMTPXOAuth2Auth
+	440, // 51: zitadel.admin.v1.UpdateEmailProviderSMTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 52: zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 53: zitadel.admin.v1.AddEmailProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	453, // 54: zitadel.admin.v1.UpdateEmailProviderHTTPRequest.expiration_signing_key:type_name -> google.protobuf.Duration
+	440, // 55: zitadel.admin.v1.UpdateEmailProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 56: zitadel.admin.v1.ActivateEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 57: zitadel.admin.v1.DeactivateEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 58: zitadel.admin.v1.RemoveEmailProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	59,  // 59: zitadel.admin.v1.TestEmailProviderSMTPRequest.none:type_name -> zitadel.admin.v1.SMTPNoAuth
+	60,  // 60: zitadel.admin.v1.TestEmailProviderSMTPRequest.plain:type_name -> zitadel.admin.v1.SMTPPlainAuth
+	61,  // 61: zitadel.admin.v1.TestEmailProviderSMTPRequest.xoauth2:type_name -> zitadel.admin.v1.SMTPXOAuth2Auth
+	443, // 62: zitadel.admin.v1.ListSMSProvidersRequest.query:type_name -> zitadel.v1.ListQuery
+	446, // 63: zitadel.admin.v1.ListSMSProvidersResponse.details:type_name -> zitadel.v1.ListDetails
+	456, // 64: zitadel.admin.v1.ListSMSProvidersResponse.result:type_name -> zitadel.settings.v1.SMSProvider
+	456, // 65: zitadel.admin.v1.GetSMSProviderResponse.config:type_name -> zitadel.settings.v1.SMSProvider
+	440, // 66: zitadel.admin.v1.AddSMSProviderTwilioResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 67: zitadel.admin.v1.UpdateSMSProviderTwilioResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 68: zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 69: zitadel.admin.v1.AddSMSProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	453, // 70: zitadel.admin.v1.UpdateSMSProviderHTTPRequest.expiration_signing_key:type_name -> google.protobuf.Duration
+	440, // 71: zitadel.admin.v1.UpdateSMSProviderHTTPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 72: zitadel.admin.v1.ActivateSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 73: zitadel.admin.v1.DeactivateSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 74: zitadel.admin.v1.RemoveSMSProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	457, // 75: zitadel.admin.v1.GetFileSystemNotificationProviderResponse.provider:type_name -> zitadel.settings.v1.DebugNotificationProvider
+	457, // 76: zitadel.admin.v1.GetLogNotificationProviderResponse.provider:type_name -> zitadel.settings.v1.DebugNotificationProvider
+	458, // 77: zitadel.admin.v1.GetOIDCSettingsResponse.settings:type_name -> zitadel.settings.v1.OIDCSettings
+	453, // 78: zitadel.admin.v1.AddOIDCSettingsRequest.access_token_lifetime:type_name -> google.protobuf.Duration
+	453, // 79: zitadel.admin.v1.AddOIDCSettingsRequest.id_token_lifetime:type_name -> google.protobuf.Duration
+	453, // 80: zitadel.admin.v1.AddOIDCSettingsRequest.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
+	453, // 81: zitadel.admin.v1.AddOIDCSettingsRequest.refresh_token_expiration:type_name -> google.protobuf.Duration
+	440, // 82: zitadel.admin.v1.AddOIDCSettingsResponse.details:type_name -> zitadel.v1.ObjectDetails
+	453, // 83: zitadel.admin.v1.UpdateOIDCSettingsRequest.access_token_lifetime:type_name -> google.protobuf.Duration
+	453, // 84: zitadel.admin.v1.UpdateOIDCSettingsRequest.id_token_lifetime:type_name -> google.protobuf.Duration
+	453, // 85: zitadel.admin.v1.UpdateOIDCSettingsRequest.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
+	453, // 86: zitadel.admin.v1.UpdateOIDCSettingsRequest.refresh_token_expiration:type_name -> google.protobuf.Duration
+	440, // 87: zitadel.admin.v1.UpdateOIDCSettingsResponse.details:type_name -> zitadel.v1.ObjectDetails
+	459, // 88: zitadel.admin.v1.GetSecurityPolicyResponse.policy:type_name -> zitadel.settings.v1.SecurityPolicy
+	440, // 89: zitadel.admin.v1.SetSecurityPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	441, // 90: zitadel.admin.v1.GetOrgByIDResponse.org:type_name -> zitadel.org.v1.Org
+	443, // 91: zitadel.admin.v1.ListOrgsRequest.query:type_name -> zitadel.v1.ListQuery
+	460, // 92: zitadel.admin.v1.ListOrgsRequest.sorting_column:type_name -> zitadel.org.v1.OrgFieldName
+	461, // 93: zitadel.admin.v1.ListOrgsRequest.queries:type_name -> zitadel.org.v1.OrgQuery
+	446, // 94: zitadel.admin.v1.ListOrgsResponse.details:type_name -> zitadel.v1.ListDetails
+	460, // 95: zitadel.admin.v1.ListOrgsResponse.sorting_column:type_name -> zitadel.org.v1.OrgFieldName
+	441, // 96: zitadel.admin.v1.ListOrgsResponse.result:type_name -> zitadel.org.v1.Org
+	428, // 97: zitadel.admin.v1.SetUpOrgRequest.org:type_name -> zitadel.admin.v1.SetUpOrgRequest.Org
+	429, // 98: zitadel.admin.v1.SetUpOrgRequest.human:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human
+	440, // 99: zitadel.admin.v1.SetUpOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 100: zitadel.admin.v1.RemoveOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
+	462, // 101: zitadel.admin.v1.GetIDPByIDResponse.idp:type_name -> zitadel.idp.v1.IDP
+	443, // 102: zitadel.admin.v1.ListIDPsRequest.query:type_name -> zitadel.v1.ListQuery
+	463, // 103: zitadel.admin.v1.ListIDPsRequest.sorting_column:type_name -> zitadel.idp.v1.IDPFieldName
+	128, // 104: zitadel.admin.v1.ListIDPsRequest.queries:type_name -> zitadel.admin.v1.IDPQuery
+	464, // 105: zitadel.admin.v1.IDPQuery.idp_id_query:type_name -> zitadel.idp.v1.IDPIDQuery
+	465, // 106: zitadel.admin.v1.IDPQuery.idp_name_query:type_name -> zitadel.idp.v1.IDPNameQuery
+	446, // 107: zitadel.admin.v1.ListIDPsResponse.details:type_name -> zitadel.v1.ListDetails
+	463, // 108: zitadel.admin.v1.ListIDPsResponse.sorting_column:type_name -> zitadel.idp.v1.IDPFieldName
+	462, // 109: zitadel.admin.v1.ListIDPsResponse.result:type_name -> zitadel.idp.v1.IDP
+	466, // 110: zitadel.admin.v1.AddOIDCIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
+	467, // 111: zitadel.admin.v1.AddOIDCIDPRequest.display_name_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
+	467, // 112: zitadel.admin.v1.AddOIDCIDPRequest.username_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
+	440, // 113: zitadel.admin.v1.AddOIDCIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	466, // 114: zitadel.admin.v1.AddJWTIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
+	440, // 115: zitadel.admin.v1.AddJWTIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	466, // 116: zitadel.admin.v1.UpdateIDPRequest.styling_type:type_name -> zitadel.idp.v1.IDPStylingType
+	440, // 117: zitadel.admin.v1.UpdateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 118: zitadel.admin.v1.DeactivateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 119: zitadel.admin.v1.ReactivateIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 120: zitadel.admin.v1.RemoveIDPResponse.details:type_name -> zitadel.v1.ObjectDetails
+	467, // 121: zitadel.admin.v1.UpdateIDPOIDCConfigRequest.display_name_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
+	467, // 122: zitadel.admin.v1.UpdateIDPOIDCConfigRequest.username_mapping:type_name -> zitadel.idp.v1.OIDCMappingField
+	440, // 123: zitadel.admin.v1.UpdateIDPOIDCConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 124: zitadel.admin.v1.UpdateIDPJWTConfigResponse.details:type_name -> zitadel.v1.ObjectDetails
+	443, // 125: zitadel.admin.v1.ListProvidersRequest.query:type_name -> zitadel.v1.ListQuery
+	147, // 126: zitadel.admin.v1.ListProvidersRequest.queries:type_name -> zitadel.admin.v1.ProviderQuery
+	464, // 127: zitadel.admin.v1.ProviderQuery.idp_id_query:type_name -> zitadel.idp.v1.IDPIDQuery
+	465, // 128: zitadel.admin.v1.ProviderQuery.idp_name_query:type_name -> zitadel.idp.v1.IDPNameQuery
+	446, // 129: zitadel.admin.v1.ListProvidersResponse.details:type_name -> zitadel.v1.ListDetails
+	468, // 130: zitadel.admin.v1.ListProvidersResponse.result:type_name -> zitadel.idp.v1.Provider
+	468, // 131: zitadel.admin.v1.GetProviderByIDResponse.idp:type_name -> zitadel.idp.v1.Provider
+	469, // 132: zitadel.admin.v1.AddGenericOAuthProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 133: zitadel.admin.v1.AddGenericOAuthProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 134: zitadel.admin.v1.UpdateGenericOAuthProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 135: zitadel.admin.v1.UpdateGenericOAuthProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 136: zitadel.admin.v1.AddGenericOIDCProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 137: zitadel.admin.v1.AddGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 138: zitadel.admin.v1.UpdateGenericOIDCProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 139: zitadel.admin.v1.UpdateGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	165, // 140: zitadel.admin.v1.MigrateGenericOIDCProviderRequest.azure:type_name -> zitadel.admin.v1.AddAzureADProviderRequest
+	185, // 141: zitadel.admin.v1.MigrateGenericOIDCProviderRequest.google:type_name -> zitadel.admin.v1.AddGoogleProviderRequest
+	440, // 142: zitadel.admin.v1.MigrateGenericOIDCProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 143: zitadel.admin.v1.AddJWTProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 144: zitadel.admin.v1.AddJWTProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 145: zitadel.admin.v1.UpdateJWTProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 146: zitadel.admin.v1.UpdateJWTProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	470, // 147: zitadel.admin.v1.AddAzureADProviderRequest.tenant:type_name -> zitadel.idp.v1.AzureADTenant
+	469, // 148: zitadel.admin.v1.AddAzureADProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 149: zitadel.admin.v1.AddAzureADProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	470, // 150: zitadel.admin.v1.UpdateAzureADProviderRequest.tenant:type_name -> zitadel.idp.v1.AzureADTenant
+	469, // 151: zitadel.admin.v1.UpdateAzureADProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 152: zitadel.admin.v1.UpdateAzureADProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 153: zitadel.admin.v1.AddGitHubProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 154: zitadel.admin.v1.AddGitHubProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 155: zitadel.admin.v1.UpdateGitHubProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 156: zitadel.admin.v1.UpdateGitHubProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 157: zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 158: zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 159: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 160: zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 161: zitadel.admin.v1.AddGitLabProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 162: zitadel.admin.v1.AddGitLabProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 163: zitadel.admin.v1.UpdateGitLabProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 164: zitadel.admin.v1.UpdateGitLabProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 165: zitadel.admin.v1.AddGitLabSelfHostedProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 166: zitadel.admin.v1.AddGitLabSelfHostedProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 167: zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 168: zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 169: zitadel.admin.v1.AddGoogleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 170: zitadel.admin.v1.AddGoogleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 171: zitadel.admin.v1.UpdateGoogleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 172: zitadel.admin.v1.UpdateGoogleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	453, // 173: zitadel.admin.v1.AddLDAPProviderRequest.timeout:type_name -> google.protobuf.Duration
+	471, // 174: zitadel.admin.v1.AddLDAPProviderRequest.attributes:type_name -> zitadel.idp.v1.LDAPAttributes
+	469, // 175: zitadel.admin.v1.AddLDAPProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 176: zitadel.admin.v1.AddLDAPProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	453, // 177: zitadel.admin.v1.UpdateLDAPProviderRequest.timeout:type_name -> google.protobuf.Duration
+	471, // 178: zitadel.admin.v1.UpdateLDAPProviderRequest.attributes:type_name -> zitadel.idp.v1.LDAPAttributes
+	469, // 179: zitadel.admin.v1.UpdateLDAPProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 180: zitadel.admin.v1.UpdateLDAPProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 181: zitadel.admin.v1.AddAppleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 182: zitadel.admin.v1.AddAppleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	469, // 183: zitadel.admin.v1.UpdateAppleProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	440, // 184: zitadel.admin.v1.UpdateAppleProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	472, // 185: zitadel.admin.v1.AddSAMLProviderRequest.binding:type_name -> zitadel.idp.v1.SAMLBinding
+	469, // 186: zitadel.admin.v1.AddSAMLProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	473, // 187: zitadel.admin.v1.AddSAMLProviderRequest.name_id_format:type_name -> zitadel.idp.v1.SAMLNameIDFormat
+	474, // 188: zitadel.admin.v1.AddSAMLProviderRequest.signature_algorithm:type_name -> zitadel.idp.v1.SAMLSignatureAlgorithm
+	440, // 189: zitadel.admin.v1.AddSAMLProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	472, // 190: zitadel.admin.v1.UpdateSAMLProviderRequest.binding:type_name -> zitadel.idp.v1.SAMLBinding
+	469, // 191: zitadel.admin.v1.UpdateSAMLProviderRequest.provider_options:type_name -> zitadel.idp.v1.Options
+	473, // 192: zitadel.admin.v1.UpdateSAMLProviderRequest.name_id_format:type_name -> zitadel.idp.v1.SAMLNameIDFormat
+	474, // 193: zitadel.admin.v1.UpdateSAMLProviderRequest.signature_algorithm:type_name -> zitadel.idp.v1.SAMLSignatureAlgorithm
+	440, // 194: zitadel.admin.v1.UpdateSAMLProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 195: zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 196: zitadel.admin.v1.DeleteProviderResponse.details:type_name -> zitadel.v1.ObjectDetails
+	475, // 197: zitadel.admin.v1.GetOrgIAMPolicyResponse.policy:type_name -> zitadel.policy.v1.OrgIAMPolicy
+	440, // 198: zitadel.admin.v1.UpdateOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	475, // 199: zitadel.admin.v1.GetCustomOrgIAMPolicyResponse.policy:type_name -> zitadel.policy.v1.OrgIAMPolicy
+	440, // 200: zitadel.admin.v1.AddCustomOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 201: zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 202: zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	476, // 203: zitadel.admin.v1.GetDomainPolicyResponse.policy:type_name -> zitadel.policy.v1.DomainPolicy
+	440, // 204: zitadel.admin.v1.UpdateDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	476, // 205: zitadel.admin.v1.GetCustomDomainPolicyResponse.policy:type_name -> zitadel.policy.v1.DomainPolicy
+	440, // 206: zitadel.admin.v1.AddCustomDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 207: zitadel.admin.v1.UpdateCustomDomainPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 208: zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	477, // 209: zitadel.admin.v1.GetLabelPolicyResponse.policy:type_name -> zitadel.policy.v1.LabelPolicy
+	477, // 210: zitadel.admin.v1.GetPreviewLabelPolicyResponse.policy:type_name -> zitadel.policy.v1.LabelPolicy
+	478, // 211: zitadel.admin.v1.UpdateLabelPolicyRequest.theme_mode:type_name -> zitadel.policy.v1.ThemeMode
+	440, // 212: zitadel.admin.v1.UpdateLabelPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 213: zitadel.admin.v1.ActivateLabelPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 214: zitadel.admin.v1.RemoveLabelPolicyLogoResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 215: zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 216: zitadel.admin.v1.RemoveLabelPolicyIconResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 217: zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 218: zitadel.admin.v1.RemoveLabelPolicyFontResponse.details:type_name -> zitadel.v1.ObjectDetails
+	479, // 219: zitadel.admin.v1.GetLoginPolicyResponse.policy:type_name -> zitadel.policy.v1.LoginPolicy
+	480, // 220: zitadel.admin.v1.UpdateLoginPolicyRequest.passwordless_type:type_name -> zitadel.policy.v1.PasswordlessType
+	453, // 221: zitadel.admin.v1.UpdateLoginPolicyRequest.password_check_lifetime:type_name -> google.protobuf.Duration
+	453, // 222: zitadel.admin.v1.UpdateLoginPolicyRequest.external_login_check_lifetime:type_name -> google.protobuf.Duration
+	453, // 223: zitadel.admin.v1.UpdateLoginPolicyRequest.mfa_init_skip_lifetime:type_name -> google.protobuf.Duration
+	453, // 224: zitadel.admin.v1.UpdateLoginPolicyRequest.second_factor_check_lifetime:type_name -> google.protobuf.Duration
+	453, // 225: zitadel.admin.v1.UpdateLoginPolicyRequest.multi_factor_check_lifetime:type_name -> google.protobuf.Duration
+	440, // 226: zitadel.admin.v1.UpdateLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	443, // 227: zitadel.admin.v1.ListLoginPolicyIDPsRequest.query:type_name -> zitadel.v1.ListQuery
+	446, // 228: zitadel.admin.v1.ListLoginPolicyIDPsResponse.details:type_name -> zitadel.v1.ListDetails
+	481, // 229: zitadel.admin.v1.ListLoginPolicyIDPsResponse.result:type_name -> zitadel.idp.v1.IDPLoginPolicyLink
+	440, // 230: zitadel.admin.v1.AddIDPToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 231: zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	446, // 232: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse.details:type_name -> zitadel.v1.ListDetails
+	482, // 233: zitadel.admin.v1.ListLoginPolicySecondFactorsResponse.result:type_name -> zitadel.policy.v1.SecondFactorType
+	482, // 234: zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest.type:type_name -> zitadel.policy.v1.SecondFactorType
+	440, // 235: zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	482, // 236: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest.type:type_name -> zitadel.policy.v1.SecondFactorType
+	440, // 237: zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	446, // 238: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse.details:type_name -> zitadel.v1.ListDetails
+	483, // 239: zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse.result:type_name -> zitadel.policy.v1.MultiFactorType
+	483, // 240: zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest.type:type_name -> zitadel.policy.v1.MultiFactorType
+	440, // 241: zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	483, // 242: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest.type:type_name -> zitadel.policy.v1.MultiFactorType
+	440, // 243: zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	484, // 244: zitadel.admin.v1.GetPasswordComplexityPolicyResponse.policy:type_name -> zitadel.policy.v1.PasswordComplexityPolicy
+	440, // 245: zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	485, // 246: zitadel.admin.v1.GetPasswordAgePolicyResponse.policy:type_name -> zitadel.policy.v1.PasswordAgePolicy
+	440, // 247: zitadel.admin.v1.UpdatePasswordAgePolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	486, // 248: zitadel.admin.v1.GetLockoutPolicyResponse.policy:type_name -> zitadel.policy.v1.LockoutPolicy
+	440, // 249: zitadel.admin.v1.UpdateLockoutPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	487, // 250: zitadel.admin.v1.GetPrivacyPolicyResponse.policy:type_name -> zitadel.policy.v1.PrivacyPolicy
+	440, // 251: zitadel.admin.v1.UpdatePrivacyPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 252: zitadel.admin.v1.AddNotificationPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	488, // 253: zitadel.admin.v1.GetNotificationPolicyResponse.policy:type_name -> zitadel.policy.v1.NotificationPolicy
+	440, // 254: zitadel.admin.v1.UpdateNotificationPolicyResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 255: zitadel.admin.v1.GetDefaultInitMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 256: zitadel.admin.v1.GetCustomInitMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 257: zitadel.admin.v1.SetDefaultInitMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 258: zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 259: zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 260: zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 261: zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 262: zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 263: zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 264: zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 265: zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 266: zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 267: zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 268: zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 269: zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 270: zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 271: zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 272: zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 273: zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 274: zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 275: zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 276: zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 277: zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 278: zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 279: zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 280: zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 281: zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 282: zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 283: zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 284: zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 285: zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 286: zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 287: zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 288: zitadel.admin.v1.GetCustomInviteUserMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 289: zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 290: zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	489, // 291: zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	489, // 292: zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse.custom_text:type_name -> zitadel.text.v1.MessageCustomText
+	440, // 293: zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 294: zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	490, // 295: zitadel.admin.v1.GetDefaultLoginTextsResponse.custom_text:type_name -> zitadel.text.v1.LoginCustomText
+	490, // 296: zitadel.admin.v1.GetCustomLoginTextsResponse.custom_text:type_name -> zitadel.text.v1.LoginCustomText
+	491, // 297: zitadel.admin.v1.SetCustomLoginTextsRequest.select_account_text:type_name -> zitadel.text.v1.SelectAccountScreenText
+	492, // 298: zitadel.admin.v1.SetCustomLoginTextsRequest.login_text:type_name -> zitadel.text.v1.LoginScreenText
+	493, // 299: zitadel.admin.v1.SetCustomLoginTextsRequest.password_text:type_name -> zitadel.text.v1.PasswordScreenText
+	494, // 300: zitadel.admin.v1.SetCustomLoginTextsRequest.username_change_text:type_name -> zitadel.text.v1.UsernameChangeScreenText
+	495, // 301: zitadel.admin.v1.SetCustomLoginTextsRequest.username_change_done_text:type_name -> zitadel.text.v1.UsernameChangeDoneScreenText
+	496, // 302: zitadel.admin.v1.SetCustomLoginTextsRequest.init_password_text:type_name -> zitadel.text.v1.InitPasswordScreenText
+	497, // 303: zitadel.admin.v1.SetCustomLoginTextsRequest.init_password_done_text:type_name -> zitadel.text.v1.InitPasswordDoneScreenText
+	498, // 304: zitadel.admin.v1.SetCustomLoginTextsRequest.email_verification_text:type_name -> zitadel.text.v1.EmailVerificationScreenText
+	499, // 305: zitadel.admin.v1.SetCustomLoginTextsRequest.email_verification_done_text:type_name -> zitadel.text.v1.EmailVerificationDoneScreenText
+	500, // 306: zitadel.admin.v1.SetCustomLoginTextsRequest.initialize_user_text:type_name -> zitadel.text.v1.InitializeUserScreenText
+	501, // 307: zitadel.admin.v1.SetCustomLoginTextsRequest.initialize_done_text:type_name -> zitadel.text.v1.InitializeUserDoneScreenText
+	502, // 308: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_prompt_text:type_name -> zitadel.text.v1.InitMFAPromptScreenText
+	503, // 309: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_otp_text:type_name -> zitadel.text.v1.InitMFAOTPScreenText
+	504, // 310: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_u2f_text:type_name -> zitadel.text.v1.InitMFAU2FScreenText
+	505, // 311: zitadel.admin.v1.SetCustomLoginTextsRequest.init_mfa_done_text:type_name -> zitadel.text.v1.InitMFADoneScreenText
+	506, // 312: zitadel.admin.v1.SetCustomLoginTextsRequest.mfa_providers_text:type_name -> zitadel.text.v1.MFAProvidersText
+	507, // 313: zitadel.admin.v1.SetCustomLoginTextsRequest.verify_mfa_otp_text:type_name -> zitadel.text.v1.VerifyMFAOTPScreenText
+	508, // 314: zitadel.admin.v1.SetCustomLoginTextsRequest.verify_mfa_u2f_text:type_name -> zitadel.text.v1.VerifyMFAU2FScreenText
+	509, // 315: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_text:type_name -> zitadel.text.v1.PasswordlessScreenText
+	510, // 316: zitadel.admin.v1.SetCustomLoginTextsRequest.password_change_text:type_name -> zitadel.text.v1.PasswordChangeScreenText
+	511, // 317: zitadel.admin.v1.SetCustomLoginTextsRequest.password_change_done_text:type_name -> zitadel.text.v1.PasswordChangeDoneScreenText
+	512, // 318: zitadel.admin.v1.SetCustomLoginTextsRequest.password_reset_done_text:type_name -> zitadel.text.v1.PasswordResetDoneScreenText
+	513, // 319: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_option_text:type_name -> zitadel.text.v1.RegistrationOptionScreenText
+	514, // 320: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_user_text:type_name -> zitadel.text.v1.RegistrationUserScreenText
+	515, // 321: zitadel.admin.v1.SetCustomLoginTextsRequest.registration_org_text:type_name -> zitadel.text.v1.RegistrationOrgScreenText
+	516, // 322: zitadel.admin.v1.SetCustomLoginTextsRequest.linking_user_done_text:type_name -> zitadel.text.v1.LinkingUserDoneScreenText
+	517, // 323: zitadel.admin.v1.SetCustomLoginTextsRequest.external_user_not_found_text:type_name -> zitadel.text.v1.ExternalUserNotFoundScreenText
+	518, // 324: zitadel.admin.v1.SetCustomLoginTextsRequest.success_login_text:type_name -> zitadel.text.v1.SuccessLoginScreenText
+	519, // 325: zitadel.admin.v1.SetCustomLoginTextsRequest.logout_text:type_name -> zitadel.text.v1.LogoutDoneScreenText
+	520, // 326: zitadel.admin.v1.SetCustomLoginTextsRequest.footer_text:type_name -> zitadel.text.v1.FooterText
+	521, // 327: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_prompt_text:type_name -> zitadel.text.v1.PasswordlessPromptScreenText
+	522, // 328: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_registration_text:type_name -> zitadel.text.v1.PasswordlessRegistrationScreenText
+	523, // 329: zitadel.admin.v1.SetCustomLoginTextsRequest.passwordless_registration_done_text:type_name -> zitadel.text.v1.PasswordlessRegistrationDoneScreenText
+	524, // 330: zitadel.admin.v1.SetCustomLoginTextsRequest.external_registration_user_overview_text:type_name -> zitadel.text.v1.ExternalRegistrationUserOverviewScreenText
+	525, // 331: zitadel.admin.v1.SetCustomLoginTextsRequest.linking_user_prompt_text:type_name -> zitadel.text.v1.LinkingUserPromptScreenText
+	440, // 332: zitadel.admin.v1.SetCustomLoginTextsResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 333: zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 334: zitadel.admin.v1.AddIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 335: zitadel.admin.v1.UpdateIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 336: zitadel.admin.v1.RemoveIAMMemberResponse.details:type_name -> zitadel.v1.ObjectDetails
+	446, // 337: zitadel.admin.v1.ListIAMMemberRolesResponse.details:type_name -> zitadel.v1.ListDetails
+	443, // 338: zitadel.admin.v1.ListIAMMembersRequest.query:type_name -> zitadel.v1.ListQuery
+	526, // 339: zitadel.admin.v1.ListIAMMembersRequest.queries:type_name -> zitadel.member.v1.SearchQuery
+	527, // 340: zitadel.admin.v1.ListIAMMembersRequest.sorting_column:type_name -> zitadel.member.v1.MemberFieldColumnName
+	446, // 341: zitadel.admin.v1.ListIAMMembersResponse.details:type_name -> zitadel.v1.ListDetails
+	528, // 342: zitadel.admin.v1.ListIAMMembersResponse.result:type_name -> zitadel.member.v1.Member
+	395, // 343: zitadel.admin.v1.ListViewsResponse.result:type_name -> zitadel.admin.v1.View
+	396, // 344: zitadel.admin.v1.ListFailedEventsResponse.result:type_name -> zitadel.admin.v1.FailedEvent
+	529, // 345: zitadel.admin.v1.View.event_timestamp:type_name -> google.protobuf.Timestamp
+	529, // 346: zitadel.admin.v1.View.last_successful_spooler_run:type_name -> google.protobuf.Timestamp
+	529, // 347: zitadel.admin.v1.FailedEvent.last_failed:type_name -> google.protobuf.Timestamp
+	398, // 348: zitadel.admin.v1.ImportDataRequest.data_orgs:type_name -> zitadel.admin.v1.ImportDataOrg
+	530, // 349: zitadel.admin.v1.ImportDataRequest.data_orgsv1:type_name -> zitadel.v1.v1.ImportDataOrg
+	433, // 350: zitadel.admin.v1.ImportDataRequest.data_orgs_local:type_name -> zitadel.admin.v1.ImportDataRequest.LocalInput
+	433, // 351: zitadel.admin.v1.ImportDataRequest.data_orgsv1_local:type_name -> zitadel.admin.v1.ImportDataRequest.LocalInput
+	434, // 352: zitadel.admin.v1.ImportDataRequest.data_orgs_s3:type_name -> zitadel.admin.v1.ImportDataRequest.S3Input
+	434, // 353: zitadel.admin.v1.ImportDataRequest.data_orgsv1_s3:type_name -> zitadel.admin.v1.ImportDataRequest.S3Input
+	435, // 354: zitadel.admin.v1.ImportDataRequest.data_orgs_gcs:type_name -> zitadel.admin.v1.ImportDataRequest.GCSInput
+	435, // 355: zitadel.admin.v1.ImportDataRequest.data_orgsv1_gcs:type_name -> zitadel.admin.v1.ImportDataRequest.GCSInput
+	399, // 356: zitadel.admin.v1.ImportDataOrg.orgs:type_name -> zitadel.admin.v1.DataOrg
+	531, // 357: zitadel.admin.v1.DataOrg.org:type_name -> zitadel.management.v1.AddOrgRequest
+	223, // 358: zitadel.admin.v1.DataOrg.domain_policy:type_name -> zitadel.admin.v1.AddCustomDomainPolicyRequest
+	532, // 359: zitadel.admin.v1.DataOrg.label_policy:type_name -> zitadel.management.v1.AddCustomLabelPolicyRequest
+	533, // 360: zitadel.admin.v1.DataOrg.lockout_policy:type_name -> zitadel.management.v1.AddCustomLockoutPolicyRequest
+	534, // 361: zitadel.admin.v1.DataOrg.login_policy:type_name -> zitadel.management.v1.AddCustomLoginPolicyRequest
+	535, // 362: zitadel.admin.v1.DataOrg.password_complexity_policy:type_name -> zitadel.management.v1.AddCustomPasswordComplexityPolicyRequest
+	536, // 363: zitadel.admin.v1.DataOrg.privacy_policy:type_name -> zitadel.management.v1.AddCustomPrivacyPolicyRequest
+	537, // 364: zitadel.admin.v1.DataOrg.projects:type_name -> zitadel.v1.v1.DataProject
+	538, // 365: zitadel.admin.v1.DataOrg.project_roles:type_name -> zitadel.management.v1.AddProjectRoleRequest
+	539, // 366: zitadel.admin.v1.DataOrg.api_apps:type_name -> zitadel.v1.v1.DataAPIApplication
+	540, // 367: zitadel.admin.v1.DataOrg.oidc_apps:type_name -> zitadel.v1.v1.DataOIDCApplication
+	541, // 368: zitadel.admin.v1.DataOrg.human_users:type_name -> zitadel.v1.v1.DataHumanUser
+	542, // 369: zitadel.admin.v1.DataOrg.machine_users:type_name -> zitadel.v1.v1.DataMachineUser
+	543, // 370: zitadel.admin.v1.DataOrg.trigger_actions:type_name -> zitadel.management.v1.SetTriggerActionsRequest
+	544, // 371: zitadel.admin.v1.DataOrg.actions:type_name -> zitadel.v1.v1.DataAction
+	545, // 372: zitadel.admin.v1.DataOrg.project_grants:type_name -> zitadel.v1.v1.DataProjectGrant
+	546, // 373: zitadel.admin.v1.DataOrg.user_grants:type_name -> zitadel.management.v1.AddUserGrantRequest
+	547, // 374: zitadel.admin.v1.DataOrg.org_members:type_name -> zitadel.management.v1.AddOrgMemberRequest
+	548, // 375: zitadel.admin.v1.DataOrg.project_members:type_name -> zitadel.management.v1.AddProjectMemberRequest
+	549, // 376: zitadel.admin.v1.DataOrg.project_grant_members:type_name -> zitadel.management.v1.AddProjectGrantMemberRequest
+	550, // 377: zitadel.admin.v1.DataOrg.user_metadata:type_name -> zitadel.management.v1.SetUserMetadataRequest
+	551, // 378: zitadel.admin.v1.DataOrg.login_texts:type_name -> zitadel.management.v1.SetCustomLoginTextsRequest
+	552, // 379: zitadel.admin.v1.DataOrg.init_messages:type_name -> zitadel.management.v1.SetCustomInitMessageTextRequest
+	553, // 380: zitadel.admin.v1.DataOrg.password_reset_messages:type_name -> zitadel.management.v1.SetCustomPasswordResetMessageTextRequest
+	554, // 381: zitadel.admin.v1.DataOrg.verify_email_messages:type_name -> zitadel.management.v1.SetCustomVerifyEmailMessageTextRequest
+	555, // 382: zitadel.admin.v1.DataOrg.verify_phone_messages:type_name -> zitadel.management.v1.SetCustomVerifyPhoneMessageTextRequest
+	556, // 383: zitadel.admin.v1.DataOrg.domain_claimed_messages:type_name -> zitadel.management.v1.SetCustomDomainClaimedMessageTextRequest
+	557, // 384: zitadel.admin.v1.DataOrg.passwordless_registration_messages:type_name -> zitadel.management.v1.SetCustomPasswordlessRegistrationMessageTextRequest
+	558, // 385: zitadel.admin.v1.DataOrg.oidc_idps:type_name -> zitadel.v1.v1.DataOIDCIDP
+	559, // 386: zitadel.admin.v1.DataOrg.jwt_idps:type_name -> zitadel.v1.v1.DataJWTIDP
+	560, // 387: zitadel.admin.v1.DataOrg.user_links:type_name -> zitadel.idp.v1.IDPUserLink
+	561, // 388: zitadel.admin.v1.DataOrg.domains:type_name -> zitadel.org.v1.Domain
+	562, // 389: zitadel.admin.v1.DataOrg.app_keys:type_name -> zitadel.v1.v1.DataAppKey
+	563, // 390: zitadel.admin.v1.DataOrg.machine_keys:type_name -> zitadel.v1.v1.DataMachineKey
+	564, // 391: zitadel.admin.v1.DataOrg.verify_sms_otp_messages:type_name -> zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest
+	565, // 392: zitadel.admin.v1.DataOrg.verify_email_otp_messages:type_name -> zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest
+	566, // 393: zitadel.admin.v1.DataOrg.invite_user_messages:type_name -> zitadel.management.v1.SetCustomInviteUserMessageTextRequest
+	567, // 394: zitadel.admin.v1.DataOrg.org_state:type_name -> zitadel.org.v1.OrgState
+	401, // 395: zitadel.admin.v1.ImportDataResponse.errors:type_name -> zitadel.admin.v1.ImportDataError
+	402, // 396: zitadel.admin.v1.ImportDataResponse.success:type_name -> zitadel.admin.v1.ImportDataSuccess
+	403, // 397: zitadel.admin.v1.ImportDataSuccess.orgs:type_name -> zitadel.admin.v1.ImportDataSuccessOrg
+	543, // 398: zitadel.admin.v1.ImportDataSuccessOrg.trigger_actions:type_name -> zitadel.management.v1.SetTriggerActionsRequest
+	404, // 399: zitadel.admin.v1.ImportDataSuccessOrg.project_grants:type_name -> zitadel.admin.v1.ImportDataSuccessProjectGrant
+	405, // 400: zitadel.admin.v1.ImportDataSuccessOrg.user_grants:type_name -> zitadel.admin.v1.ImportDataSuccessUserGrant
+	406, // 401: zitadel.admin.v1.ImportDataSuccessOrg.project_members:type_name -> zitadel.admin.v1.ImportDataSuccessProjectMember
+	407, // 402: zitadel.admin.v1.ImportDataSuccessOrg.project_grant_members:type_name -> zitadel.admin.v1.ImportDataSuccessProjectGrantMember
+	408, // 403: zitadel.admin.v1.ImportDataSuccessOrg.user_links:type_name -> zitadel.admin.v1.ImportDataSuccessUserLinks
+	409, // 404: zitadel.admin.v1.ImportDataSuccessOrg.user_metadata:type_name -> zitadel.admin.v1.ImportDataSuccessUserMetadata
+	436, // 405: zitadel.admin.v1.ExportDataRequest.local_output:type_name -> zitadel.admin.v1.ExportDataRequest.LocalOutput
+	437, // 406: zitadel.admin.v1.ExportDataRequest.s3_output:type_name -> zitadel.admin.v1.ExportDataRequest.S3Output
+	438, // 407: zitadel.admin.v1.ExportDataRequest.gcs_output:type_name -> zitadel.admin.v1.ExportDataRequest.GCSOutput
+	399, // 408: zitadel.admin.v1.ExportDataResponse.orgs:type_name -> zitadel.admin.v1.DataOrg
+	529, // 409: zitadel.admin.v1.ListEventsRequest.creation_date:type_name -> google.protobuf.Timestamp
+	439, // 410: zitadel.admin.v1.ListEventsRequest.range:type_name -> zitadel.admin.v1.ListEventsRequest.creation_date_range
+	529, // 411: zitadel.admin.v1.ListEventsRequest.from:type_name -> google.protobuf.Timestamp
+	568, // 412: zitadel.admin.v1.ListEventsResponse.events:type_name -> zitadel.event.v1.Event
+	569, // 413: zitadel.admin.v1.ListEventTypesResponse.event_types:type_name -> zitadel.event.v1.EventType
+	570, // 414: zitadel.admin.v1.ListAggregateTypesResponse.aggregate_types:type_name -> zitadel.event.v1.AggregateType
+	440, // 415: zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse.details:type_name -> zitadel.v1.ObjectDetails
+	443, // 416: zitadel.admin.v1.ListMilestonesRequest.query:type_name -> zitadel.v1.ListQuery
+	571, // 417: zitadel.admin.v1.ListMilestonesRequest.sorting_column:type_name -> zitadel.milestone.v1.MilestoneFieldName
+	572, // 418: zitadel.admin.v1.ListMilestonesRequest.queries:type_name -> zitadel.milestone.v1.MilestoneQuery
+	446, // 419: zitadel.admin.v1.ListMilestonesResponse.details:type_name -> zitadel.v1.ListDetails
+	573, // 420: zitadel.admin.v1.ListMilestonesResponse.result:type_name -> zitadel.milestone.v1.Milestone
+	423, // 421: zitadel.admin.v1.SetRestrictionsRequest.allowed_languages:type_name -> zitadel.admin.v1.SelectLanguages
+	440, // 422: zitadel.admin.v1.SetRestrictionsResponse.details:type_name -> zitadel.v1.ObjectDetails
+	440, // 423: zitadel.admin.v1.GetRestrictionsResponse.details:type_name -> zitadel.v1.ObjectDetails
+	430, // 424: zitadel.admin.v1.SetUpOrgRequest.Human.profile:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Profile
+	431, // 425: zitadel.admin.v1.SetUpOrgRequest.Human.email:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Email
+	432, // 426: zitadel.admin.v1.SetUpOrgRequest.Human.phone:type_name -> zitadel.admin.v1.SetUpOrgRequest.Human.Phone
+	574, // 427: zitadel.admin.v1.SetUpOrgRequest.Human.Profile.gender:type_name -> zitadel.user.v1.Gender
+	529, // 428: zitadel.admin.v1.ListEventsRequest.creation_date_range.since:type_name -> google.protobuf.Timestamp
+	529, // 429: zitadel.admin.v1.ListEventsRequest.creation_date_range.until:type_name -> google.protobuf.Timestamp
+	0,   // 430: zitadel.admin.v1.AdminService.Healthz:input_type -> zitadel.admin.v1.HealthzRequest
+	2,   // 431: zitadel.admin.v1.AdminService.GetSupportedLanguages:input_type -> zitadel.admin.v1.GetSupportedLanguagesRequest
+	4,   // 432: zitadel.admin.v1.AdminService.GetAllowedLanguages:input_type -> zitadel.admin.v1.GetAllowedLanguagesRequest
+	6,   // 433: zitadel.admin.v1.AdminService.SetDefaultLanguage:input_type -> zitadel.admin.v1.SetDefaultLanguageRequest
+	8,   // 434: zitadel.admin.v1.AdminService.GetDefaultLanguage:input_type -> zitadel.admin.v1.GetDefaultLanguageRequest
+	14,  // 435: zitadel.admin.v1.AdminService.GetMyInstance:input_type -> zitadel.admin.v1.GetMyInstanceRequest
+	16,  // 436: zitadel.admin.v1.AdminService.ListInstanceDomains:input_type -> zitadel.admin.v1.ListInstanceDomainsRequest
+	18,  // 437: zitadel.admin.v1.AdminService.ListInstanceTrustedDomains:input_type -> zitadel.admin.v1.ListInstanceTrustedDomainsRequest
+	20,  // 438: zitadel.admin.v1.AdminService.AddInstanceTrustedDomain:input_type -> zitadel.admin.v1.AddInstanceTrustedDomainRequest
+	22,  // 439: zitadel.admin.v1.AdminService.RemoveInstanceTrustedDomain:input_type -> zitadel.admin.v1.RemoveInstanceTrustedDomainRequest
+	24,  // 440: zitadel.admin.v1.AdminService.ListSecretGenerators:input_type -> zitadel.admin.v1.ListSecretGeneratorsRequest
+	26,  // 441: zitadel.admin.v1.AdminService.GetSecretGenerator:input_type -> zitadel.admin.v1.GetSecretGeneratorRequest
+	28,  // 442: zitadel.admin.v1.AdminService.UpdateSecretGenerator:input_type -> zitadel.admin.v1.UpdateSecretGeneratorRequest
+	30,  // 443: zitadel.admin.v1.AdminService.GetSMTPConfig:input_type -> zitadel.admin.v1.GetSMTPConfigRequest
+	32,  // 444: zitadel.admin.v1.AdminService.GetSMTPConfigById:input_type -> zitadel.admin.v1.GetSMTPConfigByIdRequest
+	36,  // 445: zitadel.admin.v1.AdminService.AddSMTPConfig:input_type -> zitadel.admin.v1.AddSMTPConfigRequest
+	38,  // 446: zitadel.admin.v1.AdminService.UpdateSMTPConfig:input_type -> zitadel.admin.v1.UpdateSMTPConfigRequest
+	40,  // 447: zitadel.admin.v1.AdminService.UpdateSMTPConfigPassword:input_type -> zitadel.admin.v1.UpdateSMTPConfigPasswordRequest
+	42,  // 448: zitadel.admin.v1.AdminService.ActivateSMTPConfig:input_type -> zitadel.admin.v1.ActivateSMTPConfigRequest
+	44,  // 449: zitadel.admin.v1.AdminService.DeactivateSMTPConfig:input_type -> zitadel.admin.v1.DeactivateSMTPConfigRequest
+	46,  // 450: zitadel.admin.v1.AdminService.RemoveSMTPConfig:input_type -> zitadel.admin.v1.RemoveSMTPConfigRequest
+	48,  // 451: zitadel.admin.v1.AdminService.TestSMTPConfigById:input_type -> zitadel.admin.v1.TestSMTPConfigByIdRequest
+	50,  // 452: zitadel.admin.v1.AdminService.TestSMTPConfig:input_type -> zitadel.admin.v1.TestSMTPConfigRequest
+	34,  // 453: zitadel.admin.v1.AdminService.ListSMTPConfigs:input_type -> zitadel.admin.v1.ListSMTPConfigsRequest
+	56,  // 454: zitadel.admin.v1.AdminService.ListEmailProviders:input_type -> zitadel.admin.v1.ListEmailProvidersRequest
+	52,  // 455: zitadel.admin.v1.AdminService.GetEmailProvider:input_type -> zitadel.admin.v1.GetEmailProviderRequest
+	54,  // 456: zitadel.admin.v1.AdminService.GetEmailProviderById:input_type -> zitadel.admin.v1.GetEmailProviderByIdRequest
+	58,  // 457: zitadel.admin.v1.AdminService.AddEmailProviderSMTP:input_type -> zitadel.admin.v1.AddEmailProviderSMTPRequest
+	63,  // 458: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTP:input_type -> zitadel.admin.v1.UpdateEmailProviderSMTPRequest
+	67,  // 459: zitadel.admin.v1.AdminService.AddEmailProviderHTTP:input_type -> zitadel.admin.v1.AddEmailProviderHTTPRequest
+	69,  // 460: zitadel.admin.v1.AdminService.UpdateEmailProviderHTTP:input_type -> zitadel.admin.v1.UpdateEmailProviderHTTPRequest
+	65,  // 461: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTPPassword:input_type -> zitadel.admin.v1.UpdateEmailProviderSMTPPasswordRequest
+	71,  // 462: zitadel.admin.v1.AdminService.ActivateEmailProvider:input_type -> zitadel.admin.v1.ActivateEmailProviderRequest
+	73,  // 463: zitadel.admin.v1.AdminService.DeactivateEmailProvider:input_type -> zitadel.admin.v1.DeactivateEmailProviderRequest
+	75,  // 464: zitadel.admin.v1.AdminService.RemoveEmailProvider:input_type -> zitadel.admin.v1.RemoveEmailProviderRequest
+	77,  // 465: zitadel.admin.v1.AdminService.TestEmailProviderSMTPById:input_type -> zitadel.admin.v1.TestEmailProviderSMTPByIdRequest
+	79,  // 466: zitadel.admin.v1.AdminService.TestEmailProviderSMTP:input_type -> zitadel.admin.v1.TestEmailProviderSMTPRequest
+	81,  // 467: zitadel.admin.v1.AdminService.ListSMSProviders:input_type -> zitadel.admin.v1.ListSMSProvidersRequest
+	83,  // 468: zitadel.admin.v1.AdminService.GetSMSProvider:input_type -> zitadel.admin.v1.GetSMSProviderRequest
+	85,  // 469: zitadel.admin.v1.AdminService.AddSMSProviderTwilio:input_type -> zitadel.admin.v1.AddSMSProviderTwilioRequest
+	87,  // 470: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilio:input_type -> zitadel.admin.v1.UpdateSMSProviderTwilioRequest
+	89,  // 471: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilioToken:input_type -> zitadel.admin.v1.UpdateSMSProviderTwilioTokenRequest
+	91,  // 472: zitadel.admin.v1.AdminService.AddSMSProviderHTTP:input_type -> zitadel.admin.v1.AddSMSProviderHTTPRequest
+	93,  // 473: zitadel.admin.v1.AdminService.UpdateSMSProviderHTTP:input_type -> zitadel.admin.v1.UpdateSMSProviderHTTPRequest
+	95,  // 474: zitadel.admin.v1.AdminService.ActivateSMSProvider:input_type -> zitadel.admin.v1.ActivateSMSProviderRequest
+	97,  // 475: zitadel.admin.v1.AdminService.DeactivateSMSProvider:input_type -> zitadel.admin.v1.DeactivateSMSProviderRequest
+	99,  // 476: zitadel.admin.v1.AdminService.RemoveSMSProvider:input_type -> zitadel.admin.v1.RemoveSMSProviderRequest
+	105, // 477: zitadel.admin.v1.AdminService.GetOIDCSettings:input_type -> zitadel.admin.v1.GetOIDCSettingsRequest
+	107, // 478: zitadel.admin.v1.AdminService.AddOIDCSettings:input_type -> zitadel.admin.v1.AddOIDCSettingsRequest
+	109, // 479: zitadel.admin.v1.AdminService.UpdateOIDCSettings:input_type -> zitadel.admin.v1.UpdateOIDCSettingsRequest
+	101, // 480: zitadel.admin.v1.AdminService.GetFileSystemNotificationProvider:input_type -> zitadel.admin.v1.GetFileSystemNotificationProviderRequest
+	103, // 481: zitadel.admin.v1.AdminService.GetLogNotificationProvider:input_type -> zitadel.admin.v1.GetLogNotificationProviderRequest
+	111, // 482: zitadel.admin.v1.AdminService.GetSecurityPolicy:input_type -> zitadel.admin.v1.GetSecurityPolicyRequest
+	113, // 483: zitadel.admin.v1.AdminService.SetSecurityPolicy:input_type -> zitadel.admin.v1.SetSecurityPolicyRequest
+	117, // 484: zitadel.admin.v1.AdminService.GetOrgByID:input_type -> zitadel.admin.v1.GetOrgByIDRequest
+	115, // 485: zitadel.admin.v1.AdminService.IsOrgUnique:input_type -> zitadel.admin.v1.IsOrgUniqueRequest
+	10,  // 486: zitadel.admin.v1.AdminService.SetDefaultOrg:input_type -> zitadel.admin.v1.SetDefaultOrgRequest
+	12,  // 487: zitadel.admin.v1.AdminService.GetDefaultOrg:input_type -> zitadel.admin.v1.GetDefaultOrgRequest
+	119, // 488: zitadel.admin.v1.AdminService.ListOrgs:input_type -> zitadel.admin.v1.ListOrgsRequest
+	121, // 489: zitadel.admin.v1.AdminService.SetUpOrg:input_type -> zitadel.admin.v1.SetUpOrgRequest
+	123, // 490: zitadel.admin.v1.AdminService.RemoveOrg:input_type -> zitadel.admin.v1.RemoveOrgRequest
+	125, // 491: zitadel.admin.v1.AdminService.GetIDPByID:input_type -> zitadel.admin.v1.GetIDPByIDRequest
+	127, // 492: zitadel.admin.v1.AdminService.ListIDPs:input_type -> zitadel.admin.v1.ListIDPsRequest
+	130, // 493: zitadel.admin.v1.AdminService.AddOIDCIDP:input_type -> zitadel.admin.v1.AddOIDCIDPRequest
+	132, // 494: zitadel.admin.v1.AdminService.AddJWTIDP:input_type -> zitadel.admin.v1.AddJWTIDPRequest
+	134, // 495: zitadel.admin.v1.AdminService.UpdateIDP:input_type -> zitadel.admin.v1.UpdateIDPRequest
+	136, // 496: zitadel.admin.v1.AdminService.DeactivateIDP:input_type -> zitadel.admin.v1.DeactivateIDPRequest
+	138, // 497: zitadel.admin.v1.AdminService.ReactivateIDP:input_type -> zitadel.admin.v1.ReactivateIDPRequest
+	140, // 498: zitadel.admin.v1.AdminService.RemoveIDP:input_type -> zitadel.admin.v1.RemoveIDPRequest
+	142, // 499: zitadel.admin.v1.AdminService.UpdateIDPOIDCConfig:input_type -> zitadel.admin.v1.UpdateIDPOIDCConfigRequest
+	144, // 500: zitadel.admin.v1.AdminService.UpdateIDPJWTConfig:input_type -> zitadel.admin.v1.UpdateIDPJWTConfigRequest
+	146, // 501: zitadel.admin.v1.AdminService.ListProviders:input_type -> zitadel.admin.v1.ListProvidersRequest
+	149, // 502: zitadel.admin.v1.AdminService.GetProviderByID:input_type -> zitadel.admin.v1.GetProviderByIDRequest
+	151, // 503: zitadel.admin.v1.AdminService.AddGenericOAuthProvider:input_type -> zitadel.admin.v1.AddGenericOAuthProviderRequest
+	153, // 504: zitadel.admin.v1.AdminService.UpdateGenericOAuthProvider:input_type -> zitadel.admin.v1.UpdateGenericOAuthProviderRequest
+	155, // 505: zitadel.admin.v1.AdminService.AddGenericOIDCProvider:input_type -> zitadel.admin.v1.AddGenericOIDCProviderRequest
+	157, // 506: zitadel.admin.v1.AdminService.UpdateGenericOIDCProvider:input_type -> zitadel.admin.v1.UpdateGenericOIDCProviderRequest
+	159, // 507: zitadel.admin.v1.AdminService.MigrateGenericOIDCProvider:input_type -> zitadel.admin.v1.MigrateGenericOIDCProviderRequest
+	161, // 508: zitadel.admin.v1.AdminService.AddJWTProvider:input_type -> zitadel.admin.v1.AddJWTProviderRequest
+	163, // 509: zitadel.admin.v1.AdminService.UpdateJWTProvider:input_type -> zitadel.admin.v1.UpdateJWTProviderRequest
+	165, // 510: zitadel.admin.v1.AdminService.AddAzureADProvider:input_type -> zitadel.admin.v1.AddAzureADProviderRequest
+	167, // 511: zitadel.admin.v1.AdminService.UpdateAzureADProvider:input_type -> zitadel.admin.v1.UpdateAzureADProviderRequest
+	169, // 512: zitadel.admin.v1.AdminService.AddGitHubProvider:input_type -> zitadel.admin.v1.AddGitHubProviderRequest
+	171, // 513: zitadel.admin.v1.AdminService.UpdateGitHubProvider:input_type -> zitadel.admin.v1.UpdateGitHubProviderRequest
+	173, // 514: zitadel.admin.v1.AdminService.AddGitHubEnterpriseServerProvider:input_type -> zitadel.admin.v1.AddGitHubEnterpriseServerProviderRequest
+	175, // 515: zitadel.admin.v1.AdminService.UpdateGitHubEnterpriseServerProvider:input_type -> zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderRequest
+	177, // 516: zitadel.admin.v1.AdminService.AddGitLabProvider:input_type -> zitadel.admin.v1.AddGitLabProviderRequest
+	179, // 517: zitadel.admin.v1.AdminService.UpdateGitLabProvider:input_type -> zitadel.admin.v1.UpdateGitLabProviderRequest
+	181, // 518: zitadel.admin.v1.AdminService.AddGitLabSelfHostedProvider:input_type -> zitadel.admin.v1.AddGitLabSelfHostedProviderRequest
+	183, // 519: zitadel.admin.v1.AdminService.UpdateGitLabSelfHostedProvider:input_type -> zitadel.admin.v1.UpdateGitLabSelfHostedProviderRequest
+	185, // 520: zitadel.admin.v1.AdminService.AddGoogleProvider:input_type -> zitadel.admin.v1.AddGoogleProviderRequest
+	187, // 521: zitadel.admin.v1.AdminService.UpdateGoogleProvider:input_type -> zitadel.admin.v1.UpdateGoogleProviderRequest
+	189, // 522: zitadel.admin.v1.AdminService.AddLDAPProvider:input_type -> zitadel.admin.v1.AddLDAPProviderRequest
+	191, // 523: zitadel.admin.v1.AdminService.UpdateLDAPProvider:input_type -> zitadel.admin.v1.UpdateLDAPProviderRequest
+	193, // 524: zitadel.admin.v1.AdminService.AddAppleProvider:input_type -> zitadel.admin.v1.AddAppleProviderRequest
+	195, // 525: zitadel.admin.v1.AdminService.UpdateAppleProvider:input_type -> zitadel.admin.v1.UpdateAppleProviderRequest
+	197, // 526: zitadel.admin.v1.AdminService.AddSAMLProvider:input_type -> zitadel.admin.v1.AddSAMLProviderRequest
+	199, // 527: zitadel.admin.v1.AdminService.UpdateSAMLProvider:input_type -> zitadel.admin.v1.UpdateSAMLProviderRequest
+	201, // 528: zitadel.admin.v1.AdminService.RegenerateSAMLProviderCertificate:input_type -> zitadel.admin.v1.RegenerateSAMLProviderCertificateRequest
+	203, // 529: zitadel.admin.v1.AdminService.DeleteProvider:input_type -> zitadel.admin.v1.DeleteProviderRequest
+	205, // 530: zitadel.admin.v1.AdminService.GetOrgIAMPolicy:input_type -> zitadel.admin.v1.GetOrgIAMPolicyRequest
+	207, // 531: zitadel.admin.v1.AdminService.UpdateOrgIAMPolicy:input_type -> zitadel.admin.v1.UpdateOrgIAMPolicyRequest
+	209, // 532: zitadel.admin.v1.AdminService.GetCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.GetCustomOrgIAMPolicyRequest
+	211, // 533: zitadel.admin.v1.AdminService.AddCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.AddCustomOrgIAMPolicyRequest
+	213, // 534: zitadel.admin.v1.AdminService.UpdateCustomOrgIAMPolicy:input_type -> zitadel.admin.v1.UpdateCustomOrgIAMPolicyRequest
+	215, // 535: zitadel.admin.v1.AdminService.ResetCustomOrgIAMPolicyToDefault:input_type -> zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultRequest
+	217, // 536: zitadel.admin.v1.AdminService.GetDomainPolicy:input_type -> zitadel.admin.v1.GetDomainPolicyRequest
+	219, // 537: zitadel.admin.v1.AdminService.UpdateDomainPolicy:input_type -> zitadel.admin.v1.UpdateDomainPolicyRequest
+	221, // 538: zitadel.admin.v1.AdminService.GetCustomDomainPolicy:input_type -> zitadel.admin.v1.GetCustomDomainPolicyRequest
+	223, // 539: zitadel.admin.v1.AdminService.AddCustomDomainPolicy:input_type -> zitadel.admin.v1.AddCustomDomainPolicyRequest
+	225, // 540: zitadel.admin.v1.AdminService.UpdateCustomDomainPolicy:input_type -> zitadel.admin.v1.UpdateCustomDomainPolicyRequest
+	227, // 541: zitadel.admin.v1.AdminService.ResetCustomDomainPolicyToDefault:input_type -> zitadel.admin.v1.ResetCustomDomainPolicyToDefaultRequest
+	229, // 542: zitadel.admin.v1.AdminService.GetLabelPolicy:input_type -> zitadel.admin.v1.GetLabelPolicyRequest
+	231, // 543: zitadel.admin.v1.AdminService.GetPreviewLabelPolicy:input_type -> zitadel.admin.v1.GetPreviewLabelPolicyRequest
+	233, // 544: zitadel.admin.v1.AdminService.UpdateLabelPolicy:input_type -> zitadel.admin.v1.UpdateLabelPolicyRequest
+	235, // 545: zitadel.admin.v1.AdminService.ActivateLabelPolicy:input_type -> zitadel.admin.v1.ActivateLabelPolicyRequest
+	237, // 546: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogo:input_type -> zitadel.admin.v1.RemoveLabelPolicyLogoRequest
+	239, // 547: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogoDark:input_type -> zitadel.admin.v1.RemoveLabelPolicyLogoDarkRequest
+	241, // 548: zitadel.admin.v1.AdminService.RemoveLabelPolicyIcon:input_type -> zitadel.admin.v1.RemoveLabelPolicyIconRequest
+	243, // 549: zitadel.admin.v1.AdminService.RemoveLabelPolicyIconDark:input_type -> zitadel.admin.v1.RemoveLabelPolicyIconDarkRequest
+	245, // 550: zitadel.admin.v1.AdminService.RemoveLabelPolicyFont:input_type -> zitadel.admin.v1.RemoveLabelPolicyFontRequest
+	247, // 551: zitadel.admin.v1.AdminService.GetLoginPolicy:input_type -> zitadel.admin.v1.GetLoginPolicyRequest
+	249, // 552: zitadel.admin.v1.AdminService.UpdateLoginPolicy:input_type -> zitadel.admin.v1.UpdateLoginPolicyRequest
+	251, // 553: zitadel.admin.v1.AdminService.ListLoginPolicyIDPs:input_type -> zitadel.admin.v1.ListLoginPolicyIDPsRequest
+	253, // 554: zitadel.admin.v1.AdminService.AddIDPToLoginPolicy:input_type -> zitadel.admin.v1.AddIDPToLoginPolicyRequest
+	255, // 555: zitadel.admin.v1.AdminService.RemoveIDPFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveIDPFromLoginPolicyRequest
+	257, // 556: zitadel.admin.v1.AdminService.ListLoginPolicySecondFactors:input_type -> zitadel.admin.v1.ListLoginPolicySecondFactorsRequest
+	259, // 557: zitadel.admin.v1.AdminService.AddSecondFactorToLoginPolicy:input_type -> zitadel.admin.v1.AddSecondFactorToLoginPolicyRequest
+	261, // 558: zitadel.admin.v1.AdminService.RemoveSecondFactorFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyRequest
+	263, // 559: zitadel.admin.v1.AdminService.ListLoginPolicyMultiFactors:input_type -> zitadel.admin.v1.ListLoginPolicyMultiFactorsRequest
+	265, // 560: zitadel.admin.v1.AdminService.AddMultiFactorToLoginPolicy:input_type -> zitadel.admin.v1.AddMultiFactorToLoginPolicyRequest
+	267, // 561: zitadel.admin.v1.AdminService.RemoveMultiFactorFromLoginPolicy:input_type -> zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyRequest
+	269, // 562: zitadel.admin.v1.AdminService.GetPasswordComplexityPolicy:input_type -> zitadel.admin.v1.GetPasswordComplexityPolicyRequest
+	271, // 563: zitadel.admin.v1.AdminService.UpdatePasswordComplexityPolicy:input_type -> zitadel.admin.v1.UpdatePasswordComplexityPolicyRequest
+	273, // 564: zitadel.admin.v1.AdminService.GetPasswordAgePolicy:input_type -> zitadel.admin.v1.GetPasswordAgePolicyRequest
+	275, // 565: zitadel.admin.v1.AdminService.UpdatePasswordAgePolicy:input_type -> zitadel.admin.v1.UpdatePasswordAgePolicyRequest
+	277, // 566: zitadel.admin.v1.AdminService.GetLockoutPolicy:input_type -> zitadel.admin.v1.GetLockoutPolicyRequest
+	279, // 567: zitadel.admin.v1.AdminService.UpdateLockoutPolicy:input_type -> zitadel.admin.v1.UpdateLockoutPolicyRequest
+	281, // 568: zitadel.admin.v1.AdminService.GetPrivacyPolicy:input_type -> zitadel.admin.v1.GetPrivacyPolicyRequest
+	283, // 569: zitadel.admin.v1.AdminService.UpdatePrivacyPolicy:input_type -> zitadel.admin.v1.UpdatePrivacyPolicyRequest
+	285, // 570: zitadel.admin.v1.AdminService.AddNotificationPolicy:input_type -> zitadel.admin.v1.AddNotificationPolicyRequest
+	287, // 571: zitadel.admin.v1.AdminService.GetNotificationPolicy:input_type -> zitadel.admin.v1.GetNotificationPolicyRequest
+	289, // 572: zitadel.admin.v1.AdminService.UpdateNotificationPolicy:input_type -> zitadel.admin.v1.UpdateNotificationPolicyRequest
+	291, // 573: zitadel.admin.v1.AdminService.GetDefaultInitMessageText:input_type -> zitadel.admin.v1.GetDefaultInitMessageTextRequest
+	293, // 574: zitadel.admin.v1.AdminService.GetCustomInitMessageText:input_type -> zitadel.admin.v1.GetCustomInitMessageTextRequest
+	295, // 575: zitadel.admin.v1.AdminService.SetDefaultInitMessageText:input_type -> zitadel.admin.v1.SetDefaultInitMessageTextRequest
+	297, // 576: zitadel.admin.v1.AdminService.ResetCustomInitMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomInitMessageTextToDefaultRequest
+	299, // 577: zitadel.admin.v1.AdminService.GetDefaultPasswordResetMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordResetMessageTextRequest
+	301, // 578: zitadel.admin.v1.AdminService.GetCustomPasswordResetMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordResetMessageTextRequest
+	303, // 579: zitadel.admin.v1.AdminService.SetDefaultPasswordResetMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordResetMessageTextRequest
+	305, // 580: zitadel.admin.v1.AdminService.ResetCustomPasswordResetMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultRequest
+	307, // 581: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyEmailMessageTextRequest
+	309, // 582: zitadel.admin.v1.AdminService.GetCustomVerifyEmailMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyEmailMessageTextRequest
+	311, // 583: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyEmailMessageTextRequest
+	313, // 584: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultRequest
+	315, // 585: zitadel.admin.v1.AdminService.GetDefaultVerifyPhoneMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextRequest
+	317, // 586: zitadel.admin.v1.AdminService.GetCustomVerifyPhoneMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyPhoneMessageTextRequest
+	319, // 587: zitadel.admin.v1.AdminService.SetDefaultVerifyPhoneMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextRequest
+	321, // 588: zitadel.admin.v1.AdminService.ResetCustomVerifyPhoneMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest
+	325, // 589: zitadel.admin.v1.AdminService.GetDefaultVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest
+	323, // 590: zitadel.admin.v1.AdminService.GetCustomVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest
+	327, // 591: zitadel.admin.v1.AdminService.SetDefaultVerifySMSOTPMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest
+	329, // 592: zitadel.admin.v1.AdminService.ResetCustomVerifySMSOTPMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest
+	333, // 593: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest
+	331, // 594: zitadel.admin.v1.AdminService.GetCustomVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest
+	335, // 595: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailOTPMessageText:input_type -> zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest
+	337, // 596: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailOTPMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest
+	339, // 597: zitadel.admin.v1.AdminService.GetDefaultDomainClaimedMessageText:input_type -> zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest
+	341, // 598: zitadel.admin.v1.AdminService.GetCustomDomainClaimedMessageText:input_type -> zitadel.admin.v1.GetCustomDomainClaimedMessageTextRequest
+	343, // 599: zitadel.admin.v1.AdminService.SetDefaultDomainClaimedMessageText:input_type -> zitadel.admin.v1.SetDefaultDomainClaimedMessageTextRequest
+	345, // 600: zitadel.admin.v1.AdminService.ResetCustomDomainClaimedMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultRequest
+	363, // 601: zitadel.admin.v1.AdminService.GetDefaultPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextRequest
+	365, // 602: zitadel.admin.v1.AdminService.GetCustomPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextRequest
+	367, // 603: zitadel.admin.v1.AdminService.SetDefaultPasswordlessRegistrationMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextRequest
+	369, // 604: zitadel.admin.v1.AdminService.ResetCustomPasswordlessRegistrationMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultRequest
+	347, // 605: zitadel.admin.v1.AdminService.GetDefaultPasswordChangeMessageText:input_type -> zitadel.admin.v1.GetDefaultPasswordChangeMessageTextRequest
+	349, // 606: zitadel.admin.v1.AdminService.GetCustomPasswordChangeMessageText:input_type -> zitadel.admin.v1.GetCustomPasswordChangeMessageTextRequest
+	351, // 607: zitadel.admin.v1.AdminService.SetDefaultPasswordChangeMessageText:input_type -> zitadel.admin.v1.SetDefaultPasswordChangeMessageTextRequest
+	353, // 608: zitadel.admin.v1.AdminService.ResetCustomPasswordChangeMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultRequest
+	355, // 609: zitadel.admin.v1.AdminService.GetDefaultInviteUserMessageText:input_type -> zitadel.admin.v1.GetDefaultInviteUserMessageTextRequest
+	357, // 610: zitadel.admin.v1.AdminService.GetCustomInviteUserMessageText:input_type -> zitadel.admin.v1.GetCustomInviteUserMessageTextRequest
+	359, // 611: zitadel.admin.v1.AdminService.SetDefaultInviteUserMessageText:input_type -> zitadel.admin.v1.SetDefaultInviteUserMessageTextRequest
+	361, // 612: zitadel.admin.v1.AdminService.ResetCustomInviteUserMessageTextToDefault:input_type -> zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultRequest
+	371, // 613: zitadel.admin.v1.AdminService.GetDefaultLoginTexts:input_type -> zitadel.admin.v1.GetDefaultLoginTextsRequest
+	373, // 614: zitadel.admin.v1.AdminService.GetCustomLoginTexts:input_type -> zitadel.admin.v1.GetCustomLoginTextsRequest
+	375, // 615: zitadel.admin.v1.AdminService.SetCustomLoginText:input_type -> zitadel.admin.v1.SetCustomLoginTextsRequest
+	377, // 616: zitadel.admin.v1.AdminService.ResetCustomLoginTextToDefault:input_type -> zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest
+	385, // 617: zitadel.admin.v1.AdminService.ListIAMMemberRoles:input_type -> zitadel.admin.v1.ListIAMMemberRolesRequest
+	387, // 618: zitadel.admin.v1.AdminService.ListIAMMembers:input_type -> zitadel.admin.v1.ListIAMMembersRequest
+	379, // 619: zitadel.admin.v1.AdminService.AddIAMMember:input_type -> zitadel.admin.v1.AddIAMMemberRequest
+	381, // 620: zitadel.admin.v1.AdminService.UpdateIAMMember:input_type -> zitadel.admin.v1.UpdateIAMMemberRequest
+	383, // 621: zitadel.admin.v1.AdminService.RemoveIAMMember:input_type -> zitadel.admin.v1.RemoveIAMMemberRequest
+	389, // 622: zitadel.admin.v1.AdminService.ListViews:input_type -> zitadel.admin.v1.ListViewsRequest
+	391, // 623: zitadel.admin.v1.AdminService.ListFailedEvents:input_type -> zitadel.admin.v1.ListFailedEventsRequest
+	393, // 624: zitadel.admin.v1.AdminService.RemoveFailedEvent:input_type -> zitadel.admin.v1.RemoveFailedEventRequest
+	397, // 625: zitadel.admin.v1.AdminService.ImportData:input_type -> zitadel.admin.v1.ImportDataRequest
+	410, // 626: zitadel.admin.v1.AdminService.ExportData:input_type -> zitadel.admin.v1.ExportDataRequest
+	414, // 627: zitadel.admin.v1.AdminService.ListEventTypes:input_type -> zitadel.admin.v1.ListEventTypesRequest
+	412, // 628: zitadel.admin.v1.AdminService.ListEvents:input_type -> zitadel.admin.v1.ListEventsRequest
+	416, // 629: zitadel.admin.v1.AdminService.ListAggregateTypes:input_type -> zitadel.admin.v1.ListAggregateTypesRequest
+	418, // 630: zitadel.admin.v1.AdminService.ActivateFeatureLoginDefaultOrg:input_type -> zitadel.admin.v1.ActivateFeatureLoginDefaultOrgRequest
+	420, // 631: zitadel.admin.v1.AdminService.ListMilestones:input_type -> zitadel.admin.v1.ListMilestonesRequest
+	422, // 632: zitadel.admin.v1.AdminService.SetRestrictions:input_type -> zitadel.admin.v1.SetRestrictionsRequest
+	425, // 633: zitadel.admin.v1.AdminService.GetRestrictions:input_type -> zitadel.admin.v1.GetRestrictionsRequest
+	1,   // 634: zitadel.admin.v1.AdminService.Healthz:output_type -> zitadel.admin.v1.HealthzResponse
+	3,   // 635: zitadel.admin.v1.AdminService.GetSupportedLanguages:output_type -> zitadel.admin.v1.GetSupportedLanguagesResponse
+	5,   // 636: zitadel.admin.v1.AdminService.GetAllowedLanguages:output_type -> zitadel.admin.v1.GetAllowedLanguagesResponse
+	7,   // 637: zitadel.admin.v1.AdminService.SetDefaultLanguage:output_type -> zitadel.admin.v1.SetDefaultLanguageResponse
+	9,   // 638: zitadel.admin.v1.AdminService.GetDefaultLanguage:output_type -> zitadel.admin.v1.GetDefaultLanguageResponse
+	15,  // 639: zitadel.admin.v1.AdminService.GetMyInstance:output_type -> zitadel.admin.v1.GetMyInstanceResponse
+	17,  // 640: zitadel.admin.v1.AdminService.ListInstanceDomains:output_type -> zitadel.admin.v1.ListInstanceDomainsResponse
+	19,  // 641: zitadel.admin.v1.AdminService.ListInstanceTrustedDomains:output_type -> zitadel.admin.v1.ListInstanceTrustedDomainsResponse
+	21,  // 642: zitadel.admin.v1.AdminService.AddInstanceTrustedDomain:output_type -> zitadel.admin.v1.AddInstanceTrustedDomainResponse
+	23,  // 643: zitadel.admin.v1.AdminService.RemoveInstanceTrustedDomain:output_type -> zitadel.admin.v1.RemoveInstanceTrustedDomainResponse
+	25,  // 644: zitadel.admin.v1.AdminService.ListSecretGenerators:output_type -> zitadel.admin.v1.ListSecretGeneratorsResponse
+	27,  // 645: zitadel.admin.v1.AdminService.GetSecretGenerator:output_type -> zitadel.admin.v1.GetSecretGeneratorResponse
+	29,  // 646: zitadel.admin.v1.AdminService.UpdateSecretGenerator:output_type -> zitadel.admin.v1.UpdateSecretGeneratorResponse
+	31,  // 647: zitadel.admin.v1.AdminService.GetSMTPConfig:output_type -> zitadel.admin.v1.GetSMTPConfigResponse
+	33,  // 648: zitadel.admin.v1.AdminService.GetSMTPConfigById:output_type -> zitadel.admin.v1.GetSMTPConfigByIdResponse
+	37,  // 649: zitadel.admin.v1.AdminService.AddSMTPConfig:output_type -> zitadel.admin.v1.AddSMTPConfigResponse
+	39,  // 650: zitadel.admin.v1.AdminService.UpdateSMTPConfig:output_type -> zitadel.admin.v1.UpdateSMTPConfigResponse
+	41,  // 651: zitadel.admin.v1.AdminService.UpdateSMTPConfigPassword:output_type -> zitadel.admin.v1.UpdateSMTPConfigPasswordResponse
+	43,  // 652: zitadel.admin.v1.AdminService.ActivateSMTPConfig:output_type -> zitadel.admin.v1.ActivateSMTPConfigResponse
+	45,  // 653: zitadel.admin.v1.AdminService.DeactivateSMTPConfig:output_type -> zitadel.admin.v1.DeactivateSMTPConfigResponse
+	47,  // 654: zitadel.admin.v1.AdminService.RemoveSMTPConfig:output_type -> zitadel.admin.v1.RemoveSMTPConfigResponse
+	49,  // 655: zitadel.admin.v1.AdminService.TestSMTPConfigById:output_type -> zitadel.admin.v1.TestSMTPConfigByIdResponse
+	51,  // 656: zitadel.admin.v1.AdminService.TestSMTPConfig:output_type -> zitadel.admin.v1.TestSMTPConfigResponse
+	35,  // 657: zitadel.admin.v1.AdminService.ListSMTPConfigs:output_type -> zitadel.admin.v1.ListSMTPConfigsResponse
+	57,  // 658: zitadel.admin.v1.AdminService.ListEmailProviders:output_type -> zitadel.admin.v1.ListEmailProvidersResponse
+	53,  // 659: zitadel.admin.v1.AdminService.GetEmailProvider:output_type -> zitadel.admin.v1.GetEmailProviderResponse
+	55,  // 660: zitadel.admin.v1.AdminService.GetEmailProviderById:output_type -> zitadel.admin.v1.GetEmailProviderByIdResponse
+	62,  // 661: zitadel.admin.v1.AdminService.AddEmailProviderSMTP:output_type -> zitadel.admin.v1.AddEmailProviderSMTPResponse
+	64,  // 662: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTP:output_type -> zitadel.admin.v1.UpdateEmailProviderSMTPResponse
+	68,  // 663: zitadel.admin.v1.AdminService.AddEmailProviderHTTP:output_type -> zitadel.admin.v1.AddEmailProviderHTTPResponse
+	70,  // 664: zitadel.admin.v1.AdminService.UpdateEmailProviderHTTP:output_type -> zitadel.admin.v1.UpdateEmailProviderHTTPResponse
+	66,  // 665: zitadel.admin.v1.AdminService.UpdateEmailProviderSMTPPassword:output_type -> zitadel.admin.v1.UpdateEmailProviderSMTPPasswordResponse
+	72,  // 666: zitadel.admin.v1.AdminService.ActivateEmailProvider:output_type -> zitadel.admin.v1.ActivateEmailProviderResponse
+	74,  // 667: zitadel.admin.v1.AdminService.DeactivateEmailProvider:output_type -> zitadel.admin.v1.DeactivateEmailProviderResponse
+	76,  // 668: zitadel.admin.v1.AdminService.RemoveEmailProvider:output_type -> zitadel.admin.v1.RemoveEmailProviderResponse
+	78,  // 669: zitadel.admin.v1.AdminService.TestEmailProviderSMTPById:output_type -> zitadel.admin.v1.TestEmailProviderSMTPByIdResponse
+	80,  // 670: zitadel.admin.v1.AdminService.TestEmailProviderSMTP:output_type -> zitadel.admin.v1.TestEmailProviderSMTPResponse
+	82,  // 671: zitadel.admin.v1.AdminService.ListSMSProviders:output_type -> zitadel.admin.v1.ListSMSProvidersResponse
+	84,  // 672: zitadel.admin.v1.AdminService.GetSMSProvider:output_type -> zitadel.admin.v1.GetSMSProviderResponse
+	86,  // 673: zitadel.admin.v1.AdminService.AddSMSProviderTwilio:output_type -> zitadel.admin.v1.AddSMSProviderTwilioResponse
+	88,  // 674: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilio:output_type -> zitadel.admin.v1.UpdateSMSProviderTwilioResponse
+	90,  // 675: zitadel.admin.v1.AdminService.UpdateSMSProviderTwilioToken:output_type -> zitadel.admin.v1.UpdateSMSProviderTwilioTokenResponse
+	92,  // 676: zitadel.admin.v1.AdminService.AddSMSProviderHTTP:output_type -> zitadel.admin.v1.AddSMSProviderHTTPResponse
+	94,  // 677: zitadel.admin.v1.AdminService.UpdateSMSProviderHTTP:output_type -> zitadel.admin.v1.UpdateSMSProviderHTTPResponse
+	96,  // 678: zitadel.admin.v1.AdminService.ActivateSMSProvider:output_type -> zitadel.admin.v1.ActivateSMSProviderResponse
+	98,  // 679: zitadel.admin.v1.AdminService.DeactivateSMSProvider:output_type -> zitadel.admin.v1.DeactivateSMSProviderResponse
+	100, // 680: zitadel.admin.v1.AdminService.RemoveSMSProvider:output_type -> zitadel.admin.v1.RemoveSMSProviderResponse
+	106, // 681: zitadel.admin.v1.AdminService.GetOIDCSettings:output_type -> zitadel.admin.v1.GetOIDCSettingsResponse
+	108, // 682: zitadel.admin.v1.AdminService.AddOIDCSettings:output_type -> zitadel.admin.v1.AddOIDCSettingsResponse
+	110, // 683: zitadel.admin.v1.AdminService.UpdateOIDCSettings:output_type -> zitadel.admin.v1.UpdateOIDCSettingsResponse
+	102, // 684: zitadel.admin.v1.AdminService.GetFileSystemNotificationProvider:output_type -> zitadel.admin.v1.GetFileSystemNotificationProviderResponse
+	104, // 685: zitadel.admin.v1.AdminService.GetLogNotificationProvider:output_type -> zitadel.admin.v1.GetLogNotificationProviderResponse
+	112, // 686: zitadel.admin.v1.AdminService.GetSecurityPolicy:output_type -> zitadel.admin.v1.GetSecurityPolicyResponse
+	114, // 687: zitadel.admin.v1.AdminService.SetSecurityPolicy:output_type -> zitadel.admin.v1.SetSecurityPolicyResponse
+	118, // 688: zitadel.admin.v1.AdminService.GetOrgByID:output_type -> zitadel.admin.v1.GetOrgByIDResponse
+	116, // 689: zitadel.admin.v1.AdminService.IsOrgUnique:output_type -> zitadel.admin.v1.IsOrgUniqueResponse
+	11,  // 690: zitadel.admin.v1.AdminService.SetDefaultOrg:output_type -> zitadel.admin.v1.SetDefaultOrgResponse
+	13,  // 691: zitadel.admin.v1.AdminService.GetDefaultOrg:output_type -> zitadel.admin.v1.GetDefaultOrgResponse
+	120, // 692: zitadel.admin.v1.AdminService.ListOrgs:output_type -> zitadel.admin.v1.ListOrgsResponse
+	122, // 693: zitadel.admin.v1.AdminService.SetUpOrg:output_type -> zitadel.admin.v1.SetUpOrgResponse
+	124, // 694: zitadel.admin.v1.AdminService.RemoveOrg:output_type -> zitadel.admin.v1.RemoveOrgResponse
+	126, // 695: zitadel.admin.v1.AdminService.GetIDPByID:output_type -> zitadel.admin.v1.GetIDPByIDResponse
+	129, // 696: zitadel.admin.v1.AdminService.ListIDPs:output_type -> zitadel.admin.v1.ListIDPsResponse
+	131, // 697: zitadel.admin.v1.AdminService.AddOIDCIDP:output_type -> zitadel.admin.v1.AddOIDCIDPResponse
+	133, // 698: zitadel.admin.v1.AdminService.AddJWTIDP:output_type -> zitadel.admin.v1.AddJWTIDPResponse
+	135, // 699: zitadel.admin.v1.AdminService.UpdateIDP:output_type -> zitadel.admin.v1.UpdateIDPResponse
+	137, // 700: zitadel.admin.v1.AdminService.DeactivateIDP:output_type -> zitadel.admin.v1.DeactivateIDPResponse
+	139, // 701: zitadel.admin.v1.AdminService.ReactivateIDP:output_type -> zitadel.admin.v1.ReactivateIDPResponse
+	141, // 702: zitadel.admin.v1.AdminService.RemoveIDP:output_type -> zitadel.admin.v1.RemoveIDPResponse
+	143, // 703: zitadel.admin.v1.AdminService.UpdateIDPOIDCConfig:output_type -> zitadel.admin.v1.UpdateIDPOIDCConfigResponse
+	145, // 704: zitadel.admin.v1.AdminService.UpdateIDPJWTConfig:output_type -> zitadel.admin.v1.UpdateIDPJWTConfigResponse
+	148, // 705: zitadel.admin.v1.AdminService.ListProviders:output_type -> zitadel.admin.v1.ListProvidersResponse
+	150, // 706: zitadel.admin.v1.AdminService.GetProviderByID:output_type -> zitadel.admin.v1.GetProviderByIDResponse
+	152, // 707: zitadel.admin.v1.AdminService.AddGenericOAuthProvider:output_type -> zitadel.admin.v1.AddGenericOAuthProviderResponse
+	154, // 708: zitadel.admin.v1.AdminService.UpdateGenericOAuthProvider:output_type -> zitadel.admin.v1.UpdateGenericOAuthProviderResponse
+	156, // 709: zitadel.admin.v1.AdminService.AddGenericOIDCProvider:output_type -> zitadel.admin.v1.AddGenericOIDCProviderResponse
+	158, // 710: zitadel.admin.v1.AdminService.UpdateGenericOIDCProvider:output_type -> zitadel.admin.v1.UpdateGenericOIDCProviderResponse
+	160, // 711: zitadel.admin.v1.AdminService.MigrateGenericOIDCProvider:output_type -> zitadel.admin.v1.MigrateGenericOIDCProviderResponse
+	162, // 712: zitadel.admin.v1.AdminService.AddJWTProvider:output_type -> zitadel.admin.v1.AddJWTProviderResponse
+	164, // 713: zitadel.admin.v1.AdminService.UpdateJWTProvider:output_type -> zitadel.admin.v1.UpdateJWTProviderResponse
+	166, // 714: zitadel.admin.v1.AdminService.AddAzureADProvider:output_type -> zitadel.admin.v1.AddAzureADProviderResponse
+	168, // 715: zitadel.admin.v1.AdminService.UpdateAzureADProvider:output_type -> zitadel.admin.v1.UpdateAzureADProviderResponse
+	170, // 716: zitadel.admin.v1.AdminService.AddGitHubProvider:output_type -> zitadel.admin.v1.AddGitHubProviderResponse
+	172, // 717: zitadel.admin.v1.AdminService.UpdateGitHubProvider:output_type -> zitadel.admin.v1.UpdateGitHubProviderResponse
+	174, // 718: zitadel.admin.v1.AdminService.AddGitHubEnterpriseServerProvider:output_type -> zitadel.admin.v1.AddGitHubEnterpriseServerProviderResponse
+	176, // 719: zitadel.admin.v1.AdminService.UpdateGitHubEnterpriseServerProvider:output_type -> zitadel.admin.v1.UpdateGitHubEnterpriseServerProviderResponse
+	178, // 720: zitadel.admin.v1.AdminService.AddGitLabProvider:output_type -> zitadel.admin.v1.AddGitLabProviderResponse
+	180, // 721: zitadel.admin.v1.AdminService.UpdateGitLabProvider:output_type -> zitadel.admin.v1.UpdateGitLabProviderResponse
+	182, // 722: zitadel.admin.v1.AdminService.AddGitLabSelfHostedProvider:output_type -> zitadel.admin.v1.AddGitLabSelfHostedProviderResponse
+	184, // 723: zitadel.admin.v1.AdminService.UpdateGitLabSelfHostedProvider:output_type -> zitadel.admin.v1.UpdateGitLabSelfHostedProviderResponse
+	186, // 724: zitadel.admin.v1.AdminService.AddGoogleProvider:output_type -> zitadel.admin.v1.AddGoogleProviderResponse
+	188, // 725: zitadel.admin.v1.AdminService.UpdateGoogleProvider:output_type -> zitadel.admin.v1.UpdateGoogleProviderResponse
+	190, // 726: zitadel.admin.v1.AdminService.AddLDAPProvider:output_type -> zitadel.admin.v1.AddLDAPProviderResponse
+	192, // 727: zitadel.admin.v1.AdminService.UpdateLDAPProvider:output_type -> zitadel.admin.v1.UpdateLDAPProviderResponse
+	194, // 728: zitadel.admin.v1.AdminService.AddAppleProvider:output_type -> zitadel.admin.v1.AddAppleProviderResponse
+	196, // 729: zitadel.admin.v1.AdminService.UpdateAppleProvider:output_type -> zitadel.admin.v1.UpdateAppleProviderResponse
+	198, // 730: zitadel.admin.v1.AdminService.AddSAMLProvider:output_type -> zitadel.admin.v1.AddSAMLProviderResponse
+	200, // 731: zitadel.admin.v1.AdminService.UpdateSAMLProvider:output_type -> zitadel.admin.v1.UpdateSAMLProviderResponse
+	202, // 732: zitadel.admin.v1.AdminService.RegenerateSAMLProviderCertificate:output_type -> zitadel.admin.v1.RegenerateSAMLProviderCertificateResponse
+	204, // 733: zitadel.admin.v1.AdminService.DeleteProvider:output_type -> zitadel.admin.v1.DeleteProviderResponse
+	206, // 734: zitadel.admin.v1.AdminService.GetOrgIAMPolicy:output_type -> zitadel.admin.v1.GetOrgIAMPolicyResponse
+	208, // 735: zitadel.admin.v1.AdminService.UpdateOrgIAMPolicy:output_type -> zitadel.admin.v1.UpdateOrgIAMPolicyResponse
+	210, // 736: zitadel.admin.v1.AdminService.GetCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.GetCustomOrgIAMPolicyResponse
+	212, // 737: zitadel.admin.v1.AdminService.AddCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.AddCustomOrgIAMPolicyResponse
+	214, // 738: zitadel.admin.v1.AdminService.UpdateCustomOrgIAMPolicy:output_type -> zitadel.admin.v1.UpdateCustomOrgIAMPolicyResponse
+	216, // 739: zitadel.admin.v1.AdminService.ResetCustomOrgIAMPolicyToDefault:output_type -> zitadel.admin.v1.ResetCustomOrgIAMPolicyToDefaultResponse
+	218, // 740: zitadel.admin.v1.AdminService.GetDomainPolicy:output_type -> zitadel.admin.v1.GetDomainPolicyResponse
+	220, // 741: zitadel.admin.v1.AdminService.UpdateDomainPolicy:output_type -> zitadel.admin.v1.UpdateDomainPolicyResponse
+	222, // 742: zitadel.admin.v1.AdminService.GetCustomDomainPolicy:output_type -> zitadel.admin.v1.GetCustomDomainPolicyResponse
+	224, // 743: zitadel.admin.v1.AdminService.AddCustomDomainPolicy:output_type -> zitadel.admin.v1.AddCustomDomainPolicyResponse
+	226, // 744: zitadel.admin.v1.AdminService.UpdateCustomDomainPolicy:output_type -> zitadel.admin.v1.UpdateCustomDomainPolicyResponse
+	228, // 745: zitadel.admin.v1.AdminService.ResetCustomDomainPolicyToDefault:output_type -> zitadel.admin.v1.ResetCustomDomainPolicyToDefaultResponse
+	230, // 746: zitadel.admin.v1.AdminService.GetLabelPolicy:output_type -> zitadel.admin.v1.GetLabelPolicyResponse
+	232, // 747: zitadel.admin.v1.AdminService.GetPreviewLabelPolicy:output_type -> zitadel.admin.v1.GetPreviewLabelPolicyResponse
+	234, // 748: zitadel.admin.v1.AdminService.UpdateLabelPolicy:output_type -> zitadel.admin.v1.UpdateLabelPolicyResponse
+	236, // 749: zitadel.admin.v1.AdminService.ActivateLabelPolicy:output_type -> zitadel.admin.v1.ActivateLabelPolicyResponse
+	238, // 750: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogo:output_type -> zitadel.admin.v1.RemoveLabelPolicyLogoResponse
+	240, // 751: zitadel.admin.v1.AdminService.RemoveLabelPolicyLogoDark:output_type -> zitadel.admin.v1.RemoveLabelPolicyLogoDarkResponse
+	242, // 752: zitadel.admin.v1.AdminService.RemoveLabelPolicyIcon:output_type -> zitadel.admin.v1.RemoveLabelPolicyIconResponse
+	244, // 753: zitadel.admin.v1.AdminService.RemoveLabelPolicyIconDark:output_type -> zitadel.admin.v1.RemoveLabelPolicyIconDarkResponse
+	246, // 754: zitadel.admin.v1.AdminService.RemoveLabelPolicyFont:output_type -> zitadel.admin.v1.RemoveLabelPolicyFontResponse
+	248, // 755: zitadel.admin.v1.AdminService.GetLoginPolicy:output_type -> zitadel.admin.v1.GetLoginPolicyResponse
+	250, // 756: zitadel.admin.v1.AdminService.UpdateLoginPolicy:output_type -> zitadel.admin.v1.UpdateLoginPolicyResponse
+	252, // 757: zitadel.admin.v1.AdminService.ListLoginPolicyIDPs:output_type -> zitadel.admin.v1.ListLoginPolicyIDPsResponse
+	254, // 758: zitadel.admin.v1.AdminService.AddIDPToLoginPolicy:output_type -> zitadel.admin.v1.AddIDPToLoginPolicyResponse
+	256, // 759: zitadel.admin.v1.AdminService.RemoveIDPFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveIDPFromLoginPolicyResponse
+	258, // 760: zitadel.admin.v1.AdminService.ListLoginPolicySecondFactors:output_type -> zitadel.admin.v1.ListLoginPolicySecondFactorsResponse
+	260, // 761: zitadel.admin.v1.AdminService.AddSecondFactorToLoginPolicy:output_type -> zitadel.admin.v1.AddSecondFactorToLoginPolicyResponse
+	262, // 762: zitadel.admin.v1.AdminService.RemoveSecondFactorFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveSecondFactorFromLoginPolicyResponse
+	264, // 763: zitadel.admin.v1.AdminService.ListLoginPolicyMultiFactors:output_type -> zitadel.admin.v1.ListLoginPolicyMultiFactorsResponse
+	266, // 764: zitadel.admin.v1.AdminService.AddMultiFactorToLoginPolicy:output_type -> zitadel.admin.v1.AddMultiFactorToLoginPolicyResponse
+	268, // 765: zitadel.admin.v1.AdminService.RemoveMultiFactorFromLoginPolicy:output_type -> zitadel.admin.v1.RemoveMultiFactorFromLoginPolicyResponse
+	270, // 766: zitadel.admin.v1.AdminService.GetPasswordComplexityPolicy:output_type -> zitadel.admin.v1.GetPasswordComplexityPolicyResponse
+	272, // 767: zitadel.admin.v1.AdminService.UpdatePasswordComplexityPolicy:output_type -> zitadel.admin.v1.UpdatePasswordComplexityPolicyResponse
+	274, // 768: zitadel.admin.v1.AdminService.GetPasswordAgePolicy:output_type -> zitadel.admin.v1.GetPasswordAgePolicyResponse
+	276, // 769: zitadel.admin.v1.AdminService.UpdatePasswordAgePolicy:output_type -> zitadel.admin.v1.UpdatePasswordAgePolicyResponse
+	278, // 770: zitadel.admin.v1.AdminService.GetLockoutPolicy:output_type -> zitadel.admin.v1.GetLockoutPolicyResponse
+	280, // 771: zitadel.admin.v1.AdminService.UpdateLockoutPolicy:output_type -> zitadel.admin.v1.UpdateLockoutPolicyResponse
+	282, // 772: zitadel.admin.v1.AdminService.GetPrivacyPolicy:output_type -> zitadel.admin.v1.GetPrivacyPolicyResponse
+	284, // 773: zitadel.admin.v1.AdminService.UpdatePrivacyPolicy:output_type -> zitadel.admin.v1.UpdatePrivacyPolicyResponse
+	286, // 774: zitadel.admin.v1.AdminService.AddNotificationPolicy:output_type -> zitadel.admin.v1.AddNotificationPolicyResponse
+	288, // 775: zitadel.admin.v1.AdminService.GetNotificationPolicy:output_type -> zitadel.admin.v1.GetNotificationPolicyResponse
+	290, // 776: zitadel.admin.v1.AdminService.UpdateNotificationPolicy:output_type -> zitadel.admin.v1.UpdateNotificationPolicyResponse
+	292, // 777: zitadel.admin.v1.AdminService.GetDefaultInitMessageText:output_type -> zitadel.admin.v1.GetDefaultInitMessageTextResponse
+	294, // 778: zitadel.admin.v1.AdminService.GetCustomInitMessageText:output_type -> zitadel.admin.v1.GetCustomInitMessageTextResponse
+	296, // 779: zitadel.admin.v1.AdminService.SetDefaultInitMessageText:output_type -> zitadel.admin.v1.SetDefaultInitMessageTextResponse
+	298, // 780: zitadel.admin.v1.AdminService.ResetCustomInitMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomInitMessageTextToDefaultResponse
+	300, // 781: zitadel.admin.v1.AdminService.GetDefaultPasswordResetMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordResetMessageTextResponse
+	302, // 782: zitadel.admin.v1.AdminService.GetCustomPasswordResetMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordResetMessageTextResponse
+	304, // 783: zitadel.admin.v1.AdminService.SetDefaultPasswordResetMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordResetMessageTextResponse
+	306, // 784: zitadel.admin.v1.AdminService.ResetCustomPasswordResetMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordResetMessageTextToDefaultResponse
+	308, // 785: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyEmailMessageTextResponse
+	310, // 786: zitadel.admin.v1.AdminService.GetCustomVerifyEmailMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyEmailMessageTextResponse
+	312, // 787: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyEmailMessageTextResponse
+	314, // 788: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyEmailMessageTextToDefaultResponse
+	316, // 789: zitadel.admin.v1.AdminService.GetDefaultVerifyPhoneMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyPhoneMessageTextResponse
+	318, // 790: zitadel.admin.v1.AdminService.GetCustomVerifyPhoneMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyPhoneMessageTextResponse
+	320, // 791: zitadel.admin.v1.AdminService.SetDefaultVerifyPhoneMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyPhoneMessageTextResponse
+	322, // 792: zitadel.admin.v1.AdminService.ResetCustomVerifyPhoneMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse
+	326, // 793: zitadel.admin.v1.AdminService.GetDefaultVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse
+	324, // 794: zitadel.admin.v1.AdminService.GetCustomVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse
+	328, // 795: zitadel.admin.v1.AdminService.SetDefaultVerifySMSOTPMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse
+	330, // 796: zitadel.admin.v1.AdminService.ResetCustomVerifySMSOTPMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse
+	334, // 797: zitadel.admin.v1.AdminService.GetDefaultVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse
+	332, // 798: zitadel.admin.v1.AdminService.GetCustomVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse
+	336, // 799: zitadel.admin.v1.AdminService.SetDefaultVerifyEmailOTPMessageText:output_type -> zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse
+	338, // 800: zitadel.admin.v1.AdminService.ResetCustomVerifyEmailOTPMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse
+	340, // 801: zitadel.admin.v1.AdminService.GetDefaultDomainClaimedMessageText:output_type -> zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse
+	342, // 802: zitadel.admin.v1.AdminService.GetCustomDomainClaimedMessageText:output_type -> zitadel.admin.v1.GetCustomDomainClaimedMessageTextResponse
+	344, // 803: zitadel.admin.v1.AdminService.SetDefaultDomainClaimedMessageText:output_type -> zitadel.admin.v1.SetDefaultDomainClaimedMessageTextResponse
+	346, // 804: zitadel.admin.v1.AdminService.ResetCustomDomainClaimedMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomDomainClaimedMessageTextToDefaultResponse
+	364, // 805: zitadel.admin.v1.AdminService.GetDefaultPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordlessRegistrationMessageTextResponse
+	366, // 806: zitadel.admin.v1.AdminService.GetCustomPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordlessRegistrationMessageTextResponse
+	368, // 807: zitadel.admin.v1.AdminService.SetDefaultPasswordlessRegistrationMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordlessRegistrationMessageTextResponse
+	370, // 808: zitadel.admin.v1.AdminService.ResetCustomPasswordlessRegistrationMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordlessRegistrationMessageTextToDefaultResponse
+	348, // 809: zitadel.admin.v1.AdminService.GetDefaultPasswordChangeMessageText:output_type -> zitadel.admin.v1.GetDefaultPasswordChangeMessageTextResponse
+	350, // 810: zitadel.admin.v1.AdminService.GetCustomPasswordChangeMessageText:output_type -> zitadel.admin.v1.GetCustomPasswordChangeMessageTextResponse
+	352, // 811: zitadel.admin.v1.AdminService.SetDefaultPasswordChangeMessageText:output_type -> zitadel.admin.v1.SetDefaultPasswordChangeMessageTextResponse
+	354, // 812: zitadel.admin.v1.AdminService.ResetCustomPasswordChangeMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomPasswordChangeMessageTextToDefaultResponse
+	356, // 813: zitadel.admin.v1.AdminService.GetDefaultInviteUserMessageText:output_type -> zitadel.admin.v1.GetDefaultInviteUserMessageTextResponse
+	358, // 814: zitadel.admin.v1.AdminService.GetCustomInviteUserMessageText:output_type -> zitadel.admin.v1.GetCustomInviteUserMessageTextResponse
+	360, // 815: zitadel.admin.v1.AdminService.SetDefaultInviteUserMessageText:output_type -> zitadel.admin.v1.SetDefaultInviteUserMessageTextResponse
+	362, // 816: zitadel.admin.v1.AdminService.ResetCustomInviteUserMessageTextToDefault:output_type -> zitadel.admin.v1.ResetCustomInviteUserMessageTextToDefaultResponse
+	372, // 817: zitadel.admin.v1.AdminService.GetDefaultLoginTexts:output_type -> zitadel.admin.v1.GetDefaultLoginTextsResponse
+	374, // 818: zitadel.admin.v1.AdminService.GetCustomLoginTexts:output_type -> zitadel.admin.v1.GetCustomLoginTextsResponse
+	376, // 819: zitadel.admin.v1.AdminService.SetCustomLoginText:output_type -> zitadel.admin.v1.SetCustomLoginTextsResponse
+	378, // 820: zitadel.admin.v1.AdminService.ResetCustomLoginTextToDefault:output_type -> zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse
+	386, // 821: zitadel.admin.v1.AdminService.ListIAMMemberRoles:output_type -> zitadel.admin.v1.ListIAMMemberRolesResponse
+	388, // 822: zitadel.admin.v1.AdminService.ListIAMMembers:output_type -> zitadel.admin.v1.ListIAMMembersResponse
+	380, // 823: zitadel.admin.v1.AdminService.AddIAMMember:output_type -> zitadel.admin.v1.AddIAMMemberResponse
+	382, // 824: zitadel.admin.v1.AdminService.UpdateIAMMember:output_type -> zitadel.admin.v1.UpdateIAMMemberResponse
+	384, // 825: zitadel.admin.v1.AdminService.RemoveIAMMember:output_type -> zitadel.admin.v1.RemoveIAMMemberResponse
+	390, // 826: zitadel.admin.v1.AdminService.ListViews:output_type -> zitadel.admin.v1.ListViewsResponse
+	392, // 827: zitadel.admin.v1.AdminService.ListFailedEvents:output_type -> zitadel.admin.v1.ListFailedEventsResponse
+	394, // 828: zitadel.admin.v1.AdminService.RemoveFailedEvent:output_type -> zitadel.admin.v1.RemoveFailedEventResponse
+	400, // 829: zitadel.admin.v1.AdminService.ImportData:output_type -> zitadel.admin.v1.ImportDataResponse
+	411, // 830: zitadel.admin.v1.AdminService.ExportData:output_type -> zitadel.admin.v1.ExportDataResponse
+	415, // 831: zitadel.admin.v1.AdminService.ListEventTypes:output_type -> zitadel.admin.v1.ListEventTypesResponse
+	413, // 832: zitadel.admin.v1.AdminService.ListEvents:output_type -> zitadel.admin.v1.ListEventsResponse
+	417, // 833: zitadel.admin.v1.AdminService.ListAggregateTypes:output_type -> zitadel.admin.v1.ListAggregateTypesResponse
+	419, // 834: zitadel.admin.v1.AdminService.ActivateFeatureLoginDefaultOrg:output_type -> zitadel.admin.v1.ActivateFeatureLoginDefaultOrgResponse
+	421, // 835: zitadel.admin.v1.AdminService.ListMilestones:output_type -> zitadel.admin.v1.ListMilestonesResponse
+	424, // 836: zitadel.admin.v1.AdminService.SetRestrictions:output_type -> zitadel.admin.v1.SetRestrictionsResponse
+	426, // 837: zitadel.admin.v1.AdminService.GetRestrictions:output_type -> zitadel.admin.v1.GetRestrictionsResponse
+	634, // [634:838] is the sub-list for method output_type
+	430, // [430:634] is the sub-list for method input_type
+	430, // [430:430] is the sub-list for extension type_name
+	430, // [430:430] is the sub-list for extension extendee
+	0,   // [0:430] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_admin_proto_init() }
@@ -28522,34 +28979,52 @@ func file_zitadel_admin_proto_init() {
 	if File_zitadel_admin_proto != nil {
 		return
 	}
-	file_zitadel_admin_proto_msgTypes[66].OneofWrappers = []any{}
-	file_zitadel_admin_proto_msgTypes[67].OneofWrappers = []any{}
-	file_zitadel_admin_proto_msgTypes[90].OneofWrappers = []any{}
-	file_zitadel_admin_proto_msgTypes[91].OneofWrappers = []any{}
-	file_zitadel_admin_proto_msgTypes[118].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[58].OneofWrappers = []any{
+		(*AddEmailProviderSMTPRequest_None)(nil),
+		(*AddEmailProviderSMTPRequest_Plain)(nil),
+		(*AddEmailProviderSMTPRequest_Xoauth2)(nil),
+	}
+	file_zitadel_admin_proto_msgTypes[61].OneofWrappers = []any{
+		(*SMTPXOAuth2Auth_ClientCredentials_)(nil),
+	}
+	file_zitadel_admin_proto_msgTypes[63].OneofWrappers = []any{
+		(*UpdateEmailProviderSMTPRequest_None)(nil),
+		(*UpdateEmailProviderSMTPRequest_Plain)(nil),
+		(*UpdateEmailProviderSMTPRequest_Xoauth2)(nil),
+	}
+	file_zitadel_admin_proto_msgTypes[69].OneofWrappers = []any{}
+	file_zitadel_admin_proto_msgTypes[70].OneofWrappers = []any{}
+	file_zitadel_admin_proto_msgTypes[79].OneofWrappers = []any{
+		(*TestEmailProviderSMTPRequest_None)(nil),
+		(*TestEmailProviderSMTPRequest_Plain)(nil),
+		(*TestEmailProviderSMTPRequest_Xoauth2)(nil),
+	}
+	file_zitadel_admin_proto_msgTypes[93].OneofWrappers = []any{}
+	file_zitadel_admin_proto_msgTypes[94].OneofWrappers = []any{}
+	file_zitadel_admin_proto_msgTypes[121].OneofWrappers = []any{
 		(*SetUpOrgRequest_Human_)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[125].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[128].OneofWrappers = []any{
 		(*IDPQuery_IdpIdQuery)(nil),
 		(*IDPQuery_IdpNameQuery)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[144].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[147].OneofWrappers = []any{
 		(*ProviderQuery_IdpIdQuery)(nil),
 		(*ProviderQuery_IdpNameQuery)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[156].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[159].OneofWrappers = []any{
 		(*MigrateGenericOIDCProviderRequest_Azure)(nil),
 		(*MigrateGenericOIDCProviderRequest_Google)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[194].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[197].OneofWrappers = []any{
 		(*AddSAMLProviderRequest_MetadataXml)(nil),
 		(*AddSAMLProviderRequest_MetadataUrl)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[196].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[199].OneofWrappers = []any{
 		(*UpdateSAMLProviderRequest_MetadataXml)(nil),
 		(*UpdateSAMLProviderRequest_MetadataUrl)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[394].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[397].OneofWrappers = []any{
 		(*ImportDataRequest_DataOrgs)(nil),
 		(*ImportDataRequest_DataOrgsv1)(nil),
 		(*ImportDataRequest_DataOrgsLocal)(nil),
@@ -28559,18 +29034,18 @@ func file_zitadel_admin_proto_init() {
 		(*ImportDataRequest_DataOrgsGcs)(nil),
 		(*ImportDataRequest_DataOrgsv1Gcs)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[409].OneofWrappers = []any{
+	file_zitadel_admin_proto_msgTypes[412].OneofWrappers = []any{
 		(*ListEventsRequest_Range)(nil),
 		(*ListEventsRequest_From)(nil),
 	}
-	file_zitadel_admin_proto_msgTypes[419].OneofWrappers = []any{}
+	file_zitadel_admin_proto_msgTypes[422].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_admin_proto_rawDesc), len(file_zitadel_admin_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   436,
+			NumMessages:   440,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

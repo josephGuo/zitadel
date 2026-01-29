@@ -186,8 +186,8 @@ func (x *HumanEmail) GetIsVerified() bool {
 
 type SendEmailVerificationCode struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optionally set a url_template, which will be used in the verification mail sent by ZITADEL to guide the user to your verification page.
-	// If no template is set, the default ZITADEL url will be used.
+	// Optionally set a url_template, which will be used in the verification mail sent by Zitadel to guide the user to your verification page.
+	// If no template is set, the default Zitadel url will be used.
 	//
 	// The following placeholders can be used: UserID, OrgID, Code
 	UrlTemplate   *string `protobuf:"bytes,1,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`

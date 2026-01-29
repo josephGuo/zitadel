@@ -49,10 +49,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SystemServiceClient interface {
-	// Indicates if ZITADEL is running.
-	// It respondes as soon as ZITADEL started
+	// Indicates if Zitadel is running.
+	// It respondes as soon as Zitadel started
 	Healthz(ctx context.Context, in *HealthzRequest, opts ...grpc.CallOption) (*HealthzResponse, error)
-	// Returns a list of ZITADEL instances
+	// Returns a list of Zitadel instances
 	//
 	// Deprecated: Use [ListInstances](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-instances.api.mdx) instead to list instances
 	ListInstances(ctx context.Context, in *ListInstancesRequest, opts ...grpc.CallOption) (*ListInstancesResponse, error)
@@ -100,12 +100,12 @@ type SystemServiceClient interface {
 	RemoveDomain(ctx context.Context, in *RemoveDomainRequest, opts ...grpc.CallOption) (*RemoveDomainResponse, error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(ctx context.Context, in *SetPrimaryDomainRequest, opts ...grpc.CallOption) (*SetPrimaryDomainResponse, error)
-	// Returns all stored read models of ZITADEL
+	// Returns all stored read models of Zitadel
 	// views are used for search optimisation and optimise request latencies
 	// they represent the delta of the event happend on the objects
 	ListViews(ctx context.Context, in *ListViewsRequest, opts ...grpc.CallOption) (*ListViewsResponse, error)
 	// Truncates the delta of the change stream
-	// be carefull with this function because ZITADEL has to
+	// be carefull with this function because Zitadel has to
 	// recompute the deltas after they got cleared.
 	// Search requests will return wrong results until all deltas are recomputed
 	ClearView(ctx context.Context, in *ClearViewRequest, opts ...grpc.CallOption) (*ClearViewResponse, error)
@@ -390,10 +390,10 @@ func (c *systemServiceClient) ResetLimits(ctx context.Context, in *ResetLimitsRe
 // All implementations must embed UnimplementedSystemServiceServer
 // for forward compatibility.
 type SystemServiceServer interface {
-	// Indicates if ZITADEL is running.
-	// It respondes as soon as ZITADEL started
+	// Indicates if Zitadel is running.
+	// It respondes as soon as Zitadel started
 	Healthz(context.Context, *HealthzRequest) (*HealthzResponse, error)
-	// Returns a list of ZITADEL instances
+	// Returns a list of Zitadel instances
 	//
 	// Deprecated: Use [ListInstances](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-instances.api.mdx) instead to list instances
 	ListInstances(context.Context, *ListInstancesRequest) (*ListInstancesResponse, error)
@@ -441,12 +441,12 @@ type SystemServiceServer interface {
 	RemoveDomain(context.Context, *RemoveDomainRequest) (*RemoveDomainResponse, error)
 	// Sets the primary domain of an instance
 	SetPrimaryDomain(context.Context, *SetPrimaryDomainRequest) (*SetPrimaryDomainResponse, error)
-	// Returns all stored read models of ZITADEL
+	// Returns all stored read models of Zitadel
 	// views are used for search optimisation and optimise request latencies
 	// they represent the delta of the event happend on the objects
 	ListViews(context.Context, *ListViewsRequest) (*ListViewsResponse, error)
 	// Truncates the delta of the change stream
-	// be carefull with this function because ZITADEL has to
+	// be carefull with this function because Zitadel has to
 	// recompute the deltas after they got cleared.
 	// Search requests will return wrong results until all deltas are recomputed
 	ClearView(context.Context, *ClearViewRequest) (*ClearViewResponse, error)

@@ -91,7 +91,7 @@ type CreateUser struct {
 	Contact *SetContact `protobuf:"bytes,3,opt,name=contact,proto3" json:"contact,omitempty"`
 	// Set the initial authenticators of the user.
 	Authenticators *SetAuthenticators `protobuf:"bytes,4,opt,name=authenticators,proto3" json:"authenticators,omitempty"`
-	// Optionally set a unique identifier of the user. If unset, ZITADEL will take care of it.
+	// Optionally set a unique identifier of the user. If unset, Zitadel will take care of it.
 	UserId        *string `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -230,7 +230,7 @@ type GetUser struct {
 	// The schema the user and it's data is based on.
 	Schema *GetSchema       `protobuf:"bytes,2,opt,name=schema,proto3" json:"schema,omitempty"`
 	Data   *structpb.Struct `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
-	// Contact information for the user. ZITADEL will use this in case of internal notifications.
+	// Contact information for the user. Zitadel will use this in case of internal notifications.
 	Contact *Contact `protobuf:"bytes,4,opt,name=contact,proto3" json:"contact,omitempty"`
 	// The user's authenticators. They are used to identify and authenticate the user
 	// during the authentication process.

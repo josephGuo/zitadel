@@ -629,7 +629,7 @@
         "limit": {
           "type": "integer",
           "format": "int64",
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -688,7 +688,7 @@
         "STATE_INACTIVE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_ACTIVE: An active authorization grants the user access with the roles specified on the project.\n - STATE_INACTIVE: An inactive authorization temporarily deactivates the granted access and roles.\nZITADEL will not include the specific authorization in any authorization information like an access token.\nBut the information can still be accessed using the API."
+      "description": " - STATE_ACTIVE: An active authorization grants the user access with the roles specified on the project.\n - STATE_INACTIVE: An inactive authorization temporarily deactivates the granted access and roles.\nZitadel will not include the specific authorization in any authorization information like an access token.\nBut the information can still be accessed using the API."
     },
     "v2betaStateQuery": {
       "type": "object",

@@ -406,7 +406,7 @@ const file_zitadel_user_v2beta_password_proto_rawDesc = "" +
 	"\x0fchange_required\x18\x02 \x01(\bR\x0echangeRequired\"\xe5\x03\n" +
 	"\x15SendPasswordResetLink\x12R\n" +
 	"\x11notification_type\x18\x01 \x01(\x0e2%.zitadel.user.v2beta.NotificationTypeR\x10notificationType\x12\xe6\x02\n" +
-	"\furl_template\x18\x02 \x01(\tB\xbd\x02\x92A\xaf\x022\xcb\x01\"Optionally set a url_template, which will be used in the password reset mail sent by ZITADEL to guide the user to your password change page. If no template is set, the default ZITADEL url will be used.\"JY\"https://example.com/password/changey?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
+	"\furl_template\x18\x02 \x01(\tB\xbd\x02\x92A\xaf\x022\xcb\x01\"Optionally set a url_template, which will be used in the password reset mail sent by Zitadel to guide the user to your password change page. If no template is set, the default Zitadel url will be used.\"JY\"https://example.com/password/changey?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
 	"\r_url_template\"\x19\n" +
 	"\x17ReturnPasswordResetCode\"\xa8\x03\n" +
 	"\vSetPassword\x12;\n" +

@@ -285,7 +285,7 @@ const file_zitadel_resources_object_v3alpha_object_proto_rawDesc = "" +
 	"\x05owner\x18\x05 \x01(\v2\x1d.zitadel.object.v3alpha.OwnerB\x18\x92A\x15J\x13\"69629023906488334\"R\x05owner\"\xf8\x03\n" +
 	"\vSearchQuery\x12 \n" +
 	"\x06offset\x18\x01 \x01(\x04B\b\x92A\x05J\x03\"0\"R\x06offset\x12\xc6\x01\n" +
-	"\x05limit\x18\x02 \x01(\rB\xaf\x01\x92A\xab\x012\xa3\x01Maximum amount of events returned. If not configured otherwise, the default is 100, the maximum is 1000. If the limit exceeds the maximum, ZITADEL throws an error.J\x03100R\x05limit\x12\xa1\x01\n" +
+	"\x05limit\x18\x02 \x01(\rB\xaf\x01\x92A\xab\x012\xa3\x01Maximum amount of events returned. If not configured otherwise, the default is 100, the maximum is 1000. If the limit exceeds the maximum, Zitadel throws an error.J\x03100R\x05limit\x12\xa1\x01\n" +
 	"\x04desc\x18\x03 \x01(\bB\x8c\x01\x92A\x88\x012\x85\x01default is ascending, because together with the creation date sorting column, this returns the most deterministic pagination results.R\x04desc:Z\x92AW\n" +
 	"U*\x12General List Query2?Object unspecific list filters like offset, limit and asc/desc.\"\xd2\x01\n" +
 	"\vListDetails\x12-\n" +

@@ -425,7 +425,7 @@
         },
         "accessTokenType": {
           "$ref": "#/definitions/v2OIDCTokenType",
-          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the ZITADEL token endpoint."
+          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the Zitadel token endpoint."
         },
         "accessTokenRoleAssertion": {
           "type": "boolean",
@@ -442,7 +442,7 @@
         "clockSkew": {
           "type": "string",
           "example": "1s",
-          "description": "ClockSkew is used to compensate time differences between the servers of ZITADEL and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s."
+          "description": "ClockSkew is used to compensate time differences between the servers of Zitadel and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s."
         },
         "additionalOrigins": {
           "type": "array",
@@ -660,7 +660,7 @@
       "properties": {
         "loginV1": {
           "$ref": "#/definitions/v2LoginV1",
-          "description": "Allow the user to sign in through the ZITADEL hosted login UI."
+          "description": "Allow the user to sign in through the Zitadel hosted login UI."
         },
         "loginV2": {
           "$ref": "#/definitions/v2LoginV2",
@@ -759,7 +759,7 @@
         },
         "accessTokenType": {
           "$ref": "#/definitions/v2OIDCTokenType",
-          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the ZITADEL token endpoint."
+          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the Zitadel token endpoint."
         },
         "accessTokenRoleAssertion": {
           "type": "boolean",
@@ -775,7 +775,7 @@
         },
         "clockSkew": {
           "type": "string",
-          "description": "ClockSkew is used to compensate time differences between the servers of ZITADEL and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s."
+          "description": "ClockSkew is used to compensate time differences between the servers of Zitadel and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s."
         },
         "additionalOrigins": {
           "type": "array",
@@ -874,7 +874,7 @@
           "type": "integer",
           "format": "int64",
           "example": 10,
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1031,7 +1031,7 @@
         },
         "accessTokenType": {
           "$ref": "#/definitions/v2OIDCTokenType",
-          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the ZITADEL token endpoint.\nIf not set, the access token type will not be changed."
+          "description": "The AccessTokenType defines the type of the access token returned from ZITADEL.\nBearer tokens are opaque to clients. JWT tokens are self-contained and can be validated by the client.\nBearer tokens must be introspected at the Zitadel token endpoint.\nIf not set, the access token type will not be changed."
         },
         "accessTokenRoleAssertion": {
           "type": "boolean",
@@ -1048,7 +1048,7 @@
         "clockSkew": {
           "type": "string",
           "example": "1s",
-          "description": "ClockSkew is used to compensate time differences between the servers of ZITADEL and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s.\nIf not set, the clock skew will not be changed."
+          "description": "ClockSkew is used to compensate time differences between the servers of Zitadel and the application.\nIt is added to the \"exp\" claim and subtracted from \"iat\", \"auth_time\" and \"nbf\" claims.\nThe default is 0s, the maximum is 5s.\nIf not set, the clock skew will not be changed."
         },
         "additionalOrigins": {
           "type": "array",

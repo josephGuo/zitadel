@@ -1508,10 +1508,10 @@ const file_zitadel_settings_v2beta_settings_service_proto_rawDesc = "" +
 	"\x02OKX\x01\x8a\xb5\x18\x0f\n" +
 	"\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02\x1a\x12\x18/v2beta/settings/lockout\x12\x8f\x02\n" +
-	"\x13GetSecuritySettings\x123.zitadel.settings.v2beta.GetSecuritySettingsRequest\x1a4.zitadel.settings.v2beta.GetSecuritySettingsResponse\"\x8c\x01\x92AQ\x12\x15Get Security Settings\x1a6Returns the security settings of the ZITADEL instance.X\x01\x8a\xb5\x18\x13\n" +
+	"\x13GetSecuritySettings\x123.zitadel.settings.v2beta.GetSecuritySettingsRequest\x1a4.zitadel.settings.v2beta.GetSecuritySettingsResponse\"\x8c\x01\x92AQ\x12\x15Get Security Settings\x1a6Returns the security settings of the Zitadel instance.X\x01\x8a\xb5\x18\x13\n" +
 	"\x11\n" +
 	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02\x1b\x12\x19/v2beta/settings/security\x12\x8f\x02\n" +
-	"\x13SetSecuritySettings\x123.zitadel.settings.v2beta.SetSecuritySettingsRequest\x1a4.zitadel.settings.v2beta.SetSecuritySettingsResponse\"\x8c\x01\x92AM\x12\x15Set Security Settings\x1a2Set the security settings of the ZITADEL instance.X\x01\x8a\xb5\x18\x14\n" +
+	"\x13SetSecuritySettings\x123.zitadel.settings.v2beta.SetSecuritySettingsRequest\x1a4.zitadel.settings.v2beta.SetSecuritySettingsResponse\"\x8c\x01\x92AM\x12\x15Set Security Settings\x1a2Set the security settings of the Zitadel instance.X\x01\x8a\xb5\x18\x14\n" +
 	"\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v2beta/policies/security\x12\xfd\x01\n" +
 	"\x17SetOrganizationSettings\x127.zitadel.settings.v2beta.SetOrganizationSettingsRequest\x1a8.zitadel.settings.v2beta.SetOrganizationSettingsResponse\"o\x92A3J/\n" +
@@ -1531,7 +1531,7 @@ const file_zitadel_settings_v2beta_settings_service_proto_rawDesc = "" +
 	"\x12invalid list queryX\x01\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02%:\x01*\" /v2/settings/organization/searchB\xc3\b\x92A\x81\b\x12\xdf\x02\n" +
-	"\x10Settings Service\x12\xc7\x01This API is intended to manage settings in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
+	"\x10Settings Service\x12\xc7\x01This API is intended to manage settings in a Zitadel instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

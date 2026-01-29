@@ -274,7 +274,7 @@ type CreateOIDCApplicationRequest struct {
 	GrantTypes     []OIDCGrantType    `protobuf:"varint,3,rep,packed,name=grant_types,json=grantTypes,proto3,enum=zitadel.app.v2beta.OIDCGrantType" json:"grant_types,omitempty"`
 	AppType        OIDCAppType        `protobuf:"varint,4,opt,name=app_type,json=appType,proto3,enum=zitadel.app.v2beta.OIDCAppType" json:"app_type,omitempty"`
 	AuthMethodType OIDCAuthMethodType `protobuf:"varint,5,opt,name=auth_method_type,json=authMethodType,proto3,enum=zitadel.app.v2beta.OIDCAuthMethodType" json:"auth_method_type,omitempty"`
-	// ZITADEL will redirect to this link after a successful logout
+	// Zitadel will redirect to this link after a successful logout
 	PostLogoutRedirectUris   []string             `protobuf:"bytes,6,rep,name=post_logout_redirect_uris,json=postLogoutRedirectUris,proto3" json:"post_logout_redirect_uris,omitempty"`
 	Version                  OIDCVersion          `protobuf:"varint,7,opt,name=version,proto3,enum=zitadel.app.v2beta.OIDCVersion" json:"version,omitempty"`
 	DevMode                  bool                 `protobuf:"varint,8,opt,name=dev_mode,json=devMode,proto3" json:"dev_mode,omitempty"`
@@ -2673,7 +2673,7 @@ const file_zitadel_app_v2beta_app_service_proto_rawDesc = "" +
 	"\x19The matching applicationsX\x01\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v2beta/application_keys/searchB\xa8\b\x92A\xf0\a\x12\xce\x02\n" +
-	"\x13Application Service\x12\xb3\x01This API is intended to manage apps (SAML, OIDC, etc..) in a ZITADEL instance. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
+	"\x13Application Service\x12\xb3\x01This API is intended to manage apps (SAML, OIDC, etc..) in a Zitadel instance. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

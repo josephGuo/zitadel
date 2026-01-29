@@ -175,7 +175,7 @@ type SettingsServiceClient interface {
 	GetLockoutSettings(context.Context, *connect.Request[v2.GetLockoutSettingsRequest]) (*connect.Response[v2.GetLockoutSettingsResponse], error)
 	// Get Security Settings
 	//
-	// Get the security settings of the ZITADEL instance.
+	// Get the security settings of the Zitadel instance.
 	// Security settings include settings like enabling impersonation and embedded iframe settings.
 	//
 	// Required permissions:
@@ -539,7 +539,7 @@ type SettingsServiceHandler interface {
 	GetLockoutSettings(context.Context, *connect.Request[v2.GetLockoutSettingsRequest]) (*connect.Response[v2.GetLockoutSettingsResponse], error)
 	// Get Security Settings
 	//
-	// Get the security settings of the ZITADEL instance.
+	// Get the security settings of the Zitadel instance.
 	// Security settings include settings like enabling impersonation and embedded iframe settings.
 	//
 	// Required permissions:

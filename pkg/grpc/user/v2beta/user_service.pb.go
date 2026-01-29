@@ -4341,7 +4341,7 @@ const file_zitadel_user_v2beta_user_service_proto_rawDesc = "" +
 	"&RetrieveIdentityProviderIntentResponse\x128\n" +
 	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2beta.DetailsR\adetails\x12L\n" +
 	"\x0fidp_information\x18\x02 \x01(\v2#.zitadel.user.v2beta.IDPInformationR\x0eidpInformation\x12h\n" +
-	"\auser_id\x18\x03 \x01(\tBO\x92AL24ID of the user in ZITADEL if external user is linkedJ\x14\"163840776835432345\"R\x06userId\"\x93\x01\n" +
+	"\auser_id\x18\x03 \x01(\tBO\x92AL24ID of the user in Zitadel if external user is linkedJ\x14\"163840776835432345\"R\x06userId\"\x93\x01\n" +
 	"\x11AddIDPLinkRequest\x12E\n" +
 	"\auser_id\x18\x01 \x01(\tB,\x92A\x1bJ\x13\"69629026806489455\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06userId\x127\n" +
 	"\bidp_link\x18\x02 \x01(\v2\x1c.zitadel.user.v2beta.IDPLinkR\aidpLink\"N\n" +
@@ -4559,7 +4559,7 @@ const file_zitadel_user_v2beta_user_service_proto_rawDesc = "" +
 	"\x02OKX\x01\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x020\x12./v2beta/users/{user_id}/authentication_methodsB\xb4\b\x92A\xfa\a\x12\xd8\x02\n" +
-	"\fUser Service\x12\xc4\x01This API is intended to manage users in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
+	"\fUser Service\x12\xc4\x01This API is intended to manage users in a Zitadel instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

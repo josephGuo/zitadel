@@ -283,7 +283,7 @@ const file_zitadel_user_v2beta_email_proto_rawDesc = "" +
 	"\vis_verified\x18\x02 \x01(\bR\n" +
 	"isVerified\"\x8c\x03\n" +
 	"\x19SendEmailVerificationCode\x12\xdd\x02\n" +
-	"\furl_template\x18\x01 \x01(\tB\xb4\x02\x92A\xa6\x022\xc6\x01\"Optionally set a url_template, which will be used in the verification mail sent by ZITADEL to guide the user to your verification page. If no template is set, the default ZITADEL url will be used.\"JU\"https://example.com/email/verify?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
+	"\furl_template\x18\x01 \x01(\tB\xb4\x02\x92A\xa6\x022\xc6\x01\"Optionally set a url_template, which will be used in the verification mail sent by Zitadel to guide the user to your verification page. If no template is set, the default Zitadel url will be used.\"JU\"https://example.com/email/verify?userID={{.UserID}}&code={{.Code}}&orgID={{.OrgID}}\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\vurlTemplate\x88\x01\x01B\x0f\n" +
 	"\r_url_template\"\x1d\n" +
 	"\x1bReturnEmailVerificationCodeB6Z4github.com/zitadel/zitadel/pkg/grpc/user/v2beta;userb\x06proto3"
 

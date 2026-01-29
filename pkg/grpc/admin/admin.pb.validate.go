@@ -7724,6 +7724,134 @@ func (m *AddEmailProviderSMTPRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	switch v := m.Auth.(type) {
+	case *AddEmailProviderSMTPRequest_None:
+		if v == nil {
+			err := AddEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetNone()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetNone()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AddEmailProviderSMTPRequestValidationError{
+					field:  "None",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AddEmailProviderSMTPRequest_Plain:
+		if v == nil {
+			err := AddEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetPlain()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetPlain()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AddEmailProviderSMTPRequestValidationError{
+					field:  "Plain",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AddEmailProviderSMTPRequest_Xoauth2:
+		if v == nil {
+			err := AddEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetXoauth2()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AddEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetXoauth2()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AddEmailProviderSMTPRequestValidationError{
+					field:  "Xoauth2",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+
 	if len(errors) > 0 {
 		return AddEmailProviderSMTPRequestMultiError(errors)
 	}
@@ -7804,6 +7932,400 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AddEmailProviderSMTPRequestValidationError{}
+
+// Validate checks the field values on SMTPNoAuth with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SMTPNoAuth) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SMTPNoAuth with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SMTPNoAuthMultiError, or
+// nil if none found.
+func (m *SMTPNoAuth) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SMTPNoAuth) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return SMTPNoAuthMultiError(errors)
+	}
+
+	return nil
+}
+
+// SMTPNoAuthMultiError is an error wrapping multiple validation errors
+// returned by SMTPNoAuth.ValidateAll() if the designated constraints aren't met.
+type SMTPNoAuthMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SMTPNoAuthMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SMTPNoAuthMultiError) AllErrors() []error { return m }
+
+// SMTPNoAuthValidationError is the validation error returned by
+// SMTPNoAuth.Validate if the designated constraints aren't met.
+type SMTPNoAuthValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SMTPNoAuthValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SMTPNoAuthValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SMTPNoAuthValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SMTPNoAuthValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SMTPNoAuthValidationError) ErrorName() string { return "SMTPNoAuthValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SMTPNoAuthValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSMTPNoAuth.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SMTPNoAuthValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SMTPNoAuthValidationError{}
+
+// Validate checks the field values on SMTPPlainAuth with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SMTPPlainAuth) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SMTPPlainAuth with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SMTPPlainAuthMultiError, or
+// nil if none found.
+func (m *SMTPPlainAuth) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SMTPPlainAuth) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetPassword()); l < 0 || l > 200 {
+		err := SMTPPlainAuthValidationError{
+			field:  "Password",
+			reason: "value length must be between 0 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SMTPPlainAuthMultiError(errors)
+	}
+
+	return nil
+}
+
+// SMTPPlainAuthMultiError is an error wrapping multiple validation errors
+// returned by SMTPPlainAuth.ValidateAll() if the designated constraints
+// aren't met.
+type SMTPPlainAuthMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SMTPPlainAuthMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SMTPPlainAuthMultiError) AllErrors() []error { return m }
+
+// SMTPPlainAuthValidationError is the validation error returned by
+// SMTPPlainAuth.Validate if the designated constraints aren't met.
+type SMTPPlainAuthValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SMTPPlainAuthValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SMTPPlainAuthValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SMTPPlainAuthValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SMTPPlainAuthValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SMTPPlainAuthValidationError) ErrorName() string { return "SMTPPlainAuthValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SMTPPlainAuthValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSMTPPlainAuth.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SMTPPlainAuthValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SMTPPlainAuthValidationError{}
+
+// Validate checks the field values on SMTPXOAuth2Auth with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SMTPXOAuth2Auth) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SMTPXOAuth2Auth with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SMTPXOAuth2AuthMultiError, or nil if none found.
+func (m *SMTPXOAuth2Auth) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SMTPXOAuth2Auth) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetTokenEndpoint()); l < 0 || l > 200 {
+		err := SMTPXOAuth2AuthValidationError{
+			field:  "TokenEndpoint",
+			reason: "value length must be between 0 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetScopes()) > 20 {
+		err := SMTPXOAuth2AuthValidationError{
+			field:  "Scopes",
+			reason: "value must contain no more than 20 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	for idx, item := range m.GetScopes() {
+		_, _ = idx, item
+
+		if l := utf8.RuneCountInString(item); l < 1 || l > 100 {
+			err := SMTPXOAuth2AuthValidationError{
+				field:  fmt.Sprintf("Scopes[%v]", idx),
+				reason: "value length must be between 1 and 100 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	switch v := m.OAuth2Type.(type) {
+	case *SMTPXOAuth2Auth_ClientCredentials_:
+		if v == nil {
+			err := SMTPXOAuth2AuthValidationError{
+				field:  "OAuth2Type",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetClientCredentials()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SMTPXOAuth2AuthValidationError{
+						field:  "ClientCredentials",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SMTPXOAuth2AuthValidationError{
+						field:  "ClientCredentials",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetClientCredentials()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SMTPXOAuth2AuthValidationError{
+					field:  "ClientCredentials",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+
+	if len(errors) > 0 {
+		return SMTPXOAuth2AuthMultiError(errors)
+	}
+
+	return nil
+}
+
+// SMTPXOAuth2AuthMultiError is an error wrapping multiple validation errors
+// returned by SMTPXOAuth2Auth.ValidateAll() if the designated constraints
+// aren't met.
+type SMTPXOAuth2AuthMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SMTPXOAuth2AuthMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SMTPXOAuth2AuthMultiError) AllErrors() []error { return m }
+
+// SMTPXOAuth2AuthValidationError is the validation error returned by
+// SMTPXOAuth2Auth.Validate if the designated constraints aren't met.
+type SMTPXOAuth2AuthValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SMTPXOAuth2AuthValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SMTPXOAuth2AuthValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SMTPXOAuth2AuthValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SMTPXOAuth2AuthValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SMTPXOAuth2AuthValidationError) ErrorName() string { return "SMTPXOAuth2AuthValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SMTPXOAuth2AuthValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSMTPXOAuth2Auth.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SMTPXOAuth2AuthValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SMTPXOAuth2AuthValidationError{}
 
 // Validate checks the field values on AddEmailProviderSMTPResponse with the
 // rules defined in the proto definition for this message. If any rules are
@@ -8031,6 +8553,134 @@ func (m *UpdateEmailProviderSMTPRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	switch v := m.Auth.(type) {
+	case *UpdateEmailProviderSMTPRequest_None:
+		if v == nil {
+			err := UpdateEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetNone()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetNone()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UpdateEmailProviderSMTPRequestValidationError{
+					field:  "None",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *UpdateEmailProviderSMTPRequest_Plain:
+		if v == nil {
+			err := UpdateEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetPlain()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetPlain()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UpdateEmailProviderSMTPRequestValidationError{
+					field:  "Plain",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *UpdateEmailProviderSMTPRequest_Xoauth2:
+		if v == nil {
+			err := UpdateEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetXoauth2()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, UpdateEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetXoauth2()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UpdateEmailProviderSMTPRequestValidationError{
+					field:  "Xoauth2",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
@@ -10181,6 +10831,148 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 	}
 
 	// no validation rules for Id
+
+	oneofAuthPresent := false
+	switch v := m.Auth.(type) {
+	case *TestEmailProviderSMTPRequest_None:
+		if v == nil {
+			err := TestEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofAuthPresent = true
+
+		if all {
+			switch v := interface{}(m.GetNone()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "None",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetNone()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TestEmailProviderSMTPRequestValidationError{
+					field:  "None",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *TestEmailProviderSMTPRequest_Plain:
+		if v == nil {
+			err := TestEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofAuthPresent = true
+
+		if all {
+			switch v := interface{}(m.GetPlain()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "Plain",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetPlain()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TestEmailProviderSMTPRequestValidationError{
+					field:  "Plain",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *TestEmailProviderSMTPRequest_Xoauth2:
+		if v == nil {
+			err := TestEmailProviderSMTPRequestValidationError{
+				field:  "Auth",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofAuthPresent = true
+
+		if all {
+			switch v := interface{}(m.GetXoauth2()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, TestEmailProviderSMTPRequestValidationError{
+						field:  "Xoauth2",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetXoauth2()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TestEmailProviderSMTPRequestValidationError{
+					field:  "Xoauth2",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+	if !oneofAuthPresent {
+		err := TestEmailProviderSMTPRequestValidationError{
+			field:  "Auth",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return TestEmailProviderSMTPRequestMultiError(errors)
@@ -61331,6 +62123,133 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetRestrictionsResponseValidationError{}
+
+// Validate checks the field values on SMTPXOAuth2Auth_ClientCredentials with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *SMTPXOAuth2Auth_ClientCredentials) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SMTPXOAuth2Auth_ClientCredentials
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// SMTPXOAuth2Auth_ClientCredentialsMultiError, or nil if none found.
+func (m *SMTPXOAuth2Auth_ClientCredentials) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SMTPXOAuth2Auth_ClientCredentials) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetClientId()); l < 0 || l > 200 {
+		err := SMTPXOAuth2Auth_ClientCredentialsValidationError{
+			field:  "ClientId",
+			reason: "value length must be between 0 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetClientSecret()); l < 0 || l > 200 {
+		err := SMTPXOAuth2Auth_ClientCredentialsValidationError{
+			field:  "ClientSecret",
+			reason: "value length must be between 0 and 200 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SMTPXOAuth2Auth_ClientCredentialsMultiError(errors)
+	}
+
+	return nil
+}
+
+// SMTPXOAuth2Auth_ClientCredentialsMultiError is an error wrapping multiple
+// validation errors returned by
+// SMTPXOAuth2Auth_ClientCredentials.ValidateAll() if the designated
+// constraints aren't met.
+type SMTPXOAuth2Auth_ClientCredentialsMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SMTPXOAuth2Auth_ClientCredentialsMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SMTPXOAuth2Auth_ClientCredentialsMultiError) AllErrors() []error { return m }
+
+// SMTPXOAuth2Auth_ClientCredentialsValidationError is the validation error
+// returned by SMTPXOAuth2Auth_ClientCredentials.Validate if the designated
+// constraints aren't met.
+type SMTPXOAuth2Auth_ClientCredentialsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) ErrorName() string {
+	return "SMTPXOAuth2Auth_ClientCredentialsValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SMTPXOAuth2Auth_ClientCredentialsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSMTPXOAuth2Auth_ClientCredentials.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SMTPXOAuth2Auth_ClientCredentialsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SMTPXOAuth2Auth_ClientCredentialsValidationError{}
 
 // Validate checks the field values on SetUpOrgRequest_Org with the rules
 // defined in the proto definition for this message. If any rules are

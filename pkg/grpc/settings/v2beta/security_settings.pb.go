@@ -136,7 +136,7 @@ const file_zitadel_settings_v2beta_security_settings_proto_rawDesc = "" +
 	"\x14enable_impersonation\x18\x02 \x01(\bB3\x92A02(default language for the current contextJ\x04\"en\"R\x13enableImpersonation\"\xf6\x01\n" +
 	"\x16EmbeddedIframeSettings\x12P\n" +
 	"\aenabled\x18\x01 \x01(\bB6\x92A321states if iframe embedding is enabled or disabledR\aenabled\x12\x89\x01\n" +
-	"\x0fallowed_origins\x18\x02 \x03(\tB`\x92A]28origins allowed loading ZITADEL in an iframe if enabled.J![\"foo.bar.com\", \"localhost:8080\"]R\x0eallowedOriginsB>Z<github.com/zitadel/zitadel/pkg/grpc/settings/v2beta;settingsb\x06proto3"
+	"\x0fallowed_origins\x18\x02 \x03(\tB`\x92A]28origins allowed loading Zitadel in an iframe if enabled.J![\"foo.bar.com\", \"localhost:8080\"]R\x0eallowedOriginsB>Z<github.com/zitadel/zitadel/pkg/grpc/settings/v2beta;settingsb\x06proto3"
 
 var (
 	file_zitadel_settings_v2beta_security_settings_proto_rawDescOnce sync.Once

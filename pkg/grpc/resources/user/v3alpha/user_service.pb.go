@@ -1374,7 +1374,7 @@ type isResendContactEmailCodeRequest_Verification interface {
 }
 
 type ResendContactEmailCodeRequest_SendCode struct {
-	// Let ZITADEL send the link to the user via email.
+	// Let Zitadel send the link to the user via email.
 	SendCode *SendEmailVerificationCode `protobuf:"bytes,4,opt,name=send_code,json=sendCode,proto3,oneof"`
 }
 
@@ -1778,7 +1778,7 @@ type isResendContactPhoneCodeRequest_Verification interface {
 }
 
 type ResendContactPhoneCodeRequest_SendCode struct {
-	// Let ZITADEL send the link to the user via SMS.
+	// Let Zitadel send the link to the user via SMS.
 	SendCode *SendPhoneVerificationCode `protobuf:"bytes,4,opt,name=send_code,json=sendCode,proto3,oneof"`
 }
 
@@ -2307,12 +2307,12 @@ type isRequestPasswordResetRequest_Medium interface {
 }
 
 type RequestPasswordResetRequest_SendEmail struct {
-	// Let ZITADEL send the link to the user via email.
+	// Let Zitadel send the link to the user via email.
 	SendEmail *SendPasswordResetEmail `protobuf:"bytes,4,opt,name=send_email,json=sendEmail,proto3,oneof"`
 }
 
 type RequestPasswordResetRequest_SendSms struct {
-	// Let ZITADEL send the link to the user via SMS.
+	// Let Zitadel send the link to the user via SMS.
 	SendSms *SendPasswordResetSMS `protobuf:"bytes,5,opt,name=send_sms,json=sendSms,proto3,oneof"`
 }
 
@@ -2736,7 +2736,7 @@ type isCreateWebAuthNRegistrationLinkRequest_Medium interface {
 }
 
 type CreateWebAuthNRegistrationLinkRequest_SendLink struct {
-	// Let ZITADEL send the link to the user via email.
+	// Let Zitadel send the link to the user via email.
 	SendLink *SendWebAuthNRegistrationLink `protobuf:"bytes,4,opt,name=send_link,json=sendLink,proto3,oneof"`
 }
 
@@ -4335,7 +4335,7 @@ type GetIdentityProviderIntentResponse struct {
 	// Information returned by the identity provider (IDP) such as the identification of the user
 	// and detailed / profile information.
 	IdpInformation *IDPInformation `protobuf:"bytes,2,opt,name=idp_information,json=idpInformation,proto3" json:"idp_information,omitempty"`
-	// If the user was already federated and linked to a ZITADEL user, it's id will be returned.
+	// If the user was already federated and linked to a Zitadel user, it's id will be returned.
 	Id            *string `protobuf:"bytes,3,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -5215,7 +5215,7 @@ const file_zitadel_resources_user_v3alpha_user_service_proto_rawDesc = "" +
 	"&IDP authenticator successfully removed\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02-*+/resources/v3alpha/users/{id}/idps/{idp_id}B\xe7\b\x92A\xa2\b\x12\x80\x03\n" +
-	"\fUser Service\x12\xeb\x01This API is intended to manage users with your own data schema in a ZITADEL instance. This project is in preview state. It can AND will continue breaking until the service provides the same functionality as the v1 and v2 user services.\".\n" +
+	"\fUser Service\x12\xeb\x01This API is intended to manage users with your own data schema in a Zitadel instance. This project is in preview state. It can AND will continue breaking until the service provides the same functionality as the v1 and v2 user services.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\t3.0-alpha\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

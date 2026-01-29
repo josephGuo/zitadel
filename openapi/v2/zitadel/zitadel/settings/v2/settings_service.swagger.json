@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Settings Service",
-    "description": "This API is intended to manage settings in a ZITADEL instance.",
+    "description": "This API is intended to manage settings in a Zitadel instance.",
     "version": "2.0",
     "contact": {
       "name": "ZITADEL",
@@ -799,7 +799,7 @@
     "/v2/settings/security": {
       "get": {
         "summary": "Get Security Settings",
-        "description": "Get the security settings of the ZITADEL instance.\nSecurity settings include settings like enabling impersonation and embedded iframe settings.\n\nRequired permissions:\n  - `iam.policy.read`",
+        "description": "Get the security settings of the Zitadel instance.\nSecurity settings include settings like enabling impersonation and embedded iframe settings.\n\nRequired permissions:\n  - `iam.policy.read`",
         "operationId": "SettingsService_GetSecuritySettings",
         "responses": {
           "200": {
@@ -878,7 +878,7 @@
         "AUTO_LINKING_OPTION_EMAIL"
       ],
       "default": "AUTO_LINKING_OPTION_UNSPECIFIED",
-      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to\ncheck for a corresponding ZITADEL user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check\nfor a corresponding ZITADEL user with the same verified email Note that in\ncase multiple users match, no prompt will be shown."
+      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to\ncheck for a corresponding Zitadel user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check\nfor a corresponding Zitadel user with the same verified email Note that in\ncase multiple users match, no prompt will be shown."
     },
     "v2BrandingSettings": {
       "type": "object",
@@ -995,7 +995,7 @@
           "items": {
             "type": "string"
           },
-          "description": "AllowedOrigins defines which origins are allowed to embed ZITADEL in an iframe."
+          "description": "AllowedOrigins defines which origins are allowed to embed Zitadel in an iframe."
         }
       }
     },
@@ -1243,17 +1243,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -1530,7 +1530,7 @@
           "type": "integer",
           "format": "int64",
           "example": 10,
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1608,7 +1608,7 @@
           "type": "string",
           "format": "uint64",
           "example": "10",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         },
         "resourceOwnerType": {
           "$ref": "#/definitions/v2ResourceOwnerType",
@@ -1802,23 +1802,23 @@
       "properties": {
         "isLinkingAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to link an existing ZITADEL user with an\nexternal account."
+          "description": "Enable if users should be able to link an existing Zitadel user with an\nexternal account."
         },
         "isCreationAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to create a new account in ZITADEL when\nusing an external account."
+          "description": "Enable if users should be able to create a new account in Zitadel when\nusing an external account."
         },
         "isAutoCreation": {
           "type": "boolean",
-          "description": "Enable if a new account in ZITADEL should be created automatically when\nlogin with an external account."
+          "description": "Enable if a new account in Zitadel should be created automatically when\nlogin with an external account."
         },
         "isAutoUpdate": {
           "type": "boolean",
-          "description": "Enable if a the ZITADEL account fields should be updated automatically on\neach login."
+          "description": "Enable if a the Zitadel account fields should be updated automatically on\neach login."
         },
         "autoLinking": {
           "$ref": "#/definitions/v2AutoLinkingOption",
-          "description": "Enable if users should get prompted to link an existing ZITADEL user to an\nexternal account if the selected attribute matches."
+          "description": "Enable if users should get prompted to link an existing Zitadel user to an\nexternal account if the selected attribute matches."
         }
       }
     }

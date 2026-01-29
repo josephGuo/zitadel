@@ -184,7 +184,7 @@ type OrganizationServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	//
 	// Required permission:
 	//   - `org.write`
@@ -505,7 +505,7 @@ type OrganizationServiceHandler interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	//
 	// Required permission:
 	//   - `org.write`

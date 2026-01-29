@@ -40,7 +40,7 @@ type CreateTargetRequest struct {
 	//	*CreateTargetRequest_RestCall
 	//	*CreateTargetRequest_RestAsync
 	TargetType isCreateTargetRequest_TargetType `protobuf_oneof:"target_type"`
-	// Timeout defines the duration until ZITADEL cancels the execution.
+	// Timeout defines the duration until Zitadel cancels the execution.
 	// If the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution.
 	Timeout       *durationpb.Duration `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"`
 	Endpoint      string               `protobuf:"bytes,6,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
@@ -148,7 +148,7 @@ type CreateTargetRequest_RestCall struct {
 }
 
 type CreateTargetRequest_RestAsync struct {
-	// Call is executed in parallel to others, ZITADEL does not wait until the call is finished. The state is ignored, call is sent as post.
+	// Call is executed in parallel to others, Zitadel does not wait until the call is finished. The state is ignored, call is sent as post.
 	RestAsync *RESTAsync `protobuf:"bytes,4,opt,name=rest_async,json=restAsync,proto3,oneof"`
 }
 
@@ -233,7 +233,7 @@ type UpdateTargetRequest struct {
 	//	*UpdateTargetRequest_RestCall
 	//	*UpdateTargetRequest_RestAsync
 	TargetType isUpdateTargetRequest_TargetType `protobuf_oneof:"target_type"`
-	// Timeout defines the duration until ZITADEL cancels the execution.
+	// Timeout defines the duration until Zitadel cancels the execution.
 	// If the target doesn't respond before this timeout expires, then the connection is closed and the action fails. Depending on the target type and possible setting on `interrupt_on_error` following targets will not be called. In case of a `rest_async` target only this specific target will fail, without any influence on other targets of the same execution.
 	Timeout  *durationpb.Duration `protobuf:"bytes,6,opt,name=timeout,proto3,oneof" json:"timeout,omitempty"`
 	Endpoint *string              `protobuf:"bytes,7,opt,name=endpoint,proto3,oneof" json:"endpoint,omitempty"`
@@ -363,7 +363,7 @@ type UpdateTargetRequest_RestCall struct {
 }
 
 type UpdateTargetRequest_RestAsync struct {
-	// Call is executed in parallel to others, ZITADEL does not wait until the call is finished. The state is ignored, call is sent as post.
+	// Call is executed in parallel to others, Zitadel does not wait until the call is finished. The state is ignored, call is sent as post.
 	RestAsync *RESTAsync `protobuf:"bytes,5,opt,name=rest_async,json=restAsync,proto3,oneof"`
 }
 
@@ -1344,7 +1344,7 @@ const file_zitadel_action_v2beta_action_service_proto_rawDesc = "" +
 	"\x1eList all services successfullyX\x01\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02%\x12#/v2beta/actions/executions/servicesB\xc0\b\x92A\x82\b\x12\xe0\x02\n" +
-	"\x0eAction Service\x12\xca\x01This API is intended to manage custom executions (previously known as actions) in a ZITADEL instance. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
+	"\x0eAction Service\x12\xca\x01This API is intended to manage custom executions (previously known as actions) in a Zitadel instance. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

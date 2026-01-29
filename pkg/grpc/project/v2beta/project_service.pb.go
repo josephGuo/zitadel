@@ -189,9 +189,9 @@ type UpdateProjectRequest struct {
 	Name *string `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	// Enable this setting to have role information included in the user info endpoint. It is also dependent on your application settings to include it in tokens and other types.
 	ProjectRoleAssertion *bool `protobuf:"varint,3,opt,name=project_role_assertion,json=projectRoleAssertion,proto3,oneof" json:"project_role_assertion,omitempty"`
-	// When enabled ZITADEL will check if a user has a role of this project assigned when login into an application of this project.
+	// When enabled Zitadel will check if a user has a role of this project assigned when login into an application of this project.
 	ProjectRoleCheck *bool `protobuf:"varint,4,opt,name=project_role_check,json=projectRoleCheck,proto3,oneof" json:"project_role_check,omitempty"`
-	// When enabled ZITADEL will check if the organization of the user, that is trying to log in, has a grant to this project.
+	// When enabled Zitadel will check if the organization of the user, that is trying to log in, has a grant to this project.
 	HasProjectCheck *bool `protobuf:"varint,5,opt,name=has_project_check,json=hasProjectCheck,proto3,oneof" json:"has_project_check,omitempty"`
 	// Define which private labeling/branding should trigger when getting to a login of this project.
 	PrivateLabelingSetting *PrivateLabelingSetting `protobuf:"varint,6,opt,name=private_labeling_setting,json=privateLabelingSetting,proto3,enum=zitadel.project.v2beta.PrivateLabelingSetting,oneof" json:"private_labeling_setting,omitempty"`
@@ -796,7 +796,7 @@ type AddProjectRoleRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the project.
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// The key is the only relevant attribute for ZITADEL regarding the authorization checks.
+	// The key is the only relevant attribute for Zitadel regarding the authorization checks.
 	RoleKey string `protobuf:"bytes,2,opt,name=role_key,json=roleKey,proto3" json:"role_key,omitempty"`
 	// Name displayed for the role.
 	DisplayName string `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
@@ -913,7 +913,7 @@ type UpdateProjectRoleRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the project.
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// The key is the only relevant attribute for ZITADEL regarding the authorization checks.
+	// The key is the only relevant attribute for Zitadel regarding the authorization checks.
 	RoleKey string `protobuf:"bytes,2,opt,name=role_key,json=roleKey,proto3" json:"role_key,omitempty"`
 	// Name displayed for the role.
 	DisplayName *string `protobuf:"bytes,3,opt,name=display_name,json=displayName,proto3,oneof" json:"display_name,omitempty"`
@@ -1030,7 +1030,7 @@ type RemoveProjectRoleRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the project.
 	ProjectId string `protobuf:"bytes,1,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
-	// The key is the only relevant attribute for ZITADEL regarding the authorization checks.
+	// The key is the only relevant attribute for Zitadel regarding the authorization checks.
 	RoleKey       string `protobuf:"bytes,2,opt,name=role_key,json=roleKey,proto3" json:"role_key,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2146,7 +2146,7 @@ const file_zitadel_project_v2beta_project_service_proto_rawDesc = "" +
 	"\x12invalid list queryX\x01\x8a\xb5\x18\x16\n" +
 	"\x14\n" +
 	"\x12project.grant.read\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/v2beta/projects/grants/searchB\xa0\b\x92A\xe0\a\x12\xbe\x02\n" +
-	"\x0fProject Service\x12\xa7\x01This API is intended to manage Projects in a ZITADEL Organization. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
+	"\x0fProject Service\x12\xa7\x01This API is intended to manage Projects in a Zitadel Organization. This service is in beta state. It can AND will continue breaking until a stable version is released.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

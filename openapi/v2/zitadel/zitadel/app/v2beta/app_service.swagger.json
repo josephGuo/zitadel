@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Application Service",
-    "description": "This API is intended to manage apps (SAML, OIDC, etc..) in a ZITADEL instance. This service is in beta state. It can AND will continue breaking until a stable version is released.",
+    "description": "This API is intended to manage apps (SAML, OIDC, etc..) in a Zitadel instance. This service is in beta state. It can AND will continue breaking until a stable version is released.",
     "version": "2.0-beta",
     "contact": {
       "name": "ZITADEL",
@@ -748,7 +748,7 @@
           "type": "integer",
           "format": "int64",
           "example": 10,
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1100,7 +1100,7 @@
             "type": "string"
           },
           "description": "ZITADEL will redirect to this link after a successful logout",
-          "title": "ZITADEL will redirect to this link after a successful logout"
+          "title": "Zitadel will redirect to this link after a successful logout"
         },
         "version": {
           "$ref": "#/definitions/v2betaOIDCVersion"

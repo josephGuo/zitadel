@@ -1155,7 +1155,7 @@ const file_zitadel_session_v2beta_session_service_proto_rawDesc = "" +
 	"\x02OKX\x01\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\":\x01**\x1d/v2beta/sessions/{session_id}B\xbd\t\x92A\xfd\b\x12\xdb\x03\n" +
-	"\x0fSession Service\x12\xc4\x02This API is intended to manage sessions in a ZITADEL instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
+	"\x0fSession Service\x12\xc4\x02This API is intended to manage sessions in a Zitadel instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

@@ -7976,7 +7976,7 @@ const file_zitadel_user_v2_user_service_proto_rawDesc = "" +
 	"&RetrieveIdentityProviderIntentResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\x12H\n" +
 	"\x0fidp_information\x18\x02 \x01(\v2\x1f.zitadel.user.v2.IDPInformationR\x0eidpInformation\x12h\n" +
-	"\auser_id\x18\x03 \x01(\tBO\x92AL24ID of the user in ZITADEL if external user is linkedJ\x14\"163840776835432345\"R\x06userId\x12J\n" +
+	"\auser_id\x18\x03 \x01(\tBO\x92AL24ID of the user in Zitadel if external user is linkedJ\x14\"163840776835432345\"R\x06userId\x12J\n" +
 	"\x0eadd_human_user\x18\x04 \x01(\v2$.zitadel.user.v2.AddHumanUserRequestR\faddHumanUser\x12S\n" +
 	"\x11update_human_user\x18\x05 \x01(\v2'.zitadel.user.v2.UpdateHumanUserRequestR\x0fupdateHumanUser\"\x8f\x01\n" +
 	"\x11AddIDPLinkRequest\x12E\n" +
@@ -8568,7 +8568,7 @@ const file_zitadel_user_v2_user_service_proto_rawDesc = "" +
 	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x1e*\x1c/v2/users/{user_id}/metadataB\xe4\a\x92A\xae\a\x12\xc9\x01\n" +
-	"\fUser Service\x12;This API is intended to manage users in a ZITADEL instance.\".\n" +
+	"\fUser Service\x12;This API is intended to manage users in a Zitadel instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoR?\n" +

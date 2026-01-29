@@ -4284,7 +4284,7 @@ const file_zitadel_user_proto_rawDesc = "" +
 	"first_name\x18\x01 \x01(\tB\v\x92A\bJ\x06\"Gigi\"R\tfirstName\x12+\n" +
 	"\tlast_name\x18\x02 \x01(\tB\x0e\x92A\vJ\t\"Giraffe\"R\blastName\x120\n" +
 	"\tnick_name\x18\x03 \x01(\tB\x13\x92A\x10J\x0e\"gigi-giraffe\"R\bnickName\x12\x92\x01\n" +
-	"\fdisplay_name\x18\x04 \x01(\tBo\x92Al2Za user can set the display name, if nothing is set ZITADEL computes \"first_name last_name\"J\x0e\"Gigi Giraffe\"R\vdisplayName\x12q\n" +
+	"\fdisplay_name\x18\x04 \x01(\tBo\x92Al2Za user can set the display name, if nothing is set Zitadel computes \"first_name last_name\"J\x0e\"Gigi Giraffe\"R\vdisplayName\x12q\n" +
 	"\x12preferred_language\x18\x05 \x01(\tBB\x92A?27language tag analog https://tools.ietf.org/html/rfc3066J\x04\"en\"R\x11preferredLanguage\x12M\n" +
 	"\x06gender\x18\x06 \x01(\x0e2\x17.zitadel.user.v1.GenderB\x1c\x92A\x192\x17the gender of the humanR\x06gender\x12s\n" +
 	"\n" +

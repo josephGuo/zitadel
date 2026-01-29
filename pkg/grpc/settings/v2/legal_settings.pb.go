@@ -36,11 +36,11 @@ type LegalAndSupportSettings struct {
 	// ResourceOwnerType returns if the setting is managed on the organization explicitly or
 	// fell back on the instance settings.
 	ResourceOwnerType ResourceOwnerType `protobuf:"varint,5,opt,name=resource_owner_type,json=resourceOwnerType,proto3,enum=zitadel.settings.v2.ResourceOwnerType" json:"resource_owner_type,omitempty"`
-	// Link to documentation to be shown in the console.
+	// Link to documentation to be shown in the management console.
 	DocsLink string `protobuf:"bytes,6,opt,name=docs_link,json=docsLink,proto3" json:"docs_link,omitempty"`
-	// Link to an external resource that will be available to users in the console.
+	// Link to an external resource that will be available to users in the management console.
 	CustomLink string `protobuf:"bytes,7,opt,name=custom_link,json=customLink,proto3" json:"custom_link,omitempty"`
-	// The button text that would be shown in console pointing to custom link.
+	// The button text that would be shown in the management console pointing to custom link.
 	CustomLinkText string `protobuf:"bytes,8,opt,name=custom_link_text,json=customLinkText,proto3" json:"custom_link_text,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache

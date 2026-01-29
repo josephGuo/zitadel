@@ -1947,7 +1947,7 @@ const file_zitadel_org_v2_org_service_proto_rawDesc = "" +
 	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x021:\x01*\",/v2/organizations/{organization_id}/activateB\xaf\a\x92A\xfb\x06\x12\xd9\x01\n" +
-	"\x14Organization Service\x12CThis API is intended to manage organizations in a ZITADEL instance.\".\n" +
+	"\x14Organization Service\x12CThis API is intended to manage organizations in a Zitadel instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

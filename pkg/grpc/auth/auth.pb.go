@@ -5505,7 +5505,7 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xfd\x92\x01\n" +
 	"\vAuthService\x12\xd3\x01\n" +
 	"\aHealthz\x12\x1f.zitadel.auth.v1.HealthzRequest\x1a .zitadel.auth.v1.HealthzResponse\"\x84\x01\x92Aq\n" +
-	"\aGeneral\x12\aHealthz\x1a]The health endpoint allows an external system to probe if ZITADEL authentication API is alive\x82\xd3\xe4\x93\x02\n" +
+	"\aGeneral\x12\aHealthz\x1a]The health endpoint allows an external system to probe if Zitadel authentication API is alive\x82\xd3\xe4\x93\x02\n" +
 	"\x12\b/healthz\x12\xfa\x01\n" +
 	"\x15GetSupportedLanguages\x12-.zitadel.auth.v1.GetSupportedLanguagesRequest\x1a..zitadel.auth.v1.GetSupportedLanguagesResponse\"\x81\x01\x92AY\n" +
 	"\aGeneral\x12\x13Supported Languages\x1a7Use GetSupportedLanguages on the admin service instead.X\x01\x82\xb5\x18\x0f\n" +
@@ -5661,13 +5661,13 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\x1aUser Authorizations/Grants\x12\x15List My Organizations\x1a\xfc\x01Returns a list of the organizations where the authenticated user has any authorizations/user grants. The request is made in the context of the requested project. This request can be used in multi-tenancy applications to show the user a tenant switcher.\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/global/projectorgs/_search\x12\x9b\x03\n" +
 	"\x18ListMyZitadelPermissions\x120.zitadel.auth.v1.ListMyZitadelPermissionsRequest\x1a1.zitadel.auth.v1.ListMyZitadelPermissionsResponse\"\x99\x02\x92A\xdb\x01\n" +
-	"\x1aUser Authorizations/Grants\x12\x1bList My ZITADEL Permissions\x1a\x9f\x01Returns a list of permissions the authenticated user has in ZITADEL based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).\x82\xb5\x18\x0f\n" +
+	"\x1aUser Authorizations/Grants\x12\x1bList My Zitadel Permissions\x1a\x9f\x01Returns a list of permissions the authenticated user has in Zitadel based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02!\"\x1f/permissions/zitadel/me/_search\x12\xd4\x01\n" +
 	"\x18ListMyProjectPermissions\x120.zitadel.auth.v1.ListMyProjectPermissionsRequest\x1a1.zitadel.auth.v1.ListMyProjectPermissionsResponse\"S\x92A\x1e\n" +
 	"\x1aUser Authorizations/GrantsX\x01\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x19\"\x17/permissions/me/_search\x12\xa6\x02\n" +
 	"\x11ListMyMemberships\x12).zitadel.auth.v1.ListMyMembershipsRequest\x1a*.zitadel.auth.v1.ListMyMembershipsResponse\"\xb9\x01\x92A\x80\x01\n" +
-	"\x10User Memberships\x12#List My ZITADEL Administrator Roles\x1aGShow all the management roles my user has in ZITADEL (ZITADEL Manager).\x82\xb5\x18\x0f\n" +
+	"\x10User Memberships\x12#List My Zitadel Administrator Roles\x1aGShow all the management roles my user has in Zitadel (ZITADEL Manager).\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/memberships/me/_search\x12\xf6\x02\n" +
 	"\x10GetMyLabelPolicy\x12(.zitadel.auth.v1.GetMyLabelPolicyRequest\x1a).zitadel.auth.v1.GetMyLabelPolicyResponse\"\x8c\x02\x92A\xde\x01\n" +
 	"\bPolicies\x12\x10Get Label Policy\x1a\xbf\x01Returns the label settings that should be used for the authenticated user. It is set either on an instance or organization level. This policy defines the branding, colors, fonts, images, etc.\x82\xb5\x18\x0f\n" +

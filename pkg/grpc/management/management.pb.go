@@ -17627,7 +17627,7 @@ type AddCustomPasswordAgePolicyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Amount of days after which a password will expire. The user will be forced to change the password on the following authentication.
 	MaxAgeDays uint32 `protobuf:"varint,1,opt,name=max_age_days,json=maxAgeDays,proto3" json:"max_age_days,omitempty"`
-	// Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user.
+	// Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user.
 	ExpireWarnDays uint32 `protobuf:"varint,2,opt,name=expire_warn_days,json=expireWarnDays,proto3" json:"expire_warn_days,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -17725,7 +17725,7 @@ type UpdateCustomPasswordAgePolicyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Amount of days after which a password will expire. The user will be forced to change the password on the following authentication.
 	MaxAgeDays uint32 `protobuf:"varint,1,opt,name=max_age_days,json=maxAgeDays,proto3" json:"max_age_days,omitempty"`
-	// Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user.
+	// Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user.
 	ExpireWarnDays uint32 `protobuf:"varint,2,opt,name=expire_warn_days,json=expireWarnDays,proto3" json:"expire_warn_days,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -29743,7 +29743,7 @@ type AddSAMLProviderRequest struct {
 	// Optionally specify the name of the attribute, which will be used to map the user
 	// in case the nameid-format returned is `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`.
 	TransientMappingAttributeName *string `protobuf:"bytes,8,opt,name=transient_mapping_attribute_name,json=transientMappingAttributeName,proto3,oneof" json:"transient_mapping_attribute_name,omitempty"`
-	// Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,
+	// Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,
 	// if the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata.
 	FederatedLogoutEnabled *bool `protobuf:"varint,9,opt,name=federated_logout_enabled,json=federatedLogoutEnabled,proto3,oneof" json:"federated_logout_enabled,omitempty"`
 	// Specify a Signature Algorithm that should be used to sign SAML requests and responses.
@@ -29955,7 +29955,7 @@ type UpdateSAMLProviderRequest struct {
 	// Optionally specify the name of the attribute, which will be used to map the user
 	// in case the nameid-format returned is `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`.
 	TransientMappingAttributeName *string `protobuf:"bytes,9,opt,name=transient_mapping_attribute_name,json=transientMappingAttributeName,proto3,oneof" json:"transient_mapping_attribute_name,omitempty"`
-	// Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,
+	// Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,
 	// if the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata.
 	FederatedLogoutEnabled *bool `protobuf:"varint,10,opt,name=federated_logout_enabled,json=federatedLogoutEnabled,proto3,oneof" json:"federated_logout_enabled,omitempty"`
 	// Specify a Signature Algorithm that should be used to sign SAML requests and responses.
@@ -32842,7 +32842,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x03IDP\x12\x82\x01\n" +
 	"\tconfig_id\x18\x01 \x01(\tBe\x92AX2?The internal ID of the identity provider configured in ZITADEL.J\x0f\"idp-config-id\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bconfigId\x12\x87\x01\n" +
 	"\x10external_user_id\x18\x02 \x01(\tB]\x92AP24The id of the user in the external identity providerJ\x12\"external-user-id\"x\xc8\x01\x80\x01\x01\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x0eexternalUserId\x12\x84\x01\n" +
-	"\fdisplay_name\x18\x03 \x01(\tBa\x92AV27A display name ZITADEL can show on the linked provider.J\x18\"minnie.mouse@gmail.com\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\vdisplayName\x1a\xd2\x03\n" +
+	"\fdisplay_name\x18\x03 \x01(\tBa\x92AV27A display name Zitadel can show on the linked provider.J\x18\"minnie.mouse@gmail.com\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\vdisplayName\x1a\xd2\x03\n" +
 	"\fRecoveryCode\x12\xbf\x01\n" +
 	"\x03raw\x18\x01 \x01(\tB\xaa\x01\x92A\x98\x012\x80\x01\"Encoded hash of a recovery code in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"J\r\"a435b-34kns\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\x03raw\x12\xf2\x01\n" +
 	"\x04hash\x18\x02 \x01(\tB\xdb\x01\x92A\xc9\x012\x80\x01\"Encoded hash of a recovery code in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"J>\"$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01H\x00R\x04hashB\v\n" +
@@ -33354,8 +33354,8 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x02id\x12@\n" +
 	"\x04name\x18\x02 \x01(\tB,\x92A\x1bJ\x13\"MyProject-Updated\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12\xe9\x01\n" +
 	"\x16project_role_assertion\x18\x03 \x01(\bB\xb2\x01\x92A\xae\x012\xab\x01Enable this setting to have role information included in the user info endpoint. It is also dependent on your application settings to include it in tokens and other types.R\x14projectRoleAssertion\x12\xb1\x01\n" +
-	"\x12project_role_check\x18\x04 \x01(\bB\x82\x01\x92A\x7f2}When enabled ZITADEL will check if a user has a role of this project assigned when login into an application of this project.R\x10projectRoleCheck\x12\xa8\x01\n" +
-	"\x11has_project_check\x18\x05 \x01(\bB|\x92Ay2wWhen enabled ZITADEL will check if the organization of the user, that is trying to log in, has a grant to this project.R\x0fhasProjectCheck\x12\xd1\x01\n" +
+	"\x12project_role_check\x18\x04 \x01(\bB\x82\x01\x92A\x7f2}When enabled Zitadel will check if a user has a role of this project assigned when login into an application of this project.R\x10projectRoleCheck\x12\xa8\x01\n" +
+	"\x11has_project_check\x18\x05 \x01(\bB|\x92Ay2wWhen enabled Zitadel will check if the organization of the user, that is trying to log in, has a grant to this project.R\x0fhasProjectCheck\x12\xd1\x01\n" +
 	"\x18private_labeling_setting\x18\x06 \x01(\x0e2*.zitadel.project.v1.PrivateLabelingSettingBk\x92A`2^Define which private labeling/branding should trigger when getting to a login of this project.\xfaB\x05\x82\x01\x02\x10\x01R\x16privateLabelingSetting\"L\n" +
 	"\x15UpdateProjectResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"6\n" +
@@ -33382,7 +33382,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\tprojectId\x12\x93\x01\n" +
-	"\brole_key\x18\x02 \x01(\tBx\x92Ag2VThe key is the only relevant attribute for ZITADEL regarding the authorization checks.J\a\"ADMIN\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\aroleKey\x12K\n" +
+	"\brole_key\x18\x02 \x01(\tBx\x92Ag2VThe key is the only relevant attribute for Zitadel regarding the authorization checks.J\a\"ADMIN\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\aroleKey\x12K\n" +
 	"\fdisplay_name\x18\x03 \x01(\tB(\x92A\x17J\x0f\"Administrator\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vdisplayName\x12\xaf\x01\n" +
 	"\x05group\x18\x04 \x01(\tB\x98\x01\x92A\x8c\x012}The group is only used for display purposes. That you have better handling, like giving all the roles from a group to a user.J\b\"Admins\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\x05group\"M\n" +
 	"\x16AddProjectRoleResponse\x123\n" +
@@ -33404,7 +33404,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\tprojectId\x12\x93\x01\n" +
-	"\brole_key\x18\x02 \x01(\tBx\x92Ag2VThe key is the only relevant attribute for ZITADEL regarding the authorization checks.J\a\"ADMIN\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\aroleKey\x12K\n" +
+	"\brole_key\x18\x02 \x01(\tBx\x92Ag2VThe key is the only relevant attribute for Zitadel regarding the authorization checks.J\a\"ADMIN\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\aroleKey\x12K\n" +
 	"\fdisplay_name\x18\x03 \x01(\tB(\x92A\x17J\x0f\"Administrator\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vdisplayName\x12\xaf\x01\n" +
 	"\x05group\x18\x04 \x01(\tB\x98\x01\x92A\x8c\x012}The group is only used for display purposes. That you have better handling, like giving all the roles from a group to a user.J\b\"Admins\"x\xc8\x01\xfaB\x05r\x03\x18\xc8\x01R\x05group\"P\n" +
 	"\x19UpdateProjectRoleResponse\x123\n" +
@@ -34063,30 +34063,30 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\" \n" +
 	"\x1eGetDefaultPrivacyPolicyRequest\"[\n" +
 	"\x1fGetDefaultPrivacyPolicyResponse\x128\n" +
-	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\x88\t\n" +
+	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\xad\t\n" +
 	"\x1dAddCustomPrivacyPolicyRequest\x12\xde\x01\n" +
 	"\btos_link\x18\x01 \x01(\tB\xc2\x01\x92A\xbe\x012\x88\x01If registration is enabled, the user has to accept the TOS. Variable {{.Lang}} can be set to have different links based on the language.J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12\xee\x01\n" +
 	"\fprivacy_link\x18\x02 \x01(\tB\xca\x01\x92A\xc6\x012\x92\x01If registration is enabled, the user has to accept the privacy terms. Variable {{.Lang}} can be set to have different links based on the language.J/\"https://zitadel.com/docs/legal/privacy-policy\"R\vprivacyLink\x12\xa0\x01\n" +
 	"\thelp_link\x18\x03 \x01(\tB\x82\x01\x92A\x7f2LVariable {{.Lang}} can be set to have different links based on the language.J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x04 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
-	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12o\n" +
-	"\tdocs_link\x18\x05 \x01(\tBR\x92AO21Link to documentation to be shown in the console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x8b\x01\n" +
-	"\vcustom_link\x18\x06 \x01(\tBj\x92Ag2LLink to an external resource that will be available to users in the console.J\x17\"https://external.link\"R\n" +
-	"customLink\x12\x82\x01\n" +
-	"\x10custom_link_text\x18\a \x01(\tBX\x92AU2GThe button text that would be shown in console pointing to custom link.J\n" +
+	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12z\n" +
+	"\tdocs_link\x18\x05 \x01(\tB]\x92AZ2<Link to documentation to be shown in the management console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +
+	"\vcustom_link\x18\x06 \x01(\tBu\x92Ar2WLink to an external resource that will be available to users in the management console.J\x17\"https://external.link\"R\n" +
+	"customLink\x12\x91\x01\n" +
+	"\x10custom_link_text\x18\a \x01(\tBg\x92Ad2VThe button text that would be shown in the management console pointing to custom link.J\n" +
 	"\"External\"R\x0ecustomLinkText\"U\n" +
 	"\x1eAddCustomPrivacyPolicyResponse\x123\n" +
-	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\x8b\t\n" +
+	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\xac\t\n" +
 	" UpdateCustomPrivacyPolicyRequest\x12\xde\x01\n" +
 	"\btos_link\x18\x01 \x01(\tB\xc2\x01\x92A\xbe\x012\x88\x01If registration is enabled, the user has to accept the TOS. Variable {{.Lang}} can be set to have different links based on the language.J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12\xee\x01\n" +
 	"\fprivacy_link\x18\x02 \x01(\tB\xca\x01\x92A\xc6\x012\x92\x01If registration is enabled, the user has to accept the privacy terms. Variable {{.Lang}} can be set to have different links based on the language.J/\"https://zitadel.com/docs/legal/privacy-policy\"R\vprivacyLink\x12\xa0\x01\n" +
 	"\thelp_link\x18\x03 \x01(\tB\x82\x01\x92A\x7f2LVariable {{.Lang}} can be set to have different links based on the language.J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x04 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
-	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12o\n" +
-	"\tdocs_link\x18\x05 \x01(\tBR\x92AO21Link to documentation to be shown in the console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x8b\x01\n" +
-	"\vcustom_link\x18\x06 \x01(\tBj\x92Ag2LLink to an external resource that will be available to users in the console.J\x17\"https://external.link\"R\n" +
-	"customLink\x12\x82\x01\n" +
-	"\x10custom_link_text\x18\a \x01(\tBX\x92AU2GThe button text that would be shown in console pointing to custom link.J\n" +
+	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12z\n" +
+	"\tdocs_link\x18\x05 \x01(\tB]\x92AZ2<Link to documentation to be shown in the management console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +
+	"\vcustom_link\x18\x06 \x01(\tBu\x92Ar2WLink to an external resource that will be available to users in the management console.J\x17\"https://external.link\"R\n" +
+	"customLink\x12\x8d\x01\n" +
+	"\x10custom_link_text\x18\a \x01(\tBc\x92A`2RThe button text that would be shown in management console pointing to custom link.J\n" +
 	"\"External\"R\x0ecustomLinkText\"X\n" +
 	"!UpdateCustomPrivacyPolicyResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"$\n" +
@@ -34378,7 +34378,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"customText\"\xb9\x02\n" +
 	"'SetCustomVerifySMSOTPMessageTextRequest\x12/\n" +
 	"\blanguage\x18\x01 \x01(\tB\x13\x92A\x06J\x04\"de\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xdc\x01\n" +
-	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"_\n" +
+	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"_\n" +
 	"(SetCustomVerifySMSOTPMessageTextResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\\\n" +
 	"2ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x12&\n" +
@@ -34405,7 +34405,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"pre_header\x18\x03 \x01(\tB+\x92A J\x1b\"Verify One-time Password \"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x12D\n" +
 	"\asubject\x18\x04 \x01(\tB*\x92A\x1fJ\x1a\"Verify One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
 	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xe6\x01\n" +
-	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
+	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
 	"\vbutton_text\x18\a \x01(\tB\x1e\x92A\x13J\x0e\"Authenticate\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\n" +
 	"buttonText\x12)\n" +
 	"\vfooter_text\x18\b \x01(\tB\b\xfaB\x05r\x03(\xc0>R\n" +
@@ -34566,7 +34566,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\tclient_id\x18\x03 \x01(\tBE\x92A42,client id generated by the identity providerx\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12n\n" +
 	"\rclient_secret\x18\x04 \x01(\tBI\x92A820client secret generated by the identity providerx\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12r\n" +
 	"\x06issuer\x18\x05 \x01(\tBZ\x92AI2(the OIDC issuer of the identity providerJ\x1d\"https://accounts.google.com\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12\x88\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tBp\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBp\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
 	"\x14display_name_mapping\x18\a \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBM\x92AB2@definition which field is mapped to the display name of the user\xfaB\x05\x82\x01\x02\x10\x01R\x12displayNameMapping\x12\x93\x01\n" +
 	"\x10username_mapping\x18\b \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBF\x92A;29definition which field is mapped to the email of the user\xfaB\x05\x82\x01\x02\x10\x01R\x0fusernameMapping\x12#\n" +
 	"\rauto_register\x18\t \x01(\bR\fautoRegister\"}\n" +
@@ -34612,7 +34612,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\tclient_id\x18\x02 \x01(\tBE\x92A42,client id generated by the identity providerx\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12\x8a\x01\n" +
 	"\rclient_secret\x18\x03 \x01(\tBe\x92AZ2Xclient secret generated by the identity provider. If empty the secret is not overwritten\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12x\n" +
 	"\x06issuer\x18\x04 \x01(\tB`\x92AO2(the OIDC issuer of the identity providerJ\x1d\"https://accounts.google.com\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12\x88\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBp\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBp\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]R\x06scopes\x12\xa1\x01\n" +
 	"\x14display_name_mapping\x18\x06 \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBM\x92AB2@definition which field is mapped to the display name of the user\xfaB\x05\x82\x01\x02\x10\x01R\x12displayNameMapping\x12\x93\x01\n" +
 	"\x10username_mapping\x18\a \x01(\x0e2 .zitadel.idp.v1.OIDCMappingFieldBF\x92A;29definition which field is mapped to the email of the user\xfaB\x05\x82\x01\x02\x10\x01R\x0fusernameMapping\"U\n" +
 	"\x1eUpdateOrgIDPOIDCConfigResponse\x123\n" +
@@ -34647,10 +34647,10 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tB\x1c\x92A\x0fJ\r\"My Provider\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12e\n" +
 	"\tclient_id\x18\x02 \x01(\tBH\x92A;2,Client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12u\n" +
 	"\rclient_secret\x18\x03 \x01(\tBP\x92AC20Client secret generated by the identity providerJ\x0f\"client-secret\"\xfaB\ar\x05\x10\x01\x18\xe8\aR\fclientSecret\x12\xae\x01\n" +
-	"\x16authorization_endpoint\x18\x04 \x01(\tBw\x92Aj28The endpoint where ZITADEL send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
-	"\x0etoken_endpoint\x18\x05 \x01(\tBb\x92AU2,The endpoint where ZITADEL can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
-	"\ruser_endpoint\x18\x06 \x01(\tBz\x92Am27The endpoint where ZITADEL can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
-	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2KThe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x16authorization_endpoint\x18\x04 \x01(\tBw\x92Aj28The endpoint where Zitadel send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
+	"\x0etoken_endpoint\x18\x05 \x01(\tBb\x92AU2,The endpoint where Zitadel can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
+	"\ruser_endpoint\x18\x06 \x01(\tBz\x92Am27The endpoint where Zitadel can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
+	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2KThe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12\x83\x01\n" +
 	"\fid_attribute\x18\b \x01(\tB`\x92AS2FIdentifying attribute of the user in the response of the user_endpointJ\t\"user_id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vidAttribute\x12B\n" +
 	"\x10provider_options\x18\t \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12\x19\n" +
@@ -34665,10 +34665,10 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tB\x1c\x92A\x0fJ\r\"My Provider\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12e\n" +
 	"\tclient_id\x18\x03 \x01(\tBH\x92A;2,Client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12q\n" +
 	"\rclient_secret\x18\x04 \x01(\tBL\x92AA2.Client secret will only be updated if providedJ\x0f\"client-secret\"\xfaB\x05r\x03\x18\xe8\aR\fclientSecret\x12\xae\x01\n" +
-	"\x16authorization_endpoint\x18\x05 \x01(\tBw\x92Aj28The endpoint where ZITADEL send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
-	"\x0etoken_endpoint\x18\x06 \x01(\tBb\x92AU2,The endpoint where ZITADEL can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
-	"\ruser_endpoint\x18\a \x01(\tBz\x92Am27The endpoint where ZITADEL can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
-	"\x06scopes\x18\b \x03(\tB\x80\x01\x92Am2KThe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x16authorization_endpoint\x18\x05 \x01(\tBw\x92Aj28The endpoint where Zitadel send the user to authenticateJ.\"https://accounts.google.com/o/oauth2/v2/auth\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x15authorizationEndpoint\x12\x89\x01\n" +
+	"\x0etoken_endpoint\x18\x06 \x01(\tBb\x92AU2,The endpoint where Zitadel can get the tokenJ%\"https://oauth2.googleapis.com/token\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12\x9f\x01\n" +
+	"\ruser_endpoint\x18\a \x01(\tBz\x92Am27The endpoint where Zitadel can get the user informationJ2\"https://openidconnect.googleapis.com/v1/userinfo\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x99\x01\n" +
+	"\x06scopes\x18\b \x03(\tB\x80\x01\x92Am2KThe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12\x83\x01\n" +
 	"\fid_attribute\x18\t \x01(\tB`\x92AS2FIdentifying attribute of the user in the response of the user_endpointJ\t\"user_id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\vidAttribute\x12B\n" +
 	"\x10provider_options\x18\n" +
@@ -34682,7 +34682,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x06issuer\x18\x02 \x01(\tBW\x92AJ2(the OIDC issuer of the identity providerJ\x1e\"https://accounts.google.com/\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12e\n" +
 	"\tclient_id\x18\x03 \x01(\tBH\x92A;2,client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12g\n" +
 	"\rclient_secret\x18\x04 \x01(\tBB\x92A52)secret generated by the identity providerJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xe8\aR\fclientSecret\x12\x99\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12-\n" +
 	"\x13is_id_token_mapping\x18\a \x01(\bR\x10isIdTokenMapping\x12\x19\n" +
@@ -34697,7 +34697,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x06issuer\x18\x03 \x01(\tBW\x92AJ2(the OIDC issuer of the identity providerJ\x1e\"https://accounts.google.com/\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x06issuer\x12e\n" +
 	"\tclient_id\x18\x04 \x01(\tBH\x92A;2,client id generated by the identity providerJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x05 \x01(\tBE\x92A:2.client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xe8\aR\fclientSecret\x12\x99\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by ZITADEL during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2Kthe scopes requested by Zitadel during the request on the identity providerJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\x12-\n" +
 	"\x13is_id_token_mapping\x18\b \x01(\bR\x10isIdTokenMapping\x12\x19\n" +
@@ -34748,8 +34748,8 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\tclient_id\x18\x02 \x01(\tB?\x92A22#client id generated by the Azure ADJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12e\n" +
 	"\rclient_secret\x18\x03 \x01(\tB@\x92A32'client secret generated by the Azure ADJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\xd9\x01\n" +
 	"\x06tenant\x18\x04 \x01(\v2\x1d.zitadel.idp.v1.AzureADTenantB\xa1\x01\x92A\x9d\x012\x9a\x01Defines what kind of accounts are allowed to authenticate (Personal, Organizational, All). If not provided the `common` tenant will be used (All accounts)R\x06tenant\x12\xd3\x01\n" +
-	"\x0eemail_verified\x18\x05 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2>the scopes requested by ZITADEL during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
+	"\x0eemail_verified\x18\x05 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tB\x80\x01\x92Am2>the scopes requested by Zitadel during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"a\n" +
 	"\x1aAddAzureADProviderResponse\x123\n" +
@@ -34763,8 +34763,8 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\tclient_id\x18\x03 \x01(\tB?\x92A22#Client id generated by the Azure ADJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client_secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\xd9\x01\n" +
 	"\x06tenant\x18\x05 \x01(\v2\x1d.zitadel.idp.v1.AzureADTenantB\xa1\x01\x92A\x9d\x012\x9a\x01Defines what kind of accounts are allowed to authenticate (Personal, Organizational, All). If not provided the `common` tenant will be used (All accounts)R\x06tenant\x12\xd3\x01\n" +
-	"\x0eemail_verified\x18\x06 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
-	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2>the scopes requested by ZITADEL during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
+	"\x0eemail_verified\x18\x06 \x01(\bB\xab\x01\x92A\xa7\x012\xa4\x01Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)R\remailVerified\x12\x99\x01\n" +
+	"\x06scopes\x18\a \x03(\tB\x80\x01\x92Am2>the scopes requested by Zitadel during the request to Azure ADJ+[\"openid\", \"profile\", \"email\", \"User.Read\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"T\n" +
 	"\x1dUpdateAzureADProviderResponse\x123\n" +
@@ -34773,7 +34773,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26GitHub will be used as default, if no name is providedJ\b\"GitHub\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GitHubJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12c\n" +
 	"\rclient_secret\x18\x03 \x01(\tB>\x92A12%Client secret generated by the GitHubJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGitHubProviderResponse\x123\n" +
@@ -34786,7 +34786,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"J\b\"GitHub\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitHubJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client_secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGitHubProviderResponse\x123\n" +
@@ -34802,7 +34802,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12/\n" +
 	"\ruser_endpoint\x18\x06 \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x89\x01\n" +
-	"\x06scopes\x18\a \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\a \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"p\n" +
 	")AddGitHubEnterpriseServerProviderResponse\x123\n" +
@@ -34821,7 +34821,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rtokenEndpoint\x12/\n" +
 	"\ruser_endpoint\x18\a \x01(\tB\n" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fuserEndpoint\x12\x89\x01\n" +
-	"\x06scopes\x18\b \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\b \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitHubJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\t \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"c\n" +
 	",UpdateGitHubEnterpriseServerProviderResponse\x123\n" +
@@ -34830,7 +34830,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26GitLab will be used as default, if no name is providedJ\b\"GitLab\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x03 \x01(\tB:\x92A-2!Client secret generated by GitLabJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGitLabProviderResponse\x123\n" +
@@ -34842,7 +34842,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x02 \x01(\tBM\x92AB26GitLab will be used as default, if no name is providedJ\b\"GitLab\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGitLabProviderResponse\x123\n" +
@@ -34854,7 +34854,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"J\b\"GitLab\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x04 \x01(\tB:\x92A-2!Client secret generated by GitLabJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"j\n" +
 	"#AddGitLabSelfHostedProviderResponse\x123\n" +
@@ -34869,7 +34869,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"J\b\"GitLab\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x04 \x01(\tB9\x92A,2\x1dClient id generated by GitLabJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x05 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x06 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GitLabJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"]\n" +
 	"&UpdateGitLabSelfHostedProviderResponse\x123\n" +
@@ -34878,7 +34878,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tBM\x92AB26Google will be used as default, if no name is providedJ\b\"Google\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x02 \x01(\tB9\x92A,2\x1dClient id generated by GoogleJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12_\n" +
 	"\rclient_secret\x18\x03 \x01(\tB:\x92A-2!Client secret generated by GoogleJ\b\"secret\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x04 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x05 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"`\n" +
 	"\x19AddGoogleProviderResponse\x123\n" +
@@ -34891,7 +34891,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"J\b\"Google\"\xfaB\x05r\x03\x18\xc8\x01R\x04name\x12V\n" +
 	"\tclient_id\x18\x03 \x01(\tB9\x92A,2\x1dClient id generated by GoogleJ\v\"client-id\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bclientId\x12j\n" +
 	"\rclient_secret\x18\x04 \x01(\tBE\x92A:2.Client secret will only be updated if providedJ\b\"secret\"\xfaB\x05r\x03\x18\xc8\x01R\fclientSecret\x12\x89\x01\n" +
-	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by ZITADEL during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x05 \x03(\tBq\x92A^2<The scopes requested by Zitadel during the request to GoogleJ\x1e[\"openid\", \"profile\", \"email\"]\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\x06 \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"S\n" +
 	"\x1cUpdateGoogleProviderResponse\x123\n" +
@@ -35005,7 +35005,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"R\x05keyId\x12\x86\x01\n" +
 	"\vprivate_key\x18\x05 \x01(\fBe\x92AT2\x1ePrivate Key generated by AppleJ,\"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1...\"x\x88'\x80\x01\x01\xe2A\x01\x02\xfaB\az\x05\x10\x01\x18\x88'R\n" +
 	"privateKey\x12~\n" +
-	"\x06scopes\x18\x06 \x03(\tBf\x92AS2;The scopes requested by ZITADEL during the request to AppleJ\x11[\"name\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\x06 \x03(\tBf\x92AS2;The scopes requested by Zitadel during the request to AppleJ\x11[\"name\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\a \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"_\n" +
 	"\x18AddAppleProviderResponse\x123\n" +
@@ -35026,7 +35026,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"R\x05keyId\x12}\n" +
 	"\vprivate_key\x18\x06 \x01(\fB\\\x92AQ2\x1ePrivate Key generated by AppleJ,\"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1...\"x\x88'\xfaB\x05z\x03\x18\x88'R\n" +
 	"privateKey\x12\x8b\x01\n" +
-	"\x06scopes\x18\a \x03(\tBs\x92A`2;The scopes requested by ZITADEL during the request to AppleJ\x1e[\"openid\", \"profile\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
+	"\x06scopes\x18\a \x03(\tBs\x92A`2;The scopes requested by Zitadel during the request to AppleJ\x1e[\"openid\", \"profile\", \"email\"]\xa0\x01\x14\xfaB\r\x92\x01\n" +
 	"\x10\x14\"\x06r\x04\x10\x01\x18dR\x06scopes\x12B\n" +
 	"\x10provider_options\x18\b \x01(\v2\x17.zitadel.idp.v1.OptionsR\x0fproviderOptions\"R\n" +
 	"\x1bUpdateAppleProviderResponse\x123\n" +
@@ -35101,20 +35101,20 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"action_ids\x18\x03 \x03(\tR\tactionIds\"P\n" +
 	"\x19SetTriggerActionsResponse\x123\n" +
-	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2\x92\x9f\n" +
+	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2ԟ\n" +
 	"\n" +
 	"\x11ManagementService\x12\xe8\x01\n" +
 	"\aHealthz\x12%.zitadel.management.v1.HealthzRequest\x1a&.zitadel.management.v1.HealthzResponse\"\x8d\x01\x92Az\n" +
-	"\aGeneral\x12\aHealthz\x1aYThe health endpoint allows an external system to probe if ZITADEL management API is aliveJ\v\n" +
+	"\aGeneral\x12\aHealthz\x1aYThe health endpoint allows an external system to probe if Zitadel management API is aliveJ\v\n" +
 	"\x03200\x12\x04\n" +
 	"\x02OK\x82\xd3\xe4\x93\x02\n" +
 	"\x12\b/healthz\x12\xb5\x02\n" +
 	"\x12GetOIDCInformation\x120.zitadel.management.v1.GetOIDCInformationRequest\x1a1.zitadel.management.v1.GetOIDCInformationResponse\"\xb9\x01\x92A\xa0\x01\n" +
-	"\aGeneral\x12\x15ZITADEL documentation\x1aqThis endpoint returns some general needed (OIDC) information about ZITADEL like the issuer or discovery endpoint.J\v\n" +
+	"\aGeneral\x12\x15ZITADEL documentation\x1aqThis endpoint returns some general needed (OIDC) information about Zitadel like the issuer or discovery endpoint.J\v\n" +
 	"\x03200\x12\x04\n" +
 	"\x02OK\x82\xd3\xe4\x93\x02\x0f\x12\r/zitadel/docs\x12\x84\x02\n" +
 	"\x06GetIAM\x12$.zitadel.management.v1.GetIAMRequest\x1a%.zitadel.management.v1.GetIAMResponse\"\xac\x01\x92A\x89\x01\n" +
-	"\aGeneral\x12\x14Instance information\x1a[Some needed settings made in ZITADEL like the global organization id or ZITADEL project ID J\v\n" +
+	"\aGeneral\x12\x14Instance information\x1a[Some needed settings made in Zitadel like the global organization id or Zitadel project ID J\v\n" +
 	"\x03200\x12\x04\n" +
 	"\x02OK\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x06\x12\x04/iam\x12\x93\x02\n" +
@@ -35719,7 +35719,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x12ListOrgMemberRoles\x120.zitadel.management.v1.ListOrgMemberRolesRequest\x1a1.zitadel.management.v1.ListOrgMemberRolesResponse\"\x9b\x04\x92A\xdf\x03\n" +
 	"\rOrganizations\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL Administrators\x12\x1eList Organization Member Roles\x1a\xa6\x01Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the organization level.r\xe3\x01\n" +
+	"\x16ZITADEL Administrators\x12\x1eList Organization Member Roles\x1a\xa6\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the organization level.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x11\n" +
 	"\x0forg.member.read\x82\xd3\xe4\x93\x02\x1d\"\x1b/orgs/members/roles/_search\x12\xc4\x03\n" +
@@ -35835,7 +35835,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x16ListProjectMemberRoles\x124.zitadel.management.v1.ListProjectMemberRolesRequest\x1a5.zitadel.management.v1.ListProjectMemberRolesResponse\"\x94\x04\x92A\xd0\x03\n" +
 	"\bProjects\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL Administrators\x12\x19List Project Member Roles\x1a\xa1\x01Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the project level.r\xe3\x01\n" +
+	"\x16ZITADEL Administrators\x12\x19List Project Member Roles\x1a\xa1\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the project level.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x15\n" +
 	"\x13project.member.read\x82\xd3\xe4\x93\x02!\"\x1f/projects/members/roles/_search\x12\xe8\x03\n" +
@@ -36013,7 +36013,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x1bListProjectGrantMemberRoles\x129.zitadel.management.v1.ListProjectGrantMemberRolesRequest\x1a:.zitadel.management.v1.ListProjectGrantMemberRolesResponse\"\xb3\x04\x92A\xe2\x03\n" +
 	"\x0eProject Grants\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL Administrators\x12\x1fList Project Grant Member Roles\x1a\xa7\x01Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the project grant level.r\xe3\x01\n" +
+	"\x16ZITADEL Administrators\x12\x1fList Project Grant Member Roles\x1a\xa7\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the project grant level.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x1b\n" +
 	"\x19project.grant.member.read\x82\xd3\xe4\x93\x02(\"&/projects/grants/members/roles/_search\x12\x8a\x04\n" +
@@ -36339,40 +36339,40 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x15Notification Settings\x12&Reset Notification Settings to Default\x1a\x91\x02The settings configured will be removed from the organization. Therefore the settings from the instance will trigger for the users of this organization afterward. The settings specify if notifications should be sent to the users on specific triggers (e.g password changed).r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
-	"\rpolicy.delete\x82\xd3\xe4\x93\x02\x18*\x16/policies/notification\x12\xd8\x05\n" +
-	"\x0eGetLabelPolicy\x12,.zitadel.management.v1.GetLabelPolicyRequest\x1a-.zitadel.management.v1.GetLabelPolicyResponse\"\xe8\x04\x92A\xbc\x04\n" +
+	"\rpolicy.delete\x82\xd3\xe4\x93\x02\x18*\x16/policies/notification\x12\xe3\x05\n" +
+	"\x0eGetLabelPolicy\x12,.zitadel.management.v1.GetLabelPolicyRequest\x1a-.zitadel.management.v1.GetLabelPolicyResponse\"\xf3\x04\x92A\xc7\x04\n" +
 	"\bSettings\n" +
-	"\bBranding\x12&Get Private Labeling/Branding Settings\x1a\x97\x02Returns the currently active private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12&Get Private Labeling/Branding Settings\x1a\xa2\x02Returns the currently active private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02\x11\x12\x0f/policies/label\x12\xbb\a\n" +
-	"\x15GetPreviewLabelPolicy\x123.zitadel.management.v1.GetPreviewLabelPolicyRequest\x1a4.zitadel.management.v1.GetPreviewLabelPolicyResponse\"\xb6\x06\x92A\x81\x06\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02\x11\x12\x0f/policies/label\x12\xc6\a\n" +
+	"\x15GetPreviewLabelPolicy\x123.zitadel.management.v1.GetPreviewLabelPolicyRequest\x1a4.zitadel.management.v1.GetPreviewLabelPolicyResponse\"\xc1\x06\x92A\x8c\x06\n" +
 	"\bSettings\n" +
-	"\bBranding\x12.Get Preview Private Labeling/Branding Settings\x1a\xd4\x03Returns the preview private labeling/branding configured on the organization. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12.Get Preview Private Labeling/Branding Settings\x1a\xdf\x03Returns the preview private labeling/branding configured on the organization. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02\x1a\x12\x18/policies/label/_preview\x12\x93\x05\n" +
-	"\x15GetDefaultLabelPolicy\x123.zitadel.management.v1.GetDefaultLabelPolicyRequest\x1a4.zitadel.management.v1.GetDefaultLabelPolicyResponse\"\x8e\x04\x92A\xda\x03\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02\x1a\x12\x18/policies/label/_preview\x12\x9e\x05\n" +
+	"\x15GetDefaultLabelPolicy\x123.zitadel.management.v1.GetDefaultLabelPolicyRequest\x1a4.zitadel.management.v1.GetDefaultLabelPolicyResponse\"\x99\x04\x92A\xe5\x03\n" +
 	"\bSettings\n" +
-	"\bBranding\x12.Get Default Private Labeling/Branding Settings\x1a\xad\x01Returns the default private labeling/branding configured on the instance. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12.Get Default Private Labeling/Branding Settings\x1a\xb8\x01Returns the default private labeling/branding configured on the instance. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02\x19\x12\x17/policies/default/label\x12\x92\x06\n" +
-	"\x14AddCustomLabelPolicy\x122.zitadel.management.v1.AddCustomLabelPolicyRequest\x1a3.zitadel.management.v1.AddCustomLabelPolicyResponse\"\x90\x05\x92A\xe0\x04\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02\x19\x12\x17/policies/default/label\x12\x9d\x06\n" +
+	"\x14AddCustomLabelPolicy\x122.zitadel.management.v1.AddCustomLabelPolicyRequest\x1a3.zitadel.management.v1.AddCustomLabelPolicyResponse\"\x9b\x05\x92A\xeb\x04\n" +
 	"\bSettings\n" +
-	"\bBranding\x12!Create Labeling/Branding Settings\x1a\xc0\x02Create the private labeling/branding configured on the organization. Make sure to activate it so it will be shown to the users. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12!Create Labeling/Branding Settings\x1a\xcb\x02Create the private labeling/branding configured on the organization. Make sure to activate it so it will be shown to the users. The settings will trigger if the organization has been identified (organization scope, user). Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
-	"\fpolicy.write\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/policies/label\x12\xe9\x06\n" +
-	"\x17UpdateCustomLabelPolicy\x125.zitadel.management.v1.UpdateCustomLabelPolicyRequest\x1a6.zitadel.management.v1.UpdateCustomLabelPolicyResponse\"\xde\x05\x92A\xae\x05\n" +
+	"\fpolicy.write\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/policies/label\x12\xf4\x06\n" +
+	"\x17UpdateCustomLabelPolicy\x125.zitadel.management.v1.UpdateCustomLabelPolicyRequest\x1a6.zitadel.management.v1.UpdateCustomLabelPolicyResponse\"\xe9\x05\x92A\xb9\x05\n" +
 	"\bSettings\n" +
-	"\bBranding\x12!Update Labeling/Branding Settings\x1a\x8e\x03Update the preview private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12!Update Labeling/Branding Settings\x1a\x99\x03Update the preview private labeling/branding configured on the organization. The settings will trigger if the organization has been identified (organization scope, user). The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
-	"\fpolicy.write\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/policies/label\x12\xa7\x06\n" +
-	"\x19ActivateCustomLabelPolicy\x127.zitadel.management.v1.ActivateCustomLabelPolicyRequest\x1a8.zitadel.management.v1.ActivateCustomLabelPolicyResponse\"\x96\x05\x92A\xdc\x04\n" +
+	"\fpolicy.write\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/policies/label\x12\xb2\x06\n" +
+	"\x19ActivateCustomLabelPolicy\x127.zitadel.management.v1.ActivateCustomLabelPolicyRequest\x1a8.zitadel.management.v1.ActivateCustomLabelPolicyResponse\"\xa1\x05\x92A\xe7\x04\n" +
 	"\bSettings\n" +
-	"\bBranding\x12#Activate Labeling/Branding Settings\x1a\xba\x02Activates the preview private labeling/branding configured on the organization. It will be shown to the users afterward. The settings will trigger if the organization has been identified (organization scope, user). Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.r\xe3\x01\n" +
+	"\bBranding\x12#Activate Labeling/Branding Settings\x1a\xc5\x02Activates the preview private labeling/branding configured on the organization. It will be shown to the users afterward. The settings will trigger if the organization has been identified (organization scope, user). Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
 	"\fpolicy.write\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/policies/label/_activate\x12\x8f\x05\n" +
@@ -36458,7 +36458,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02&\x12$/text/message/verifyemail/{language}\x12\xd0\x05\n" +
 	" GetDefaultVerifyEmailMessageText\x12>.zitadel.management.v1.GetDefaultVerifyEmailMessageTextRequest\x1a?.zitadel.management.v1.GetDefaultVerifyEmailMessageTextResponse\"\xaa\x04\x92A\xe1\x03\n" +
-	"\rMessage Texts\x12%Get Default Verify Email Message Text\x1a\xc2\x01Get the default text of the verify-email message/email that is set on the instance or as translation files in ZITADEL itself. The email is sent when a user adds a new non-verified email address.r\xe3\x01\n" +
+	"\rMessage Texts\x12%Get Default Verify Email Message Text\x1a\xc2\x01Get the default text of the verify-email message/email that is set on the instance or as translation files in Zitadel itself. The email is sent when a user adds a new non-verified email address.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/verifyemail/{language}\x12\xa2\a\n" +
@@ -36478,7 +36478,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02&\x12$/text/message/verifyphone/{language}\x12\xf5\x05\n" +
 	" GetDefaultVerifyPhoneMessageText\x12>.zitadel.management.v1.GetDefaultVerifyPhoneMessageTextRequest\x1a?.zitadel.management.v1.GetDefaultVerifyPhoneMessageTextResponse\"\xcf\x04\x92A\x86\x04\n" +
-	"\rMessage Texts\x12%Get Default Verify Phone Message Text\x1a\xe7\x01Get the default text of the verify-phone message that is set on the instance or as translation files in ZITADEL itself. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.r\xe3\x01\n" +
+	"\rMessage Texts\x12%Get Default Verify Phone Message Text\x1a\xe7\x01Get the default text of the verify-phone message that is set on the instance or as translation files in Zitadel itself. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/verifyphone/{language}\x12\xc8\a\n" +
@@ -36498,7 +36498,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02'\x12%/text/message/verifysmsotp/{language}\x12\xfd\x05\n" +
 	"!GetDefaultVerifySMSOTPMessageText\x12?.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a@.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xd4\x04\x92A\x8a\x04\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xe9\x01Get the default text of the verify SMS OTP message that is set on the instance or as translation files in ZITADEL itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xe9\x01Get the default text of the verify SMS OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xd0\a\n" +
@@ -36518,7 +36518,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02)\x12'/text/message/verifyemailotp/{language}\x12\x8b\x06\n" +
 	"#GetDefaultVerifyEmailOTPMessageText\x12A.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xdc\x04\x92A\x90\x04\n" +
-	"\rMessage Texts\x12)Get Default Verify Email OTP Message Text\x1a\xed\x01Get the default text of the verify Email OTP message that is set on the instance or as translation files in ZITADEL itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\rMessage Texts\x12)Get Default Verify Email OTP Message Text\x1a\xed\x01Get the default text of the verify Email OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xde\a\n" +
@@ -36538,7 +36538,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02(\x12&/text/message/domainclaimed/{language}\x12\xee\x06\n" +
 	"\"GetDefaultDomainClaimedMessageText\x12@.zitadel.management.v1.GetDefaultDomainClaimedMessageTextRequest\x1aA.zitadel.management.v1.GetDefaultDomainClaimedMessageTextResponse\"\xc2\x05\x92A\xf7\x04\n" +
-	"\rMessage Texts\x12'Get Default Domain Claimed Message Text\x1a\xd6\x02Get the default text of the domain claimed message/email that is set on the instance or as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.r\xe3\x01\n" +
+	"\rMessage Texts\x12'Get Default Domain Claimed Message Text\x1a\xd6\x02Get the default text of the domain claimed message/email that is set on the instance or as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x020\x12./text/default/message/domainclaimed/{language}\x12\xf7\a\n" +
@@ -36578,7 +36578,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02*\x12(/text/message/password_change/{language}\x12\xe9\x05\n" +
 	"#GetDefaultPasswordChangeMessageText\x12A.zitadel.management.v1.GetDefaultPasswordChangeMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultPasswordChangeMessageTextResponse\"\xba\x04\x92A\xed\x03\n" +
-	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\xca\x01Get the default text of the password-changed message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
+	"\rMessage Texts\x12)Get Default Password Changed Message Text\x1a\xca\x01Get the default text of the password-changed message/email that is configured on the instance or as translation files in Zitadel itself. The message is sent when the password of a user has been changed.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x022\x120/text/default/message/password_change/{language}\x12\xb2\a\n" +
@@ -36598,7 +36598,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02&\x12$/text/message/invite_user/{language}\x12\xc9\x05\n" +
 	"\x1fGetDefaultInviteUserMessageText\x12=.zitadel.management.v1.GetDefaultInviteUserMessageTextRequest\x1a>.zitadel.management.v1.GetDefaultInviteUserMessageTextResponse\"\xa6\x04\x92A\xdd\x03\n" +
-	"\rMessage Texts\x12$Get Default Invite User Message Text\x1a\xbf\x01Get the default text of the invite user message/email that is configured on the instance or as translation files in ZITADEL itself. The message is sent when an invite code email is requested.r\xe3\x01\n" +
+	"\rMessage Texts\x12$Get Default Invite User Message Text\x1a\xbf\x01Get the default text of the invite user message/email that is configured on the instance or as translation files in Zitadel itself. The message is sent when an invite code email is requested.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02.\x12,/text/default/message/invite_user/{language}\x12\xa0\a\n" +
@@ -36618,17 +36618,17 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02\x18\x12\x16/text/login/{language}\x12\xec\x05\n" +
 	"\x14GetDefaultLoginTexts\x122.zitadel.management.v1.GetDefaultLoginTextsRequest\x1a3.zitadel.management.v1.GetDefaultLoginTextsResponse\"\xea\x04\x92A\xaf\x04\n" +
-	"\vLogin Texts\x12\x16Get Default Login Text\x1a\xa1\x02Get the default texts for the login and register UI of ZITADEL, which are configured on the instance or as translation files in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured. Or if the organization context is not given.r\xe3\x01\n" +
+	"\vLogin Texts\x12\x16Get Default Login Text\x1a\xa1\x02Get the default texts for the login and register UI of ZITADEL, which are configured on the instance or as translation files in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured. Or if the organization context is not given.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
 	"\vpolicy.read\x82\xd3\xe4\x93\x02 \x12\x1e/text/default/login/{language}\x12\x95\x04\n" +
 	"\x12SetCustomLoginText\x121.zitadel.management.v1.SetCustomLoginTextsRequest\x1a2.zitadel.management.v1.SetCustomLoginTextsResponse\"\x97\x03\x92A\xe0\x02\n" +
-	"\vLogin Texts\x12\x16Set Default Login Text\x1aSSet the custom texts for the login and register UI of ZITADEL for the organization.r\xe3\x01\n" +
+	"\vLogin Texts\x12\x16Set Default Login Text\x1aSSet the custom texts for the login and register UI of Zitadel for the organization.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
 	"\fpolicy.write\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/text/login/{language}\x12\xa3\x05\n" +
 	"\x1dResetCustomLoginTextToDefault\x12<.zitadel.management.v1.ResetCustomLoginTextsToDefaultRequest\x1a=.zitadel.management.v1.ResetCustomLoginTextsToDefaultResponse\"\x84\x04\x92A\xcf\x03\n" +
-	"\vLogin Texts\x12\"Reset Custom Login Text to Default\x1a\xb5\x01Removes the custom texts for the login and register UI from the organization and therefore the configuration of the instance or the translation files in ZITADEL itself will trigger.r\xe3\x01\n" +
+	"\vLogin Texts\x12\"Reset Custom Login Text to Default\x1a\xb5\x01Removes the custom texts for the login and register UI from the organization and therefore the configuration of the instance or the translation files in Zitadel itself will trigger.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
 	"\rpolicy.delete\x82\xd3\xe4\x93\x02\x18*\x16/text/login/{language}\x12\xc4\x04\n" +
@@ -36650,7 +36650,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\rorg.idp.write\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/idps/oidc\x12\x83\x06\n" +
 	"\fAddOrgJWTIDP\x12*.zitadel.management.v1.AddOrgJWTIDPRequest\x1a+.zitadel.management.v1.AddOrgJWTIDPResponse\"\x99\x05\x92A\xee\x04\n" +
-	"\x12Identity Providers\x12+Deprecated: Add JWT Identity Provider (IDP)\x1a\xc2\x02Create a new identity provider configuration on the organization to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where ZITADEL can get the existing JWT token.X\x01r\xe3\x01\n" +
+	"\x12Identity Providers\x12+Deprecated: Add JWT Identity Provider (IDP)\x1a\xc2\x02Create a new identity provider configuration on the organization to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where Zitadel can get the existing JWT token.X\x01r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
 	"\rorg.idp.write\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/idps/jwt\x12\xdb\x05\n" +
@@ -36842,12 +36842,12 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fx-zitadel-orgid\x12\xc3\x01The default is always the organization of the requesting user. If you like to get users of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x11\n" +
 	"\x0forg.action.read\x82\xd3\xe4\x93\x02\x0f\x12\r/actions/{id}\x12\x9a\x04\n" +
 	"\fCreateAction\x12*.zitadel.management.v1.CreateActionRequest\x1a+.zitadel.management.v1.CreateActionResponse\"\xb0\x03\x92A\x83\x03\n" +
-	"\aActions\x12\rCreate Action\x1a\x89\x01Create a new ZITADEL action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.r\xdc\x01\n" +
+	"\aActions\x12\rCreate Action\x1a\x89\x01Create a new Zitadel action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.r\xdc\x01\n" +
 	"\xd9\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xc3\x01The default is always the organization of the requesting user. If you like to get users of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x12\n" +
 	"\x10org.action.write\x82\xd3\xe4\x93\x02\r:\x01*\"\b/actions\x12\xa5\x04\n" +
 	"\fUpdateAction\x12*.zitadel.management.v1.UpdateActionRequest\x1a+.zitadel.management.v1.UpdateActionResponse\"\xbb\x03\x92A\x89\x03\n" +
-	"\aActions\x12\rUpdate Action\x1a\x8f\x01Update an existing ZITADEL action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.r\xdc\x01\n" +
+	"\aActions\x12\rUpdate Action\x1a\x8f\x01Update an existing Zitadel action. Actions are custom code written in javascript, that can be run at a specified point/flow/trigger in ZITADEL.r\xdc\x01\n" +
 	"\xd9\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xc3\x01The default is always the organization of the requesting user. If you like to get users of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x12\n" +
 	"\x10org.action.write\x82\xd3\xe4\x93\x02\x12:\x01*\x1a\r/actions/{id}\x12\xf6\x04\n" +
@@ -36936,7 +36936,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"User Humanj\x0e\n" +
 	"\fUser Machinej\x8c\x01\n" +
-	"\rUser Metadata\x12{Metadata is a key/value list to enrich the user object with any data needed. The data is not interpreted by ZITADEL itself.j\x18\n" +
+	"\rUser Metadata\x12{Metadata is a key/value list to enrich the user object with any data needed. The data is not interpreted by Zitadel itself.j\x18\n" +
 	"\x16ZITADEL Administratorsr>\n" +
 	"\"Detailed information about ZITADEL\x12\x18https://zitadel.com/docsz'\n" +
 	"\x0fx-zitadel-orgid\x12\x14\x1a\x12$YOUR_ORGANIZATIONZ.github.com/zitadel/zitadel/pkg/grpc/managementb\x06proto3"

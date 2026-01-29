@@ -596,7 +596,7 @@ const file_zitadel_user_v2_idp_proto_rawDesc = "" +
 	"\tIDPIntent\x12Y\n" +
 	"\ridp_intent_id\x18\x01 \x01(\tB5\x92A22\x14ID of the IDP intentJ\x14\"163840776835432705\"x\xc8\x01\x80\x01\x01R\vidpIntentId\x12r\n" +
 	"\x10idp_intent_token\x18\x02 \x01(\tBH\x92AE2\x17token of the IDP intentJ$\"SJKL3ioIDpo342ioqw98fjp3sdf32wahb=\"x\xc8\x01\x80\x01\x01R\x0eidpIntentToken\x12m\n" +
-	"\auser_id\x18\x03 \x01(\tBT\x92AQ26ID of the ZITADEL user if external user already linkedJ\x14\"163840776835432345\"x\xc8\x01R\x06userId\"\xcb\x06\n" +
+	"\auser_id\x18\x03 \x01(\tBT\x92AQ26ID of the Zitadel user if external user already linkedJ\x14\"163840776835432345\"x\xc8\x01R\x06userId\"\xcb\x06\n" +
 	"\x0eIDPInformation\x12\x8b\x01\n" +
 	"\x05oauth\x18\x01 \x01(\v2*.zitadel.user.v2.IDPOAuthAccessInformationBG\x92AD2BOAuth/OIDC access (and id_token) returned by the identity providerH\x00R\x05oauth\x12~\n" +
 	"\x04ldap\x18\x06 \x01(\v2).zitadel.user.v2.IDPLDAPAccessInformationB=\x92A:28LDAP entity attributes returned by the identity providerH\x00R\x04ldap\x12t\n" +

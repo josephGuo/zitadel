@@ -2023,7 +2023,7 @@ const file_zitadel_org_v2beta_org_service_proto_rawDesc = "" +
 	"\x03200\x12\x00\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02(:\x01*\"#/v2beta/organizations/{id}/activateB\xc9\b\x92A\x91\b\x12\xef\x02\n" +
-	"\x1bOrganization Service (Beta)\x12\xcc\x01This API is intended to manage organizations in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
+	"\x1bOrganization Service (Beta)\x12\xcc\x01This API is intended to manage organizations in a Zitadel instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\b2.0-beta\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

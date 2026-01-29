@@ -245,7 +245,7 @@ type Username struct {
 	// This can be useful if you provide multiple usernames for a single user, where one
 	// if specific to your organization, e.g.:
 	// - gigi-giraffe@zitadel.com (unique across organizations)
-	// - gigi-giraffe (unique only inside the ZITADEL organization)
+	// - gigi-giraffe (unique only inside the Zitadel organization)
 	IsOrganizationSpecific bool `protobuf:"varint,3,opt,name=is_organization_specific,json=isOrganizationSpecific,proto3" json:"is_organization_specific,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -314,7 +314,7 @@ type SetUsername struct {
 	// This can be useful if you provide multiple usernames for a single user, where one
 	// if specific to your organization, e.g.:
 	// - gigi-giraffe@zitadel.com (unique across organizations)
-	// - gigi-giraffe (unique only inside the ZITADEL organization)
+	// - gigi-giraffe (unique only inside the Zitadel organization)
 	IsOrganizationSpecific bool `protobuf:"varint,2,opt,name=is_organization_specific,json=isOrganizationSpecific,proto3" json:"is_organization_specific,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
@@ -875,7 +875,7 @@ type IdentityProvider struct {
 	// IDP name is the name of the identity provider in ZITADEL.
 	IdpName string `protobuf:"bytes,3,opt,name=idp_name,json=idpName,proto3" json:"idp_name,omitempty"`
 	// The user ID represents the ID provided by the identity provider.
-	// This ID is used to link the user in ZITADEL with the identity provider.
+	// This ID is used to link the user in Zitadel with the identity provider.
 	UserId string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	// The username represents the username provided by the identity provider.
 	Username      string `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`
@@ -1106,7 +1106,7 @@ type isSetPassword_Type interface {
 }
 
 type SetPassword_Password struct {
-	// Provide the plain text password. ZITADEL will take care to store it in a secure way (hash).
+	// Provide the plain text password. Zitadel will take care to store it in a secure way (hash).
 	Password string `protobuf:"bytes,1,opt,name=password,proto3,oneof"`
 }
 
@@ -1141,8 +1141,8 @@ func (*SetPassword_VerificationCode) isSetPassword_Verification() {}
 type SendPasswordResetEmail struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Optionally set a url_template, which will be used in the password reset mail
-	// sent by ZITADEL to guide the user to your password change page.
-	// If no template is set, the default ZITADEL url will be used.
+	// sent by Zitadel to guide the user to your password change page.
+	// If no template is set, the default Zitadel url will be used.
 	UrlTemplate   *string `protobuf:"bytes,2,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1313,9 +1313,9 @@ func (x *AuthenticatorRegistrationCode) GetCode() string {
 
 type SendWebAuthNRegistrationLink struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optionally set a url_template, which will be used in the mail sent by ZITADEL
+	// Optionally set a url_template, which will be used in the mail sent by Zitadel
 	// to guide the user to your passkey registration page.
-	// If no template is set, the default ZITADEL url will be used.
+	// If no template is set, the default Zitadel url will be used.
 	UrlTemplate   *string `protobuf:"bytes,1,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1508,7 +1508,7 @@ type IdentityProviderIntent struct {
 	IdpIntentId string `protobuf:"bytes,1,opt,name=idp_intent_id,json=idpIntentId,proto3" json:"idp_intent_id,omitempty"`
 	// Token of the identity provider (IDP) intent.
 	IdpIntentToken string `protobuf:"bytes,2,opt,name=idp_intent_token,json=idpIntentToken,proto3" json:"idp_intent_token,omitempty"`
-	// If the user was already federated and linked to a ZITADEL user, it's id will be returned.
+	// If the user was already federated and linked to a Zitadel user, it's id will be returned.
 	UserId        *string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

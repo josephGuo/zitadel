@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Project Service",
-    "description": "This API is intended to manage Projects in a ZITADEL Organization. This service is in beta state. It can AND will continue breaking until a stable version is released.",
+    "description": "This API is intended to manage Projects in a Zitadel Organization. This service is in beta state. It can AND will continue breaking until a stable version is released.",
     "version": "2.0-beta",
     "contact": {
       "name": "ZITADEL",
@@ -825,7 +825,7 @@
           },
           {
             "name": "pagination.limit",
-            "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken.",
+            "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -898,7 +898,7 @@
           },
           {
             "name": "roleKey",
-            "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+            "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -947,7 +947,7 @@
           },
           {
             "name": "roleKey",
-            "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+            "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -981,7 +981,7 @@
         "roleKey": {
           "type": "string",
           "example": "ADMIN",
-          "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+          "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
           "maxLength": 200,
           "minLength": 1
         },
@@ -1059,11 +1059,11 @@
         },
         "projectRoleCheck": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if a user has a role of this project assigned when login into an application of this project."
+          "description": "When enabled Zitadel will check if a user has a role of this project assigned when login into an application of this project."
         },
         "hasProjectCheck": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if the organization of the user, that is trying to log in, has a grant to this project."
+          "description": "When enabled Zitadel will check if the organization of the user, that is trying to log in, has a grant to this project."
         },
         "privateLabelingSetting": {
           "$ref": "#/definitions/v2betaPrivateLabelingSetting",
@@ -1486,7 +1486,7 @@
         "limit": {
           "type": "integer",
           "format": "int64",
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1560,11 +1560,11 @@
         },
         "authorizationRequired": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if a user has an authorization to use this project assigned when login into an application of this project."
+          "description": "When enabled Zitadel will check if a user has an authorization to use this project assigned when login into an application of this project."
         },
         "projectAccessRequired": {
           "type": "boolean",
-          "description": "When enabled ZITADEL will check if the organization of the user, that is trying to log in, has access to this project (either owns the project or is granted)."
+          "description": "When enabled Zitadel will check if the organization of the user, that is trying to log in, has access to this project (either owns the project or is granted)."
         },
         "privateLabelingSetting": {
           "$ref": "#/definitions/v2betaPrivateLabelingSetting",

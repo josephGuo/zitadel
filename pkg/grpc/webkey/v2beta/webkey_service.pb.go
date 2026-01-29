@@ -497,7 +497,7 @@ const file_zitadel_webkey_v2beta_webkey_service_proto_rawDesc = "" +
 	"\x12\n" +
 	"\x10iam.web_key.read\x82\xd3\xe4\x93\x02\x12\x12\x10/v2beta/web_keysB\xa9\n" +
 	"\x92A\xeb\t\x12\xc9\x04\n" +
-	"\x0fWeb key Service\x12\xb2\x03This API is intended to manage web keys for a ZITADEL instance, used to sign and validate OIDC tokens. This service is in beta state. It can AND will continue breaking until a stable version is released.\n" +
+	"\x0fWeb key Service\x12\xb2\x03This API is intended to manage web keys for a Zitadel instance, used to sign and validate OIDC tokens. This service is in beta state. It can AND will continue breaking until a stable version is released.\n" +
 	"\n" +
 	"The public key endpoint (outside of this service) is used to retrieve the public keys of the active and inactive keys.\n" +
 	"\n" +

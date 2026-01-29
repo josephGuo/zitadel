@@ -650,25 +650,25 @@ type AdminServiceClient interface {
 	//
 	// Deprecated: use [instance service v2 GetInstance](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-get-instance.api.mdx) instead.
 	//
-	// Returns a list of domains that are configured for this ZITADEL instance. These domains are the URLs where ZITADEL is running.
+	// Returns a list of domains that are configured for this Zitadel instance. These domains are the URLs where Zitadel is running.
 	ListInstanceDomains(context.Context, *connect.Request[admin.ListInstanceDomainsRequest]) (*connect.Response[admin.ListInstanceDomainsResponse], error)
 	// List Instance Trusted Domains
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-trusted-domains.api.mdx) instead.
 	//
-	// Returns a list of domains that are configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Returns a list of domains that are configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	ListInstanceTrustedDomains(context.Context, *connect.Request[admin.ListInstanceTrustedDomainsRequest]) (*connect.Response[admin.ListInstanceTrustedDomainsResponse], error)
 	// Add an Instance Trusted Domain
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-trusted-domain.api.mdx) instead.
 	//
-	// Add a domain to the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Add a domain to the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	AddInstanceTrustedDomain(context.Context, *connect.Request[admin.AddInstanceTrustedDomainRequest]) (*connect.Response[admin.AddInstanceTrustedDomainResponse], error)
 	// Remove an Instance Trusted Domain
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-trusted-domain.api.mdx) instead.
 	//
-	// Removes a domain from the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Removes a domain from the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	RemoveInstanceTrustedDomain(context.Context, *connect.Request[admin.RemoveInstanceTrustedDomainRequest]) (*connect.Response[admin.RemoveInstanceTrustedDomainResponse], error)
 	ListSecretGenerators(context.Context, *connect.Request[admin.ListSecretGeneratorsRequest]) (*connect.Response[admin.ListSecretGeneratorsResponse], error)
 	GetSecretGenerator(context.Context, *connect.Request[admin.GetSecretGeneratorRequest]) (*connect.Response[admin.GetSecretGeneratorResponse], error)
@@ -786,7 +786,7 @@ type AdminServiceClient interface {
 	//
 	// Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.
 	//
-	// Get the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.
+	// Get the default organization of the Zitadel instance. If no specific organization is given on the register form, a user will be registered to the default organization.
 	GetDefaultOrg(context.Context, *connect.Request[admin.GetDefaultOrgRequest]) (*connect.Response[admin.GetDefaultOrgResponse], error)
 	// Search Organizations
 	//
@@ -968,25 +968,25 @@ type AdminServiceClient interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
 	ListIAMMembers(context.Context, *connect.Request[admin.ListIAMMembersRequest]) (*connect.Response[admin.ListIAMMembersResponse], error)
 	// Add IAM Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.
 	AddIAMMember(context.Context, *connect.Request[admin.AddIAMMemberRequest]) (*connect.Response[admin.AddIAMMemberResponse], error)
 	// Update IAM Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateIAMMember(context.Context, *connect.Request[admin.UpdateIAMMemberRequest]) (*connect.Response[admin.UpdateIAMMemberResponse], error)
 	// Remove IAM Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).
 	RemoveIAMMember(context.Context, *connect.Request[admin.RemoveIAMMemberRequest]) (*connect.Response[admin.RemoveIAMMemberResponse], error)
 	ListViews(context.Context, *connect.Request[admin.ListViewsRequest]) (*connect.Response[admin.ListViewsResponse], error)
 	ListFailedEvents(context.Context, *connect.Request[admin.ListFailedEventsRequest]) (*connect.Response[admin.ListFailedEventsResponse], error)
@@ -3540,25 +3540,25 @@ type AdminServiceHandler interface {
 	//
 	// Deprecated: use [instance service v2 GetInstance](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-get-instance.api.mdx) instead.
 	//
-	// Returns a list of domains that are configured for this ZITADEL instance. These domains are the URLs where ZITADEL is running.
+	// Returns a list of domains that are configured for this Zitadel instance. These domains are the URLs where Zitadel is running.
 	ListInstanceDomains(context.Context, *connect.Request[admin.ListInstanceDomainsRequest]) (*connect.Response[admin.ListInstanceDomainsResponse], error)
 	// List Instance Trusted Domains
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-trusted-domains.api.mdx) instead.
 	//
-	// Returns a list of domains that are configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Returns a list of domains that are configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	ListInstanceTrustedDomains(context.Context, *connect.Request[admin.ListInstanceTrustedDomainsRequest]) (*connect.Response[admin.ListInstanceTrustedDomainsResponse], error)
 	// Add an Instance Trusted Domain
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-trusted-domain.api.mdx) instead.
 	//
-	// Add a domain to the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Add a domain to the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	AddInstanceTrustedDomain(context.Context, *connect.Request[admin.AddInstanceTrustedDomainRequest]) (*connect.Response[admin.AddInstanceTrustedDomainResponse], error)
 	// Remove an Instance Trusted Domain
 	//
 	// Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-trusted-domain.api.mdx) instead.
 	//
-	// Removes a domain from the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.
+	// Removes a domain from the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.
 	RemoveInstanceTrustedDomain(context.Context, *connect.Request[admin.RemoveInstanceTrustedDomainRequest]) (*connect.Response[admin.RemoveInstanceTrustedDomainResponse], error)
 	ListSecretGenerators(context.Context, *connect.Request[admin.ListSecretGeneratorsRequest]) (*connect.Response[admin.ListSecretGeneratorsResponse], error)
 	GetSecretGenerator(context.Context, *connect.Request[admin.GetSecretGeneratorRequest]) (*connect.Response[admin.GetSecretGeneratorResponse], error)
@@ -3676,7 +3676,7 @@ type AdminServiceHandler interface {
 	//
 	// Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.
 	//
-	// Get the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.
+	// Get the default organization of the Zitadel instance. If no specific organization is given on the register form, a user will be registered to the default organization.
 	GetDefaultOrg(context.Context, *connect.Request[admin.GetDefaultOrgRequest]) (*connect.Response[admin.GetDefaultOrgResponse], error)
 	// Search Organizations
 	//
@@ -3858,25 +3858,25 @@ type AdminServiceHandler interface {
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
+	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
 	ListIAMMembers(context.Context, *connect.Request[admin.ListIAMMembersRequest]) (*connect.Response[admin.ListIAMMembersResponse], error)
 	// Add IAM Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list with one or multiple roles.
+	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.
 	AddIAMMember(context.Context, *connect.Request[admin.AddIAMMemberRequest]) (*connect.Response[admin.AddIAMMemberResponse], error)
 	// Update IAM Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
+	// Members are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).
 	UpdateIAMMember(context.Context, *connect.Request[admin.UpdateIAMMemberRequest]) (*connect.Response[admin.UpdateIAMMemberResponse], error)
 	// Remove IAM Member
 	//
 	// Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.
 	//
-	// Members are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).
+	// Members are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).
 	RemoveIAMMember(context.Context, *connect.Request[admin.RemoveIAMMemberRequest]) (*connect.Response[admin.RemoveIAMMemberResponse], error)
 	ListViews(context.Context, *connect.Request[admin.ListViewsRequest]) (*connect.Response[admin.ListViewsResponse], error)
 	ListFailedEvents(context.Context, *connect.Request[admin.ListFailedEventsRequest]) (*connect.Response[admin.ListFailedEventsResponse], error)

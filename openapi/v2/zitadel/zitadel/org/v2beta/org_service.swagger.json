@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Organization Service (Beta)",
-    "description": "This API is intended to manage organizations in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.",
+    "description": "This API is intended to manage organizations in a Zitadel instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.",
     "version": "2.0-beta",
     "contact": {
       "name": "ZITADEL",
@@ -549,7 +549,7 @@
     "/v2beta/organizations/{organizationId}/domains/validation/verify": {
       "post": {
         "summary": "Verify Organization Domain",
-        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.\n\nRequired permission:\n - `org.write`",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nMake sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.\n\nRequired permission:\n - `org.write`",
         "operationId": "OrganizationService_VerifyOrganizationDomain",
         "responses": {
           "200": {
@@ -1474,7 +1474,7 @@
         "limit": {
           "type": "integer",
           "format": "int64",
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1528,7 +1528,7 @@
         "urlTemplate": {
           "type": "string",
           "example": "https://example.com/email/verify?userID={{.UserID}}\u0026code={{.Code}}\u0026orgID={{.OrgID}}",
-          "description": "\"Optionally set a url_template, which will be used in the verification mail sent by ZITADEL to guide the user to your verification page. If no template is set, the default ZITADEL url will be used.\"",
+          "description": "\"Optionally set a url_template, which will be used in the verification mail sent by Zitadel to guide the user to your verification page. If no template is set, the default Zitadel url will be used.\"",
           "maxLength": 200,
           "minLength": 1
         }

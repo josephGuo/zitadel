@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Identity Provider Service",
-    "description": "This API is intended to manage identity providers (IdPs) in a ZITADEL instance.",
+    "description": "This API is intended to manage identity providers (IdPs) in a Zitadel instance.",
     "version": "2.0",
     "contact": {
       "name": "ZITADEL",
@@ -137,7 +137,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Apple."
+          "description": "The scopes requested by Zitadel during the request to Apple."
         }
       }
     },
@@ -149,7 +149,7 @@
         "AUTO_LINKING_OPTION_EMAIL"
       ],
       "default": "AUTO_LINKING_OPTION_UNSPECIFIED",
-      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to\ncheck for a corresponding ZITADEL user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check\nfor a corresponding ZITADEL user with the same verified email Note that in\ncase multiple users match, no prompt will be shown."
+      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to\ncheck for a corresponding Zitadel user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check\nfor a corresponding Zitadel user with the same verified email Note that in\ncase multiple users match, no prompt will be shown."
     },
     "v2AzureADConfig": {
       "type": "object",
@@ -165,7 +165,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the\nuser email should always be added verified in ZITADEL (no verification\nemails will be sent)."
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the\nuser email should always be added verified in Zitadel (no verification\nemails will be sent)."
         },
         "scopes": {
           "type": "array",
@@ -178,7 +178,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Azure AD."
+          "description": "The scopes requested by Zitadel during the request to Azure AD."
         }
       }
     },
@@ -253,7 +253,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity\nprovider."
+          "description": "The scopes requested by Zitadel during the request on the identity\nprovider."
         },
         "isIdTokenMapping": {
           "type": "boolean",
@@ -288,7 +288,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub."
+          "description": "The scopes requested by Zitadel during the request to GitHub."
         }
       }
     },
@@ -319,7 +319,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub."
+          "description": "The scopes requested by Zitadel during the request to GitHub."
         }
       }
     },
@@ -341,7 +341,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab."
+          "description": "The scopes requested by Zitadel during the request to GitLab."
         }
       }
     },
@@ -366,7 +366,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab."
+          "description": "The scopes requested by Zitadel during the request to GitLab."
         }
       }
     },
@@ -388,7 +388,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Google."
+          "description": "The scopes requested by Zitadel during the request to Google."
         }
       }
     },
@@ -623,17 +623,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "The endpoint where ZITADEL send the user to authenticate."
+          "description": "The endpoint where Zitadel send the user to authenticate."
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "The endpoint where ZITADEL can get the token."
+          "description": "The endpoint where Zitadel can get the token."
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "The endpoint where ZITADEL can get the user information."
+          "description": "The endpoint where Zitadel can get the user information."
         },
         "scopes": {
           "type": "array",
@@ -645,12 +645,12 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity\nprovider."
+          "description": "The scopes requested by Zitadel during the request on the identity\nprovider."
         },
         "idAttribute": {
           "type": "string",
           "example": "user_id",
-          "description": "Defines how the attribute is called where ZITADEL can get the id of the\nuser."
+          "description": "Defines how the attribute is called where Zitadel can get the id of the\nuser."
         }
       }
     },
@@ -690,7 +690,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Boolean weather federated logout is enabled. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Boolean weather federated logout is enabled. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v2SAMLSignatureAlgorithm",
@@ -723,23 +723,23 @@
       "properties": {
         "isLinkingAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to link an existing ZITADEL user with an\nexternal account."
+          "description": "Enable if users should be able to link an existing Zitadel user with an\nexternal account."
         },
         "isCreationAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to create a new account in ZITADEL when\nusing an external account."
+          "description": "Enable if users should be able to create a new account in Zitadel when\nusing an external account."
         },
         "isAutoCreation": {
           "type": "boolean",
-          "description": "Enable if a new account in ZITADEL should be created automatically when\nlogin with an external account."
+          "description": "Enable if a new account in Zitadel should be created automatically when\nlogin with an external account."
         },
         "isAutoUpdate": {
           "type": "boolean",
-          "description": "Enable if a the ZITADEL account fields should be updated automatically on\neach login."
+          "description": "Enable if a the Zitadel account fields should be updated automatically on\neach login."
         },
         "autoLinking": {
           "$ref": "#/definitions/v2AutoLinkingOption",
-          "description": "Enable if users should get prompted to link an existing ZITADEL user to an\nexternal account if the selected attribute matches."
+          "description": "Enable if users should get prompted to link an existing Zitadel user to an\nexternal account if the selected attribute matches."
         }
       }
     }

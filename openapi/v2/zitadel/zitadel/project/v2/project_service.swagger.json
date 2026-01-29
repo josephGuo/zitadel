@@ -260,7 +260,7 @@
           "type": "integer",
           "format": "int64",
           "example": 10,
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -526,7 +526,7 @@
         "key": {
           "type": "string",
           "example": "role.super.man",
-          "description": "Key of the project role. The key identifies the role. It's the only relevant attribute for ZITADEL and\nwill be used for authorization checks and as claim in tokens and user info responses."
+          "description": "Key of the project role. The key identifies the role. It's the only relevant attribute for Zitadel and\nwill be used for authorization checks and as claim in tokens and user info responses."
         },
         "creationDate": {
           "type": "string",

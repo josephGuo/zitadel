@@ -1983,7 +1983,7 @@ const file_zitadel_settings_v2_settings_service_proto_rawDesc = "" +
 	"&The translations was successfully set.\x8a\xb5\x18\x14\n" +
 	"\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02*:\x01*\x1a%/v2/settings/hosted_login_translationB\xb0\a\x92A\xf2\x06\x12\xd0\x01\n" +
-	"\x10Settings Service\x12>This API is intended to manage settings in a ZITADEL instance.\".\n" +
+	"\x10Settings Service\x12>This API is intended to manage settings in a Zitadel instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

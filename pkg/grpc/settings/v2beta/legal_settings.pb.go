@@ -128,18 +128,18 @@ var File_zitadel_settings_v2beta_legal_settings_proto protoreflect.FileDescripto
 
 const file_zitadel_settings_v2beta_legal_settings_proto_rawDesc = "" +
 	"\n" +
-	",zitadel/settings/v2beta/legal_settings.proto\x12\x17zitadel.settings.v2beta\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a&zitadel/settings/v2beta/settings.proto\x1a\x17validate/validate.proto\"\xd9\a\n" +
+	",zitadel/settings/v2beta/legal_settings.proto\x12\x17zitadel.settings.v2beta\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a&zitadel/settings/v2beta/settings.proto\x1a\x17validate/validate.proto\"\xfe\a\n" +
 	"\x17LegalAndSupportSettings\x12Q\n" +
 	"\btos_link\x18\x01 \x01(\tB6\x92A3J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12d\n" +
 	"\x13privacy_policy_link\x18\x02 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/legal/privacy-policy\"R\x11privacyPolicyLink\x12Q\n" +
 	"\thelp_link\x18\x03 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x04 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
 	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12\xbd\x01\n" +
-	"\x13resource_owner_type\x18\x05 \x01(\x0e2*.zitadel.settings.v2beta.ResourceOwnerTypeBa\x92A^2\\resource_owner_type returns if the setting is managed on the organization or on the instanceR\x11resourceOwnerType\x12o\n" +
-	"\tdocs_link\x18\x06 \x01(\tBR\x92AO21Link to documentation to be shown in the console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x8b\x01\n" +
-	"\vcustom_link\x18\a \x01(\tBj\x92Ag2LLink to an external resource that will be available to users in the console.J\x17\"https://external.link\"R\n" +
-	"customLink\x12\x82\x01\n" +
-	"\x10custom_link_text\x18\b \x01(\tBX\x92AU2GThe button text that would be shown in console pointing to custom link.J\n" +
+	"\x13resource_owner_type\x18\x05 \x01(\x0e2*.zitadel.settings.v2beta.ResourceOwnerTypeBa\x92A^2\\resource_owner_type returns if the setting is managed on the organization or on the instanceR\x11resourceOwnerType\x12z\n" +
+	"\tdocs_link\x18\x06 \x01(\tB]\x92AZ2<Link to documentation to be shown in the management console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +
+	"\vcustom_link\x18\a \x01(\tBu\x92Ar2WLink to an external resource that will be available to users in the management console.J\x17\"https://external.link\"R\n" +
+	"customLink\x12\x91\x01\n" +
+	"\x10custom_link_text\x18\b \x01(\tBg\x92Ad2VThe button text that would be shown in the management console pointing to custom link.J\n" +
 	"\"External\"R\x0ecustomLinkTextB>Z<github.com/zitadel/zitadel/pkg/grpc/settings/v2beta;settingsb\x06proto3"
 
 var (

@@ -866,7 +866,7 @@ type PasswordAgePolicy struct {
 	Details *object.ObjectDetails  `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
 	// Amount of days after which a password will expire. The user will be forced to change the password on the following authentication.
 	MaxAgeDays uint64 `protobuf:"varint,2,opt,name=max_age_days,json=maxAgeDays,proto3" json:"max_age_days,omitempty"`
-	// Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user.
+	// Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user.
 	ExpireWarnDays uint64 `protobuf:"varint,3,opt,name=expire_warn_days,json=expireWarnDays,proto3" json:"expire_warn_days,omitempty"`
 	// If true, the returned values represent the instance settings, e.g. by an organization without custom settings.
 	IsDefault     bool `protobuf:"varint,4,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
@@ -1262,7 +1262,7 @@ const file_zitadel_policy_proto_rawDesc = "" +
 	"\x15max_password_attempts\x18\x02 \x01(\x04B\xd4\x01\x92A\xd0\x012\xc7\x01Maximum password check attempts before the account gets locked. Attempts are reset as soon as the password is entered correctly or the password is reset. If set to 0 the account will never be locked.J\x04\"10\"R\x13maxPasswordAttempts\x12\x82\x02\n" +
 	"\x10max_otp_attempts\x18\x03 \x01(\x04B\xd7\x01\x92A\xd3\x012\xca\x01Maximum failed attempts for a single OTP type (TOTP, SMS, Email) before the account gets locked. Attempts are reset as soon as the OTP is entered correctly. If set to 0 the account will never be locked.J\x04\"10\"R\x0emaxOtpAttempts\x12Z\n" +
 	"\n" +
-	"is_default\x18\x04 \x01(\bB;\x92A826defines if the organization's admin changed the policyR\tisDefault\"\xd6\x06\n" +
+	"is_default\x18\x04 \x01(\bB;\x92A826defines if the organization's admin changed the policyR\tisDefault\"\xfb\x06\n" +
 	"\rPrivacyPolicy\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12Q\n" +
 	"\btos_link\x18\x02 \x01(\tB6\x92A3J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12W\n" +
@@ -1271,11 +1271,11 @@ const file_zitadel_policy_proto_rawDesc = "" +
 	"is_default\x18\x04 \x01(\bR\tisDefault\x12Q\n" +
 	"\thelp_link\x18\x05 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x06 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
-	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12o\n" +
-	"\tdocs_link\x18\a \x01(\tBR\x92AO21Link to documentation to be shown in the console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x8b\x01\n" +
-	"\vcustom_link\x18\b \x01(\tBj\x92Ag2LLink to an external resource that will be available to users in the console.J\x17\"https://external.link\"R\n" +
-	"customLink\x12\x82\x01\n" +
-	"\x10custom_link_text\x18\t \x01(\tBX\x92AU2GThe button text that would be shown in console pointing to custom link.J\n" +
+	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12z\n" +
+	"\tdocs_link\x18\a \x01(\tB]\x92AZ2<Link to documentation to be shown in the management console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +
+	"\vcustom_link\x18\b \x01(\tBu\x92Ar2WLink to an external resource that will be available to users in the management console.J\x17\"https://external.link\"R\n" +
+	"customLink\x12\x91\x01\n" +
+	"\x10custom_link_text\x18\t \x01(\tBg\x92Ad2VThe button text that would be shown in the management console pointing to custom link.J\n" +
 	"\"External\"R\x0ecustomLinkText\"\xf3\x01\n" +
 	"\x12NotificationPolicy\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12\x1d\n" +

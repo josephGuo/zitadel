@@ -30,7 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // InternalPermissionService provides methods to manage permissions for resource
-// and their management in ZITADEL itself also known as "administrators".
+// and their management in Zitadel itself also known as "administrators".
 //
 // If you want to manage permissions and roles within your project or application,
 // please use the AuthorizationsService.
@@ -141,7 +141,7 @@ func (c *internalPermissionServiceClient) DeleteAdministrator(ctx context.Contex
 // for forward compatibility.
 //
 // InternalPermissionService provides methods to manage permissions for resource
-// and their management in ZITADEL itself also known as "administrators".
+// and their management in Zitadel itself also known as "administrators".
 //
 // If you want to manage permissions and roles within your project or application,
 // please use the AuthorizationsService.

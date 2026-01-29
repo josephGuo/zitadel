@@ -39,7 +39,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// This service is intended to manage organizations in a ZITADEL instance.
+// This service is intended to manage organizations in a Zitadel instance.
 //
 // Deprecated: use organization service v2 instead. This service will be removed in the next major version of ZITADEL.
 type OrganizationServiceClient interface {
@@ -148,7 +148,7 @@ type OrganizationServiceClient interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	//
 	// Required permission:
 	//   - `org.write`
@@ -325,7 +325,7 @@ func (c *organizationServiceClient) ActivateOrganization(ctx context.Context, in
 // All implementations must embed UnimplementedOrganizationServiceServer
 // for forward compatibility.
 //
-// This service is intended to manage organizations in a ZITADEL instance.
+// This service is intended to manage organizations in a Zitadel instance.
 //
 // Deprecated: use organization service v2 instead. This service will be removed in the next major version of ZITADEL.
 type OrganizationServiceServer interface {
@@ -434,7 +434,7 @@ type OrganizationServiceServer interface {
 	//
 	// Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.
 	//
-	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). ZITADEL will check it and set the domain as verified if it was successful. A verify domain has to be unique.
+	// Make sure you have added the required verification to your domain, depending on the method you have chosen (HTTP or DNS challenge). Zitadel will check it and set the domain as verified if it was successful. A verify domain has to be unique.
 	//
 	// Required permission:
 	//   - `org.write`

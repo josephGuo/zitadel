@@ -131,7 +131,7 @@ const file_zitadel_idp_v2_idp_service_proto_rawDesc = "" +
 	"\x02OK\x8a\xb5\x18\x11\n" +
 	"\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x0f\x12\r/v2/idps/{id}B\xc0\a\x92A\x8c\a\x12\xea\x01\n" +
-	"\x19Identity Provider Service\x12OThis API is intended to manage identity providers (IdPs) in a ZITADEL instance.\".\n" +
+	"\x19Identity Provider Service\x12OThis API is intended to manage identity providers (IdPs) in a Zitadel instance.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\x032.0\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

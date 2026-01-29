@@ -844,7 +844,7 @@ const file_zitadel_resources_userschema_v3alpha_user_schema_service_proto_rawDes
 	"\x1bSchema successfully deleted\x8a\xb5\x18\x15\n" +
 	"\x13\n" +
 	"\x11userschema.delete\x82\xd3\xe4\x93\x02&*$/resources/v3alpha/user_schemas/{id}B\xf3\b\x92A\xa2\b\x12\x80\x03\n" +
-	"\x13User Schema Service\x12\xe2\x01This API is intended to manage data schemas for users in a ZITADEL instance. This project is in preview state. It can AND will continue breaking until the service provides the same functionality as the v1 and v2 user services.\".\n" +
+	"\x13User Schema Service\x12\xe2\x01This API is intended to manage data schemas for users in a Zitadel instance. This project is in preview state. It can AND will continue breaking until the service provides the same functionality as the v1 and v2 user services.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*G\n" +
 	"\n" +
 	"Apache 2.0\x129https://github.com/zitadel/zitadel/blob/main/LICENSING.md2\v3.0-preview\x1a\x0e$CUSTOM_DOMAIN\"\x01/*\x02\x02\x012\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoRm\n" +

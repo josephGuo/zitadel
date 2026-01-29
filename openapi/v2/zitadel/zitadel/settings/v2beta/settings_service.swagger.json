@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Settings Service",
-    "description": "This API is intended to manage settings in a ZITADEL instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.",
+    "description": "This API is intended to manage settings in a Zitadel instance. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.",
     "version": "2.0-beta",
     "contact": {
       "name": "ZITADEL",
@@ -182,7 +182,7 @@
     "/v2beta/policies/security": {
       "put": {
         "summary": "Set Security Settings",
-        "description": "Set the security settings of the ZITADEL instance.",
+        "description": "Set the security settings of the Zitadel instance.",
         "operationId": "SettingsService_SetSecuritySettings",
         "responses": {
           "200": {
@@ -674,7 +674,7 @@
     "/v2beta/settings/security": {
       "get": {
         "summary": "Get Security Settings",
-        "description": "Returns the security settings of the ZITADEL instance.",
+        "description": "Returns the security settings of the Zitadel instance.",
         "operationId": "SettingsService_GetSecuritySettings",
         "responses": {
           "200": {
@@ -858,7 +858,7 @@
           "items": {
             "type": "string"
           },
-          "description": "origins allowed loading ZITADEL in an iframe if enabled."
+          "description": "origins allowed loading Zitadel in an iframe if enabled."
         }
       }
     },
@@ -1068,17 +1068,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -1348,7 +1348,7 @@
         "limit": {
           "type": "integer",
           "format": "int64",
-          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured ZITADEL will throw an error.\nIf no limit is present the default is taken."
+          "description": "limit is the maximum amount of objects returned. The default is set to 100\nwith a maximum of 1000 in the runtime configuration.\nIf the limit exceeds the maximum configured Zitadel will throw an error.\nIf no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -1426,7 +1426,7 @@
           "type": "string",
           "format": "uint64",
           "example": "10",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         },
         "resourceOwnerType": {
           "$ref": "#/definitions/v2betaResourceOwnerType",

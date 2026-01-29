@@ -43,8 +43,8 @@ const (
 // The higher level (instance) acts as a default for the lower level (organization).
 // When a feature is set on multiple levels, the lower level takes precedence.
 //
-// Features can be experimental where ZITADEL will assume a sane default, such as disabled.
-// When over time confidence in such a feature grows, ZITADEL can default to enabling the feature.
+// Features can be experimental where Zitadel will assume a sane default, such as disabled.
+// When over time confidence in such a feature grows, Zitadel can default to enabling the feature.
 // As a final step we might choose to always enable a feature and remove the setting from this API,
 // reserving the proto field number. Such removal is not considered a breaking change.
 // Setting a removed field will effectively result in a no-op.
@@ -201,8 +201,8 @@ func (c *featureServiceClient) GetUserFeatures(ctx context.Context, in *GetUserF
 // The higher level (instance) acts as a default for the lower level (organization).
 // When a feature is set on multiple levels, the lower level takes precedence.
 //
-// Features can be experimental where ZITADEL will assume a sane default, such as disabled.
-// When over time confidence in such a feature grows, ZITADEL can default to enabling the feature.
+// Features can be experimental where Zitadel will assume a sane default, such as disabled.
+// When over time confidence in such a feature grows, Zitadel can default to enabling the feature.
 // As a final step we might choose to always enable a feature and remove the setting from this API,
 // reserving the proto field number. Such removal is not considered a breaking change.
 // Setting a removed field will effectively result in a no-op.

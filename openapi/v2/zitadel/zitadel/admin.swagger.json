@@ -20,7 +20,7 @@
     },
     {
       "name": "Branding",
-      "description": "Defines the look of the login UI, E-Mails, and ZITADEL Console. For adding assets like logo, icon and font, have a look at the assets API."
+      "description": "Defines the look of the login UI, E-Mails, and Zitadel Management Console. For adding assets like logo, icon and font, have a look at the assets API."
     },
     {
       "name": "Domain Settings"
@@ -161,7 +161,7 @@
     "/domains/_search": {
       "post": {
         "summary": "List Instance Domains",
-        "description": "Deprecated: use [instance service v2 GetInstance](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-get-instance.api.mdx) instead.\n\nReturns a list of domains that are configured for this ZITADEL instance. These domains are the URLs where ZITADEL is running.",
+        "description": "Deprecated: use [instance service v2 GetInstance](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-get-instance.api.mdx) instead.\n\nReturns a list of domains that are configured for this Zitadel instance. These domains are the URLs where Zitadel is running.",
         "operationId": "AdminService_ListInstanceDomains",
         "responses": {
           "200": {
@@ -199,7 +199,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -1127,7 +1127,7 @@
     "/healthz": {
       "get": {
         "summary": "Healthz",
-        "description": "The health endpoint allows an external system to probe if ZITADEL system API is alive. Response as soon as ZITADEL is running.",
+        "description": "The health endpoint allows an external system to probe if Zitadel system API is alive. Response as soon as Zitadel is running.",
         "operationId": "AdminService_Healthz",
         "responses": {
           "200": {
@@ -2131,7 +2131,7 @@
     "/idps/jwt": {
       "post": {
         "summary": "Deprecated: Add JWT Identity Provider (IDP)",
-        "description": "Create a new identity provider configuration to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where ZITADEL can get the existing JWT token.",
+        "description": "Create a new identity provider configuration to enable your users to log in with social/enterprise login. JSON Web Token Identity Provider (JWT IDP) gives you the possibility to use an (existing) JWT as a federated identity. You have to provide an endpoint where Zitadel can get the existing JWT token.",
         "operationId": "AdminService_AddJWTIDP",
         "responses": {
           "200": {
@@ -3332,7 +3332,7 @@
     "/members": {
       "post": {
         "summary": "Add IAM Member",
-        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request adds a new user to the members list with one or multiple roles.",
+        "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.",
         "operationId": "AdminService_AddIAMMember",
         "responses": {
           "200": {
@@ -3386,7 +3386,7 @@
     "/members/_search": {
       "post": {
         "summary": "List IAM Members",
-        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.",
+        "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.",
         "operationId": "AdminService_ListIAMMembers",
         "responses": {
           "200": {
@@ -3434,7 +3434,7 @@
     "/members/roles/_search": {
       "post": {
         "summary": "List IAM Member Roles",
-        "description": "Members are users with permission to administrate ZITADEL on different levels. This request returns all roles possible for a ZITADEL member on the instance level.",
+        "description": "Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the instance level.",
         "operationId": "AdminService_ListIAMMemberRoles",
         "responses": {
           "200": {
@@ -3471,7 +3471,7 @@
     "/members/{userId}": {
       "delete": {
         "summary": "Remove IAM Member",
-        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).",
+        "description": "Deprecated: use [DeleteAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-delete-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request removes a user from the members list on an instance level. The user can still have roles on another level (organization, project).",
         "operationId": "AdminService_RemoveIAMMember",
         "responses": {
           "200": {
@@ -3521,7 +3521,7 @@
       },
       "put": {
         "summary": "Update IAM Member",
-        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate ZITADEL on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
+        "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
         "operationId": "AdminService_UpdateIAMMember",
         "responses": {
           "200": {
@@ -3858,7 +3858,7 @@
     "/orgs/default": {
       "get": {
         "summary": "Get Default Organization",
-        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nGet the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
+        "description": "Deprecated: use [organization service v2 ListOrganizations](apis/resources/org_service_v2/zitadel-org-v-2-organization-service-list-organizations.api.mdx) instead.\n\nGet the default organization of the Zitadel instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
         "operationId": "AdminService_GetDefaultOrg",
         "responses": {
           "200": {
@@ -3896,7 +3896,7 @@
     "/orgs/default/{orgId}": {
       "put": {
         "summary": "Set Default Organization",
-        "description": "Sets the default organization of the ZITADEL instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
+        "description": "Sets the default organization of the Zitadel instance. If no specific organization is given on the register form, a user will be registered to the default organization.",
         "operationId": "AdminService_SetDefaultOrg",
         "responses": {
           "200": {
@@ -4037,7 +4037,7 @@
     "/orgs/{orgId}/policies/domain": {
       "get": {
         "summary": "Get Domain Settings for Organization",
-        "description": "Get the domain settings configured on a specific organization. If the organization doesn't have a custom setting, the default will be returned. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.",
+        "description": "Get the domain settings configured on a specific organization. If the organization doesn't have a custom setting, the default will be returned. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.",
         "operationId": "AdminService_GetCustomDomainPolicy",
         "responses": {
           "200": {
@@ -4081,7 +4081,7 @@
       },
       "delete": {
         "summary": "Reset Domain Settings of Organization",
-        "description": "Resets the domain settings configured on a specific organization to the settings configured on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.",
+        "description": "Resets the domain settings configured on a specific organization to the settings configured on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.",
         "operationId": "AdminService_ResetCustomDomainPolicyToDefault",
         "responses": {
           "200": {
@@ -4125,7 +4125,7 @@
       },
       "post": {
         "summary": "Set a Domain Settings for an Organization",
-        "description": "Create the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.",
+        "description": "Create the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.",
         "operationId": "AdminService_AddCustomDomainPolicy",
         "responses": {
           "200": {
@@ -4177,7 +4177,7 @@
       },
       "put": {
         "summary": "Update Domain Settings for Organization",
-        "description": "Update the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation.",
+        "description": "Update the domain settings configured on a specific organization. It will overwrite the settings specified on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation.",
         "operationId": "AdminService_UpdateCustomDomainPolicy",
         "responses": {
           "200": {
@@ -4425,7 +4425,7 @@
     "/policies/domain": {
       "get": {
         "summary": "Get Domain Settings",
-        "description": "Returns the domain settings configured as default on the instance. Domain settings specify how ZITADEL should handle domains, in regards to usernames, emails and validation..",
+        "description": "Returns the domain settings configured as default on the instance. Domain settings specify how Zitadel should handle domains, in regards to usernames, emails and validation..",
         "operationId": "AdminService_GetDomainPolicy",
         "responses": {
           "200": {
@@ -4460,7 +4460,7 @@
       },
       "put": {
         "summary": "Update Domain Settings",
-        "description": "Update the domain settings configured as default on the instance. Domain settings specify how ZITADEL should handle domains, usernames, emails and validation. It affects all organizations that do not have overwritten settings.",
+        "description": "Update the domain settings configured as default on the instance. Domain settings specify how Zitadel should handle domains, usernames, emails and validation. It affects all organizations that do not have overwritten settings.",
         "operationId": "AdminService_UpdateDomainPolicy",
         "responses": {
           "200": {
@@ -4507,7 +4507,7 @@
     "/policies/label": {
       "get": {
         "summary": "Get Private Labeling/Branding Settings",
-        "description": "Returns the currently active private labeling/branding configured on the instance level. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Returns the currently active private labeling/branding configured on the instance level. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "AdminService_GetLabelPolicy",
         "responses": {
           "200": {
@@ -4542,7 +4542,7 @@
       },
       "put": {
         "summary": "Update Labeling/Branding Settings",
-        "description": "Update the preview private labeling/branding configured on the instance level. It affects all organizations, that don't overwrite the settings. The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Update the preview private labeling/branding configured on the instance level. It affects all organizations, that don't overwrite the settings. The preview is used to show you how it will look like, make sure to activate it as soon as you are happy with the configuration. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "AdminService_UpdateLabelPolicy",
         "responses": {
           "200": {
@@ -4589,7 +4589,7 @@
     "/policies/label/_activate": {
       "post": {
         "summary": "Activate Labeling/Branding Settings",
-        "description": "Activates the preview private labeling/branding configured on the instance level. It will be shown to the users afterward. It affects all organizations, that don't overwrite the settings. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Activates the preview private labeling/branding configured on the instance level. It will be shown to the users afterward. It affects all organizations, that don't overwrite the settings. Defines what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "AdminService_ActivateLabelPolicy",
         "responses": {
           "200": {
@@ -4636,7 +4636,7 @@
     "/policies/label/_preview": {
       "get": {
         "summary": "Get Preview Private Labeling/Branding Settings",
-        "description": "Returns the preview private labeling/branding configured on the instance level. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Console.",
+        "description": "Returns the preview private labeling/branding configured on the instance level. The preview is used to show you how it will look like, and not activate it directly for your users. In the future, it should be possible to send a preview mail and have a look at the preview login. The settings will trigger if the organization has not overwritten the settings or if no specific organization is called on the login UI. Define what colors, fonts, and logo should be used for the Login/Register UI, E-Mails and Management Console.",
         "operationId": "AdminService_GetPreviewLabelPolicy",
         "responses": {
           "200": {
@@ -5947,7 +5947,7 @@
     "/policies/security": {
       "get": {
         "summary": "Get Security Settings",
-        "description": "Returns the security settings of the ZITADEL instance.",
+        "description": "Returns the security settings of the Zitadel instance.",
         "operationId": "AdminService_GetSecurityPolicy",
         "responses": {
           "200": {
@@ -5981,7 +5981,7 @@
       },
       "put": {
         "summary": "Set Security Settings",
-        "description": "Set the security settings of the ZITADEL instance.",
+        "description": "Set the security settings of the Zitadel instance.",
         "operationId": "AdminService_SetSecurityPolicy",
         "responses": {
           "200": {
@@ -7408,7 +7408,7 @@
     "/text/deafult/message/passwordreset/{language}": {
       "get": {
         "summary": "Get Default Password Reset Message Text",
-        "description": "Get the default text of the password reset message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.",
+        "description": "Get the default text of the password reset message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.",
         "operationId": "AdminService_GetDefaultPasswordResetMessageText",
         "responses": {
           "200": {
@@ -7452,7 +7452,7 @@
     "/text/default/login/{language}": {
       "get": {
         "summary": "Get Default Login Text",
-        "description": "Get the default texts for the login and register UI of ZITADEL, which are stored as translation files in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured.",
+        "description": "Get the default texts for the login and register UI of ZITADEL, which are stored as translation files in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_GetDefaultLoginTexts",
         "responses": {
           "200": {
@@ -7496,7 +7496,7 @@
     "/text/default/message/domainclaimed/{language}": {
       "get": {
         "summary": "Get Default Domain Claimed Message Text",
-        "description": "Get the default text of the domain claimed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.",
+        "description": "Get the default text of the domain claimed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.",
         "operationId": "AdminService_GetDefaultDomainClaimedMessageText",
         "responses": {
           "200": {
@@ -7540,7 +7540,7 @@
     "/text/default/message/init/{language}": {
       "get": {
         "summary": "Get Default Init Message Text",
-        "description": "Get the default text of the initialize-user message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address.",
+        "description": "Get the default text of the initialize-user message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user is created and has either no password or a non-verified email address.",
         "operationId": "AdminService_GetDefaultInitMessageText",
         "responses": {
           "200": {
@@ -7584,7 +7584,7 @@
     "/text/default/message/invite_user/{language}": {
       "get": {
         "summary": "Get Default Invite User Message Text",
-        "description": "Get the default text of the invite user message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested.",
+        "description": "Get the default text of the invite user message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an invite code email is requested.",
         "operationId": "AdminService_GetDefaultInviteUserMessageText",
         "responses": {
           "200": {
@@ -7628,7 +7628,7 @@
     "/text/default/message/password_change/{language}": {
       "get": {
         "summary": "Get Default Password Changed Message Text",
-        "description": "Get the default text of the password-changed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.",
+        "description": "Get the default text of the password-changed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when the password of a user has been changed.",
         "operationId": "AdminService_GetDefaultPasswordChangeMessageText",
         "responses": {
           "200": {
@@ -7672,7 +7672,7 @@
     "/text/default/message/passwordless_registration/{language}": {
       "get": {
         "summary": "Get Default Passwordless Registration Message Text",
-        "description": "Get the default text of the domain claimed message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.",
+        "description": "Get the default text of the domain claimed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user requests passwordless/passkey registration as email, to be able to configure on another device.",
         "operationId": "AdminService_GetDefaultPasswordlessRegistrationMessageText",
         "responses": {
           "200": {
@@ -7716,7 +7716,7 @@
     "/text/default/message/passwordreset/{language}": {
       "get": {
         "summary": "Get Default Password Reset Message Text",
-        "description": "Get the default text of the password reset message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.",
+        "description": "Get the default text of the password reset message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user triggers the password forgot-request.",
         "operationId": "AdminService_GetDefaultPasswordResetMessageText2",
         "responses": {
           "200": {
@@ -7760,7 +7760,7 @@
     "/text/default/message/verifyemail/{language}": {
       "get": {
         "summary": "Get Default Verify Email Message Text",
-        "description": "Get the default text of the verify-email message/email that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new non-verified email address.",
+        "description": "Get the default text of the verify-email message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The email is sent when a user adds a new non-verified email address.",
         "operationId": "AdminService_GetDefaultVerifyEmailMessageText",
         "responses": {
           "200": {
@@ -7804,7 +7804,7 @@
     "/text/default/message/verifyemailotp/{language}": {
       "get": {
         "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify Email OTP message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "description": "Get the default text of the verify Email OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetDefaultVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -7848,7 +7848,7 @@
     "/text/default/message/verifyphone/{language}": {
       "get": {
         "summary": "Get Default Verify Phone Message Text",
-        "description": "Get the default text of the verify-phone message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.",
+        "description": "Get the default text of the verify-phone message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when a user adds a new non-verified phone number and a notification provider is configured.",
         "operationId": "AdminService_GetDefaultVerifyPhoneMessageText",
         "responses": {
           "200": {
@@ -7892,7 +7892,7 @@
     "/text/default/message/verifysmsotp/{language}": {
       "get": {
         "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify SMS OTP message that is stored as translation files in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "description": "Get the default text of the verify SMS OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetDefaultVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -7978,7 +7978,7 @@
       },
       "delete": {
         "summary": "Reset Custom Login Text to Default",
-        "description": "Removes the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be shown to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomLoginTextToDefault",
         "responses": {
           "200": {
@@ -8114,7 +8114,7 @@
       },
       "delete": {
         "summary": "Reset Custom Domain Claimed Message Text to Default",
-        "description": "Removes the custom text of the domain claimed message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the domain claimed message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomDomainClaimedMessageTextToDefault",
         "responses": {
           "200": {
@@ -8250,7 +8250,7 @@
       },
       "delete": {
         "summary": "Reset Custom Init Message Text to Default",
-        "description": "Removes the custom text of the initialize-user message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the initialize-user message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomInitMessageTextToDefault",
         "responses": {
           "200": {
@@ -8386,7 +8386,7 @@
       },
       "delete": {
         "summary": "Reset Custom Invite User Message Text to Default",
-        "description": "Removes the custom text of the invite user message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the invite user message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomInviteUserMessageTextToDefault",
         "responses": {
           "200": {
@@ -8522,7 +8522,7 @@
       },
       "delete": {
         "summary": "Reset Custom Password Changed Message Text to Default",
-        "description": "Removes the custom text of the password-changed message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the password-changed message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomPasswordChangeMessageTextToDefault",
         "responses": {
           "200": {
@@ -8658,7 +8658,7 @@
       },
       "delete": {
         "summary": "Reset Custom Passwordless Registration Message Text to Default",
-        "description": "Removes the custom text of the passwordless/passkey registration message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the passwordless/passkey registration message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomPasswordlessRegistrationMessageTextToDefault",
         "responses": {
           "200": {
@@ -8794,7 +8794,7 @@
       },
       "delete": {
         "summary": "Reset Custom Password Reset Message Text to Default",
-        "description": "Removes the custom text of the password reset user message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the password reset user message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomPasswordResetMessageTextToDefault",
         "responses": {
           "200": {
@@ -8930,7 +8930,7 @@
       },
       "delete": {
         "summary": "Reset Custom Verify Email Message Text to Default",
-        "description": "Removes the custom text of the email verify message/email that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the email verify message/email that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifyEmailMessageTextToDefault",
         "responses": {
           "200": {
@@ -9066,7 +9066,7 @@
       },
       "delete": {
         "summary": "Reset Custom Verify SMS OTP Message Text to Default",
-        "description": "Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifyEmailOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9202,7 +9202,7 @@
       },
       "delete": {
         "summary": "Reset Custom Verify Phone Message Text to Default",
-        "description": "Removes the custom text of the verify-phone message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the verify-phone message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifyPhoneMessageTextToDefault",
         "responses": {
           "200": {
@@ -9338,7 +9338,7 @@
       },
       "delete": {
         "summary": "Reset Custom Verify SMS OTP Message Text to Default",
-        "description": "Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in ZITADEL itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "description": "Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifySMSOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9432,7 +9432,7 @@
     "/trusted_domains": {
       "post": {
         "summary": "Add an Instance Trusted Domain",
-        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-trusted-domain.api.mdx) instead.\n\nAdd a domain to the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.",
+        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-add-trusted-domain.api.mdx) instead.\n\nAdd a domain to the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.",
         "operationId": "AdminService_AddInstanceTrustedDomain",
         "responses": {
           "200": {
@@ -9479,7 +9479,7 @@
     "/trusted_domains/_search": {
       "post": {
         "summary": "List Instance Trusted Domains",
-        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-trusted-domains.api.mdx) instead.\n\nReturns a list of domains that are configured for this ZITADEL instance. These domains are trusted to be used as public hosts.",
+        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-list-trusted-domains.api.mdx) instead.\n\nReturns a list of domains that are configured for this Zitadel instance. These domains are trusted to be used as public hosts.",
         "operationId": "AdminService_ListInstanceTrustedDomains",
         "responses": {
           "200": {
@@ -9517,7 +9517,7 @@
           },
           {
             "name": "query.limit",
-            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.",
+            "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -9555,7 +9555,7 @@
     "/trusted_domains/{domain}": {
       "delete": {
         "summary": "Remove an Instance Trusted Domain",
-        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-trusted-domain.api.mdx) instead.\n\nRemoves a domain from the list configured for this ZITADEL instance. These domains are trusted to be used as public hosts.",
+        "description": "Deprecated: use [instance service v2 ListTrustedDomains](apis/resources/instance_service_v2/zitadel-instance-v-2-instance-service-remove-trusted-domain.api.mdx) instead.\n\nRemoves a domain from the list configured for this Zitadel instance. These domains are trusted to be used as public hosts.",
         "operationId": "AdminService_RemoveInstanceTrustedDomain",
         "responses": {
           "200": {
@@ -9972,7 +9972,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -10028,7 +10028,7 @@
       "properties": {
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }
@@ -10153,6 +10153,15 @@
           "type": "string",
           "example": "provider description",
           "maxLength": 200
+        },
+        "none": {
+          "$ref": "#/definitions/zitadeladminv1SMTPNoAuth"
+        },
+        "plain": {
+          "$ref": "#/definitions/zitadeladminv1SMTPPlainAuth"
+        },
+        "xoauth2": {
+          "$ref": "#/definitions/zitadeladminv1SMTPXOAuth2Auth"
         }
       },
       "required": [
@@ -10276,7 +10285,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -10633,7 +10642,7 @@
         "displayName": {
           "type": "string",
           "example": "Gigi Giraffe",
-          "description": "a user can set the display name if nothing is set ZITADEL computes \"first_name last_name\"",
+          "description": "a user can set the display name if nothing is set Zitadel computes \"first_name last_name\"",
           "maxLength": 200
         },
         "preferredLanguage": {
@@ -11105,17 +11114,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -11185,7 +11194,8 @@
         },
         "password": {
           "type": "string",
-          "example": "this-is-my-password"
+          "example": "this-is-my-password",
+          "description": "Deprecated: use [Auth] oneof instead."
         },
         "replyToAddress": {
           "type": "string",
@@ -11196,6 +11206,15 @@
           "type": "string",
           "example": "provider description",
           "maxLength": 200
+        },
+        "none": {
+          "$ref": "#/definitions/zitadeladminv1SMTPNoAuth"
+        },
+        "plain": {
+          "$ref": "#/definitions/zitadeladminv1SMTPPlainAuth"
+        },
+        "xoauth2": {
+          "$ref": "#/definitions/zitadeladminv1SMTPXOAuth2Auth"
         }
       },
       "required": [
@@ -11539,7 +11558,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -11708,7 +11727,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -11855,7 +11874,7 @@
         "roleKey": {
           "type": "string",
           "example": "ADMIN",
-          "description": "The key is the only relevant attribute for ZITADEL regarding the authorization checks.",
+          "description": "The key is the only relevant attribute for Zitadel regarding the authorization checks.",
           "maxLength": 200,
           "minLength": 1
         },
@@ -12226,7 +12245,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Apple",
+          "description": "The scopes requested by Zitadel during the request to Apple",
           "maxItems": 20
         },
         "providerOptions": {
@@ -12264,7 +12283,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -12277,7 +12296,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12305,17 +12324,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "The endpoint where ZITADEL send the user to authenticate"
+          "description": "The endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "The endpoint where ZITADEL can get the token"
+          "description": "The endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "The endpoint where ZITADEL can get the user information"
+          "description": "The endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -12327,7 +12346,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity provider"
+          "description": "The scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
@@ -12377,7 +12396,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12428,7 +12447,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12463,7 +12482,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12499,7 +12518,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12537,7 +12556,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12572,7 +12591,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Google"
+          "description": "The scopes requested by Zitadel during the request to Google"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -12694,7 +12713,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",
@@ -12757,7 +12776,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Apple"
+          "description": "the scopes requested by Zitadel during the request to Apple"
         }
       }
     },
@@ -12769,7 +12788,7 @@
         "AUTO_LINKING_OPTION_EMAIL"
       ],
       "default": "AUTO_LINKING_OPTION_UNSPECIFIED",
-      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to check for a corresponding ZITADEL user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check for a corresponding ZITADEL user with the same verified email\nNote that in case multiple users match, no prompt will be shown."
+      "description": " - AUTO_LINKING_OPTION_UNSPECIFIED: AUTO_LINKING_OPTION_UNSPECIFIED disables the auto linking prompt.\n - AUTO_LINKING_OPTION_USERNAME: AUTO_LINKING_OPTION_USERNAME will use the username of the external user to check for a corresponding Zitadel user.\n - AUTO_LINKING_OPTION_EMAIL: AUTO_LINKING_OPTION_EMAIL  will use the email of the external user to check for a corresponding Zitadel user with the same verified email\nNote that in case multiple users match, no prompt will be shown."
     },
     "v1AzureADConfig": {
       "type": "object",
@@ -12785,7 +12804,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -12798,7 +12817,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         }
       }
     },
@@ -13204,6 +13223,15 @@
         "replyToAddress": {
           "type": "string",
           "example": "replyto@m.zitadel.cloud"
+        },
+        "none": {
+          "$ref": "#/definitions/zitadelsettingsv1SMTPNoAuth"
+        },
+        "plain": {
+          "$ref": "#/definitions/zitadelsettingsv1SMTPPlainAuth"
+        },
+        "xoauth2": {
+          "$ref": "#/definitions/zitadelsettingsv1SMTPXOAuth2Auth"
         }
       }
     },
@@ -13492,7 +13520,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "isIdTokenMapping": {
           "type": "boolean",
@@ -13635,7 +13663,7 @@
         },
         "disallowPublicOrgRegistration": {
           "type": "boolean",
-          "description": "defines if ZITADEL should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests."
+          "description": "defines if Zitadel should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests."
         },
         "allowedLanguages": {
           "type": "array",
@@ -13704,7 +13732,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitHub"
+          "description": "the scopes requested by Zitadel during the request to GitHub"
         }
       }
     },
@@ -13735,7 +13763,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitHub"
+          "description": "the scopes requested by Zitadel during the request to GitHub"
         }
       }
     },
@@ -13757,7 +13785,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitLab"
+          "description": "the scopes requested by Zitadel during the request to GitLab"
         }
       }
     },
@@ -13782,7 +13810,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to GitLab"
+          "description": "the scopes requested by Zitadel during the request to GitLab"
         }
       }
     },
@@ -13804,7 +13832,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Google"
+          "description": "the scopes requested by Zitadel during the request to Google"
         }
       }
     },
@@ -13880,7 +13908,7 @@
         "IDP_OWNER_TYPE_ORG"
       ],
       "default": "IDP_OWNER_TYPE_UNSPECIFIED",
-      "description": "the owner of the identity provider.\n\n - IDP_OWNER_TYPE_SYSTEM: system is managed by the ZITADEL administrators\n - IDP_OWNER_TYPE_ORG: org is managed by de organization administrators"
+      "description": "the owner of the identity provider.\n\n - IDP_OWNER_TYPE_SYSTEM: system is managed by the Zitadel administrators\n - IDP_OWNER_TYPE_ORG: org is managed by de organization administrators"
     },
     "v1IDPState": {
       "type": "string",
@@ -14345,7 +14373,7 @@
         "displayName": {
           "type": "string",
           "example": "minnie.mouse@gmail.com",
-          "description": "A display name ZITADEL can show on the linked provider.",
+          "description": "A display name Zitadel can show on the linked provider.",
           "maxLength": 200
         }
       }
@@ -15217,7 +15245,7 @@
           "type": "integer",
           "format": "int64",
           "example": 100,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -15841,17 +15869,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "the endpoint where ZITADEL send the user to authenticate"
+          "description": "the endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "the endpoint where ZITADEL can get the token"
+          "description": "the endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "the endpoint where ZITADEL can get the user information"
+          "description": "the endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -15863,12 +15891,12 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
           "example": "user_id",
-          "description": "defines how the attribute is called where ZITADEL can get the id of the user"
+          "description": "defines how the attribute is called where Zitadel can get the id of the user"
         },
         "usePkce": {
           "type": "boolean",
@@ -15993,23 +16021,23 @@
       "properties": {
         "isLinkingAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to manually link an existing ZITADEL user with an external account. Disable if users should only be allowed to link the proposed account in case of active auto_linking."
+          "description": "Enable if users should be able to manually link an existing Zitadel user with an external account. Disable if users should only be allowed to link the proposed account in case of active auto_linking."
         },
         "isCreationAllowed": {
           "type": "boolean",
-          "description": "Enable if users should be able to manually create a new account in ZITADEL when using an external account. Disable if users should not be able to edit account information when auto_creation is enabled."
+          "description": "Enable if users should be able to manually create a new account in Zitadel when using an external account. Disable if users should not be able to edit account information when auto_creation is enabled."
         },
         "isAutoCreation": {
           "type": "boolean",
-          "description": "Enable if a new account in ZITADEL should be created automatically when login with an external account."
+          "description": "Enable if a new account in Zitadel should be created automatically when login with an external account."
         },
         "isAutoUpdate": {
           "type": "boolean",
-          "description": "Enable if a the ZITADEL account fields should be updated automatically on each login."
+          "description": "Enable if a the Zitadel account fields should be updated automatically on each login."
         },
         "autoLinking": {
           "$ref": "#/definitions/v1AutoLinkingOption",
-          "description": "Enable if users should get prompted to link an existing ZITADEL user to an external account if the selected attribute matches."
+          "description": "Enable if users should get prompted to link an existing Zitadel user to an external account if the selected attribute matches."
         }
       }
     },
@@ -16125,7 +16153,7 @@
           "type": "string",
           "format": "uint64",
           "example": "10",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         },
         "isDefault": {
           "type": "boolean",
@@ -16391,17 +16419,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -16949,7 +16977,7 @@
           "items": {
             "type": "string"
           },
-          "title": "origins allowed loading ZITADEL in an iframe if enable_iframe_embedding is true"
+          "title": "origins allowed loading Zitadel in an iframe if enable_iframe_embedding is true"
         },
         "enableImpersonation": {
           "type": "boolean",
@@ -17280,7 +17308,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -17344,7 +17372,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at ZITADEL within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }
@@ -17450,7 +17478,7 @@
       "properties": {
         "disallowPublicOrgRegistration": {
           "type": "boolean",
-          "description": "defines if ZITADEL should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests."
+          "description": "defines if Zitadel should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests."
         },
         "allowedLanguages": {
           "$ref": "#/definitions/v1SelectLanguages",
@@ -17478,7 +17506,7 @@
           "items": {
             "type": "string"
           },
-          "title": "origins allowed loading ZITADEL in an iframe if enable_iframe_embedding is true"
+          "title": "origins allowed loading Zitadel in an iframe if enable_iframe_embedding is true"
         },
         "enableImpersonation": {
           "type": "boolean",
@@ -17685,6 +17713,15 @@
           "type": "string",
           "example": "267191369515139464",
           "description": "Zitadel SMTP provider id in case you are not sending the password and want to reuse the stored password"
+        },
+        "none": {
+          "$ref": "#/definitions/zitadeladminv1SMTPNoAuth"
+        },
+        "plain": {
+          "$ref": "#/definitions/zitadeladminv1SMTPPlainAuth"
+        },
+        "xoauth2": {
+          "$ref": "#/definitions/zitadeladminv1SMTPXOAuth2Auth"
         }
       },
       "required": [
@@ -18158,7 +18195,7 @@
         "expireWarnDays": {
           "type": "integer",
           "format": "int64",
-          "description": "Amount of days after which the user should be notified of the upcoming expiry. ZITADEL will not notify the user."
+          "description": "Amount of days after which the user should be notified of the upcoming expiry. Zitadel will not notify the user."
         }
       }
     },
@@ -18231,12 +18268,12 @@
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },
@@ -18444,7 +18481,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Apple",
+          "description": "The scopes requested by Zitadel during the request to Apple",
           "maxItems": 20
         },
         "providerOptions": {
@@ -18493,7 +18530,7 @@
         },
         "emailVerified": {
           "type": "boolean",
-          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in ZITADEL (no verification emails will be sent)"
+          "description": "Azure AD doesn't send if the email has been verified. Enable this if the user email should always be added verified in Zitadel (no verification emails will be sent)"
         },
         "scopes": {
           "type": "array",
@@ -18506,7 +18543,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request to Azure AD"
+          "description": "the scopes requested by Zitadel during the request to Azure AD"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18544,17 +18581,17 @@
         "authorizationEndpoint": {
           "type": "string",
           "example": "https://accounts.google.com/o/oauth2/v2/auth",
-          "description": "The endpoint where ZITADEL send the user to authenticate"
+          "description": "The endpoint where Zitadel send the user to authenticate"
         },
         "tokenEndpoint": {
           "type": "string",
           "example": "https://oauth2.googleapis.com/token",
-          "description": "The endpoint where ZITADEL can get the token"
+          "description": "The endpoint where Zitadel can get the token"
         },
         "userEndpoint": {
           "type": "string",
           "example": "https://openidconnect.googleapis.com/v1/userinfo",
-          "description": "The endpoint where ZITADEL can get the user information"
+          "description": "The endpoint where Zitadel can get the user information"
         },
         "scopes": {
           "type": "array",
@@ -18566,7 +18603,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request on the identity provider"
+          "description": "The scopes requested by Zitadel during the request on the identity provider"
         },
         "idAttribute": {
           "type": "string",
@@ -18626,7 +18663,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18687,7 +18724,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18734,7 +18771,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitHub"
+          "description": "The scopes requested by Zitadel during the request to GitHub"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18781,7 +18818,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18829,7 +18866,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to GitLab"
+          "description": "The scopes requested by Zitadel during the request to GitLab"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -18876,7 +18913,7 @@
           "items": {
             "type": "string"
           },
-          "description": "The scopes requested by ZITADEL during the request to Google"
+          "description": "The scopes requested by Zitadel during the request to Google"
         },
         "providerOptions": {
           "$ref": "#/definitions/v1Options"
@@ -19075,7 +19112,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Optionally enable federated logout. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Optionally enable federated logout. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",
@@ -19998,6 +20035,72 @@
         }
       }
     },
+    "zitadeladminv1SMTPNoAuth": {
+      "type": "object",
+      "description": "SMTPNoAuth can be used when no authentication is required for the SMTP connection."
+    },
+    "zitadeladminv1SMTPPlainAuth": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "this-is-my-client-secret"
+        }
+      },
+      "description": "SMTPPlainAuth adds plain authentication to the smtp connection. The username of the parent configuration is used in\ncombination with the password in this message.",
+      "required": [
+        "password"
+      ]
+    },
+    "zitadeladminv1SMTPXOAuth2Auth": {
+      "type": "object",
+      "properties": {
+        "tokenEndpoint": {
+          "type": "string",
+          "example": "http://auth.example.com/token",
+          "description": "token_endpoint is the endpoint from which a token will be requested according to the oauth2 specification.",
+          "maxLength": 200
+        },
+        "scopes": {
+          "type": "array",
+          "example": [
+            "https://mail.example.com"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "scopes is a list of scopes which should be requested from the authorization service. To authorize a token to\nuse the smtp functionality, the server requires a specific scope. These scopes can be found in the documentation\nof the provider."
+        },
+        "clientCredentials": {
+          "$ref": "#/definitions/zitadeladminv1SMTPXOAuth2AuthClientCredentials"
+        }
+      },
+      "description": "SMTPXOAuth2Auth adds XOAut2 authentication to the smtp connection. The username of the parent configuration is used\nin combination with the other parameters of this message.",
+      "required": [
+        "tokenEndpoint",
+        "scopes"
+      ]
+    },
+    "zitadeladminv1SMTPXOAuth2AuthClientCredentials": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "example": "197f0117-529e-443d-bf6c-0292dd9a02b7",
+          "maxLength": 200
+        },
+        "clientSecret": {
+          "type": "string",
+          "example": "this-is-my-client-secret",
+          "maxLength": 200
+        }
+      },
+      "title": "ClientCredentials authenticates the SMTP client using Oauth 2.0 Client Credentials grant.\nhttps://datatracker.ietf.org/doc/html/rfc6749#section-4.4",
+      "required": [
+        "clientId",
+        "clientSecret"
+      ]
+    },
     "zitadeladminv1SetCustomLoginTextsResponse": {
       "type": "object",
       "properties": {
@@ -20154,7 +20257,7 @@
           "items": {
             "type": "string"
           },
-          "description": "the scopes requested by ZITADEL during the request on the identity provider"
+          "description": "the scopes requested by Zitadel during the request on the identity provider"
         },
         "displayNameMapping": {
           "$ref": "#/definitions/v1OIDCMappingField",
@@ -20192,7 +20295,7 @@
         },
         "federatedLogoutEnabled": {
           "type": "boolean",
-          "description": "Boolean value to indicate whether federated logout is enabled. If enabled, ZITADEL will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
+          "description": "Boolean value to indicate whether federated logout is enabled. If enabled, Zitadel will send a logout request to the identity provider,\nif the user terminates the session in ZITADEL. Be sure to provide a SLO endpoint as part of the metadata."
         },
         "signatureAlgorithm": {
           "$ref": "#/definitions/v1SAMLSignatureAlgorithm",
@@ -20488,6 +20591,48 @@
           "description": "defines the protocol the domain was validated with"
         }
       }
+    },
+    "zitadelsettingsv1SMTPNoAuth": {
+      "type": "object",
+      "description": "SMTPNoAuth can be used when no authentication is required for the SMTP connection."
+    },
+    "zitadelsettingsv1SMTPPlainAuth": {
+      "type": "object",
+      "description": "SMTPPlainAuth adds plain authentication to the smtp connection. The username of the parent configuration is used in\ncombination with the password in this message."
+    },
+    "zitadelsettingsv1SMTPXOAuth2Auth": {
+      "type": "object",
+      "properties": {
+        "tokenEndpoint": {
+          "type": "string",
+          "example": "http://auth.example.com/token",
+          "description": "token_endpoint is the endpoint from which a token will be requested according to the oauth2 specification."
+        },
+        "scopes": {
+          "type": "array",
+          "example": [
+            "https://mail.example.com"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "scopes is a list of scopes which should be requested from the authorization service. To authorize a token to\nuse the smtp functionality, the server requires a specific scope. These scopes can be found in the documentation\nof the provider."
+        },
+        "clientCredentials": {
+          "$ref": "#/definitions/zitadelsettingsv1SMTPXOAuth2AuthClientCredentials"
+        }
+      },
+      "description": "SMTPXOAuth2Auth adds XOAut2 authentication to the smtp connection. The username of the parent configuration is used\nin combination with the other parameters of this message."
+    },
+    "zitadelsettingsv1SMTPXOAuth2AuthClientCredentials": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "example": "197f0117-529e-443d-bf6c-0292dd9a02b7"
+        }
+      },
+      "title": "ClientCredentials authenticates the SMTP client using Oauth 2.0 Client Credentials grant.\nhttps://datatracker.ietf.org/doc/html/rfc6749#section-4.4"
     },
     "zitadelv1v1AddCustomOrgIAMPolicyRequest": {
       "type": "object",

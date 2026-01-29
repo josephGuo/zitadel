@@ -687,8 +687,14 @@ type EmailProviderSMTP struct {
 	Host           string                 `protobuf:"bytes,4,opt,name=host,proto3" json:"host,omitempty"`
 	User           string                 `protobuf:"bytes,5,opt,name=user,proto3" json:"user,omitempty"`
 	ReplyToAddress string                 `protobuf:"bytes,6,opt,name=reply_to_address,json=replyToAddress,proto3" json:"reply_to_address,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Types that are valid to be assigned to Auth:
+	//
+	//	*EmailProviderSMTP_None
+	//	*EmailProviderSMTP_Plain
+	//	*EmailProviderSMTP_Xoauth2
+	Auth          isEmailProviderSMTP_Auth `protobuf_oneof:"Auth"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *EmailProviderSMTP) Reset() {
@@ -763,6 +769,227 @@ func (x *EmailProviderSMTP) GetReplyToAddress() string {
 	return ""
 }
 
+func (x *EmailProviderSMTP) GetAuth() isEmailProviderSMTP_Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *EmailProviderSMTP) GetNone() *SMTPNoAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*EmailProviderSMTP_None); ok {
+			return x.None
+		}
+	}
+	return nil
+}
+
+func (x *EmailProviderSMTP) GetPlain() *SMTPPlainAuth {
+	if x != nil {
+		if x, ok := x.Auth.(*EmailProviderSMTP_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *EmailProviderSMTP) GetXoauth2() *SMTPXOAuth2Auth {
+	if x != nil {
+		if x, ok := x.Auth.(*EmailProviderSMTP_Xoauth2); ok {
+			return x.Xoauth2
+		}
+	}
+	return nil
+}
+
+type isEmailProviderSMTP_Auth interface {
+	isEmailProviderSMTP_Auth()
+}
+
+type EmailProviderSMTP_None struct {
+	None *SMTPNoAuth `protobuf:"bytes,9,opt,name=none,proto3,oneof"`
+}
+
+type EmailProviderSMTP_Plain struct {
+	Plain *SMTPPlainAuth `protobuf:"bytes,10,opt,name=plain,proto3,oneof"`
+}
+
+type EmailProviderSMTP_Xoauth2 struct {
+	Xoauth2 *SMTPXOAuth2Auth `protobuf:"bytes,11,opt,name=xoauth2,proto3,oneof"`
+}
+
+func (*EmailProviderSMTP_None) isEmailProviderSMTP_Auth() {}
+
+func (*EmailProviderSMTP_Plain) isEmailProviderSMTP_Auth() {}
+
+func (*EmailProviderSMTP_Xoauth2) isEmailProviderSMTP_Auth() {}
+
+// SMTPNoAuth can be used when no authentication is required for the SMTP connection.
+type SMTPNoAuth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPNoAuth) Reset() {
+	*x = SMTPNoAuth{}
+	mi := &file_zitadel_settings_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPNoAuth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPNoAuth) ProtoMessage() {}
+
+func (x *SMTPNoAuth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_settings_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPNoAuth.ProtoReflect.Descriptor instead.
+func (*SMTPNoAuth) Descriptor() ([]byte, []int) {
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{6}
+}
+
+// SMTPPlainAuth adds plain authentication to the smtp connection. The username of the parent configuration is used in
+// combination with the password in this message.
+type SMTPPlainAuth struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPPlainAuth) Reset() {
+	*x = SMTPPlainAuth{}
+	mi := &file_zitadel_settings_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPPlainAuth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPPlainAuth) ProtoMessage() {}
+
+func (x *SMTPPlainAuth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_settings_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPPlainAuth.ProtoReflect.Descriptor instead.
+func (*SMTPPlainAuth) Descriptor() ([]byte, []int) {
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{7}
+}
+
+// SMTPXOAuth2Auth adds XOAut2 authentication to the smtp connection. The username of the parent configuration is used
+// in combination with the other parameters of this message.
+type SMTPXOAuth2Auth struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// token_endpoint is the endpoint from which a token will be requested according to the oauth2 specification.
+	TokenEndpoint string `protobuf:"bytes,1,opt,name=token_endpoint,json=tokenEndpoint,proto3" json:"token_endpoint,omitempty"`
+	// scopes is a list of scopes which should be requested from the authorization service. To authorize a token to
+	// use the smtp functionality, the server requires a specific scope. These scopes can be found in the documentation
+	// of the provider.
+	Scopes []string `protobuf:"bytes,2,rep,name=scopes,proto3" json:"scopes,omitempty"`
+	// OAuth2Type is a oneof used to switch between the different types of oauth2 authorization flows.
+	//
+	// Types that are valid to be assigned to OAuth2Type:
+	//
+	//	*SMTPXOAuth2Auth_ClientCredentials_
+	OAuth2Type    isSMTPXOAuth2Auth_OAuth2Type `protobuf_oneof:"OAuth2Type"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPXOAuth2Auth) Reset() {
+	*x = SMTPXOAuth2Auth{}
+	mi := &file_zitadel_settings_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPXOAuth2Auth) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPXOAuth2Auth) ProtoMessage() {}
+
+func (x *SMTPXOAuth2Auth) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_settings_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPXOAuth2Auth.ProtoReflect.Descriptor instead.
+func (*SMTPXOAuth2Auth) Descriptor() ([]byte, []int) {
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SMTPXOAuth2Auth) GetTokenEndpoint() string {
+	if x != nil {
+		return x.TokenEndpoint
+	}
+	return ""
+}
+
+func (x *SMTPXOAuth2Auth) GetScopes() []string {
+	if x != nil {
+		return x.Scopes
+	}
+	return nil
+}
+
+func (x *SMTPXOAuth2Auth) GetOAuth2Type() isSMTPXOAuth2Auth_OAuth2Type {
+	if x != nil {
+		return x.OAuth2Type
+	}
+	return nil
+}
+
+func (x *SMTPXOAuth2Auth) GetClientCredentials() *SMTPXOAuth2Auth_ClientCredentials {
+	if x != nil {
+		if x, ok := x.OAuth2Type.(*SMTPXOAuth2Auth_ClientCredentials_); ok {
+			return x.ClientCredentials
+		}
+	}
+	return nil
+}
+
+type isSMTPXOAuth2Auth_OAuth2Type interface {
+	isSMTPXOAuth2Auth_OAuth2Type()
+}
+
+type SMTPXOAuth2Auth_ClientCredentials_ struct {
+	ClientCredentials *SMTPXOAuth2Auth_ClientCredentials `protobuf:"bytes,3,opt,name=client_credentials,json=clientCredentials,proto3,oneof"`
+}
+
+func (*SMTPXOAuth2Auth_ClientCredentials_) isSMTPXOAuth2Auth_OAuth2Type() {}
+
 type EmailProviderHTTP struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Endpoint      string                 `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
@@ -773,7 +1000,7 @@ type EmailProviderHTTP struct {
 
 func (x *EmailProviderHTTP) Reset() {
 	*x = EmailProviderHTTP{}
-	mi := &file_zitadel_settings_proto_msgTypes[6]
+	mi := &file_zitadel_settings_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -785,7 +1012,7 @@ func (x *EmailProviderHTTP) String() string {
 func (*EmailProviderHTTP) ProtoMessage() {}
 
 func (x *EmailProviderHTTP) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[6]
+	mi := &file_zitadel_settings_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -798,7 +1025,7 @@ func (x *EmailProviderHTTP) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmailProviderHTTP.ProtoReflect.Descriptor instead.
 func (*EmailProviderHTTP) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{6}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *EmailProviderHTTP) GetEndpoint() string {
@@ -832,7 +1059,7 @@ type SMSProvider struct {
 
 func (x *SMSProvider) Reset() {
 	*x = SMSProvider{}
-	mi := &file_zitadel_settings_proto_msgTypes[7]
+	mi := &file_zitadel_settings_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -844,7 +1071,7 @@ func (x *SMSProvider) String() string {
 func (*SMSProvider) ProtoMessage() {}
 
 func (x *SMSProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[7]
+	mi := &file_zitadel_settings_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -857,7 +1084,7 @@ func (x *SMSProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SMSProvider.ProtoReflect.Descriptor instead.
 func (*SMSProvider) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{7}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SMSProvider) GetDetails() *object.ObjectDetails {
@@ -940,7 +1167,7 @@ type TwilioConfig struct {
 
 func (x *TwilioConfig) Reset() {
 	*x = TwilioConfig{}
-	mi := &file_zitadel_settings_proto_msgTypes[8]
+	mi := &file_zitadel_settings_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -952,7 +1179,7 @@ func (x *TwilioConfig) String() string {
 func (*TwilioConfig) ProtoMessage() {}
 
 func (x *TwilioConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[8]
+	mi := &file_zitadel_settings_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -965,7 +1192,7 @@ func (x *TwilioConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TwilioConfig.ProtoReflect.Descriptor instead.
 func (*TwilioConfig) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{8}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *TwilioConfig) GetSid() string {
@@ -999,7 +1226,7 @@ type HTTPConfig struct {
 
 func (x *HTTPConfig) Reset() {
 	*x = HTTPConfig{}
-	mi := &file_zitadel_settings_proto_msgTypes[9]
+	mi := &file_zitadel_settings_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1011,7 +1238,7 @@ func (x *HTTPConfig) String() string {
 func (*HTTPConfig) ProtoMessage() {}
 
 func (x *HTTPConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[9]
+	mi := &file_zitadel_settings_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1024,7 +1251,7 @@ func (x *HTTPConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HTTPConfig.ProtoReflect.Descriptor instead.
 func (*HTTPConfig) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{9}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *HTTPConfig) GetEndpoint() string {
@@ -1051,7 +1278,7 @@ type DebugNotificationProvider struct {
 
 func (x *DebugNotificationProvider) Reset() {
 	*x = DebugNotificationProvider{}
-	mi := &file_zitadel_settings_proto_msgTypes[10]
+	mi := &file_zitadel_settings_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1063,7 +1290,7 @@ func (x *DebugNotificationProvider) String() string {
 func (*DebugNotificationProvider) ProtoMessage() {}
 
 func (x *DebugNotificationProvider) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[10]
+	mi := &file_zitadel_settings_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1076,7 +1303,7 @@ func (x *DebugNotificationProvider) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DebugNotificationProvider.ProtoReflect.Descriptor instead.
 func (*DebugNotificationProvider) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{10}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DebugNotificationProvider) GetDetails() *object.ObjectDetails {
@@ -1106,7 +1333,7 @@ type OIDCSettings struct {
 
 func (x *OIDCSettings) Reset() {
 	*x = OIDCSettings{}
-	mi := &file_zitadel_settings_proto_msgTypes[11]
+	mi := &file_zitadel_settings_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1118,7 +1345,7 @@ func (x *OIDCSettings) String() string {
 func (*OIDCSettings) ProtoMessage() {}
 
 func (x *OIDCSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[11]
+	mi := &file_zitadel_settings_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1131,7 +1358,7 @@ func (x *OIDCSettings) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OIDCSettings.ProtoReflect.Descriptor instead.
 func (*OIDCSettings) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{11}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *OIDCSettings) GetDetails() *object.ObjectDetails {
@@ -1174,7 +1401,7 @@ type SecurityPolicy struct {
 	Details *object.ObjectDetails  `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
 	// states if iframe embedding is enabled or disabled
 	EnableIframeEmbedding bool `protobuf:"varint,2,opt,name=enable_iframe_embedding,json=enableIframeEmbedding,proto3" json:"enable_iframe_embedding,omitempty"`
-	// origins allowed loading ZITADEL in an iframe if enable_iframe_embedding is true
+	// origins allowed loading Zitadel in an iframe if enable_iframe_embedding is true
 	AllowedOrigins []string `protobuf:"bytes,3,rep,name=allowed_origins,json=allowedOrigins,proto3" json:"allowed_origins,omitempty"`
 	// allows users to impersonate other users. The impersonator needs the appropriate `*_IMPERSONATOR` roles assigned as well"
 	EnableImpersonation bool `protobuf:"varint,4,opt,name=enable_impersonation,json=enableImpersonation,proto3" json:"enable_impersonation,omitempty"`
@@ -1184,7 +1411,7 @@ type SecurityPolicy struct {
 
 func (x *SecurityPolicy) Reset() {
 	*x = SecurityPolicy{}
-	mi := &file_zitadel_settings_proto_msgTypes[12]
+	mi := &file_zitadel_settings_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1196,7 +1423,7 @@ func (x *SecurityPolicy) String() string {
 func (*SecurityPolicy) ProtoMessage() {}
 
 func (x *SecurityPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_zitadel_settings_proto_msgTypes[12]
+	mi := &file_zitadel_settings_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1209,7 +1436,7 @@ func (x *SecurityPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecurityPolicy.ProtoReflect.Descriptor instead.
 func (*SecurityPolicy) Descriptor() ([]byte, []int) {
-	return file_zitadel_settings_proto_rawDescGZIP(), []int{12}
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SecurityPolicy) GetDetails() *object.ObjectDetails {
@@ -1238,6 +1465,52 @@ func (x *SecurityPolicy) GetEnableImpersonation() bool {
 		return x.EnableImpersonation
 	}
 	return false
+}
+
+// ClientCredentials authenticates the SMTP client using Oauth 2.0 Client Credentials grant.
+// https://datatracker.ietf.org/doc/html/rfc6749#section-4.4
+type SMTPXOAuth2Auth_ClientCredentials struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ClientId      string                 `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) Reset() {
+	*x = SMTPXOAuth2Auth_ClientCredentials{}
+	mi := &file_zitadel_settings_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SMTPXOAuth2Auth_ClientCredentials) ProtoMessage() {}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) ProtoReflect() protoreflect.Message {
+	mi := &file_zitadel_settings_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SMTPXOAuth2Auth_ClientCredentials.ProtoReflect.Descriptor instead.
+func (*SMTPXOAuth2Auth_ClientCredentials) Descriptor() ([]byte, []int) {
+	return file_zitadel_settings_proto_rawDescGZIP(), []int{8, 0}
+}
+
+func (x *SMTPXOAuth2Auth_ClientCredentials) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
 }
 
 var File_zitadel_settings_proto protoreflect.FileDescriptor
@@ -1281,7 +1554,7 @@ const file_zitadel_settings_proto_rawDesc = "" +
 	"\vdescription\x18\x06 \x01(\tR\vdescription\x12<\n" +
 	"\x04smtp\x18\x04 \x01(\v2&.zitadel.settings.v1.EmailProviderSMTPH\x00R\x04smtp\x12<\n" +
 	"\x04http\x18\x05 \x01(\v2&.zitadel.settings.v1.EmailProviderHTTPH\x00R\x04httpB\b\n" +
-	"\x06config\"\xdd\x02\n" +
+	"\x06config\"\x9a\x04\n" +
 	"\x11EmailProviderSMTP\x12E\n" +
 	"\x0esender_address\x18\x01 \x01(\tB\x1e\x92A\x1bJ\x19\"noreply@m.zitadel.cloud\"R\rsenderAddress\x12/\n" +
 	"\vsender_name\x18\x02 \x01(\tB\x0e\x92A\vJ\t\"ZITADEL\"R\n" +
@@ -1289,7 +1562,23 @@ const file_zitadel_settings_proto_rawDesc = "" +
 	"\x03tls\x18\x03 \x01(\bR\x03tls\x123\n" +
 	"\x04host\x18\x04 \x01(\tB\x1f\x92A\x1cJ\x1a\"smtp.postmarkapp.com:587\"R\x04host\x12?\n" +
 	"\x04user\x18\x05 \x01(\tB+\x92A(J&\"197f0117-529e-443d-bf6c-0292dd9a02b7\"R\x04user\x12H\n" +
-	"\x10reply_to_address\x18\x06 \x01(\tB\x1e\x92A\x1bJ\x19\"replyto@m.zitadel.cloud\"R\x0ereplyToAddress\"a\n" +
+	"\x10reply_to_address\x18\x06 \x01(\tB\x1e\x92A\x1bJ\x19\"replyto@m.zitadel.cloud\"R\x0ereplyToAddress\x125\n" +
+	"\x04none\x18\t \x01(\v2\x1f.zitadel.settings.v1.SMTPNoAuthH\x00R\x04none\x12:\n" +
+	"\x05plain\x18\n" +
+	" \x01(\v2\".zitadel.settings.v1.SMTPPlainAuthH\x00R\x05plain\x12@\n" +
+	"\axoauth2\x18\v \x01(\v2$.zitadel.settings.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\x06\n" +
+	"\x04Auth\"\f\n" +
+	"\n" +
+	"SMTPNoAuth\"\x0f\n" +
+	"\rSMTPPlainAuth\"\xef\x02\n" +
+	"\x0fSMTPXOAuth2Auth\x12K\n" +
+	"\x0etoken_endpoint\x18\x01 \x01(\tB$\x92A!J\x1f\"http://auth.example.com/token\"R\rtokenEndpoint\x129\n" +
+	"\x06scopes\x18\x02 \x03(\tB!\x92A\x1eJ\x1c[\"https://mail.example.com\"]R\x06scopes\x12g\n" +
+	"\x12client_credentials\x18\x03 \x01(\v26.zitadel.settings.v1.SMTPXOAuth2Auth.ClientCredentialsH\x00R\x11clientCredentials\x1a]\n" +
+	"\x11ClientCredentials\x12H\n" +
+	"\tclient_id\x18\x01 \x01(\tB+\x92A(J&\"197f0117-529e-443d-bf6c-0292dd9a02b7\"R\bclientIdB\f\n" +
+	"\n" +
+	"OAuth2Type\"a\n" +
 	"\x11EmailProviderHTTP\x12\x1a\n" +
 	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x120\n" +
 	"\vsigning_key\x18\x02 \x01(\tB\x0f\x92A\fJ\n" +
@@ -1363,56 +1652,64 @@ func file_zitadel_settings_proto_rawDescGZIP() []byte {
 }
 
 var file_zitadel_settings_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_zitadel_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_zitadel_settings_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_zitadel_settings_proto_goTypes = []any{
-	(SMTPConfigState)(0),              // 0: zitadel.settings.v1.SMTPConfigState
-	(SecretGeneratorType)(0),          // 1: zitadel.settings.v1.SecretGeneratorType
-	(EmailProviderState)(0),           // 2: zitadel.settings.v1.EmailProviderState
-	(SMSProviderConfigState)(0),       // 3: zitadel.settings.v1.SMSProviderConfigState
-	(*SecretGenerator)(nil),           // 4: zitadel.settings.v1.SecretGenerator
-	(*SecretGeneratorQuery)(nil),      // 5: zitadel.settings.v1.SecretGeneratorQuery
-	(*SecretGeneratorTypeQuery)(nil),  // 6: zitadel.settings.v1.SecretGeneratorTypeQuery
-	(*SMTPConfig)(nil),                // 7: zitadel.settings.v1.SMTPConfig
-	(*EmailProvider)(nil),             // 8: zitadel.settings.v1.EmailProvider
-	(*EmailProviderSMTP)(nil),         // 9: zitadel.settings.v1.EmailProviderSMTP
-	(*EmailProviderHTTP)(nil),         // 10: zitadel.settings.v1.EmailProviderHTTP
-	(*SMSProvider)(nil),               // 11: zitadel.settings.v1.SMSProvider
-	(*TwilioConfig)(nil),              // 12: zitadel.settings.v1.TwilioConfig
-	(*HTTPConfig)(nil),                // 13: zitadel.settings.v1.HTTPConfig
-	(*DebugNotificationProvider)(nil), // 14: zitadel.settings.v1.DebugNotificationProvider
-	(*OIDCSettings)(nil),              // 15: zitadel.settings.v1.OIDCSettings
-	(*SecurityPolicy)(nil),            // 16: zitadel.settings.v1.SecurityPolicy
-	(*object.ObjectDetails)(nil),      // 17: zitadel.v1.ObjectDetails
-	(*durationpb.Duration)(nil),       // 18: google.protobuf.Duration
+	(SMTPConfigState)(0),                      // 0: zitadel.settings.v1.SMTPConfigState
+	(SecretGeneratorType)(0),                  // 1: zitadel.settings.v1.SecretGeneratorType
+	(EmailProviderState)(0),                   // 2: zitadel.settings.v1.EmailProviderState
+	(SMSProviderConfigState)(0),               // 3: zitadel.settings.v1.SMSProviderConfigState
+	(*SecretGenerator)(nil),                   // 4: zitadel.settings.v1.SecretGenerator
+	(*SecretGeneratorQuery)(nil),              // 5: zitadel.settings.v1.SecretGeneratorQuery
+	(*SecretGeneratorTypeQuery)(nil),          // 6: zitadel.settings.v1.SecretGeneratorTypeQuery
+	(*SMTPConfig)(nil),                        // 7: zitadel.settings.v1.SMTPConfig
+	(*EmailProvider)(nil),                     // 8: zitadel.settings.v1.EmailProvider
+	(*EmailProviderSMTP)(nil),                 // 9: zitadel.settings.v1.EmailProviderSMTP
+	(*SMTPNoAuth)(nil),                        // 10: zitadel.settings.v1.SMTPNoAuth
+	(*SMTPPlainAuth)(nil),                     // 11: zitadel.settings.v1.SMTPPlainAuth
+	(*SMTPXOAuth2Auth)(nil),                   // 12: zitadel.settings.v1.SMTPXOAuth2Auth
+	(*EmailProviderHTTP)(nil),                 // 13: zitadel.settings.v1.EmailProviderHTTP
+	(*SMSProvider)(nil),                       // 14: zitadel.settings.v1.SMSProvider
+	(*TwilioConfig)(nil),                      // 15: zitadel.settings.v1.TwilioConfig
+	(*HTTPConfig)(nil),                        // 16: zitadel.settings.v1.HTTPConfig
+	(*DebugNotificationProvider)(nil),         // 17: zitadel.settings.v1.DebugNotificationProvider
+	(*OIDCSettings)(nil),                      // 18: zitadel.settings.v1.OIDCSettings
+	(*SecurityPolicy)(nil),                    // 19: zitadel.settings.v1.SecurityPolicy
+	(*SMTPXOAuth2Auth_ClientCredentials)(nil), // 20: zitadel.settings.v1.SMTPXOAuth2Auth.ClientCredentials
+	(*object.ObjectDetails)(nil),              // 21: zitadel.v1.ObjectDetails
+	(*durationpb.Duration)(nil),               // 22: google.protobuf.Duration
 }
 var file_zitadel_settings_proto_depIdxs = []int32{
 	1,  // 0: zitadel.settings.v1.SecretGenerator.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
-	17, // 1: zitadel.settings.v1.SecretGenerator.details:type_name -> zitadel.v1.ObjectDetails
-	18, // 2: zitadel.settings.v1.SecretGenerator.expiry:type_name -> google.protobuf.Duration
+	21, // 1: zitadel.settings.v1.SecretGenerator.details:type_name -> zitadel.v1.ObjectDetails
+	22, // 2: zitadel.settings.v1.SecretGenerator.expiry:type_name -> google.protobuf.Duration
 	6,  // 3: zitadel.settings.v1.SecretGeneratorQuery.type_query:type_name -> zitadel.settings.v1.SecretGeneratorTypeQuery
 	1,  // 4: zitadel.settings.v1.SecretGeneratorTypeQuery.generator_type:type_name -> zitadel.settings.v1.SecretGeneratorType
-	17, // 5: zitadel.settings.v1.SMTPConfig.details:type_name -> zitadel.v1.ObjectDetails
+	21, // 5: zitadel.settings.v1.SMTPConfig.details:type_name -> zitadel.v1.ObjectDetails
 	0,  // 6: zitadel.settings.v1.SMTPConfig.state:type_name -> zitadel.settings.v1.SMTPConfigState
-	17, // 7: zitadel.settings.v1.EmailProvider.details:type_name -> zitadel.v1.ObjectDetails
+	21, // 7: zitadel.settings.v1.EmailProvider.details:type_name -> zitadel.v1.ObjectDetails
 	2,  // 8: zitadel.settings.v1.EmailProvider.state:type_name -> zitadel.settings.v1.EmailProviderState
 	9,  // 9: zitadel.settings.v1.EmailProvider.smtp:type_name -> zitadel.settings.v1.EmailProviderSMTP
-	10, // 10: zitadel.settings.v1.EmailProvider.http:type_name -> zitadel.settings.v1.EmailProviderHTTP
-	17, // 11: zitadel.settings.v1.SMSProvider.details:type_name -> zitadel.v1.ObjectDetails
-	3,  // 12: zitadel.settings.v1.SMSProvider.state:type_name -> zitadel.settings.v1.SMSProviderConfigState
-	12, // 13: zitadel.settings.v1.SMSProvider.twilio:type_name -> zitadel.settings.v1.TwilioConfig
-	13, // 14: zitadel.settings.v1.SMSProvider.http:type_name -> zitadel.settings.v1.HTTPConfig
-	17, // 15: zitadel.settings.v1.DebugNotificationProvider.details:type_name -> zitadel.v1.ObjectDetails
-	17, // 16: zitadel.settings.v1.OIDCSettings.details:type_name -> zitadel.v1.ObjectDetails
-	18, // 17: zitadel.settings.v1.OIDCSettings.access_token_lifetime:type_name -> google.protobuf.Duration
-	18, // 18: zitadel.settings.v1.OIDCSettings.id_token_lifetime:type_name -> google.protobuf.Duration
-	18, // 19: zitadel.settings.v1.OIDCSettings.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
-	18, // 20: zitadel.settings.v1.OIDCSettings.refresh_token_expiration:type_name -> google.protobuf.Duration
-	17, // 21: zitadel.settings.v1.SecurityPolicy.details:type_name -> zitadel.v1.ObjectDetails
-	22, // [22:22] is the sub-list for method output_type
-	22, // [22:22] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	13, // 10: zitadel.settings.v1.EmailProvider.http:type_name -> zitadel.settings.v1.EmailProviderHTTP
+	10, // 11: zitadel.settings.v1.EmailProviderSMTP.none:type_name -> zitadel.settings.v1.SMTPNoAuth
+	11, // 12: zitadel.settings.v1.EmailProviderSMTP.plain:type_name -> zitadel.settings.v1.SMTPPlainAuth
+	12, // 13: zitadel.settings.v1.EmailProviderSMTP.xoauth2:type_name -> zitadel.settings.v1.SMTPXOAuth2Auth
+	20, // 14: zitadel.settings.v1.SMTPXOAuth2Auth.client_credentials:type_name -> zitadel.settings.v1.SMTPXOAuth2Auth.ClientCredentials
+	21, // 15: zitadel.settings.v1.SMSProvider.details:type_name -> zitadel.v1.ObjectDetails
+	3,  // 16: zitadel.settings.v1.SMSProvider.state:type_name -> zitadel.settings.v1.SMSProviderConfigState
+	15, // 17: zitadel.settings.v1.SMSProvider.twilio:type_name -> zitadel.settings.v1.TwilioConfig
+	16, // 18: zitadel.settings.v1.SMSProvider.http:type_name -> zitadel.settings.v1.HTTPConfig
+	21, // 19: zitadel.settings.v1.DebugNotificationProvider.details:type_name -> zitadel.v1.ObjectDetails
+	21, // 20: zitadel.settings.v1.OIDCSettings.details:type_name -> zitadel.v1.ObjectDetails
+	22, // 21: zitadel.settings.v1.OIDCSettings.access_token_lifetime:type_name -> google.protobuf.Duration
+	22, // 22: zitadel.settings.v1.OIDCSettings.id_token_lifetime:type_name -> google.protobuf.Duration
+	22, // 23: zitadel.settings.v1.OIDCSettings.refresh_token_idle_expiration:type_name -> google.protobuf.Duration
+	22, // 24: zitadel.settings.v1.OIDCSettings.refresh_token_expiration:type_name -> google.protobuf.Duration
+	21, // 25: zitadel.settings.v1.SecurityPolicy.details:type_name -> zitadel.v1.ObjectDetails
+	26, // [26:26] is the sub-list for method output_type
+	26, // [26:26] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_zitadel_settings_proto_init() }
@@ -1427,7 +1724,15 @@ func file_zitadel_settings_proto_init() {
 		(*EmailProvider_Smtp)(nil),
 		(*EmailProvider_Http)(nil),
 	}
-	file_zitadel_settings_proto_msgTypes[7].OneofWrappers = []any{
+	file_zitadel_settings_proto_msgTypes[5].OneofWrappers = []any{
+		(*EmailProviderSMTP_None)(nil),
+		(*EmailProviderSMTP_Plain)(nil),
+		(*EmailProviderSMTP_Xoauth2)(nil),
+	}
+	file_zitadel_settings_proto_msgTypes[8].OneofWrappers = []any{
+		(*SMTPXOAuth2Auth_ClientCredentials_)(nil),
+	}
+	file_zitadel_settings_proto_msgTypes[10].OneofWrappers = []any{
 		(*SMSProvider_Twilio)(nil),
 		(*SMSProvider_Http)(nil),
 	}
@@ -1437,7 +1742,7 @@ func file_zitadel_settings_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_zitadel_settings_proto_rawDesc), len(file_zitadel_settings_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   13,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

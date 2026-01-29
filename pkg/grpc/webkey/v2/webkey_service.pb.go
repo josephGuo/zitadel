@@ -500,7 +500,7 @@ const file_zitadel_webkey_v2_webkey_service_proto_rawDesc = "" +
 	"*The feature flag `web_key` is not enabled.\x8a\xb5\x18\x14\n" +
 	"\x12\n" +
 	"\x10iam.web_key.read\x82\xd3\xe4\x93\x02\x0e\x12\f/v2/web_keysB\xa9\t\x92A\xef\b\x12\xcd\x03\n" +
-	"\x0fWeb Key Service\x12\xbb\x02This API is intended to manage web keys for a ZITADEL instance, used to sign and validate OIDC tokens.\n" +
+	"\x0fWeb Key Service\x12\xbb\x02This API is intended to manage web keys for a Zitadel instance, used to sign and validate OIDC tokens.\n" +
 	"\n" +
 	"The public key endpoint (outside of this service) is used to retrieve the public keys of the active and inactive keys.\n" +
 	"\n" +

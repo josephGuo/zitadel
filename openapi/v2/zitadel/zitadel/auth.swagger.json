@@ -106,7 +106,7 @@
     "/healthz": {
       "get": {
         "summary": "Healthz",
-        "description": "The health endpoint allows an external system to probe if ZITADEL authentication API is alive",
+        "description": "The health endpoint allows an external system to probe if Zitadel authentication API is alive",
         "operationId": "AuthService_Healthz",
         "responses": {
           "200": {
@@ -154,8 +154,8 @@
     },
     "/memberships/me/_search": {
       "post": {
-        "summary": "List My ZITADEL Administrator Roles",
-        "description": "Show all the management roles my user has in ZITADEL (ZITADEL Manager).",
+        "summary": "List My Zitadel Administrator Roles",
+        "description": "Show all the management roles my user has in Zitadel (ZITADEL Manager).",
         "operationId": "AuthService_ListMyMemberships",
         "responses": {
           "200": {
@@ -213,8 +213,8 @@
     },
     "/permissions/zitadel/me/_search": {
       "post": {
-        "summary": "List My ZITADEL Permissions",
-        "description": "Returns a list of permissions the authenticated user has in ZITADEL based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).",
+        "summary": "List My Zitadel Permissions",
+        "description": "Returns a list of permissions the authenticated user has in Zitadel based on the administrator roles the user has. (e.g: ORG_OWNER = org.read, org.write, ...).",
         "operationId": "AuthService_ListMyZitadelPermissions",
         "responses": {
           "200": {
@@ -1814,7 +1814,7 @@
         "displayName": {
           "type": "string",
           "example": "Gigi Giraffe",
-          "description": "a user can set the display name, if nothing is set ZITADEL computes \"first_name last_name\""
+          "description": "a user can set the display name, if nothing is set Zitadel computes \"first_name last_name\""
         },
         "preferredLanguage": {
           "type": "string",
@@ -2057,7 +2057,7 @@
           "type": "integer",
           "format": "int64",
           "example": 20,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -2612,7 +2612,7 @@
           "type": "integer",
           "format": "int64",
           "example": 100,
-          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken."
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
         },
         "asc": {
           "type": "boolean",
@@ -3039,17 +3039,17 @@
         "docsLink": {
           "type": "string",
           "example": "https://zitadel.com/docs",
-          "description": "Link to documentation to be shown in the console."
+          "description": "Link to documentation to be shown in the management console."
         },
         "customLink": {
           "type": "string",
           "example": "https://external.link",
-          "description": "Link to an external resource that will be available to users in the console."
+          "description": "Link to an external resource that will be available to users in the management console."
         },
         "customLinkText": {
           "type": "string",
           "example": "External",
-          "description": "The button text that would be shown in console pointing to custom link."
+          "description": "The button text that would be shown in the management console pointing to custom link."
         }
       }
     },

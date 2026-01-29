@@ -330,7 +330,7 @@ type isSetEmail_Verification interface {
 }
 
 type SetEmail_SendCode struct {
-	// Let ZITADEL send the link to the user via email.
+	// Let Zitadel send the link to the user via email.
 	SendCode *SendEmailVerificationCode `protobuf:"bytes,2,opt,name=send_code,json=sendCode,proto3,oneof"`
 }
 
@@ -352,9 +352,9 @@ func (*SetEmail_IsVerified) isSetEmail_Verification() {}
 
 type SendEmailVerificationCode struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Optionally set a url_template, which will be used in the verification mail sent by ZITADEL
+	// Optionally set a url_template, which will be used in the verification mail sent by Zitadel
 	// to guide the user to your verification page.
-	// If no template is set, the default ZITADEL url will be used.
+	// If no template is set, the default Zitadel url will be used.
 	UrlTemplate   *string `protobuf:"bytes,1,opt,name=url_template,json=urlTemplate,proto3,oneof" json:"url_template,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -525,7 +525,7 @@ type isSetPhone_Verification interface {
 }
 
 type SetPhone_SendCode struct {
-	// Let ZITADEL send the link to the user via SMS.
+	// Let Zitadel send the link to the user via SMS.
 	SendCode *SendPhoneVerificationCode `protobuf:"bytes,2,opt,name=send_code,json=sendCode,proto3,oneof"`
 }
 

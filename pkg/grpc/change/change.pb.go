@@ -202,7 +202,7 @@ const file_zitadel_change_proto_rawDesc = "" +
 	"\x11editor_avatar_url\x18\b \x01(\tBV\x92AS2\x18avatar URL of the editorJ7\"https://api.zitadel.ch/assets/v1/avatar-32432jkh4kj32\"R\x0feditorAvatarUrl\"\xc0\x04\n" +
 	"\vChangeQuery\x12c\n" +
 	"\bsequence\x18\x01 \x01(\x04BG\x92AD2=sequence represents the order of events. It's always countingJ\x03\"2\"R\bsequence\x12\xbc\x02\n" +
-	"\x05limit\x18\x02 \x01(\rB\xa5\x02\x92A\xa1\x022\x9a\x02Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured ZITADEL will throw an error. If no limit is present the default is taken.J\x0220R\x05limit\x12,\n" +
+	"\x05limit\x18\x02 \x01(\rB\xa5\x02\x92A\xa1\x022\x9a\x02Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If no limit is set or the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken.J\x0220R\x05limit\x12,\n" +
 	"\x03asc\x18\x03 \x01(\bB\x1a\x92A\x172\x15default is descendingR\x03asc:_\x92A\\\n" +
 	"Z*\x1eQuery for Changes of an Object28Filter possibility for the changes/history of an Object.B,Z*github.com/zitadel/zitadel/pkg/grpc/changeb\x06proto3"
 
