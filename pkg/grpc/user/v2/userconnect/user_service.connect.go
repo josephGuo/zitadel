@@ -203,7 +203,7 @@ type UserServiceClient interface {
 	CreateUser(context.Context, *connect.Request[v2.CreateUserRequest]) (*connect.Response[v2.CreateUserResponse], error)
 	// Create a new human user
 	//
-	// Deprecated: Use [CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) to create a new user of type human instead.
+	// Deprecated: Use [CreateUser](/docs/reference/api/user/zitadel.user.v2.UserService.CreateUser) to create a new user of type human instead.
 	//
 	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	AddHumanUser(context.Context, *connect.Request[v2.AddHumanUserRequest]) (*connect.Response[v2.AddHumanUserResponse], error)
@@ -217,7 +217,7 @@ type UserServiceClient interface {
 	ListUsers(context.Context, *connect.Request[v2.ListUsersRequest]) (*connect.Response[v2.ListUsersResponse], error)
 	// Change the user email
 	//
-	// Deprecated: [Update the users email field](apis/resources/user_service_v2/user-service-update-user.api.mdx).
+	// Deprecated: [Update the users email field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).
 	//
 	// Change the email address of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by email..
 	SetEmail(context.Context, *connect.Request[v2.SetEmailRequest]) (*connect.Response[v2.SetEmailResponse], error)
@@ -231,13 +231,13 @@ type UserServiceClient interface {
 	VerifyEmail(context.Context, *connect.Request[v2.VerifyEmailRequest]) (*connect.Response[v2.VerifyEmailResponse], error)
 	// Set the user phone
 	//
-	// Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx).
+	// Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).
 	//
 	// Set the phone number of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by sms..
 	SetPhone(context.Context, *connect.Request[v2.SetPhoneRequest]) (*connect.Response[v2.SetPhoneResponse], error)
 	// Delete the user phone
 	//
-	// Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx) to remove the phone number.
+	// Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to remove the phone number.
 	//
 	// Delete the phone number of a user.
 	RemovePhone(context.Context, *connect.Request[v2.RemovePhoneRequest]) (*connect.Response[v2.RemovePhoneResponse], error)
@@ -260,7 +260,7 @@ type UserServiceClient interface {
 	UpdateUser(context.Context, *connect.Request[v2.UpdateUserRequest]) (*connect.Response[v2.UpdateUserResponse], error)
 	// Update Human User
 	//
-	// Deprecated: Use [UpdateUser](apis/resources/user_service_v2/user-service-update-user.api.mdx) to update a user of type human instead.
+	// Deprecated: Use [UpdateUser](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to update a user of type human instead.
 	//
 	// Update all information from a user.
 	UpdateHumanUser(context.Context, *connect.Request[v2.UpdateHumanUserRequest]) (*connect.Response[v2.UpdateHumanUserResponse], error)
@@ -378,7 +378,7 @@ type UserServiceClient interface {
 	PasswordReset(context.Context, *connect.Request[v2.PasswordResetRequest]) (*connect.Response[v2.PasswordResetResponse], error)
 	// Change password
 	//
-	// Deprecated: [Update the users password](apis/resources/user_service_v2/user-service-update-user.api.mdx) instead.
+	// Deprecated: [Update the users password](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) instead.
 	//
 	// Change the password of a user with either a verification code or the current password..
 	SetPassword(context.Context, *connect.Request[v2.SetPasswordRequest]) (*connect.Response[v2.SetPasswordResponse], error)
@@ -461,7 +461,7 @@ type UserServiceClient interface {
 	CreateInviteCode(context.Context, *connect.Request[v2.CreateInviteCodeRequest]) (*connect.Response[v2.CreateInviteCodeResponse], error)
 	// Resend an invite code for a user
 	//
-	// Deprecated: Use [CreateInviteCode](apis/resources/user_service_v2/user-service-create-invite-code.api.mdx) instead.
+	// Deprecated: Use [CreateInviteCode](/docs/reference/api/user/zitadel.user.v2.UserService.CreateInviteCode) instead.
 	//
 	// Resend an invite code for a user to initialize their first authentication method (password, passkeys, IdP) depending on the organization's available methods.
 	// A resend is only possible if a code has been created previously and sent to the user. If there is no code or it was directly returned, an error will be returned.
@@ -477,7 +477,7 @@ type UserServiceClient interface {
 	HumanMFAInitSkipped(context.Context, *connect.Request[v2.HumanMFAInitSkippedRequest]) (*connect.Response[v2.HumanMFAInitSkippedResponse], error)
 	// Set User Metadata
 	//
-	// Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](apis/resources/user_service_v2/user-service-delete-user-metadata.api.mdx). For HTTP requests, make sure the bytes array value is base64 encoded.
+	// Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](/docs/reference/api/user/zitadel.user.v2.UserService.DeleteUserMetadata). For HTTP requests, make sure the bytes array value is base64 encoded.
 	//
 	// Required permission:
 	//   - `user.write`
@@ -1247,7 +1247,7 @@ type UserServiceHandler interface {
 	CreateUser(context.Context, *connect.Request[v2.CreateUserRequest]) (*connect.Response[v2.CreateUserResponse], error)
 	// Create a new human user
 	//
-	// Deprecated: Use [CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) to create a new user of type human instead.
+	// Deprecated: Use [CreateUser](/docs/reference/api/user/zitadel.user.v2.UserService.CreateUser) to create a new user of type human instead.
 	//
 	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	AddHumanUser(context.Context, *connect.Request[v2.AddHumanUserRequest]) (*connect.Response[v2.AddHumanUserResponse], error)
@@ -1261,7 +1261,7 @@ type UserServiceHandler interface {
 	ListUsers(context.Context, *connect.Request[v2.ListUsersRequest]) (*connect.Response[v2.ListUsersResponse], error)
 	// Change the user email
 	//
-	// Deprecated: [Update the users email field](apis/resources/user_service_v2/user-service-update-user.api.mdx).
+	// Deprecated: [Update the users email field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).
 	//
 	// Change the email address of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by email..
 	SetEmail(context.Context, *connect.Request[v2.SetEmailRequest]) (*connect.Response[v2.SetEmailResponse], error)
@@ -1275,13 +1275,13 @@ type UserServiceHandler interface {
 	VerifyEmail(context.Context, *connect.Request[v2.VerifyEmailRequest]) (*connect.Response[v2.VerifyEmailResponse], error)
 	// Set the user phone
 	//
-	// Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx).
+	// Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).
 	//
 	// Set the phone number of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by sms..
 	SetPhone(context.Context, *connect.Request[v2.SetPhoneRequest]) (*connect.Response[v2.SetPhoneResponse], error)
 	// Delete the user phone
 	//
-	// Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx) to remove the phone number.
+	// Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to remove the phone number.
 	//
 	// Delete the phone number of a user.
 	RemovePhone(context.Context, *connect.Request[v2.RemovePhoneRequest]) (*connect.Response[v2.RemovePhoneResponse], error)
@@ -1304,7 +1304,7 @@ type UserServiceHandler interface {
 	UpdateUser(context.Context, *connect.Request[v2.UpdateUserRequest]) (*connect.Response[v2.UpdateUserResponse], error)
 	// Update Human User
 	//
-	// Deprecated: Use [UpdateUser](apis/resources/user_service_v2/user-service-update-user.api.mdx) to update a user of type human instead.
+	// Deprecated: Use [UpdateUser](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to update a user of type human instead.
 	//
 	// Update all information from a user.
 	UpdateHumanUser(context.Context, *connect.Request[v2.UpdateHumanUserRequest]) (*connect.Response[v2.UpdateHumanUserResponse], error)
@@ -1422,7 +1422,7 @@ type UserServiceHandler interface {
 	PasswordReset(context.Context, *connect.Request[v2.PasswordResetRequest]) (*connect.Response[v2.PasswordResetResponse], error)
 	// Change password
 	//
-	// Deprecated: [Update the users password](apis/resources/user_service_v2/user-service-update-user.api.mdx) instead.
+	// Deprecated: [Update the users password](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) instead.
 	//
 	// Change the password of a user with either a verification code or the current password..
 	SetPassword(context.Context, *connect.Request[v2.SetPasswordRequest]) (*connect.Response[v2.SetPasswordResponse], error)
@@ -1505,7 +1505,7 @@ type UserServiceHandler interface {
 	CreateInviteCode(context.Context, *connect.Request[v2.CreateInviteCodeRequest]) (*connect.Response[v2.CreateInviteCodeResponse], error)
 	// Resend an invite code for a user
 	//
-	// Deprecated: Use [CreateInviteCode](apis/resources/user_service_v2/user-service-create-invite-code.api.mdx) instead.
+	// Deprecated: Use [CreateInviteCode](/docs/reference/api/user/zitadel.user.v2.UserService.CreateInviteCode) instead.
 	//
 	// Resend an invite code for a user to initialize their first authentication method (password, passkeys, IdP) depending on the organization's available methods.
 	// A resend is only possible if a code has been created previously and sent to the user. If there is no code or it was directly returned, an error will be returned.
@@ -1521,7 +1521,7 @@ type UserServiceHandler interface {
 	HumanMFAInitSkipped(context.Context, *connect.Request[v2.HumanMFAInitSkippedRequest]) (*connect.Response[v2.HumanMFAInitSkippedResponse], error)
 	// Set User Metadata
 	//
-	// Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](apis/resources/user_service_v2/user-service-delete-user-metadata.api.mdx). For HTTP requests, make sure the bytes array value is base64 encoded.
+	// Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](/docs/reference/api/user/zitadel.user.v2.UserService.DeleteUserMetadata). For HTTP requests, make sure the bytes array value is base64 encoded.
 	//
 	// Required permission:
 	//   - `user.write`

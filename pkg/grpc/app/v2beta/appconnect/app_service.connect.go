@@ -75,7 +75,7 @@ const (
 type AppServiceClient interface {
 	// Create Application
 	//
-	// Deprecated: use [application service v2 CreateApplication](apis/resources/application_service_v2/application-service-create-application.api.mdx) instead.
+	// Deprecated: use [application service v2 CreateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplication) instead.
 	//
 	// Create an application. The application can be OIDC, API or SAML type, based on the input.
 	//
@@ -84,7 +84,7 @@ type AppServiceClient interface {
 	CreateApplication(context.Context, *connect.Request[v2beta.CreateApplicationRequest]) (*connect.Response[v2beta.CreateApplicationResponse], error)
 	// Update Application
 	//
-	// Deprecated: use [application service v2 UpdateApplication](apis/resources/application_service_v2/zitadel-app-v-2-application-service-update-application.api.mdx) instead.
+	// Deprecated: use [application service v2 UpdateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.UpdateApplication) instead.
 	//
 	// Changes the configuration of an OIDC, API or SAML type application, as well as
 	// the application name, based on the input provided.
@@ -94,7 +94,7 @@ type AppServiceClient interface {
 	UpdateApplication(context.Context, *connect.Request[v2beta.UpdateApplicationRequest]) (*connect.Response[v2beta.UpdateApplicationResponse], error)
 	// Get Application
 	//
-	// Deprecated: use [application service v2 GetApplication](apis/resources/application_service_v2/application-service-get-application.api.mdx) instead.
+	// Deprecated: use [application service v2 GetApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplication) instead.
 	//
 	// Retrieves the application matching the provided ID.
 	//
@@ -103,7 +103,7 @@ type AppServiceClient interface {
 	GetApplication(context.Context, *connect.Request[v2beta.GetApplicationRequest]) (*connect.Response[v2beta.GetApplicationResponse], error)
 	// Delete Application
 	//
-	// Deprecated: use [application service v2 DeleteApplication](apis/resources/application_service_v2/application-service-delete-application.api.mdx) instead.
+	// Deprecated: use [application service v2 DeleteApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplication) instead.
 	//
 	// Deletes the application belonging to the input project and matching the provided
 	// application ID.
@@ -113,7 +113,7 @@ type AppServiceClient interface {
 	DeleteApplication(context.Context, *connect.Request[v2beta.DeleteApplicationRequest]) (*connect.Response[v2beta.DeleteApplicationResponse], error)
 	// Deactivate Application
 	//
-	// Deprecated: use [application service v2 DeactivateApplication](apis/resources/application_service_v2/application-service-deactivate-application.api.mdx) instead.
+	// Deprecated: use [application service v2 DeactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeactivateApplication) instead.
 	//
 	// Deactivates the application belonging to the input project and matching the provided
 	// application ID.
@@ -123,7 +123,7 @@ type AppServiceClient interface {
 	DeactivateApplication(context.Context, *connect.Request[v2beta.DeactivateApplicationRequest]) (*connect.Response[v2beta.DeactivateApplicationResponse], error)
 	// Reactivate Application
 	//
-	// Deprecated: use [application service v2 ReactivateApplication](apis/resources/application_service_v2/application-service-reactivate-application.api.mdx) instead.
+	// Deprecated: use [application service v2 ReactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ReactivateApplication) instead.
 	//
 	// Reactivates the application belonging to the input project and matching the provided
 	// application ID.
@@ -133,7 +133,7 @@ type AppServiceClient interface {
 	ReactivateApplication(context.Context, *connect.Request[v2beta.ReactivateApplicationRequest]) (*connect.Response[v2beta.ReactivateApplicationResponse], error)
 	// Regenerate Client Secret
 	//
-	// Deprecated: use [application service v2 GenerateClientSecret](apis/resources/application_service_v2/application-service-generate-client-secret.api.mdx) instead.
+	// Deprecated: use [application service v2 GenerateClientSecret](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GenerateClientSecret) instead.
 	//
 	// Regenerates the client secret of an API or OIDC application that belongs to the input project.
 	//
@@ -142,7 +142,7 @@ type AppServiceClient interface {
 	RegenerateClientSecret(context.Context, *connect.Request[v2beta.RegenerateClientSecretRequest]) (*connect.Response[v2beta.RegenerateClientSecretResponse], error)
 	// List Applications
 	//
-	// Deprecated: use [application service v2 ListApplications](apis/resources/application_service_v2/application-service-list-applications.api.mdx) instead.
+	// Deprecated: use [application service v2 ListApplications](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplications) instead.
 	//
 	// Returns a list of applications matching the input parameters that belong to the provided
 	// project.
@@ -155,7 +155,7 @@ type AppServiceClient interface {
 	ListApplications(context.Context, *connect.Request[v2beta.ListApplicationsRequest]) (*connect.Response[v2beta.ListApplicationsResponse], error)
 	// Create Application Key
 	//
-	// Deprecated: use [application service v2 CreateApplicationKey](apis/resources/application_service_v2/application-service-create-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 CreateApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplicationKey) instead.
 	//
 	// Create a new application key, which is used to authorize an API application.
 	//
@@ -167,7 +167,7 @@ type AppServiceClient interface {
 	CreateApplicationKey(context.Context, *connect.Request[v2beta.CreateApplicationKeyRequest]) (*connect.Response[v2beta.CreateApplicationKeyResponse], error)
 	// Delete Application Key
 	//
-	// Deprecated: use [application service v2 DeleteApplicationKey](apis/resources/application_service_v2/application-service-delete-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 DeleteApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplicationKey) instead.
 	//
 	// Deletes an application key matching the provided ID.
 	//
@@ -180,7 +180,7 @@ type AppServiceClient interface {
 	DeleteApplicationKey(context.Context, *connect.Request[v2beta.DeleteApplicationKeyRequest]) (*connect.Response[v2beta.DeleteApplicationKeyResponse], error)
 	// Get Application Key
 	//
-	// Deprecated: use [application service v2 GetApplicationKey](apis/resources/application_service_v2/application-service-get-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 GetApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplicationKey) instead.
 	//
 	// Retrieves the application key matching the provided ID.
 	//
@@ -191,7 +191,7 @@ type AppServiceClient interface {
 	GetApplicationKey(context.Context, *connect.Request[v2beta.GetApplicationKeyRequest]) (*connect.Response[v2beta.GetApplicationKeyResponse], error)
 	// List Application Keys
 	//
-	// Deprecated: use [application service v2 ListApplicationKeys](apis/resources/application_service_v2/application-service-list-application-keys.api.mdx) instead.
+	// Deprecated: use [application service v2 ListApplicationKeys](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplicationKeys) instead.
 	//
 	// Returns a list of application keys matching the input parameters.
 	//
@@ -369,7 +369,7 @@ func (c *appServiceClient) ListApplicationKeys(ctx context.Context, req *connect
 type AppServiceHandler interface {
 	// Create Application
 	//
-	// Deprecated: use [application service v2 CreateApplication](apis/resources/application_service_v2/application-service-create-application.api.mdx) instead.
+	// Deprecated: use [application service v2 CreateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplication) instead.
 	//
 	// Create an application. The application can be OIDC, API or SAML type, based on the input.
 	//
@@ -378,7 +378,7 @@ type AppServiceHandler interface {
 	CreateApplication(context.Context, *connect.Request[v2beta.CreateApplicationRequest]) (*connect.Response[v2beta.CreateApplicationResponse], error)
 	// Update Application
 	//
-	// Deprecated: use [application service v2 UpdateApplication](apis/resources/application_service_v2/zitadel-app-v-2-application-service-update-application.api.mdx) instead.
+	// Deprecated: use [application service v2 UpdateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.UpdateApplication) instead.
 	//
 	// Changes the configuration of an OIDC, API or SAML type application, as well as
 	// the application name, based on the input provided.
@@ -388,7 +388,7 @@ type AppServiceHandler interface {
 	UpdateApplication(context.Context, *connect.Request[v2beta.UpdateApplicationRequest]) (*connect.Response[v2beta.UpdateApplicationResponse], error)
 	// Get Application
 	//
-	// Deprecated: use [application service v2 GetApplication](apis/resources/application_service_v2/application-service-get-application.api.mdx) instead.
+	// Deprecated: use [application service v2 GetApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplication) instead.
 	//
 	// Retrieves the application matching the provided ID.
 	//
@@ -397,7 +397,7 @@ type AppServiceHandler interface {
 	GetApplication(context.Context, *connect.Request[v2beta.GetApplicationRequest]) (*connect.Response[v2beta.GetApplicationResponse], error)
 	// Delete Application
 	//
-	// Deprecated: use [application service v2 DeleteApplication](apis/resources/application_service_v2/application-service-delete-application.api.mdx) instead.
+	// Deprecated: use [application service v2 DeleteApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplication) instead.
 	//
 	// Deletes the application belonging to the input project and matching the provided
 	// application ID.
@@ -407,7 +407,7 @@ type AppServiceHandler interface {
 	DeleteApplication(context.Context, *connect.Request[v2beta.DeleteApplicationRequest]) (*connect.Response[v2beta.DeleteApplicationResponse], error)
 	// Deactivate Application
 	//
-	// Deprecated: use [application service v2 DeactivateApplication](apis/resources/application_service_v2/application-service-deactivate-application.api.mdx) instead.
+	// Deprecated: use [application service v2 DeactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeactivateApplication) instead.
 	//
 	// Deactivates the application belonging to the input project and matching the provided
 	// application ID.
@@ -417,7 +417,7 @@ type AppServiceHandler interface {
 	DeactivateApplication(context.Context, *connect.Request[v2beta.DeactivateApplicationRequest]) (*connect.Response[v2beta.DeactivateApplicationResponse], error)
 	// Reactivate Application
 	//
-	// Deprecated: use [application service v2 ReactivateApplication](apis/resources/application_service_v2/application-service-reactivate-application.api.mdx) instead.
+	// Deprecated: use [application service v2 ReactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ReactivateApplication) instead.
 	//
 	// Reactivates the application belonging to the input project and matching the provided
 	// application ID.
@@ -427,7 +427,7 @@ type AppServiceHandler interface {
 	ReactivateApplication(context.Context, *connect.Request[v2beta.ReactivateApplicationRequest]) (*connect.Response[v2beta.ReactivateApplicationResponse], error)
 	// Regenerate Client Secret
 	//
-	// Deprecated: use [application service v2 GenerateClientSecret](apis/resources/application_service_v2/application-service-generate-client-secret.api.mdx) instead.
+	// Deprecated: use [application service v2 GenerateClientSecret](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GenerateClientSecret) instead.
 	//
 	// Regenerates the client secret of an API or OIDC application that belongs to the input project.
 	//
@@ -436,7 +436,7 @@ type AppServiceHandler interface {
 	RegenerateClientSecret(context.Context, *connect.Request[v2beta.RegenerateClientSecretRequest]) (*connect.Response[v2beta.RegenerateClientSecretResponse], error)
 	// List Applications
 	//
-	// Deprecated: use [application service v2 ListApplications](apis/resources/application_service_v2/application-service-list-applications.api.mdx) instead.
+	// Deprecated: use [application service v2 ListApplications](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplications) instead.
 	//
 	// Returns a list of applications matching the input parameters that belong to the provided
 	// project.
@@ -449,7 +449,7 @@ type AppServiceHandler interface {
 	ListApplications(context.Context, *connect.Request[v2beta.ListApplicationsRequest]) (*connect.Response[v2beta.ListApplicationsResponse], error)
 	// Create Application Key
 	//
-	// Deprecated: use [application service v2 CreateApplicationKey](apis/resources/application_service_v2/application-service-create-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 CreateApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplicationKey) instead.
 	//
 	// Create a new application key, which is used to authorize an API application.
 	//
@@ -461,7 +461,7 @@ type AppServiceHandler interface {
 	CreateApplicationKey(context.Context, *connect.Request[v2beta.CreateApplicationKeyRequest]) (*connect.Response[v2beta.CreateApplicationKeyResponse], error)
 	// Delete Application Key
 	//
-	// Deprecated: use [application service v2 DeleteApplicationKey](apis/resources/application_service_v2/application-service-delete-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 DeleteApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplicationKey) instead.
 	//
 	// Deletes an application key matching the provided ID.
 	//
@@ -474,7 +474,7 @@ type AppServiceHandler interface {
 	DeleteApplicationKey(context.Context, *connect.Request[v2beta.DeleteApplicationKeyRequest]) (*connect.Response[v2beta.DeleteApplicationKeyResponse], error)
 	// Get Application Key
 	//
-	// Deprecated: use [application service v2 GetApplicationKey](apis/resources/application_service_v2/application-service-get-application-key.api.mdx) instead.
+	// Deprecated: use [application service v2 GetApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplicationKey) instead.
 	//
 	// Retrieves the application key matching the provided ID.
 	//
@@ -485,7 +485,7 @@ type AppServiceHandler interface {
 	GetApplicationKey(context.Context, *connect.Request[v2beta.GetApplicationKeyRequest]) (*connect.Response[v2beta.GetApplicationKeyResponse], error)
 	// List Application Keys
 	//
-	// Deprecated: use [application service v2 ListApplicationKeys](apis/resources/application_service_v2/application-service-list-application-keys.api.mdx) instead.
+	// Deprecated: use [application service v2 ListApplicationKeys](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplicationKeys) instead.
 	//
 	// Returns a list of application keys matching the input parameters.
 	//

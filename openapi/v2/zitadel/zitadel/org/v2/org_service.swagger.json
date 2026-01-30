@@ -1252,7 +1252,7 @@
         "hash": {
           "type": "string",
           "example": "$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2",
-          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"",
+          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/learn/architecture/secrets#hashed-secrets\"",
           "maxLength": 200,
           "minLength": 1
         },

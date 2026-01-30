@@ -1262,14 +1262,14 @@ const file_zitadel_policy_proto_rawDesc = "" +
 	"\x15max_password_attempts\x18\x02 \x01(\x04B\xd4\x01\x92A\xd0\x012\xc7\x01Maximum password check attempts before the account gets locked. Attempts are reset as soon as the password is entered correctly or the password is reset. If set to 0 the account will never be locked.J\x04\"10\"R\x13maxPasswordAttempts\x12\x82\x02\n" +
 	"\x10max_otp_attempts\x18\x03 \x01(\x04B\xd7\x01\x92A\xd3\x012\xca\x01Maximum failed attempts for a single OTP type (TOTP, SMS, Email) before the account gets locked. Attempts are reset as soon as the OTP is entered correctly. If set to 0 the account will never be locked.J\x04\"10\"R\x0emaxOtpAttempts\x12Z\n" +
 	"\n" +
-	"is_default\x18\x04 \x01(\bB;\x92A826defines if the organization's admin changed the policyR\tisDefault\"\xfb\x06\n" +
+	"is_default\x18\x04 \x01(\bB;\x92A826defines if the organization's admin changed the policyR\tisDefault\"\x95\a\n" +
 	"\rPrivacyPolicy\x123\n" +
-	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12Q\n" +
-	"\btos_link\x18\x02 \x01(\tB6\x92A3J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12W\n" +
-	"\fprivacy_link\x18\x03 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/legal/privacy-policy\"R\vprivacyLink\x12\x1d\n" +
+	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12X\n" +
+	"\btos_link\x18\x02 \x01(\tB=\x92A:J8\"https://zitadel.com/docs/manage/legal/terms-of-service\"R\atosLink\x12g\n" +
+	"\fprivacy_link\x18\x03 \x01(\tBD\x92AAJ?\"https://zitadel.com/docs/manage/legal/policies/privacy-policy\"R\vprivacyLink\x12\x1d\n" +
 	"\n" +
-	"is_default\x18\x04 \x01(\bR\tisDefault\x12Q\n" +
-	"\thelp_link\x18\x05 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12n\n" +
+	"is_default\x18\x04 \x01(\bR\tisDefault\x12T\n" +
+	"\thelp_link\x18\x05 \x01(\tB7\x92A4J2\"https://zitadel.com/docs/manage/console-overview\"R\bhelpLink\x12n\n" +
 	"\rsupport_email\x18\x06 \x01(\tBI\x92A92\x1dhelp / support email address.J\x18\"support-email@test.com\"\xfaB\n" +
 	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12z\n" +
 	"\tdocs_link\x18\a \x01(\tB]\x92AZ2<Link to documentation to be shown in the management console.J\x1a\"https://zitadel.com/docs\"R\bdocsLink\x12\x96\x01\n" +

@@ -1,0 +1,132 @@
+import{a as Ee,b as Ue}from"./chunk-6WRFPXTD.js";import{a as Se}from"./chunk-GGC47TJI.js";import"./chunk-GQFGD7HP.js";import{a as Rt}from"./chunk-YHHBQDJU.js";import{a as Ce,b as ye}from"./chunk-4GPTMD2R.js";import{a as It}from"./chunk-HQOOG47U.js";import{b as Vt}from"./chunk-YXCCXPQB.js";import{a as ve,b as Mt}from"./chunk-6TAROSTZ.js";import{e as yt,f as I,i as de,j as ue,k as fe}from"./chunk-D5GPMUUC.js";import{a as Ft,b as Ut,c as Tt}from"./chunk-MLJYEOLK.js";import{a as ge}from"./chunk-QEYD3WKO.js";import"./chunk-SB6TWFWD.js";import"./chunk-ZXKDPHYN.js";import{a as bt}from"./chunk-Q3XEHFHV.js";import{a as _e,b as xt}from"./chunk-I2A23NIU.js";import{d as lt,e as mt,f as ct}from"./chunk-6P4OUQHQ.js";import"./chunk-IQEMG6QJ.js";import{g as wt}from"./chunk-L5RZDO5Y.js";import{b as Pt}from"./chunk-5T7IASBX.js";import{a as ht}from"./chunk-ODOFB2IU.js";import{a as Nt}from"./chunk-LKR6PDSW.js";import{a as he}from"./chunk-ALA4MQ7O.js";import{c as Ot}from"./chunk-WSLWSWWW.js";import{a as vt,b as Et,c as St}from"./chunk-VT64R3KR.js";import{a as _t}from"./chunk-SPASDFTO.js";import{c as rt}from"./chunk-EIOO4VIF.js";import{$e as at,A as Ge,Ag as ce,C as O,Cb as Me,Cc as tt,Ce as K,Db as p,E as ke,Ea as i,Eb as f,Ed as J,Ef as ae,Eg as Fe,Fb as w,Fd as it,Ff as ft,G as $e,H as je,He as X,Ie as Z,Jb as Ne,Jg as pe,Kb as be,L as qe,La as g,Lb as Oe,Mb as V,Md as nt,Me as _,Nb as Re,O as We,Oa as W,Oe as ot,Of as kt,Pa as H,Pe as ee,Rb as Je,S as F,Sb as Ke,T as $,Ta as E,Te as te,Ue as ie,Wb as l,We as ne,Xb as m,Ze as re,af as st,ba as j,cg as $t,db as d,df as oe,eb as a,fb as n,ff as pt,g as Ae,gb as C,i as D,if as dt,ig as gt,ja as P,jf as ut,k as U,ka as M,mc as z,nb as T,ng as se,o as Le,oc as Xe,p as G,pa as q,pb as R,pc as Q,pg as le,q as k,qg as me,r as v,ra as He,rb as S,sg as A,tc as Ze,u as x,v as Be,vb as ze,vc as Y,wb as Qe,wc as et,xb as Ye,yg as Ct,z as De}from"./chunk-VYHVRGSR.js";import{h as Ve,i as b}from"./chunk-Z7V3BZMT.js";var L=Ve(kt());var B=Ve($t());var At=(...r)=>o=>o.pipe(v((c,e)=>[c,e]),ke(...r),qe(void 0,([[c,e]])=>e),v(([[c],...e])=>[c,...e]));function ai(r,o){r&1&&C(0,"mat-progress-bar",4)}function si(r,o){if(r&1&&(a(0,"form",23)(1,"cnsl-form-field")(2,"cnsl-label"),p(3),l(4,"translate"),n(),C(5,"input",24),n(),a(6,"cnsl-form-field")(7,"cnsl-label"),p(8),l(9,"translate"),n(),C(10,"input",25),n(),C(11,"cnsl-password-complexity-view",26),n()),r&2){let c=S().ngIf;d("formGroup",c.form),i(3),f(m(4,5,"USER.PASSWORD.NEWINITIAL")),i(5),f(m(9,7,"USER.PASSWORD.CONFIRMINITIAL")),i(3),d("policy",c.policy)("password",c.form.controls.password)}}function li(r,o){if(r&1){let c=T();a(0,"form",5),R("ngSubmit",function(){let t=P(c).ngIf,s=S();return M(s.createUserV2(t))}),a(1,"cnsl-form-field",6)(2,"cnsl-label"),p(3),l(4,"translate"),n(),C(5,"input",7),n(),a(6,"div",8)(7,"mat-checkbox",9),p(8),l(9,"translate"),n()(),a(10,"cnsl-form-field",10)(11,"cnsl-label"),p(12),l(13,"translate"),n(),C(14,"input",11),n(),a(15,"cnsl-form-field",12)(16,"cnsl-label"),p(17),l(18,"translate"),n(),C(19,"input",13),n(),a(20,"cnsl-form-field",14)(21,"cnsl-label"),p(22),l(23,"translate"),n(),C(24,"input",15),n(),a(25,"div",16)(26,"mat-radio-group",17)(27,"mat-radio-button",18),p(28),l(29,"translate"),n(),a(30,"mat-radio-button",19),p(31),l(32,"translate"),n(),a(33,"mat-radio-button",20),p(34),l(35,"translate"),n()(),E(36,si,12,9,"form",21),n(),a(37,"div")(38,"button",22),p(39),l(40,"translate"),n()()()}if(r&2){let c=o.ngIf,e=S();d("formGroup",e.userForm),i(3),f(m(4,13,"USER.PROFILE.EMAIL")),i(4),d("disabled",c.factor==="invitation"),i(),w(" ",m(9,15,"USER.LOGINMETHODS.EMAIL.ISVERIFIED")," "),i(4),f(m(13,17,"USER.PROFILE.USERNAME")),i(5),f(m(18,19,"USER.PROFILE.FIRSTNAME")),i(5),f(m(23,21,"USER.PROFILE.LASTNAME")),i(6),f(m(29,23,"USER.CREATE.SETUPAUTHENTICATIONLATER")),i(3),f(m(32,25,"USER.CREATE.INVITATION")),i(3),f(m(35,27,"USER.CREATE.INITIALPASSWORD")),i(2),d("ngIf",c.factor==="initialPassword"),i(2),d("disabled",e.userForm.invalid||c.factor==="initialPassword"&&c.form.invalid),i(),w(" ",m(40,29,"ACTIONS.CREATE")," ")}}var Lt=(()=>{let o=class o{constructor(e,t,s,u,y,h,N,Ie,we,xe,Pe){this.router=e,this.toast=t,this.fb=s,this.userService=u,this.newMgmtService=y,this.passwordComplexityValidatorFactory=h,this.featureService=N,this.destroyRef=Ie,this.route=we,this.location=xe,this.authService=Pe,this.loading=He(!1),this.userForm=this.buildUserForm(),this.passwordComplexityPolicy$=this.getPasswordComplexityPolicy().pipe(F({refCount:!0,bufferSize:1})),this.authenticationFactor$=this.getAuthenticationFactor(this.userForm,this.passwordComplexityPolicy$),this.useLoginV2$=this.getUseLoginV2().pipe(F({refCount:!0,bufferSize:1}))}ngOnInit(){this.useLoginV2$.pipe(A(this.destroyRef)).subscribe(),this.authenticationFactor$.pipe(A(this.destroyRef)).subscribe(t=>b(this,[t],function*({factor:e}){yield this.router.navigate([],{relativeTo:this.route,queryParams:{factor:e},queryParamsHandling:"merge"})}))}buildUserForm(){let e=this.route.snapshot.queryParamMap.get("factor"),t=e==="none"||e==="initialPassword"||e==="invitation"?e:"none";return this.fb.group({email:new _("",{nonNullable:!0,validators:[I,de]}),username:new _("",{nonNullable:!0,validators:[I,ue(2)]}),givenName:new _("",{nonNullable:!0,validators:[I]}),familyName:new _("",{nonNullable:!0,validators:[I]}),emailVerified:new _(!1,{nonNullable:!0}),authenticationFactor:new _(t,{nonNullable:!0})})}getPasswordComplexityPolicy(){return x(()=>this.newMgmtService.getPasswordComplexityPolicy()).pipe(v(({policy:e})=>e),Ge(Boolean),O(e=>(this.toast.showError(e),D)))}getAuthenticationFactor(e,t){let s=t.pipe(je(void 0),v(u=>this.buildPwdForm(u)));return e.controls.authenticationFactor.valueChanges.pipe($(e.controls.authenticationFactor.value),At(s,t),v(([u,y,h])=>u==="initialPassword"?{factor:u,form:y,policy:h}:(u==="invitation"&&e.controls.emailVerified.setValue(!1),{factor:u})))}buildPwdForm(e){return this.fb.group({password:new _("",{nonNullable:!0,validators:this.passwordComplexityValidatorFactory.buildValidators(e)}),confirmPassword:new _("",{nonNullable:!0,validators:[I,fe()]})})}getUseLoginV2(){return x(()=>this.featureService.getInstanceFeatures()).pipe(v(({loginV2:e})=>e),k(1e3),O(e=>(e instanceof G||this.toast.showError(e),U(void 0))),We(De))}createUserV2(e){return b(this,null,function*(){try{yield this.createUserV2Try(e)}catch(t){this.toast.showError(t)}finally{this.loading.set(!1)}})}createUserV2Try(e){return b(this,null,function*(){this.loading.set(!0);let t=yield this.authService.getActiveOrg(),s=this.userForm.getRawValue(),u={organization:{org:{case:"orgId",value:t.id}},username:s.username,profile:{givenName:s.givenName,familyName:s.familyName},email:{email:s.email,verification:{case:"isVerified",value:s.emailVerified}}};if(e.factor==="initialPassword"){let{password:h}=e.form.getRawValue();u.passwordType={case:"password",value:{password:h}}}let y=yield this.userService.addHumanUser(u);if(e.factor==="invitation"){let h=yield this.getUrlTemplate();yield this.userService.createInviteCode({userId:y.userId,verification:{case:"sendCode",value:h?{urlTemplate:`${h}verify?code={{.Code}}&userId={{.UserID}}&organization={{.OrgID}}&invite=true`}:{}}})}this.toast.showInfo("USER.TOAST.CREATED",!0),yield this.router.navigate(["users",y.userId],{queryParams:{new:!0}})})}getUrlTemplate(){return b(this,null,function*(){let e=yield Le(this.useLoginV2$);if(!e?.required)return;let{baseUri:t}=e;if(!t)return new URL(location.origin+"/ui/v2/login/");let s=t.endsWith("/")?t:`${t}/`;try{return new URL(s)}catch{let y=s.startsWith("/")?s:`/${s}`;return new URL(location.origin+y)}})}};o.\u0275fac=function(t){return new(t||o)(g(ce),g(pe),g(re),g(wt),g(ge),g(Ce),g(Se),g(q),g(Ct),g(z),g(ht))},o.\u0275cmp=W({type:o,selectors:[["cnsl-user-create-v2"]],standalone:!1,decls:6,vars:10,consts:[[3,"closed","title","createSteps","currentCreateStep"],[1,"content"],["color","primary","mode","indeterminate",4,"ngIf"],["class","form-grid",3,"formGroup","ngSubmit",4,"ngIf"],["color","primary","mode","indeterminate"],[1,"form-grid",3,"ngSubmit","formGroup"],[1,"email"],["cnslInput","","matRipple","","formControlName","email","required","",1,"stretchInput"],[1,"emailVerified"],["formControlName","emailVerified",3,"disabled"],[1,"username"],["cnslInput","","formControlName","username","required","",1,"stretchInput"],[1,"givenName"],["cnslInput","","formControlName","givenName","required",""],[1,"familyName"],["cnslInput","","formControlName","familyName","required",""],[1,"authenticationFactor"],["aria-label","Select an option","formControlName","authenticationFactor",1,"authenticationFactorRadioGroup"],["value","none"],["value","invitation"],["value","initialPassword"],[3,"formGroup",4,"ngIf"],["data-e2e","create-button","color","primary","type","submit","mat-raised-button","",1,"create-button",3,"disabled"],[3,"formGroup"],["cnslInput","","autocomplete","off","name","firstpassword","formControlName","password","type","password",1,"stretchInput"],["cnslInput","","autocomplete","off","name","confirmPassword","formControlName","confirmPassword","type","password",1,"stretchInput"],[1,"complexity-view",3,"policy","password"]],template:function(t,s){t&1&&(a(0,"cnsl-create-layout",0),l(1,"translate"),R("closed",function(){return s.location.back()}),a(2,"div",1),E(3,ai,1,0,"mat-progress-bar",2)(4,li,41,31,"form",3),l(5,"async"),n()()),t&2&&(d("title",V(m(1,6,"USER.CREATE.TITLE")))("createSteps",1)("currentCreateStep",1),i(3),d("ngIf",s.loading()),i(),d("ngIf",m(5,8,s.authenticationFactor$)))},dependencies:[Q,ee,K,X,Z,ne,te,ie,he,oe,ve,ye,_e,se,le,me,J,Ft,Ut,Y,ae],styles:[`
+
+.content[_ngcontent-%COMP%] {
+  max-width: 45rem;
+}
+@media only screen and (max-width: 500px) {
+  .content[_ngcontent-%COMP%] {
+    padding: 0 0.5rem;
+  }
+}
+.form-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "email email" "emailVerified emailVerified" "username username" "givenName familyName" "authenticationFactor authenticationFactor";
+  column-gap: 1rem;
+}
+.email[_ngcontent-%COMP%] {
+  grid-area: email;
+}
+.emailVerified[_ngcontent-%COMP%] {
+  grid-area: emailVerified;
+}
+.givenName[_ngcontent-%COMP%] {
+  grid-area: givenName;
+}
+.familyName[_ngcontent-%COMP%] {
+  grid-area: familyName;
+}
+.username[_ngcontent-%COMP%] {
+  grid-area: username;
+}
+.authenticationFactor[_ngcontent-%COMP%] {
+  grid-area: authenticationFactor;
+  margin-bottom: 1rem;
+}
+.authenticationFactorRadioGroup[_ngcontent-%COMP%]    > mat-radio-button[_ngcontent-%COMP%] {
+  display: block;
+}
+.authenticationFactorButton[_ngcontent-%COMP%] {
+  margin-top: 1rem;
+}
+.stretchInput[_ngcontent-%COMP%] {
+  max-width: unset;
+}`],changeDetection:0});let r=o;return r})();var ci=["suffix"],pi=()=>({standalone:!0}),di=r=>({"padding-right":r});function ui(r,o){r&1&&C(0,"cnsl-user-create-v2")}function fi(r,o){r&1&&C(0,"mat-progress-bar",7)}function gi(r,o){if(r&1&&C(0,"input",34),r&2){let c=o.ngIf;d("ngStyle",Ke(1,di,c))}}function Ci(r,o){if(r&1&&(a(0,"span",35,0),p(2),n()),r&2){let c=o.ngIf;i(2),f(c)}}function hi(r,o){if(r&1&&(a(0,"div",36),C(1,"cnsl-password-complexity-view",37),a(2,"form",38)(3,"div",11)(4,"cnsl-form-field")(5,"cnsl-label"),p(6),l(7,"translate"),n(),C(8,"input",39),n(),a(9,"cnsl-form-field")(10,"cnsl-label"),p(11),l(12,"translate"),n(),C(13,"input",40),n()()()()),r&2){let c=o.ngIf,e=S().ngIf;i(),d("policy",c)("password",e.controls.password),i(),d("formGroup",e),i(4),f(m(7,5,"USER.PASSWORD.NEWINITIAL")),i(5),f(m(12,7,"USER.PASSWORD.CONFIRMINITIAL"))}}function _i(r,o){if(r&1&&(a(0,"mat-option",41),p(1),l(2,"translate"),n()),r&2){let c=o.$implicit;d("value",c),i(),w(" ",m(2,2,"GENDERS."+c)," ")}}function yi(r,o){if(r&1&&(a(0,"mat-option",41),p(1),l(2,"translate"),n()),r&2){let c=o.$implicit;d("value",c),i(),w(" ",m(2,2,"LANGUAGES."+c)," ")}}function vi(r,o){if(r&1&&(a(0,"mat-option",42)(1,"span",43),C(2,"span"),l(3,"lowercase"),a(4,"span",44),p(5),n(),C(6,"span",45),a(7,"small",46),p(8),n()()()),r&2){let c=o.$implicit;d("value",c),i(2),Me(Re("phone-country-flag fi fi-",m(3,6,c.countryCode))),i(3),f(c.countryName),i(3),w("+",c.countryCallingCode)}}function Ei(r,o){if(r&1){let c=T();a(0,"form",8),R("ngSubmit",function(){let t=P(c).ngIf,s=S(2);return M(s.createUser(t))}),a(1,"div",9)(2,"p",10),p(3),l(4,"translate"),n(),a(5,"div",11)(6,"cnsl-form-field")(7,"cnsl-label"),p(8),l(9,"translate"),n(),C(10,"input",12),n(),a(11,"cnsl-form-field")(12,"cnsl-label"),p(13),l(14,"translate"),n(),E(15,gi,1,3,"input",13),l(16,"async"),E(17,Ci,3,1,"span",14),l(18,"async"),n(),a(19,"cnsl-form-field")(20,"cnsl-label"),p(21),l(22,"translate"),n(),C(23,"input",15),n(),a(24,"cnsl-form-field")(25,"cnsl-label"),p(26),l(27,"translate"),n(),C(28,"input",16),n(),a(29,"cnsl-form-field")(30,"cnsl-label"),p(31),l(32,"translate"),n(),C(33,"input",17),n()(),a(34,"div",18)(35,"mat-checkbox",19),p(36),l(37,"translate"),n(),a(38,"mat-checkbox",20),Oe("ngModelChange",function(t){P(c);let s=S(2);return be(s.usePassword,t)||(s.usePassword=t),M(t)}),p(39),l(40,"translate"),n(),a(41,"cnsl-info-section",21)(42,"span"),p(43),l(44,"translate"),n()()(),E(45,hi,14,9,"div",22),l(46,"async"),a(47,"p",10),p(48),l(49,"translate"),n(),a(50,"div",11)(51,"cnsl-form-field")(52,"cnsl-label"),p(53),l(54,"translate"),n(),a(55,"mat-select",23),E(56,_i,3,4,"mat-option",24),n()(),a(57,"cnsl-form-field")(58,"cnsl-label"),p(59),l(60,"translate"),n(),a(61,"mat-select",25),E(62,yi,3,4,"mat-option",24),l(63,"async"),n()()(),a(64,"p",10),p(65),l(66,"translate"),n(),a(67,"div",26)(68,"cnsl-form-field",27)(69,"cnsl-label"),p(70),l(71,"translate"),n(),a(72,"mat-select",28),Oe("valueChange",function(t){P(c);let s=S(2);return be(s.selected,t)||(s.selected=t),M(t)}),R("selectionChange",function(){P(c);let t=S(2);return M(t.setCountryCallingCode())}),a(73,"mat-select-trigger"),C(74,"span"),l(75,"lowercase"),a(76,"span",29),p(77),n()(),E(78,vi,9,8,"mat-option",30),n()(),a(79,"cnsl-form-field")(80,"cnsl-label"),p(81),l(82,"translate"),n(),C(83,"input",31),l(84,"translate"),n()()(),a(85,"div",32)(86,"button",33),p(87),l(88,"translate"),n()()()}if(r&2){let c=o.ngIf,e=S(2);d("formGroup",e.userForm),i(3),f(m(4,34,"USER.CREATE.NAMEANDEMAILSECTION")),i(5),f(m(9,36,"USER.PROFILE.EMAIL")),i(5),f(m(14,38,"USER.PROFILE.USERNAME")),i(2),d("ngIf",m(16,40,e.suffixPadding$)),i(2),d("ngIf",m(18,42,e.envSuffix$)),i(4),f(m(22,44,"USER.PROFILE.FIRSTNAME")),i(5),f(m(27,46,"USER.PROFILE.LASTNAME")),i(5),f(m(32,48,"USER.PROFILE.NICKNAME")),i(5),w(" ",m(37,50,"USER.LOGINMETHODS.EMAIL.ISVERIFIED")," "),i(2),Ne("ngModel",e.usePassword),d("ngModelOptions",Je(78,pi)),i(),w(" ",m(40,52,"ORG.PAGES.USEPASSWORD")," "),i(4),f(m(44,54,"USER.CREATE.INITMAILDESCRIPTION")),i(2),d("ngIf",e.usePassword&&m(46,56,e.passwordComplexityPolicy$)),i(3),f(m(49,58,"USER.CREATE.GENDERLANGSECTION")),i(5),f(m(54,60,"USER.PROFILE.GENDER")),i(3),d("ngForOf",e.genders),i(3),f(m(60,62,"USER.PROFILE.PREFERRED_LANGUAGE")),i(3),d("ngForOf",m(63,64,e.langSvc.supported$)),i(3),f(m(66,66,"USER.CREATE.ADDRESSANDPHONESECTION")),i(5),f(m(71,68,"USER.PROFILE.COUNTRY")),i(2),Ne("value",e.selected),d("compareWith",e.compareCountries),i(2),Me(Re("fi fi-",m(75,70,e.selected==null?null:e.selected.countryCode))),i(3),f(e.selected==null?null:e.selected.countryName),i(),d("ngForOf",e.countryPhoneCodes),i(3),f(m(82,72,"USER.PROFILE.PHONE")),i(2),d("matTooltip",V(m(84,74,"USER.PROFILE.PHONE_HINT"))),i(3),d("disabled",e.userForm.invalid||e.usePassword&&c.invalid),i(),w(" ",m(88,76,"ACTIONS.CREATE")," ")}}function Si(r,o){if(r&1){let c=T();a(0,"cnsl-create-layout",3),l(1,"translate"),R("closed",function(){P(c);let t=S();return M(t.location.back())}),a(2,"div",4),E(3,fi,1,0,"mat-progress-bar",5)(4,Ei,89,79,"form",6),l(5,"async"),n()()}if(r&2){let c=S();d("title",V(m(1,6,"USER.CREATE.TITLE")))("createSteps",1)("currentCreateStep",1),i(3),d("ngIf",c.loading),i(),d("ngIf",m(5,8,c.pwdForm$))}}var Bt=(()=>{let o=class o{set suffix(e){e?.nativeElement&&this.suffix$.next(e.nativeElement)}constructor(e,t,s,u,y,h,N,Ie,we,xe,Pe,Gt){this.router=e,this.toast=t,this.fb=s,this.mgmtService=u,this.newMgmtService=y,this.destroyRef=h,this.breadcrumbService=N,this.location=Ie,this.langSvc=we,this.featureService=xe,this.passwordComplexityValidatorFactory=Pe,this.genders=[L.Gender.GENDER_FEMALE,L.Gender.GENDER_MALE,L.Gender.GENDER_UNSPECIFIED],this.selected={countryCallingCode:"1",countryCode:"US",countryName:"United States of America"},this.loading=!1,this.suffix$=new Ae(1),this.usePassword=!1,this.envSuffix$=this.getEnvSuffix(),this.suffixPadding$=this.getSuffixPadding(),this.passwordComplexityPolicy$=this.getPasswordComplexityPolicy().pipe(F({refCount:!0,bufferSize:1})),this.useV2Api$=this.getUseV2Api().pipe(F({refCount:!0,bufferSize:1})),this.userForm=this.buildUserForm(),this.pwdForm$=this.buildPwdForm(this.passwordComplexityPolicy$),this.countryPhoneCodes=Gt.getCountryCallingCodes(),this.breadcrumbService.setBreadcrumb([new Et({type:vt.ORG,routerLink:["/org"]})])}ngOnInit(){this.watchPhoneChanges()}getEnvSuffix(){let e=x(()=>this.mgmtService.getDomainPolicy()),t=x(()=>this.mgmtService.listOrgDomains());return Be([e,t]).pipe(v(([s,u])=>{let y=s.policy?.userLoginMustBeDomain,h=u.resultList.find(N=>N.isPrimary);return y&&h?`@${h.domainName}`:""}),O(()=>U("")))}getSuffixPadding(){return this.suffix$.pipe(v(e=>`${e.offsetWidth+10}px`),$("10px"))}getPasswordComplexityPolicy(){return x(()=>this.newMgmtService.getPasswordComplexityPolicy()).pipe(v(({policy:e})=>e),O(e=>(this.toast.showError(e),D)))}getUseV2Api(){return x(()=>this.featureService.getInstanceFeatures()).pipe(v(e=>e.consoleUseV2UserApi?.enabled??!1),k(1e3),O(e=>(e instanceof G||this.toast.showError(e),U(!1))))}buildUserForm(){return this.fb.group({email:new _("",{nonNullable:!0,validators:[I,de]}),userName:new _("",{nonNullable:!0,validators:[I,ue(2)]}),firstName:new _("",{nonNullable:!0,validators:[I]}),lastName:new _("",{nonNullable:!0,validators:[I]}),nickName:new _("",{nonNullable:!0}),gender:new _(L.Gender.GENDER_UNSPECIFIED,{nonNullable:!0,validators:[I]}),preferredLanguage:new _("",{nonNullable:!0}),phone:new _("",{nonNullable:!0,validators:[yt]}),emailVerified:new _(!1,{nonNullable:!0})})}buildPwdForm(e){return e.pipe(v(t=>this.fb.group({password:new _("",{nonNullable:!0,validators:this.passwordComplexityValidatorFactory.buildValidators(t)}),confirmPassword:new _("",{nonNullable:!0,validators:[I,fe()]})})))}watchPhoneChanges(){let e=this.userForm.controls.phone;e.valueChanges.pipe($e(200),A(this.destroyRef)).subscribe(t=>{let s=Ue(t);s&&(this.selected=this.countryPhoneCodes.find(u=>u.countryCode===s.country),e.setValue(s.phone))})}createUser(e){return b(this,null,function*(){this.loading=!0;let t=this.userForm.controls,s=new B.AddHumanUserRequest.Profile;s.setFirstName(t.firstName.value),s.setLastName(t.lastName.value),s.setNickName(t.nickName.value),s.setPreferredLanguage(t.preferredLanguage.value),s.setGender(t.gender.value);let u=new B.AddHumanUserRequest;u.setUserName(t.userName.value),u.setProfile(s);let y=new B.AddHumanUserRequest.Email;if(y.setEmail(t.email.value),y.setIsEmailVerified(t.emailVerified.value),u.setEmail(y),this.usePassword&&u.setInitialPassword(e.controls.password.value),t.phone.value){let h=Ue(t.phone.value);h&&(this.selected=this.countryPhoneCodes.find(N=>N.countryCode===h.country),u.setPhone(new B.AddHumanUserRequest.Phone().setPhone(h.phone)))}try{let h=yield this.mgmtService.addHumanUser(u);this.toast.showInfo("USER.TOAST.CREATED",!0),yield this.router.navigate(["users",h.userId],{queryParams:{new:!0}})}catch(h){this.toast.showError(h)}finally{this.loading=!1}})}setCountryCallingCode(){let e=this.userForm.controls.phone.value;this.countryPhoneCodes.forEach(t=>e=e.replace(`+${t.countryCallingCode}`,"")),e=e.trim(),this.userForm.controls.phone.setValue("+"+this.selected?.countryCallingCode+" "+e)}compareCountries(e,t){return e&&t&&e.countryCallingCode===t.countryCallingCode&&e.countryCode==t.countryCode&&e.countryName==t.countryName}};o.\u0275fac=function(t){return new(t||o)(g(ce),g(pe),g(re),g(_t),g(ge),g(q),g(St),g(z),g(It),g(Se),g(Ce),g(Ee))},o.\u0275cmp=W({type:o,selectors:[["cnsl-user-create"]],viewQuery:function(t,s){if(t&1&&ze(ci,5),t&2){let u;Qe(u=Ye())&&(s.suffix=u.first)}},standalone:!1,decls:4,vars:6,consts:[["suffix",""],[4,"ngIf"],[3,"title","createSteps","currentCreateStep","closed",4,"ngIf"],[3,"closed","title","createSteps","currentCreateStep"],[1,"user-create-main-content"],["color","primary","mode","indeterminate",4,"ngIf"],["class","user-create-form",3,"formGroup","ngSubmit",4,"ngIf"],["color","primary","mode","indeterminate"],[1,"user-create-form",3,"ngSubmit","formGroup"],[1,"user-create-content"],[1,"user-create-section"],[1,"user-create-grid"],["cnslInput","","matRipple","","formControlName","email","required",""],["cnslInput","","formControlName","userName","required","",3,"ngStyle",4,"ngIf"],["cnslSuffix","",4,"ngIf"],["cnslInput","","formControlName","firstName","required",""],["cnslInput","","formControlName","lastName","required",""],["cnslInput","","formControlName","nickName"],[1,"email-is-verified"],["formControlName","emailVerified",1,"block-checkbox"],[1,"block-checkbox",3,"ngModelChange","ngModel","ngModelOptions"],[1,"full-width","desc"],["class","pwd-section",4,"ngIf"],["formControlName","gender"],[3,"value",4,"ngFor","ngForOf"],["formControlName","preferredLanguage"],[1,"phone-grid"],[1,"phone-country"],["data-cy","country-calling-code",3,"valueChange","selectionChange","value","compareWith"],[1,"trigger-name"],["class","phone-country-option",3,"value",4,"ngFor","ngForOf"],["cnslInput","","formControlName","phone",3,"matTooltip"],[1,"user-create-btn-container"],["data-e2e","create-button","color","primary","type","submit","mat-raised-button","",1,"create-button",3,"disabled"],["cnslInput","","formControlName","userName","required","",3,"ngStyle"],["cnslSuffix",""],[1,"pwd-section"],[1,"complexity-view",3,"policy","password"],[3,"formGroup"],["cnslInput","","autocomplete","off","name","firstpassword","formControlName","password","type","password"],["cnslInput","","autocomplete","off","name","confirmPassword","formControlName","confirmPassword","type","password"],[3,"value"],[1,"phone-country-option",3,"value"],[1,"phone-country-row"],[1,"phone-country-name"],[1,"fill-space"],[1,"phone-country-code"]],template:function(t,s){t&1&&(E(0,ui,1,0,"cnsl-user-create-v2",1),l(1,"async"),E(2,Si,6,10,"cnsl-create-layout",2),l(3,"async")),t&2&&(d("ngIf",m(1,2,s.useV2Api$)===!0),i(2),d("ngIf",m(3,4,s.useV2Api$)===!1))},dependencies:[Xe,Q,Ze,ee,K,X,Z,ne,ot,te,ie,lt,mt,nt,he,oe,ve,ye,_e,dt,gt,se,le,me,J,Lt,Y,et,ae],styles:[`
+
+.user-create-main-content[_ngcontent-%COMP%] {
+  max-width: 45rem;
+}
+@media only screen and (max-width: 500px) {
+  .user-create-main-content[_ngcontent-%COMP%] {
+    padding: 0 0.5rem;
+  }
+}
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .user-create-section[_ngcontent-%COMP%] {
+  padding: 1rem 0 0 0;
+  flex-basis: 100%;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .user-create-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1rem;
+}
+@media only screen and (max-width: 500px) {
+  .user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .user-create-grid[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .email-is-verified[_ngcontent-%COMP%], 
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .use-password-block[_ngcontent-%COMP%] {
+  flex-basis: 100%;
+  margin-top: 1.5rem;
+}
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .email-is-verified[_ngcontent-%COMP%]   .block-checkbox[_ngcontent-%COMP%], 
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-content[_ngcontent-%COMP%]   .use-password-block[_ngcontent-%COMP%]   .block-checkbox[_ngcontent-%COMP%] {
+  display: block;
+  margin: 0.25rem 0;
+}
+.user-create-main-content[_ngcontent-%COMP%]   .user-create-form[_ngcontent-%COMP%]   .user-create-btn-container[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {
+  margin-top: 3rem;
+  display: block;
+  padding: 0.5rem 4rem;
+  height: 3.5rem;
+  border-radius: 0.5rem;
+}
+.user-create-main-content[_ngcontent-%COMP%]   .pwd-section[_ngcontent-%COMP%]   .section[_ngcontent-%COMP%] {
+  padding: 0.5rem 0;
+}
+.phone-grid[_ngcontent-%COMP%] {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+}
+.phone-grid[_ngcontent-%COMP%]   .phone-country[_ngcontent-%COMP%] {
+  min-width: 200px;
+}
+@media only screen and (max-width: 500px) {
+  .phone-grid[_ngcontent-%COMP%] {
+    grid-template-columns: 1fr;
+  }
+}
+.trigger-name[_ngcontent-%COMP%] {
+  font-size: 14px;
+  margin-left: 0.5rem;
+}
+.phone-country-flag[_ngcontent-%COMP%] {
+  margin-right: 0.5rem;
+  min-width: 22px;
+}
+.phone-country-row[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+}
+.phone-country-row[_ngcontent-%COMP%]   .phone-country-flag[_ngcontent-%COMP%] {
+  margin-right: 0.5rem;
+}
+.phone-country-row[_ngcontent-%COMP%]   .phone-country-name[_ngcontent-%COMP%] {
+  padding: 0 0.5em;
+}
+.phone-country-row[_ngcontent-%COMP%]   .phone-country-code[_ngcontent-%COMP%] {
+  color: darkgrey;
+}
+.phone-country-row[_ngcontent-%COMP%]   .fill-space[_ngcontent-%COMP%] {
+  flex: 1;
+}
+.create-button[_ngcontent-%COMP%] {
+  padding: 0.5rem 4rem;
+  height: 3.5rem;
+}`]});let r=o;return r})();var Ii=[{path:"",component:Bt,data:{animation:"DetailPage"}}],Dt=(()=>{let o=class o{};o.\u0275fac=function(t){return new(t||o)},o.\u0275mod=H({type:o}),o.\u0275inj=j({imports:[Fe.forChild(Ii),Fe]});let r=o;return r})();var bn=(()=>{let o=class o{};o.\u0275fac=function(t){return new(t||o)},o.\u0275mod=H({type:o}),o.\u0275inj=j({providers:[Ee],imports:[Dt,tt,at,st,ct,Nt,pt,rt,Pt,Mt,Rt,xt,ut,ft,bt,Vt,Ot,it,Tt]});let r=o;return r})();export{bn as default};

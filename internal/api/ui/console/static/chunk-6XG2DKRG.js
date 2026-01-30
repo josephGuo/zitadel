@@ -1,0 +1,28 @@
+import{a as C}from"./chunk-YJWTTDJ7.js";import{a as ne,b as ie}from"./chunk-IM5424YV.js";import{a as te}from"./chunk-MMBPSHE7.js";import{a as ee}from"./chunk-GURR7JFO.js";import{Db as h,De as U,E as M,Ea as a,Eb as g,Fa as E,Ff as H,Ie as Y,Je as $,La as b,Me as q,Nd as k,Nf as re,Oa as G,Oe as B,Qe as V,T as w,Ta as J,Te as X,U as A,V as P,Wb as y,Xb as j,ag as se,d as R,db as c,eb as m,fb as p,gb as f,i as d,ia as D,ja as I,nb as x,oc as F,og as z,pb as L,pc as W,qg as K,rg as Z,u as S,vb as _,wb as O,xb as T,yb as Q}from"./chunk-SVRRUXWX.js";import{h as v}from"./chunk-Z7V3BZMT.js";var N=v(re()),u=v(se());var ae=["nameInput"],le=["auto"];function ce(o,s){o&1&&(m(0,"mat-option",7),f(1,"mat-spinner",8),p())}function me(o,s){if(o&1&&(m(0,"mat-option",9)(1,"div",10)(2,"div",11)(3,"span"),h(4),p(),f(5,"span",12),m(6,"span",13),h(7),y(8,"translate"),p()()()()),o&2){let r=s.$implicit;c("value",r),a(4),g(r!=null&&r.name?r==null?null:r.name:r!=null&&r.projectName?r==null?null:r.projectName:""),a(3),g(j(8,3,r.name?"USER.GRANTS.PROJECT-OWNED":r!=null&&r.projectName?"USER.GRANTS.PROJECT-GRANTED":""))}}var l=(function(o){return o[o.PROJECT_OWNED=0]="PROJECT_OWNED",o[o.PROJECT_GRANTED=1]="PROJECT_GRANTED",o})(l||{}),be=(()=>{let s=class s{constructor(n){this.mgmtService=n,this.removable=!0,this.addOnBlur=!0,this.separatorKeysCodes=[13,188],this.myControl=new B,this.names=[],this.projects=[],this.filteredProjects=[],this.isLoading=!1,this.selectionChanged=new E,this.valueChanged=new E,this.unsubscribed$=new R,this.myControl.valueChanges.pipe(A(this.unsubscribed$),P(e=>{let t=typeof e=="string"?e:e.name?e.name:"";this.valueChanged.emit(t)}),M(200),P(()=>this.isLoading=!0),w(e=>{let t=new u.ProjectQuery,i=new u.ProjectNameQuery;switch(i.setName(e),i.setMethod(N.TextQueryMethod.TEXT_QUERY_METHOD_CONTAINS_IGNORE_CASE),t.setNameQuery(i),this.autocompleteType){case l.PROJECT_GRANTED:return d(this.mgmtService.listGrantedProjects(10,0,[t]));case l.PROJECT_OWNED:return d(this.mgmtService.listProjects(10,0,[t]));default:return S([d(this.mgmtService.listGrantedProjects(10,0,[t])),d(this.mgmtService.listProjects(10,0,[t]))])}})).subscribe(e=>{switch(this.autocompleteType){case l.PROJECT_GRANTED:this.isLoading=!1,this.filteredProjects=[...e.resultList];break;case l.PROJECT_OWNED:this.isLoading=!1,this.filteredProjects=[...e.resultList];break;default:this.isLoading=!1,this.filteredProjects=[...e[0].resultList,...e[1].resultList];break}})}ngOnInit(){let n=new u.ProjectQuery,e=new u.ProjectNameQuery;switch(e.setMethod(N.TextQueryMethod.TEXT_QUERY_METHOD_CONTAINS_IGNORE_CASE),n.setNameQuery(e),this.autocompleteType){case l.PROJECT_GRANTED:this.mgmtService.listGrantedProjects(10,0,[n]).then(t=>{this.filteredProjects=t.resultList});break;case l.PROJECT_OWNED:this.mgmtService.listProjects(10,0,[n]).then(t=>{this.filteredProjects=t.resultList});break;default:Promise.all([this.mgmtService.listGrantedProjects(10,0,[n]),this.mgmtService.listProjects(10,0,[n])]).then(t=>{this.filteredProjects=t[0].resultList,this.filteredProjects=this.filteredProjects.concat(t[1].resultList)})}}ngOnDestroy(){this.unsubscribed$.next()}displayFn(n){return n&&n.projectName?`${n.projectName}`:n&&n.name?`${n.name}`:""}selected(n){let e=n.option.value,t=e.id?C.PROJECTTYPE_OWNED:e.projectId?C.PROJECTTYPE_GRANTED:C.PROJECTTYPE_OWNED,i=e.name?e.name:e.projectName?e.projectName:"";console.log(i),this.selectionChanged.emit({project:e,name:i,type:t})}};s.\u0275fac=function(e){return new(e||s)(b(ee))},s.\u0275cmp=G({type:s,selectors:[["cnsl-search-project-autocomplete"]],viewQuery:function(e,t){if(e&1&&(_(ae,5),_(le,5)),e&2){let i;O(i=T())&&(t.nameInput=i.first),O(i=T())&&(t.matAutocomplete=i.first)}},inputs:{autocompleteType:"autocompleteType"},outputs:{selectionChanged:"selectionChanged",valueChanged:"valueChanged"},standalone:!1,decls:11,vars:8,consts:[["nameInput",""],["auto","matAutocomplete"],[1,"full-width"],["cnslInput","","type","text","placeholder","Project XY",3,"formControl","matAutocomplete"],[3,"optionSelected","displayWith"],["class","is-loading",4,"ngIf"],[3,"value",4,"ngFor","ngForOf"],[1,"is-loading"],["diameter","30"],[3,"value"],[1,"project-option"],[1,"project-option-column"],[1,"fill-space"],[1,"smaller","cnsl-secondary-text"]],template:function(e,t){if(e&1){let i=x();m(0,"form")(1,"cnsl-form-field",2)(2,"cnsl-label"),h(3),y(4,"translate"),p(),f(5,"input",3,0),m(7,"mat-autocomplete",4,1),L("optionSelected",function(oe){return D(i),I(t.selected(oe))}),J(9,ce,2,0,"mat-option",5)(10,me,9,5,"mat-option",6),p()()()}if(e&2){let i=Q(8);a(3),g(j(4,6,"USER.GRANTS.PROJECTNAME")),a(2),c("formControl",t.myControl)("matAutocomplete",i),a(2),c("displayWith",t.displayFn),a(2),c("ngIf",t.isLoading),a(),c("ngForOf",t.filteredProjects)}},dependencies:[F,W,ne,k,ie,z,K,Z,V,U,Y,$,X,te,q,H],styles:[`
+
+.full-width[_ngcontent-%COMP%] {
+  width: 100%;
+}
+input[_ngcontent-%COMP%] {
+  max-width: 500px;
+}
+.project-option[_ngcontent-%COMP%] {
+  display: flex;
+  align-items: center;
+}
+.project-option[_ngcontent-%COMP%]   .project-option-column[_ngcontent-%COMP%] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+.project-option[_ngcontent-%COMP%]   .project-option-column[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {
+  line-height: normal;
+}
+.project-option[_ngcontent-%COMP%]   .project-option-column[_ngcontent-%COMP%]   .fill-space[_ngcontent-%COMP%] {
+  flex: 1;
+}
+.project-option[_ngcontent-%COMP%]   .project-option-column[_ngcontent-%COMP%]   .smaller[_ngcontent-%COMP%] {
+  font-size: 13px;
+}`]});let o=s;return o})();export{l as a,be as b};

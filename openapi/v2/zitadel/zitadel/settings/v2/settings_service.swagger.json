@@ -1218,17 +1218,17 @@
       "properties": {
         "tosLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/legal/terms-of-service",
+          "example": "https://zitadel.com/docs/manage/legal/terms-of-service",
           "description": "Link to the Terms of Service. Can be a relative or absolute URL."
         },
         "privacyPolicyLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/legal/privacy-policy",
+          "example": "https://zitadel.com/docs/manage/legal/policies/privacy-policy",
           "description": "Link to the Privacy Policy. Can be a relative or absolute URL."
         },
         "helpLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/manuals/introduction",
+          "example": "https://zitadel.com/docs/manage/console-overview",
           "description": "Link to a help page. Can be a relative or absolute URL."
         },
         "supportEmail": {

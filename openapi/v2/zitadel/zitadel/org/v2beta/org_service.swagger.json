@@ -39,7 +39,7 @@
     "/v2beta/organizations": {
       "post": {
         "summary": "Create Organization",
-        "description": "Create a new organization with an administrative user. If no specific roles are sent for the users, they will be granted the role ORG_OWNER.\n\nRequired permission:\n - `org.create`\n\nDeprecated: Use [AddOrganization](/apis/resources/org_service_v2/organization-service-add-organization.api.mdx) instead to create an organization.",
+        "description": "Create a new organization with an administrative user. If no specific roles are sent for the users, they will be granted the role ORG_OWNER.\n\nRequired permission:\n - `org.create`\n\nDeprecated: Use [AddOrganization](/docs/reference/api/org/zitadel.org.v2.OrganizationService.AddOrganization) instead to create an organization.",
         "operationId": "OrganizationService_CreateOrganization",
         "responses": {
           "200": {
@@ -90,7 +90,7 @@
     "/v2beta/organizations/search": {
       "post": {
         "summary": "List Organizations",
-        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nReturns a list of organizations that match the requesting filters. All filters are applied with an AND condition.\n\nRequired permission:\n - `org.read`\n\nDeprecated: Use [ListOrganizations](/apis/resources/org_service_v2/organization-service-list-organizations.api.mdx) instead to list organizations.",
+        "description": "Deprecated: please move to the corresponding endpoint under organization service v2. This endpoint will be removed with the next major version of ZITADEL.\n\nReturns a list of organizations that match the requesting filters. All filters are applied with an AND condition.\n\nRequired permission:\n - `org.read`\n\nDeprecated: Use [ListOrganizations](/docs/reference/api/org/zitadel.org.v2.OrganizationService.ListOrganizations) instead to list organizations.",
         "operationId": "OrganizationService_ListOrganizations",
         "responses": {
           "200": {
@@ -1238,7 +1238,7 @@
         "hash": {
           "type": "string",
           "example": "$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2",
-          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"",
+          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/learn/architecture/secrets#hashed-secrets\"",
           "maxLength": 200,
           "minLength": 1
         },

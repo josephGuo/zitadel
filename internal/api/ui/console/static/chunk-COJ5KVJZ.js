@@ -1,0 +1,1 @@
+import{Ig as a,da as e}from"./chunk-UYIM6G44.js";var c=n=>{let t=e(a);if(!t.authenticated)if(n.queryParams&&n.queryParams.login_hint){let i=n.queryParams.login_hint,o={customQueryParams:{login_hint:i}};console.log(`authenticate with login_hint: ${i}`),t.authenticate(o).then()}else return t.authenticate();return t.authenticated};export{c as a};

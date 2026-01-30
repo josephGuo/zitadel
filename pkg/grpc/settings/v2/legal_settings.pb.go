@@ -136,11 +136,11 @@ var File_zitadel_settings_v2_legal_settings_proto protoreflect.FileDescriptor
 
 const file_zitadel_settings_v2_legal_settings_proto_rawDesc = "" +
 	"\n" +
-	"(zitadel/settings/v2/legal_settings.proto\x12\x13zitadel.settings.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\"zitadel/settings/v2/settings.proto\x1a\x17validate/validate.proto\"\x86\x05\n" +
-	"\x17LegalAndSupportSettings\x12Q\n" +
-	"\btos_link\x18\x01 \x01(\tB6\x92A3J1\"https://zitadel.com/docs/legal/terms-of-service\"R\atosLink\x12d\n" +
-	"\x13privacy_policy_link\x18\x02 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/legal/privacy-policy\"R\x11privacyPolicyLink\x12Q\n" +
-	"\thelp_link\x18\x03 \x01(\tB4\x92A1J/\"https://zitadel.com/docs/manuals/introduction\"R\bhelpLink\x12O\n" +
+	"(zitadel/settings/v2/legal_settings.proto\x12\x13zitadel.settings.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\"zitadel/settings/v2/settings.proto\x1a\x17validate/validate.proto\"\xa0\x05\n" +
+	"\x17LegalAndSupportSettings\x12X\n" +
+	"\btos_link\x18\x01 \x01(\tB=\x92A:J8\"https://zitadel.com/docs/manage/legal/terms-of-service\"R\atosLink\x12t\n" +
+	"\x13privacy_policy_link\x18\x02 \x01(\tBD\x92AAJ?\"https://zitadel.com/docs/manage/legal/policies/privacy-policy\"R\x11privacyPolicyLink\x12T\n" +
+	"\thelp_link\x18\x03 \x01(\tB7\x92A4J2\"https://zitadel.com/docs/manage/console-overview\"R\bhelpLink\x12O\n" +
 	"\rsupport_email\x18\x04 \x01(\tB*\x92A\x1aJ\x18\"support-email@test.com\"\xfaB\n" +
 	"r\b\x18\xc0\x02\xd0\x01\x01`\x01R\fsupportEmail\x12V\n" +
 	"\x13resource_owner_type\x18\x05 \x01(\x0e2&.zitadel.settings.v2.ResourceOwnerTypeR\x11resourceOwnerType\x12<\n" +

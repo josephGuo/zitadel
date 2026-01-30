@@ -1045,15 +1045,15 @@
       "properties": {
         "tosLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/legal/terms-of-service"
+          "example": "https://zitadel.com/docs/manage/legal/terms-of-service"
         },
         "privacyPolicyLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/legal/privacy-policy"
+          "example": "https://zitadel.com/docs/manage/legal/policies/privacy-policy"
         },
         "helpLink": {
           "type": "string",
-          "example": "https://zitadel.com/docs/manuals/introduction"
+          "example": "https://zitadel.com/docs/manage/console-overview"
         },
         "supportEmail": {
           "type": "string",

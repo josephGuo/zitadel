@@ -404,9 +404,9 @@ const file_zitadel_user_v2_password_proto_rawDesc = "" +
 	"\x1ezitadel/user/v2/password.proto\x12\x0fzitadel.user.v2\x1a\x1fgoogle/api/field_behavior.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\"{\n" +
 	"\bPassword\x12F\n" +
 	"\bpassword\x18\x01 \x01(\tB*\x92A\x19J\x11\"Secr3tP4ssw0rd!\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\bpassword\x12'\n" +
-	"\x0fchange_required\x18\x02 \x01(\bR\x0echangeRequired\"\xa6\x02\n" +
-	"\x0eHashedPassword\x12\xea\x01\n" +
-	"\x04hash\x18\x01 \x01(\tB\xd5\x01\x92A\xc3\x012{\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"J>\"$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04hash\x12'\n" +
+	"\x0fchange_required\x18\x02 \x01(\bR\x0echangeRequired\"\xa3\x02\n" +
+	"\x0eHashedPassword\x12\xe7\x01\n" +
+	"\x04hash\x18\x01 \x01(\tB\xd2\x01\x92A\xc0\x012x\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/learn/architecture/secrets#hashed-secrets\"J>\"$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\x04hash\x12'\n" +
 	"\x0fchange_required\x18\x02 \x01(\bR\x0echangeRequired\"\x91\x02\n" +
 	"\x15SendPasswordResetLink\x12N\n" +
 	"\x11notification_type\x18\x01 \x01(\x0e2!.zitadel.user.v2.NotificationTypeR\x10notificationType\x12\x96\x01\n" +

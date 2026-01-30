@@ -1,0 +1,17 @@
+# clean code
+    pnpm nx run-many --target clean
+# generate code 
+    pnpm nx run-many --target generate
+# build api&login    
+    pnpm nx run-many --target build
+# build docker images
+    docker build -f ./apps/api/Dockerfile -t zitadel.api.loc .
+    docker build -f ./apps/login/Dockerfile.local -t zitadel.login.loc .
+    ## docker build -f ./apps/api/Dockerfile -t zitadel.api.loc .
+    ## local run: ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+    ## docker run: docker run -p 8080:8080 -e ZITADEL_DATABASE_POSTGRES_HOST=localhost ZITADEL_DATABASE_POSTGRES_PORT=5432 ZITADEL_DATABASE_POSTGRES_DATABASE=zitadel ZITADEL_DATABASE_POSTGRES_USER_USERNAME=zitadel ZITADEL_DATABASE_POSTGRES_USER_PASSWORD=zitadel.379 ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE=disable ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME=postgres ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD=SA123root1.618 ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE=disable ZITADEL_EXTERNALSECURE=false zitadel.local:last start-from-init --masterkey "MasterkeyNeedsToHave32Characters" --tlsMode disabled
+ 
+# start zitadel with docker-compose
+    docker-compose -f docs/docs/self-hosting/deploy/docker-compose.local.yaml -p zitadel_loc up -d
+# default user login
+Visit http://localhost:8080/ui/console?login_hint=zitadel-admin@zitadel.localhost and enter `Password1!` to log in.

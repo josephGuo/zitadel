@@ -1112,7 +1112,7 @@ type SetPassword_Password struct {
 
 type SetPassword_Hash struct {
 	// Encoded hash of a password in Modular Crypt Format:
-	// https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets.
+	// https://zitadel.com/docs/learn/architecture/secrets#hashed-secrets.
 	Hash string `protobuf:"bytes,2,opt,name=hash,proto3,oneof"`
 }
 

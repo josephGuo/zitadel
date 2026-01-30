@@ -1,0 +1,1052 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Session Service",
+    "description": "This API is intended to manage sessions in a Zitadel instance. Follow the guides on how to [build your own Login UI](/docs/guides/integrate/login-ui) and learn how to use the Session API. This project is in beta state. It can AND will continue breaking until the services provide the same functionality as the current login.",
+    "version": "2.0-beta",
+    "contact": {
+      "name": "ZITADEL",
+      "url": "https://zitadel.com",
+      "email": "hi@zitadel.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://github.com/zitadel/zitadel/blob/main/LICENSING.md"
+    }
+  },
+  "tags": [
+    {
+      "name": "SessionService"
+    }
+  ],
+  "host": "$CUSTOM_DOMAIN",
+  "basePath": "/",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "application/grpc",
+    "application/grpc-web+proto"
+  ],
+  "produces": [
+    "application/json",
+    "application/grpc",
+    "application/grpc-web+proto"
+  ],
+  "paths": {
+    "/v2beta/sessions": {
+      "post": {
+        "summary": "Create a new session",
+        "description": "Create a new session. A token will be returned, which is required for further updates of the session.",
+        "operationId": "SessionService_CreateSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaCreateSessionResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaCreateSessionRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SessionService"
+        ],
+        "deprecated": true
+      }
+    },
+    "/v2beta/sessions/search": {
+      "post": {
+        "summary": "Search sessions",
+        "description": "Search for sessions",
+        "operationId": "SessionService_ListSessions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaListSessionsResponse"
+            }
+          },
+          "400": {
+            "description": "invalid list query",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaListSessionsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SessionService"
+        ],
+        "deprecated": true
+      }
+    },
+    "/v2beta/sessions/{sessionId}": {
+      "get": {
+        "summary": "Get a session",
+        "description": "Get a session and all its information like the time of the user or password verification",
+        "operationId": "SessionService_GetSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaGetSessionResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sessionToken",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SessionService"
+        ],
+        "deprecated": true
+      },
+      "delete": {
+        "summary": "Terminate an existing session",
+        "description": "Terminate your own session or if granted any other session.",
+        "operationId": "SessionService_DeleteSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaDeleteSessionResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionId",
+            "description": "\"id of the session to terminate\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaSessionServiceDeleteSessionBody"
+            }
+          }
+        ],
+        "tags": [
+          "SessionService"
+        ],
+        "deprecated": true
+      },
+      "patch": {
+        "summary": "Update an existing session",
+        "description": "Update an existing session with new information.",
+        "operationId": "SessionService_SetSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaSetSessionResponse"
+            }
+          },
+          "403": {
+            "description": "Returned when the user does not have permission to access the resource.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sessionId",
+            "description": "\"id of the session to update\"",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sessionv2betaSessionServiceSetSessionBody"
+            }
+          }
+        ],
+        "tags": [
+          "SessionService"
+        ],
+        "deprecated": true
+      }
+    }
+  },
+  "definitions": {
+    "objectv2betaDetails": {
+      "type": "object",
+      "properties": {
+        "sequence": {
+          "type": "string",
+          "format": "uint64",
+          "example": "2",
+          "description": "on read: the sequence of the last event reduced by the projection\n\non manipulation: the timestamp of the event(s) added by the manipulation",
+          "title": "sequence represents the order of events. It's always counting"
+        },
+        "changeDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "on read: the timestamp of the last event reduced by the projection\n\non manipulation: the timestamp of the event(s) added by the manipulation",
+          "title": "change_date is the timestamp when the object was changed"
+        },
+        "resourceOwner": {
+          "type": "string",
+          "example": "69629023906488334",
+          "title": "resource_owner is the organization or instance_id an object belongs to"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "creation_date is the timestamp where the first operation on the object was made"
+        }
+      }
+    },
+    "objectv2betaListDetails": {
+      "type": "object",
+      "properties": {
+        "totalResult": {
+          "type": "string",
+          "format": "uint64",
+          "example": "2"
+        },
+        "processedSequence": {
+          "type": "string",
+          "format": "uint64",
+          "example": "267831"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "the last time the projection got updated"
+        }
+      }
+    },
+    "objectv2betaListQuery": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "string",
+          "format": "uint64",
+          "example": "0"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100,
+          "description": "Maximum amount of events returned. The default is set to 1000 in https://github.com/zitadel/zitadel/blob/new-eventstore/cmd/zitadel/startup.yaml. If the limit exceeds the maximum configured Zitadel will throw an error. If no limit is present the default is taken."
+        },
+        "asc": {
+          "type": "boolean",
+          "description": "default is descending"
+        }
+      },
+      "description": "Object unspecific list filters like offset, limit and asc/desc.",
+      "title": "General List Query"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "sessionv2betaChallenges": {
+      "type": "object",
+      "properties": {
+        "webAuthN": {
+          "$ref": "#/definitions/sessionv2betaChallengesWebAuthN"
+        },
+        "otpSms": {
+          "type": "string"
+        },
+        "otpEmail": {
+          "type": "string"
+        }
+      }
+    },
+    "sessionv2betaChallengesWebAuthN": {
+      "type": "object",
+      "properties": {
+        "publicKeyCredentialRequestOptions": {
+          "type": "object",
+          "example": {
+            "publicKey": {
+              "allowCredentials": [
+                {
+                  "id": "ATmqBg-99qyOZk2zloPdJQyS2R7IkFT7v9Hoos_B_nM",
+                  "type": "public-key"
+                }
+              ],
+              "challenge": "GAOHYz2jE69kJMYo6Laij8yWw9-dKKgbViNhfuy0StA",
+              "rpId": "localhost",
+              "timeout": 300000,
+              "userVerification": "required"
+            }
+          },
+          "description": "Options for Assertion Generaration (dictionary PublicKeyCredentialRequestOptions). Generated helper methods transform the field to JSON, for use in a WebauthN client. See also: https://www.w3.org/TR/webauthn/#dictdef-publickeycredentialrequestoptions"
+        }
+      }
+    },
+    "sessionv2betaCheckIDPIntent": {
+      "type": "object",
+      "properties": {
+        "idpIntentId": {
+          "type": "string",
+          "example": "d654e6ba-70a3-48ef-a95d-37c8d8a7901a",
+          "description": "ID of the idp intent, previously returned on the success response of the IDP callback",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "idpIntentToken": {
+          "type": "string",
+          "example": "SJKL3ioIDpo342ioqw98fjp3sdf32wahb=",
+          "description": "token of the idp intent, previously returned on the success response of the IDP callback",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "sessionv2betaCheckOTP": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "3237642",
+          "minLength": 1
+        }
+      }
+    },
+    "sessionv2betaCheckPassword": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "V3ryS3cure!",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "sessionv2betaCheckTOTP": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "323764",
+          "maxLength": 6,
+          "minLength": 6
+        }
+      }
+    },
+    "sessionv2betaCheckUser": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "d654e6ba-70a3-48ef-a95d-37c8d8a7901a",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "loginName": {
+          "type": "string",
+          "example": "mini@mouse.com",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "sessionv2betaCheckWebAuthN": {
+      "type": "object",
+      "properties": {
+        "credentialAssertionData": {
+          "type": "object",
+          "description": "JSON representation of public key credential issued by the webAuthN client",
+          "maxLength": 1048576,
+          "minLength": 55
+        }
+      },
+      "required": [
+        "credentialAssertionData"
+      ]
+    },
+    "sessionv2betaChecks": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/sessionv2betaCheckUser",
+          "description": "\"checks the user and updates the session on success\""
+        },
+        "password": {
+          "$ref": "#/definitions/sessionv2betaCheckPassword",
+          "description": "\"Checks the password and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\""
+        },
+        "webAuthN": {
+          "$ref": "#/definitions/sessionv2betaCheckWebAuthN",
+          "description": "\"Checks the public key credential issued by the WebAuthN client. Requires that the user is already checked and a WebAuthN challenge to be requested, in any previous request.\""
+        },
+        "idpIntent": {
+          "$ref": "#/definitions/sessionv2betaCheckIDPIntent",
+          "description": "\"Checks the IDP intent. Requires that the userlink is already checked and a successful idp intent.\""
+        },
+        "totp": {
+          "$ref": "#/definitions/sessionv2betaCheckTOTP",
+          "description": "\"Checks the Time-based One-Time Password and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\""
+        },
+        "otpSms": {
+          "$ref": "#/definitions/sessionv2betaCheckOTP",
+          "description": "\"Checks the One-Time Password sent over SMS and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\""
+        },
+        "otpEmail": {
+          "$ref": "#/definitions/sessionv2betaCheckOTP",
+          "description": "\"Checks the One-Time Password sent over Email and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\""
+        }
+      }
+    },
+    "sessionv2betaCreateSessionRequest": {
+      "type": "object",
+      "properties": {
+        "checks": {
+          "$ref": "#/definitions/sessionv2betaChecks",
+          "description": "\"Check for user and password. Successful checks will be stated as factors on the session.\""
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "\"custom key value list to be stored on the session\""
+        },
+        "challenges": {
+          "$ref": "#/definitions/sessionv2betaRequestChallenges"
+        },
+        "userAgent": {
+          "$ref": "#/definitions/sessionv2betaUserAgent"
+        },
+        "lifetime": {
+          "type": "string",
+          "example": "18000s",
+          "description": "\"duration (in seconds) after which the session will be automatically invalidated\""
+        }
+      }
+    },
+    "sessionv2betaCreateSessionResponse": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/objectv2betaDetails"
+        },
+        "sessionId": {
+          "type": "string",
+          "example": "222430354126975533",
+          "description": "\"id of the session\""
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "\"The current token of the session, which is required for delete session, get session or the request of other resources.\""
+        },
+        "challenges": {
+          "$ref": "#/definitions/sessionv2betaChallenges"
+        }
+      }
+    },
+    "sessionv2betaCreationDateQuery": {
+      "type": "object",
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "method": {
+          "$ref": "#/definitions/zitadelv1TimestampQueryMethod",
+          "description": "defines which timestamp comparison method is used"
+        }
+      }
+    },
+    "sessionv2betaDeleteSessionResponse": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/objectv2betaDetails"
+        }
+      }
+    },
+    "sessionv2betaFactors": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/sessionv2betaUserFactor"
+        },
+        "password": {
+          "$ref": "#/definitions/sessionv2betaPasswordFactor"
+        },
+        "webAuthN": {
+          "$ref": "#/definitions/sessionv2betaWebAuthNFactor"
+        },
+        "intent": {
+          "$ref": "#/definitions/sessionv2betaIntentFactor"
+        },
+        "totp": {
+          "$ref": "#/definitions/sessionv2betaTOTPFactor"
+        },
+        "otpSms": {
+          "$ref": "#/definitions/sessionv2betaOTPFactor"
+        },
+        "otpEmail": {
+          "$ref": "#/definitions/sessionv2betaOTPFactor"
+        }
+      }
+    },
+    "sessionv2betaGetSessionResponse": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/definitions/zitadelsessionv2betaSession"
+        }
+      }
+    },
+    "sessionv2betaIDsQuery": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sessionv2betaIntentFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when an intent was last checked\""
+        }
+      }
+    },
+    "sessionv2betaListSessionsRequest": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "$ref": "#/definitions/objectv2betaListQuery"
+        },
+        "queries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/zitadelsessionv2betaSearchQuery"
+          }
+        },
+        "sortingColumn": {
+          "$ref": "#/definitions/sessionv2betaSessionFieldName"
+        }
+      }
+    },
+    "sessionv2betaListSessionsResponse": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/objectv2betaListDetails"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/zitadelsessionv2betaSession"
+          }
+        }
+      }
+    },
+    "sessionv2betaOTPFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the One-Time Password was last checked\""
+        }
+      }
+    },
+    "sessionv2betaPasswordFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the password was last checked\""
+        }
+      }
+    },
+    "sessionv2betaRequestChallenges": {
+      "type": "object",
+      "properties": {
+        "webAuthN": {
+          "$ref": "#/definitions/sessionv2betaRequestChallengesWebAuthN"
+        },
+        "otpSms": {
+          "$ref": "#/definitions/sessionv2betaRequestChallengesOTPSMS"
+        },
+        "otpEmail": {
+          "$ref": "#/definitions/sessionv2betaRequestChallengesOTPEmail"
+        }
+      }
+    },
+    "sessionv2betaRequestChallengesOTPEmail": {
+      "type": "object",
+      "properties": {
+        "sendCode": {
+          "$ref": "#/definitions/sessionv2betaRequestChallengesOTPEmailSendCode"
+        },
+        "returnCode": {
+          "$ref": "#/definitions/sessionv2betaRequestChallengesOTPEmailReturnCode"
+        }
+      }
+    },
+    "sessionv2betaRequestChallengesOTPEmailReturnCode": {
+      "type": "object"
+    },
+    "sessionv2betaRequestChallengesOTPEmailSendCode": {
+      "type": "object",
+      "properties": {
+        "urlTemplate": {
+          "type": "string",
+          "example": "https://example.com/otp/verify?userID={{.UserID}}\u0026code={{.Code}}",
+          "description": "\"Optionally set a url_template, which will be used in the mail sent by Zitadel to guide the user to your verification page. If no template is set, the default Zitadel url will be used.\"",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "sessionv2betaRequestChallengesOTPSMS": {
+      "type": "object",
+      "properties": {
+        "returnCode": {
+          "type": "boolean"
+        }
+      }
+    },
+    "sessionv2betaRequestChallengesWebAuthN": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "\"Domain on which the session was created. Will be used in the WebAuthN challenge.\""
+        },
+        "userVerificationRequirement": {
+          "$ref": "#/definitions/sessionv2betaUserVerificationRequirement",
+          "description": "\"User verification that is required during validation. When set to `USER_VERIFICATION_REQUIREMENT_REQUIRED` the behaviour is for passkey authentication. Other values will mean U2F\""
+        }
+      },
+      "required": [
+        "domain",
+        "userVerificationRequirement"
+      ]
+    },
+    "sessionv2betaSessionFieldName": {
+      "type": "string",
+      "enum": [
+        "SESSION_FIELD_NAME_UNSPECIFIED",
+        "SESSION_FIELD_NAME_CREATION_DATE"
+      ],
+      "default": "SESSION_FIELD_NAME_UNSPECIFIED"
+    },
+    "sessionv2betaSessionServiceDeleteSessionBody": {
+      "type": "object",
+      "properties": {
+        "sessionToken": {
+          "type": "string",
+          "description": "\"The current token of the session, previously returned on the create / update request. The token is required unless the authenticated user terminates the own session or is granted the `session.delete` permission.\""
+        }
+      }
+    },
+    "sessionv2betaSessionServiceSetSessionBody": {
+      "type": "object",
+      "properties": {
+        "sessionToken": {
+          "type": "string",
+          "description": "\"DEPRECATED: this field is ignored.\"",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "checks": {
+          "$ref": "#/definitions/sessionv2betaChecks",
+          "description": "\"Check for user and password. Successful checks will be stated as factors on the session.\""
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "\"custom key value list to be stored on the session\""
+        },
+        "challenges": {
+          "$ref": "#/definitions/sessionv2betaRequestChallenges"
+        },
+        "lifetime": {
+          "type": "string",
+          "example": "18000s",
+          "description": "\"duration (in seconds) after which the session will be automatically invalidated\""
+        }
+      }
+    },
+    "sessionv2betaSetSessionResponse": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/objectv2betaDetails"
+        },
+        "sessionToken": {
+          "type": "string",
+          "description": "\"The current token of the session, which is required for delete session, get session or the request of other resources.\""
+        },
+        "challenges": {
+          "$ref": "#/definitions/sessionv2betaChallenges"
+        }
+      }
+    },
+    "sessionv2betaTOTPFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the Time-based One-Time Password was last checked\""
+        }
+      }
+    },
+    "sessionv2betaUserAgent": {
+      "type": "object",
+      "properties": {
+        "fingerprintId": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "header": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/sessionv2betaUserAgentHeaderValues"
+          }
+        }
+      }
+    },
+    "sessionv2betaUserAgentHeaderValues": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "A header may have multiple values.\nIn Go, headers are defined\nas map[string][]string, but protobuf\ndoesn't allow this scheme."
+    },
+    "sessionv2betaUserFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the user was last checked\""
+        },
+        "id": {
+          "type": "string",
+          "description": "\"id of the checked user\""
+        },
+        "loginName": {
+          "type": "string",
+          "description": "\"login name of the checked user\""
+        },
+        "displayName": {
+          "type": "string",
+          "description": "\"display name of the checked user\""
+        },
+        "organizationId": {
+          "type": "string",
+          "description": "\"organization id of the checked user\""
+        }
+      }
+    },
+    "sessionv2betaUserIDQuery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "sessionv2betaUserVerificationRequirement": {
+      "type": "string",
+      "enum": [
+        "USER_VERIFICATION_REQUIREMENT_UNSPECIFIED",
+        "USER_VERIFICATION_REQUIREMENT_REQUIRED",
+        "USER_VERIFICATION_REQUIREMENT_PREFERRED",
+        "USER_VERIFICATION_REQUIREMENT_DISCOURAGED"
+      ],
+      "default": "USER_VERIFICATION_REQUIREMENT_UNSPECIFIED"
+    },
+    "sessionv2betaWebAuthNFactor": {
+      "type": "object",
+      "properties": {
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the passkey challenge was last checked\""
+        },
+        "userVerified": {
+          "type": "boolean"
+        }
+      }
+    },
+    "zitadelsessionv2betaSearchQuery": {
+      "type": "object",
+      "properties": {
+        "idsQuery": {
+          "$ref": "#/definitions/sessionv2betaIDsQuery"
+        },
+        "userIdQuery": {
+          "$ref": "#/definitions/sessionv2betaUserIDQuery"
+        },
+        "creationDateQuery": {
+          "$ref": "#/definitions/sessionv2betaCreationDateQuery"
+        }
+      }
+    },
+    "zitadelsessionv2betaSession": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "\"id of the session\""
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the session was created\""
+        },
+        "changeDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time when the session was last updated\""
+        },
+        "sequence": {
+          "type": "string",
+          "format": "uint64",
+          "description": "\"sequence of the session\""
+        },
+        "factors": {
+          "$ref": "#/definitions/sessionv2betaFactors",
+          "description": "\"checked factors of the session, e.g. the user, password and more\""
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "\"custom key value list\""
+        },
+        "userAgent": {
+          "$ref": "#/definitions/sessionv2betaUserAgent"
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "\"time the session will be automatically invalidated\""
+        }
+      }
+    },
+    "zitadelv1TimestampQueryMethod": {
+      "type": "string",
+      "enum": [
+        "TIMESTAMP_QUERY_METHOD_EQUALS",
+        "TIMESTAMP_QUERY_METHOD_GREATER",
+        "TIMESTAMP_QUERY_METHOD_GREATER_OR_EQUALS",
+        "TIMESTAMP_QUERY_METHOD_LESS",
+        "TIMESTAMP_QUERY_METHOD_LESS_OR_EQUALS"
+      ],
+      "default": "TIMESTAMP_QUERY_METHOD_EQUALS"
+    }
+  },
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "$CUSTOM_DOMAIN/oauth/v2/authorize",
+      "tokenUrl": "$CUSTOM_DOMAIN/oauth/v2/token",
+      "scopes": {
+        "openid": "openid",
+        "urn:zitadel:iam:org:project:id:zitadel:aud": "urn:zitadel:iam:org:project:id:zitadel:aud"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": [
+        "openid",
+        "urn:zitadel:iam:org:project:id:zitadel:aud"
+      ]
+    }
+  ],
+  "externalDocs": {
+    "description": "Detailed information about ZITADEL",
+    "url": "https://zitadel.com/docs"
+  }
+}

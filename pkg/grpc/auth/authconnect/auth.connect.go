@@ -238,7 +238,7 @@ type AuthServiceClient interface {
 	RemoveMyPasswordless(context.Context, *connect.Request[auth.RemoveMyPasswordlessRequest]) (*connect.Response[auth.RemoveMyPasswordlessResponse], error)
 	// List My Authorizations / User Grants
 	//
-	// Deprecated: [List authorizations](apis/resources/authorization_service_v2/zitadel-authorization-v-2-authorization-service-list-authorizations.api.mdx) and pass the user ID filter with your users ID to search for your authorizations on granted and owned projects.
+	// Deprecated: [List authorizations](/docs/reference/api/authorization/zitadel.authorization.v2.AuthorizationService.ListAuthorizations) and pass the user ID filter with your users ID to search for your authorizations on granted and owned projects.
 	//
 	// Returns a list of the authorizations/user grants the authenticated user has. User grants consist of an organization, a project and 1-n roles.
 	ListMyUserGrants(context.Context, *connect.Request[auth.ListMyUserGrantsRequest]) (*connect.Response[auth.ListMyUserGrantsResponse], error)
@@ -246,7 +246,7 @@ type AuthServiceClient interface {
 	ListMyZitadelPermissions(context.Context, *connect.Request[auth.ListMyZitadelPermissionsRequest]) (*connect.Response[auth.ListMyZitadelPermissionsResponse], error)
 	// List My Project Roles
 	//
-	// Deprecated: [List authorizations](apis/resources/authorization_service_v2/zitadel-authorization-v-2-authorization-service-list-authorizations.api.mdx) and pass the user ID filter with your users ID and the project ID filter to search for your authorizations on a granted and an owned project.
+	// Deprecated: [List authorizations](/docs/reference/api/authorization/zitadel.authorization.v2.AuthorizationService.ListAuthorizations) and pass the user ID filter with your users ID and the project ID filter to search for your authorizations on a granted and an owned project.
 	//
 	// Returns a list of roles for the authenticated user and for the requesting project.
 	ListMyProjectPermissions(context.Context, *connect.Request[auth.ListMyProjectPermissionsRequest]) (*connect.Response[auth.ListMyProjectPermissionsResponse], error)
@@ -960,7 +960,7 @@ type AuthServiceHandler interface {
 	RemoveMyPasswordless(context.Context, *connect.Request[auth.RemoveMyPasswordlessRequest]) (*connect.Response[auth.RemoveMyPasswordlessResponse], error)
 	// List My Authorizations / User Grants
 	//
-	// Deprecated: [List authorizations](apis/resources/authorization_service_v2/zitadel-authorization-v-2-authorization-service-list-authorizations.api.mdx) and pass the user ID filter with your users ID to search for your authorizations on granted and owned projects.
+	// Deprecated: [List authorizations](/docs/reference/api/authorization/zitadel.authorization.v2.AuthorizationService.ListAuthorizations) and pass the user ID filter with your users ID to search for your authorizations on granted and owned projects.
 	//
 	// Returns a list of the authorizations/user grants the authenticated user has. User grants consist of an organization, a project and 1-n roles.
 	ListMyUserGrants(context.Context, *connect.Request[auth.ListMyUserGrantsRequest]) (*connect.Response[auth.ListMyUserGrantsResponse], error)
@@ -968,7 +968,7 @@ type AuthServiceHandler interface {
 	ListMyZitadelPermissions(context.Context, *connect.Request[auth.ListMyZitadelPermissionsRequest]) (*connect.Response[auth.ListMyZitadelPermissionsResponse], error)
 	// List My Project Roles
 	//
-	// Deprecated: [List authorizations](apis/resources/authorization_service_v2/zitadel-authorization-v-2-authorization-service-list-authorizations.api.mdx) and pass the user ID filter with your users ID and the project ID filter to search for your authorizations on a granted and an owned project.
+	// Deprecated: [List authorizations](/docs/reference/api/authorization/zitadel.authorization.v2.AuthorizationService.ListAuthorizations) and pass the user ID filter with your users ID and the project ID filter to search for your authorizations on a granted and an owned project.
 	//
 	// Returns a list of roles for the authenticated user and for the requesting project.
 	ListMyProjectPermissions(context.Context, *connect.Request[auth.ListMyProjectPermissionsRequest]) (*connect.Response[auth.ListMyProjectPermissionsResponse], error)

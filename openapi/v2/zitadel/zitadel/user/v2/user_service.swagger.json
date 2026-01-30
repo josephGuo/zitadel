@@ -206,7 +206,7 @@
     "/v2/users/human": {
       "post": {
         "summary": "Create a new human user",
-        "description": "Deprecated: Use [CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) to create a new user of type human instead.\n\nCreate/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.",
+        "description": "Deprecated: Use [CreateUser](/docs/reference/api/user/zitadel.user.v2.UserService.CreateUser) to create a new user of type human instead.\n\nCreate/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.",
         "operationId": "UserService_AddHumanUser",
         "responses": {
           "200": {
@@ -259,7 +259,7 @@
     "/v2/users/human/{userId}": {
       "put": {
         "summary": "Update Human User",
-        "description": "Deprecated: Use [UpdateUser](apis/resources/user_service_v2/user-service-update-user.api.mdx) to update a user of type human instead.\n\nUpdate all information from a user.",
+        "description": "Deprecated: Use [UpdateUser](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to update a user of type human instead.\n\nUpdate all information from a user.",
         "operationId": "UserService_UpdateHumanUser",
         "responses": {
           "200": {
@@ -864,7 +864,7 @@
     "/v2/users/{userId}/email": {
       "post": {
         "summary": "Change the user email",
-        "description": "Deprecated: [Update the users email field](apis/resources/user_service_v2/user-service-update-user.api.mdx).\n\nChange the email address of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by email..",
+        "description": "Deprecated: [Update the users email field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).\n\nChange the email address of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by email..",
         "operationId": "UserService_SetEmail",
         "responses": {
           "200": {
@@ -1173,7 +1173,7 @@
     "/v2/users/{userId}/invite_code/resend": {
       "post": {
         "summary": "Resend an invite code for a user",
-        "description": "Deprecated: Use [CreateInviteCode](apis/resources/user_service_v2/user-service-create-invite-code.api.mdx) instead.\n\nResend an invite code for a user to initialize their first authentication method (password, passkeys, IdP) depending on the organization's available methods.\nA resend is only possible if a code has been created previously and sent to the user. If there is no code or it was directly returned, an error will be returned.",
+        "description": "Deprecated: Use [CreateInviteCode](/docs/reference/api/user/zitadel.user.v2.UserService.CreateInviteCode) instead.\n\nResend an invite code for a user to initialize their first authentication method (password, passkeys, IdP) depending on the organization's available methods.\nA resend is only possible if a code has been created previously and sent to the user. If there is no code or it was directly returned, an error will be returned.",
         "operationId": "UserService_ResendInviteCode",
         "responses": {
           "200": {
@@ -1729,7 +1729,7 @@
       },
       "post": {
         "summary": "Set User Metadata",
-        "description": "Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](apis/resources/user_service_v2/user-service-delete-user-metadata.api.mdx). For HTTP requests, make sure the bytes array value is base64 encoded.\n\nRequired permission:\n - `user.write`",
+        "description": "Sets a list of key value pairs. Existing metadata entries with matching keys are overwritten. Existing metadata entries without matching keys are untouched. To remove metadata entries, use [DeleteUserMetadata](/docs/reference/api/user/zitadel.user.v2.UserService.DeleteUserMetadata). For HTTP requests, make sure the bytes array value is base64 encoded.\n\nRequired permission:\n - `user.write`",
         "operationId": "UserService_SetUserMetadata",
         "responses": {
           "200": {
@@ -2443,7 +2443,7 @@
     "/v2/users/{userId}/password": {
       "post": {
         "summary": "Change password",
-        "description": "Deprecated: [Update the users password](apis/resources/user_service_v2/user-service-update-user.api.mdx) instead.\n\nChange the password of a user with either a verification code or the current password..",
+        "description": "Deprecated: [Update the users password](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) instead.\n\nChange the password of a user with either a verification code or the current password..",
         "operationId": "UserService_SetPassword",
         "responses": {
           "200": {
@@ -2691,7 +2691,7 @@
     "/v2/users/{userId}/phone": {
       "delete": {
         "summary": "Delete the user phone",
-        "description": "Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx) to remove the phone number.\n\nDelete the phone number of a user.",
+        "description": "Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to remove the phone number.\n\nDelete the phone number of a user.",
         "operationId": "UserService_RemovePhone",
         "responses": {
           "200": {
@@ -2752,7 +2752,7 @@
       },
       "post": {
         "summary": "Set the user phone",
-        "description": "Deprecated: [Update the users phone field](apis/resources/user_service_v2/user-service-update-user.api.mdx).\n\nSet the phone number of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by sms..",
+        "description": "Deprecated: [Update the users phone field](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser).\n\nSet the phone number of a user. If the state is set to not verified, a verification code will be generated, which can be either returned or sent to the user by sms..",
         "operationId": "UserService_SetPhone",
         "responses": {
           "200": {
@@ -4596,7 +4596,7 @@
         },
         "machine": {
           "$ref": "#/definitions/v2CreateUserRequestMachine",
-          "description": "Users of type machine are users that are meant to be used by a machine.\nIn order to authenticate, [add a secret](apis/resources/user_service_v2/user-service-add-secret.api.mdx), [a key](apis/resources/user_service_v2/user-service-add-key.api.mdx) or [a personal access token](apis/resources/user_service_v2/user-service-add-personal-access-token.api.mdx) to the user.\nTokens generated for new users of type machine will be of an opaque Bearer type.\nYou can change the users token type to JWT by using the [management v1 service method UpdateMachine](apis/resources/mgmt/management-service-update-machine.api.mdx)."
+          "description": "Users of type machine are users that are meant to be used by a machine.\nIn order to authenticate, [add a secret](/docs/reference/api/user/zitadel.user.v2.UserService.AddSecret), [a key](/docs/reference/api/user/zitadel.user.v2.UserService.AddKey) or [a personal access token](/docs/reference/api/user/zitadel.user.v2.UserService.AddPersonalAccessToken) to the user.\nTokens generated for new users of type machine will be of an opaque Bearer type.\nYou can change the users token type to JWT by using the management v1 service method UpdateMachine."
         }
       }
     },
@@ -4627,7 +4627,7 @@
             "type": "object",
             "$ref": "#/definitions/v2IDPLink"
           },
-          "title": "Create the user with a list of links to identity providers.\nThis can be useful in migration-scenarios.\nFor example, if a user already has an account in an external identity provider or another Zitadel instance, an IDP link allows the user to authenticate as usual.\nSessions, second factors, hardware keys registered externally are still available for authentication.\nUse the following endpoints to manage identity provider links:\n- [AddIDPLink](apis/resources/user_service_v2/user-service-add-idp-link.api.mdx)\n- [RemoveIDPLink](apis/resources/user_service_v2/user-service-remove-idp-link.api.mdx)"
+          "title": "Create the user with a list of links to identity providers.\nThis can be useful in migration-scenarios.\nFor example, if a user already has an account in an external identity provider or another Zitadel instance, an IDP link allows the user to authenticate as usual.\nSessions, second factors, hardware keys registered externally are still available for authentication.\nUse the following endpoints to manage identity provider links:\n- [AddIDPLink](/docs/reference/api/user/zitadel.user.v2.UserService.AddIDPLink)\n- [RemoveIDPLink](/docs/reference/api/user/zitadel.user.v2.UserService.RemoveIDPLink)"
         },
         "totpSecret": {
           "type": "string",
@@ -4896,7 +4896,7 @@
         "hash": {
           "type": "string",
           "example": "$2a$12$lJ08fqVr8bFJilRVnDT9QeULI7YW.nT3iwUv6dyg0aCrfm3UY8XR2",
-          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/concepts/architecture/secrets#hashed-secrets\"",
+          "description": "\"Encoded hash of a password in Modular Crypt Format: https://zitadel.com/docs/learn/architecture/secrets#hashed-secrets\"",
           "maxLength": 200,
           "minLength": 1
         },

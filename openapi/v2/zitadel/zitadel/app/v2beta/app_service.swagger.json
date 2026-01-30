@@ -39,7 +39,7 @@
     "/v2beta/application_keys": {
       "post": {
         "summary": "Create Application Key",
-        "description": "Deprecated: use [application service v2 CreateApplicationKey](apis/resources/application_service_v2/application-service-create-application-key.api.mdx) instead.\n\nCreate a new application key, which is used to authorize an API application.\n\nKey details are returned in the response. They must be stored safely, as it will not\nbe possible to retrieve them again.\n\nRequired permissions:\n  - `project.app.write`",
+        "description": "Deprecated: use [application service v2 CreateApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplicationKey) instead.\n\nCreate a new application key, which is used to authorize an API application.\n\nKey details are returned in the response. They must be stored safely, as it will not\nbe possible to retrieve them again.\n\nRequired permissions:\n  - `project.app.write`",
         "operationId": "AppService_CreateApplicationKey",
         "responses": {
           "200": {
@@ -86,7 +86,7 @@
     "/v2beta/application_keys/search": {
       "post": {
         "summary": "List Application Keys",
-        "description": "Deprecated: use [application service v2 ListApplicationKeys](apis/resources/application_service_v2/application-service-list-application-keys.api.mdx) instead.\n\nReturns a list of application keys matching the input parameters.\n\nThe result can be sorted by id, aggregate, creation date, expiration date, resource owner or type.\nIt can also be filtered by app, project or organization ID.\n\nRequired permissions:\n  - project.app.read",
+        "description": "Deprecated: use [application service v2 ListApplicationKeys](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplicationKeys) instead.\n\nReturns a list of application keys matching the input parameters.\n\nThe result can be sorted by id, aggregate, creation date, expiration date, resource owner or type.\nIt can also be filtered by app, project or organization ID.\n\nRequired permissions:\n  - project.app.read",
         "operationId": "AppService_ListApplicationKeys",
         "responses": {
           "200": {
@@ -133,7 +133,7 @@
     "/v2beta/application_keys/{id}": {
       "get": {
         "summary": "Get Application Key",
-        "description": "Deprecated: use [application service v2 GetApplicationKey](apis/resources/application_service_v2/application-service-get-application-key.api.mdx) instead.\n\nRetrieves the application key matching the provided ID.\n\nSpecifying a project, organization and app ID is optional but help with filtering/performance.\n\nRequired permissions:\n  - project.app.read",
+        "description": "Deprecated: use [application service v2 GetApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplicationKey) instead.\n\nRetrieves the application key matching the provided ID.\n\nSpecifying a project, organization and app ID is optional but help with filtering/performance.\n\nRequired permissions:\n  - project.app.read",
         "operationId": "AppService_GetApplicationKey",
         "responses": {
           "200": {
@@ -194,7 +194,7 @@
       },
       "delete": {
         "summary": "Delete Application Key",
-        "description": "Deprecated: use [application service v2 DeleteApplicationKey](apis/resources/application_service_v2/application-service-delete-application-key.api.mdx) instead.\n\nDeletes an application key matching the provided ID.\n\nOrganization ID is not mandatory, but helps with filtering/performance.\n\nThe deletion time is returned in response message.\n\nRequired permissions:\n  - `project.app.write`",
+        "description": "Deprecated: use [application service v2 DeleteApplicationKey](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplicationKey) instead.\n\nDeletes an application key matching the provided ID.\n\nOrganization ID is not mandatory, but helps with filtering/performance.\n\nThe deletion time is returned in response message.\n\nRequired permissions:\n  - `project.app.write`",
         "operationId": "AppService_DeleteApplicationKey",
         "responses": {
           "200": {
@@ -257,7 +257,7 @@
     "/v2beta/applications": {
       "post": {
         "summary": "Create Application",
-        "description": "Deprecated: use [application service v2 CreateApplication](apis/resources/application_service_v2/application-service-create-application.api.mdx) instead.\n\nCreate an application. The application can be OIDC, API or SAML type, based on the input.\n\nRequired permissions:\n  - project.app.write",
+        "description": "Deprecated: use [application service v2 CreateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.CreateApplication) instead.\n\nCreate an application. The application can be OIDC, API or SAML type, based on the input.\n\nRequired permissions:\n  - project.app.write",
         "operationId": "AppService_CreateApplication",
         "responses": {
           "200": {
@@ -304,7 +304,7 @@
     "/v2beta/applications/search": {
       "post": {
         "summary": "List Applications",
-        "description": "Deprecated: use [application service v2 ListApplications](apis/resources/application_service_v2/application-service-list-applications.api.mdx) instead.\n\nReturns a list of applications matching the input parameters that belong to the provided\nproject.\n\nThe result can be sorted by app id, name, creation date, change date or state. It can also\nbe filtered by app state, app type and app name.\n\nRequired permissions:\n  - project.app.read",
+        "description": "Deprecated: use [application service v2 ListApplications](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ListApplications) instead.\n\nReturns a list of applications matching the input parameters that belong to the provided\nproject.\n\nThe result can be sorted by app id, name, creation date, change date or state. It can also\nbe filtered by app state, app type and app name.\n\nRequired permissions:\n  - project.app.read",
         "operationId": "AppService_ListApplications",
         "responses": {
           "200": {
@@ -351,7 +351,7 @@
     "/v2beta/applications/{applicationId}/generate_client_secret": {
       "post": {
         "summary": "Regenerate Client Secret",
-        "description": "Deprecated: use [application service v2 GenerateClientSecret](apis/resources/application_service_v2/application-service-generate-client-secret.api.mdx) instead.\n\nRegenerates the client secret of an API or OIDC application that belongs to the input project.\n\nRequired permissions:\n  - project.app.write",
+        "description": "Deprecated: use [application service v2 GenerateClientSecret](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GenerateClientSecret) instead.\n\nRegenerates the client secret of an API or OIDC application that belongs to the input project.\n\nRequired permissions:\n  - project.app.write",
         "operationId": "AppService_RegenerateClientSecret",
         "responses": {
           "200": {
@@ -404,7 +404,7 @@
     "/v2beta/applications/{id}": {
       "get": {
         "summary": "Get Application",
-        "description": "Deprecated: use [application service v2 GetApplication](apis/resources/application_service_v2/application-service-get-application.api.mdx) instead.\n\nRetrieves the application matching the provided ID.\n\nRequired permissions:\n  - project.app.read",
+        "description": "Deprecated: use [application service v2 GetApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.GetApplication) instead.\n\nRetrieves the application matching the provided ID.\n\nRequired permissions:\n  - project.app.read",
         "operationId": "AppService_GetApplication",
         "responses": {
           "200": {
@@ -447,7 +447,7 @@
       },
       "delete": {
         "summary": "Delete Application",
-        "description": "Deprecated: use [application service v2 DeleteApplication](apis/resources/application_service_v2/application-service-delete-application.api.mdx) instead.\n\nDeletes the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.delete",
+        "description": "Deprecated: use [application service v2 DeleteApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeleteApplication) instead.\n\nDeletes the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.delete",
         "operationId": "AppService_DeleteApplication",
         "responses": {
           "200": {
@@ -496,7 +496,7 @@
       },
       "patch": {
         "summary": "Update Application",
-        "description": "Deprecated: use [application service v2 UpdateApplication](apis/resources/application_service_v2/zitadel-app-v-2-application-service-update-application.api.mdx) instead.\n\nChanges the configuration of an OIDC, API or SAML type application, as well as\nthe application name, based on the input provided.\n\nRequired permissions:\n  - project.app.write",
+        "description": "Deprecated: use [application service v2 UpdateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.UpdateApplication) instead.\n\nChanges the configuration of an OIDC, API or SAML type application, as well as\nthe application name, based on the input provided.\n\nRequired permissions:\n  - project.app.write",
         "operationId": "AppService_UpdateApplication",
         "responses": {
           "200": {
@@ -549,7 +549,7 @@
     "/v2beta/applications/{id}/deactivate": {
       "post": {
         "summary": "Deactivate Application",
-        "description": "Deprecated: use [application service v2 DeactivateApplication](apis/resources/application_service_v2/application-service-deactivate-application.api.mdx) instead.\n\nDeactivates the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.write",
+        "description": "Deprecated: use [application service v2 DeactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.DeactivateApplication) instead.\n\nDeactivates the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.write",
         "operationId": "AppService_DeactivateApplication",
         "responses": {
           "200": {
@@ -602,7 +602,7 @@
     "/v2beta/applications/{id}/reactivate": {
       "post": {
         "summary": "Reactivate Application",
-        "description": "Deprecated: use [application service v2 ReactivateApplication](apis/resources/application_service_v2/application-service-reactivate-application.api.mdx) instead.\n\nReactivates the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.write",
+        "description": "Deprecated: use [application service v2 ReactivateApplication](/docs/reference/api/application/zitadel.application.v2.ApplicationService.ReactivateApplication) instead.\n\nReactivates the application belonging to the input project and matching the provided\napplication ID.\n\nRequired permissions:\n  - project.app.write",
         "operationId": "AppService_ReactivateApplication",
         "responses": {
           "200": {

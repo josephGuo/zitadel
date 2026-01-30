@@ -493,9 +493,9 @@ type CreateUserRequest_Human_ struct {
 
 type CreateUserRequest_Machine_ struct {
 	// Users of type machine are users that are meant to be used by a machine.
-	// In order to authenticate, [add a secret](apis/resources/user_service_v2/user-service-add-secret.api.mdx), [a key](apis/resources/user_service_v2/user-service-add-key.api.mdx) or [a personal access token](apis/resources/user_service_v2/user-service-add-personal-access-token.api.mdx) to the user.
+	// In order to authenticate, [add a secret](/docs/reference/api/user/zitadel.user.v2.UserService.AddSecret), [a key](/docs/reference/api/user/zitadel.user.v2.UserService.AddKey) or [a personal access token](/docs/reference/api/user/zitadel.user.v2.UserService.AddPersonalAccessToken) to the user.
 	// Tokens generated for new users of type machine will be of an opaque Bearer type.
-	// You can change the users token type to JWT by using the [management v1 service method UpdateMachine](apis/resources/mgmt/management-service-update-machine.api.mdx).
+	// You can change the users token type to JWT by using the management v1 service method UpdateMachine.
 	Machine *CreateUserRequest_Machine `protobuf:"bytes,5,opt,name=machine,proto3,oneof"`
 }
 
@@ -7202,8 +7202,8 @@ type CreateUserRequest_Human struct {
 	// For example, if a user already has an account in an external identity provider or another Zitadel instance, an IDP link allows the user to authenticate as usual.
 	// Sessions, second factors, hardware keys registered externally are still available for authentication.
 	// Use the following endpoints to manage identity provider links:
-	// - [AddIDPLink](apis/resources/user_service_v2/user-service-add-idp-link.api.mdx)
-	// - [RemoveIDPLink](apis/resources/user_service_v2/user-service-remove-idp-link.api.mdx)
+	// - [AddIDPLink](/docs/reference/api/user/zitadel.user.v2.UserService.AddIDPLink)
+	// - [RemoveIDPLink](/docs/reference/api/user/zitadel.user.v2.UserService.RemoveIDPLink)
 	IdpLinks []*IDPLink `protobuf:"bytes,7,rep,name=idp_links,json=idpLinks,proto3" json:"idp_links,omitempty"`
 	// An Implementation of RFC 6238 is used, with HMAC-SHA-1 and time-step of 30 seconds.
 	// Currently no other options are supported, and if anything different is used the validation will fail.
