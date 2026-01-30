@@ -106,7 +106,7 @@ async function downloadVersion(tag, sourceRef) {
   const tempDir = join(ROOT_DIR, `.temp/${tag}`); // Extract to tag-specific temp to avoid collisions
   fs.mkdirSync(tempDir, { recursive: true });
 
-  console.log(`Downloading content for ${tag} (using source: ${sourceRef})...`);
+  console.log(`Downloading content for ${tag} url:${url} (using source: ${sourceRef})...`);
 
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to download ${url}: ${res.statusText}`);
@@ -444,15 +444,18 @@ async function fixRelativeImports(versionDir, tagOrBranch) {
 function getLocalVersion() {
     const isVercel = process.env.VERCEL === '1';
     const vercelBranch = process.env.VERCEL_GIT_COMMIT_REF;
-    
+   
     let branch = vercelBranch;
     if (!branch) {
         try {
             branch = execSync('git branch --show-current').toString().trim();
         } catch (e) {}
     }
-
+    
+    console.log(`###[local-version] isVercel: ${isVercel}, vercelBranch: ${branch}`);
+    
     if (branch && branch !== 'main' && branch !== 'master') {
+        branch='main'; // Treat all non-main/master branches as unreleased for simplicity
         return { label: branch, isUnreleased: true };
     }
 
@@ -462,6 +465,7 @@ function getLocalVersion() {
 
     try {
         const tag = execSync('git describe --tags --abbrev=0').toString().trim();
+        console.log(`###[local-version] tags: ${tag}`);
         if (semver.valid(tag) && semver.gt(tag, CUTOFF)) {
             return { label: tag, isUnreleased: false };
         }
@@ -478,7 +482,7 @@ async function run() {
   let localVer = getLocalVersion();
   let others = selectedTags; // In our case, if local is latest, all filtered tags are others
 
-  console.log(`Latest version (Local): ${localVer.label} (Unreleased: ${localVer.isUnreleased})`);
+  console.log(`Latest version (Local): ${localVer.label} (Unreleased: ${localVer.isUnreleased}) ####tags: ${others.join(', ')}`);
   
   // Conditional Fallback: If no versions found > 4.10.0, inject v4.10.0
   if (others.length === 0) {
