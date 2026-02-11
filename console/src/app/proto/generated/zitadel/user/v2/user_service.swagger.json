@@ -205,8 +205,8 @@
     },
     "/v2/users/human": {
       "post": {
-        "summary": "Create a new human user",
-        "description": "Deprecated: Use [CreateUser](/docs/reference/api/user/zitadel.user.v2.UserService.CreateUser) to create a new user of type human instead.\n\nCreate/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.",
+        "summary": "Create a new User (Human)",
+        "description": "Deprecated: Use [CreateUser](/docs/reference/api/user/zitadel.user.v2.UserService.CreateUser) to create a new user.\n\nCreate/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.",
         "operationId": "UserService_AddHumanUser",
         "responses": {
           "200": {
@@ -258,8 +258,8 @@
     },
     "/v2/users/human/{userId}": {
       "put": {
-        "summary": "Update Human User",
-        "description": "Deprecated: Use [UpdateUser](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to update a user of type human instead.\n\nUpdate all information from a user.",
+        "summary": "Update User (Human)",
+        "description": "Deprecated: Use [UpdateUser](/docs/reference/api/user/zitadel.user.v2.UserService.UpdateUser) to update a user.\n\nUpdate all information from a user.",
         "operationId": "UserService_UpdateHumanUser",
         "responses": {
           "200": {
@@ -372,7 +372,7 @@
     "/v2/users/new": {
       "post": {
         "summary": "Create a User",
-        "description": "Create a new human or machine user in the specified organization.\n\nRequired permission:\n  - user.write",
+        "description": "Create a new user or service account in the specified organization.\n\nRequired permission:\n  - user.write",
         "operationId": "UserService_CreateUser",
         "responses": {
           "200": {
@@ -480,7 +480,7 @@
     "/v2/users/{userId}": {
       "get": {
         "summary": "User by ID",
-        "description": "Returns the full user object (human or machine) including the profile, email, etc..",
+        "description": "Returns the full user or Service Account including the profile, email, etc..",
         "operationId": "UserService_GetUserByID",
         "responses": {
           "200": {
@@ -1906,8 +1906,8 @@
     },
     "/v2/users/{userId}/otp_email": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) Email from a user",
-        "description": "Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
+        "summary": "Remove OTP Email from a user",
+        "description": "Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
         "operationId": "UserService_RemoveOTPEmail",
         "responses": {
           "200": {
@@ -1959,7 +1959,7 @@
       },
       "post": {
         "summary": "Add OTP Email for a user",
-        "description": "Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor..",
+        "description": "Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor..",
         "operationId": "UserService_AddOTPEmail",
         "responses": {
           "200": {
@@ -2020,8 +2020,8 @@
     },
     "/v2/users/{userId}/otp_sms": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) SMS from a user",
-        "description": "Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
+        "summary": "Remove OTP SMS from a user",
+        "description": "Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
         "operationId": "UserService_RemoveOTPSMS",
         "responses": {
           "200": {
@@ -2073,7 +2073,7 @@
       },
       "post": {
         "summary": "Add OTP SMS for a user",
-        "description": "Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor..",
+        "description": "Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor..",
         "operationId": "UserService_AddOTPSMS",
         "responses": {
           "200": {
@@ -4274,7 +4274,7 @@
         "username": {
           "type": "string",
           "example": "minnie-mouse",
-          "description": "The username is a unique identifier for the user in the organization.\nIf not specified, Zitadel sets the username to the email for users of type human and to the user_id for users of type machine.\nIt is used to identify the user in the organization and can be used for login.",
+          "description": "The username is a unique identifier for the user in the organization.\nIf not specified, Zitadel sets the username to the email for user and to the user_id for Service Accounts.\nIt is used to identify the user in the organization and can be used for login.",
           "maxLength": 200,
           "minLength": 1
         },
@@ -5013,7 +5013,7 @@
         },
         "description": {
           "type": "string",
-          "example": "The one and only IAM"
+          "example": "The one and only instance"
         },
         "hasSecret": {
           "type": "boolean",

@@ -1184,7 +1184,7 @@
     "/resources/v3alpha/users/{id}/otp_email": {
       "post": {
         "summary": "Add a OTP Email authenticator",
-        "description": "Add a new one-time password (OTP) Email authenticator to a user.\nIf the email is not passed as verified, a verification code will be generated,\nwhich can be either returned or will be sent to the user by email.",
+        "description": "Add a new OTP Email authenticator to a user.\nIf the email is not passed as verified, a verification code will be generated,\nwhich can be either returned or will be sent to the user by email.",
         "operationId": "ZITADELUsers_AddOTPEmailAuthenticator",
         "responses": {
           "200": {
@@ -1262,7 +1262,7 @@
     "/resources/v3alpha/users/{id}/otp_email/{otpEmailId}": {
       "delete": {
         "summary": "Remove a OTP Email authenticator",
-        "description": "Remove an existing one-time password (OTP) Email authenticator from a user, so it cannot be used for authentication anymore.",
+        "description": "Remove an existing OTP Email authenticator from a user, so it cannot be used for authentication anymore.",
         "operationId": "ZITADELUsers_RemoveOTPEmailAuthenticator",
         "responses": {
           "200": {
@@ -1423,7 +1423,7 @@
     "/resources/v3alpha/users/{id}/otp_sms": {
       "post": {
         "summary": "Add a OTP SMS authenticator",
-        "description": "Add a new one-time password (OTP) SMS authenticator to a user.\nIf the phone is not passed as verified, a verification code will be generated,\nwhich can be either returned or will be sent to the user by SMS.",
+        "description": "Add a new OTP SMS authenticator to a user.\nIf the phone is not passed as verified, a verification code will be generated,\nwhich can be either returned or will be sent to the user by SMS.",
         "operationId": "ZITADELUsers_AddOTPSMSAuthenticator",
         "responses": {
           "200": {
@@ -1501,7 +1501,7 @@
     "/resources/v3alpha/users/{id}/otp_sms/{otpSmsId}": {
       "delete": {
         "summary": "Remove a OTP SMS authenticator",
-        "description": "Remove an existing one-time password (OTP) SMS authenticator from a user, so it cannot be used for authentication anymore.",
+        "description": "Remove an existing OTP SMS authenticator from a user, so it cannot be used for authentication anymore.",
         "operationId": "ZITADELUsers_RemoveOTPSMSAuthenticator",
         "responses": {
           "200": {
@@ -2002,7 +2002,7 @@
     "/resources/v3alpha/users/{id}/totp": {
       "post": {
         "summary": "Start a TOTP registration",
-        "description": "Start the registration of a new time-based one-time password (TOTP) generator for a user.\nAs a response a secret is returned, which is used to initialize a TOTP app or device.",
+        "description": "Start the registration of a new TOTP generator for a user.\nAs a response a secret is returned, which is used to initialize a TOTP app or device.",
         "operationId": "ZITADELUsers_StartTOTPRegistration",
         "responses": {
           "200": {
@@ -2071,7 +2071,7 @@
     "/resources/v3alpha/users/{id}/totp/{totpId}": {
       "delete": {
         "summary": "Remove a TOTP authenticator",
-        "description": "Remove an existing time-based one-time password (TOTP) authenticator from a user, so it cannot be used for authentication anymore.",
+        "description": "Remove an existing TOTP authenticator from a user, so it cannot be used for authentication anymore.",
         "operationId": "ZITADELUsers_RemoveTOTPAuthenticator",
         "responses": {
           "200": {
@@ -2147,7 +2147,7 @@
     "/resources/v3alpha/users/{id}/totp/{totpId}/_verify": {
       "post": {
         "summary": "Verify a TOTP registration",
-        "description": "Verify the time-based one-time password (TOTP) registration with the generated code.",
+        "description": "Verify the TOTP registration with the generated code.",
         "operationId": "ZITADELUsers_VerifyTOTPRegistration",
         "responses": {
           "200": {
@@ -3287,7 +3287,7 @@
         "otpEmailId": {
           "type": "string",
           "example": "69629023906488334",
-          "description": "unique identifier of the one-time password (OTP) Email authenticator."
+          "description": "unique identifier of the OTP Email authenticator."
         },
         "address": {
           "type": "string",
@@ -3306,7 +3306,7 @@
         "otpSmsId": {
           "type": "string",
           "example": "69629023906488334",
-          "description": "unique identifier of the one-time password (OTP) SMS authenticator."
+          "description": "unique identifier of the OTP SMS authenticator."
         },
         "phone": {
           "type": "string",
@@ -3811,7 +3811,7 @@
             "type": "object",
             "$ref": "#/definitions/v3alphaTOTP"
           },
-          "description": "A list of the user's time-based one-time password (TOTP) authenticators,\nincl. the name for identification."
+          "description": "A list of the user's TOTP authenticators,\nincl. the name for identification."
         },
         "otpSms": {
           "type": "array",
@@ -3819,7 +3819,7 @@
             "type": "object",
             "$ref": "#/definitions/userv3alphaOTPSMS"
           },
-          "description": "A list of the user's one-time password (OTP) SMS authenticators."
+          "description": "A list of the user's OTP SMS authenticators."
         },
         "otpEmail": {
           "type": "array",
@@ -3827,7 +3827,7 @@
             "type": "object",
             "$ref": "#/definitions/userv3alphaOTPEmail"
           },
-          "description": "A list of the user's one-time password (OTP) Email authenticators."
+          "description": "A list of the user's OTP Email authenticators."
         },
         "authenticationKeys": {
           "type": "array",
@@ -4365,7 +4365,7 @@
         "totpId": {
           "type": "string",
           "example": "69629023906488334",
-          "description": "unique identifier of the time-based one-time password (TOTP) authenticator."
+          "description": "unique identifier of the TOTP authenticator."
         },
         "name": {
           "type": "string",

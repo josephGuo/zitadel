@@ -25,20 +25,33 @@ const (
 )
 
 type SetInstanceFeaturesRequest struct {
-	state                          protoimpl.MessageState `protogen:"open.v1"`
-	LoginDefaultOrg                *bool                  `protobuf:"varint,1,opt,name=login_default_org,json=loginDefaultOrg,proto3,oneof" json:"login_default_org,omitempty"`
-	UserSchema                     *bool                  `protobuf:"varint,4,opt,name=user_schema,json=userSchema,proto3,oneof" json:"user_schema,omitempty"`
-	OidcTokenExchange              *bool                  `protobuf:"varint,5,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3,oneof" json:"oidc_token_exchange,omitempty"`
-	ImprovedPerformance            []ImprovedPerformance  `protobuf:"varint,7,rep,packed,name=improved_performance,json=improvedPerformance,proto3,enum=zitadel.feature.v2.ImprovedPerformance" json:"improved_performance,omitempty"`
-	DebugOidcParentError           *bool                  `protobuf:"varint,9,opt,name=debug_oidc_parent_error,json=debugOidcParentError,proto3,oneof" json:"debug_oidc_parent_error,omitempty"`
-	OidcSingleV1SessionTermination *bool                  `protobuf:"varint,10,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3,oneof" json:"oidc_single_v1_session_termination,omitempty"`
-	EnableBackChannelLogout        *bool                  `protobuf:"varint,12,opt,name=enable_back_channel_logout,json=enableBackChannelLogout,proto3,oneof" json:"enable_back_channel_logout,omitempty"`
-	LoginV2                        *LoginV2               `protobuf:"bytes,13,opt,name=login_v2,json=loginV2,proto3,oneof" json:"login_v2,omitempty"`
-	PermissionCheckV2              *bool                  `protobuf:"varint,14,opt,name=permission_check_v2,json=permissionCheckV2,proto3,oneof" json:"permission_check_v2,omitempty"`
-	ConsoleUseV2UserApi            *bool                  `protobuf:"varint,15,opt,name=console_use_v2_user_api,json=consoleUseV2UserApi,proto3,oneof" json:"console_use_v2_user_api,omitempty"`
-	EnableRelationalTables         *bool                  `protobuf:"varint,16,opt,name=enable_relational_tables,json=enableRelationalTables,proto3,oneof" json:"enable_relational_tables,omitempty"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	LoginDefaultOrg *bool                  `protobuf:"varint,1,opt,name=login_default_org,json=loginDefaultOrg,proto3,oneof" json:"login_default_org,omitempty"`
+	UserSchema      *bool                  `protobuf:"varint,4,opt,name=user_schema,json=userSchema,proto3,oneof" json:"user_schema,omitempty"`
+	// Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`
+	// grant type for the OIDC token endpoint is enabled by default.
+	// Token exchange can be used to request tokens with a lesser scope or impersonate other users.
+	// See the security policy to allow impersonation on an instance.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	// Setting the field will have no effect.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
+	OidcTokenExchange              *bool                 `protobuf:"varint,5,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3,oneof" json:"oidc_token_exchange,omitempty"`
+	ImprovedPerformance            []ImprovedPerformance `protobuf:"varint,7,rep,packed,name=improved_performance,json=improvedPerformance,proto3,enum=zitadel.feature.v2.ImprovedPerformance" json:"improved_performance,omitempty"`
+	DebugOidcParentError           *bool                 `protobuf:"varint,9,opt,name=debug_oidc_parent_error,json=debugOidcParentError,proto3,oneof" json:"debug_oidc_parent_error,omitempty"`
+	OidcSingleV1SessionTermination *bool                 `protobuf:"varint,10,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3,oneof" json:"oidc_single_v1_session_termination,omitempty"`
+	// Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	// Setting the field will have no effect.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
+	EnableBackChannelLogout *bool    `protobuf:"varint,12,opt,name=enable_back_channel_logout,json=enableBackChannelLogout,proto3,oneof" json:"enable_back_channel_logout,omitempty"`
+	LoginV2                 *LoginV2 `protobuf:"bytes,13,opt,name=login_v2,json=loginV2,proto3,oneof" json:"login_v2,omitempty"`
+	PermissionCheckV2       *bool    `protobuf:"varint,14,opt,name=permission_check_v2,json=permissionCheckV2,proto3,oneof" json:"permission_check_v2,omitempty"`
+	ConsoleUseV2UserApi     *bool    `protobuf:"varint,15,opt,name=console_use_v2_user_api,json=consoleUseV2UserApi,proto3,oneof" json:"console_use_v2_user_api,omitempty"`
+	EnableRelationalTables  *bool    `protobuf:"varint,16,opt,name=enable_relational_tables,json=enableRelationalTables,proto3,oneof" json:"enable_relational_tables,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *SetInstanceFeaturesRequest) Reset() {
@@ -85,6 +98,7 @@ func (x *SetInstanceFeaturesRequest) GetUserSchema() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
 func (x *SetInstanceFeaturesRequest) GetOidcTokenExchange() bool {
 	if x != nil && x.OidcTokenExchange != nil {
 		return *x.OidcTokenExchange
@@ -113,6 +127,7 @@ func (x *SetInstanceFeaturesRequest) GetOidcSingleV1SessionTermination() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
 func (x *SetInstanceFeaturesRequest) GetEnableBackChannelLogout() bool {
 	if x != nil && x.EnableBackChannelLogout != nil {
 		return *x.EnableBackChannelLogout
@@ -317,21 +332,32 @@ func (x *GetInstanceFeaturesRequest) GetInheritance() bool {
 }
 
 type GetInstanceFeaturesResponse struct {
-	state                          protoimpl.MessageState          `protogen:"open.v1"`
-	Details                        *v2.Details                     `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
-	LoginDefaultOrg                *FeatureFlag                    `protobuf:"bytes,2,opt,name=login_default_org,json=loginDefaultOrg,proto3" json:"login_default_org,omitempty"`
-	UserSchema                     *FeatureFlag                    `protobuf:"bytes,5,opt,name=user_schema,json=userSchema,proto3" json:"user_schema,omitempty"`
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Details         *v2.Details            `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
+	LoginDefaultOrg *FeatureFlag           `protobuf:"bytes,2,opt,name=login_default_org,json=loginDefaultOrg,proto3" json:"login_default_org,omitempty"`
+	UserSchema      *FeatureFlag           `protobuf:"bytes,5,opt,name=user_schema,json=userSchema,proto3" json:"user_schema,omitempty"`
+	// Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`
+	// grant type for the OIDC token endpoint is enabled by default.
+	// Token exchange can be used to request tokens with a lesser scope or impersonate other users.
+	// See the security policy to allow impersonation on an instance.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
 	OidcTokenExchange              *FeatureFlag                    `protobuf:"bytes,6,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3" json:"oidc_token_exchange,omitempty"`
 	ImprovedPerformance            *ImprovedPerformanceFeatureFlag `protobuf:"bytes,8,opt,name=improved_performance,json=improvedPerformance,proto3" json:"improved_performance,omitempty"`
 	DebugOidcParentError           *FeatureFlag                    `protobuf:"bytes,10,opt,name=debug_oidc_parent_error,json=debugOidcParentError,proto3" json:"debug_oidc_parent_error,omitempty"`
 	OidcSingleV1SessionTermination *FeatureFlag                    `protobuf:"bytes,11,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3" json:"oidc_single_v1_session_termination,omitempty"`
-	EnableBackChannelLogout        *FeatureFlag                    `protobuf:"bytes,13,opt,name=enable_back_channel_logout,json=enableBackChannelLogout,proto3" json:"enable_back_channel_logout,omitempty"`
-	LoginV2                        *LoginV2FeatureFlag             `protobuf:"bytes,14,opt,name=login_v2,json=loginV2,proto3" json:"login_v2,omitempty"`
-	PermissionCheckV2              *FeatureFlag                    `protobuf:"bytes,15,opt,name=permission_check_v2,json=permissionCheckV2,proto3" json:"permission_check_v2,omitempty"`
-	ConsoleUseV2UserApi            *FeatureFlag                    `protobuf:"bytes,16,opt,name=console_use_v2_user_api,json=consoleUseV2UserApi,proto3" json:"console_use_v2_user_api,omitempty"`
-	EnableRelationalTables         *FeatureFlag                    `protobuf:"bytes,17,opt,name=enable_relational_tables,json=enableRelationalTables,proto3" json:"enable_relational_tables,omitempty"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	// Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
+	EnableBackChannelLogout *FeatureFlag        `protobuf:"bytes,13,opt,name=enable_back_channel_logout,json=enableBackChannelLogout,proto3" json:"enable_back_channel_logout,omitempty"`
+	LoginV2                 *LoginV2FeatureFlag `protobuf:"bytes,14,opt,name=login_v2,json=loginV2,proto3" json:"login_v2,omitempty"`
+	PermissionCheckV2       *FeatureFlag        `protobuf:"bytes,15,opt,name=permission_check_v2,json=permissionCheckV2,proto3" json:"permission_check_v2,omitempty"`
+	ConsoleUseV2UserApi     *FeatureFlag        `protobuf:"bytes,16,opt,name=console_use_v2_user_api,json=consoleUseV2UserApi,proto3" json:"console_use_v2_user_api,omitempty"`
+	EnableRelationalTables  *FeatureFlag        `protobuf:"bytes,17,opt,name=enable_relational_tables,json=enableRelationalTables,proto3" json:"enable_relational_tables,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *GetInstanceFeaturesResponse) Reset() {
@@ -385,6 +411,7 @@ func (x *GetInstanceFeaturesResponse) GetUserSchema() *FeatureFlag {
 	return nil
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
 func (x *GetInstanceFeaturesResponse) GetOidcTokenExchange() *FeatureFlag {
 	if x != nil {
 		return x.OidcTokenExchange
@@ -413,6 +440,7 @@ func (x *GetInstanceFeaturesResponse) GetOidcSingleV1SessionTermination() *Featu
 	return nil
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2/instance.proto.
 func (x *GetInstanceFeaturesResponse) GetEnableBackChannelLogout() *FeatureFlag {
 	if x != nil {
 		return x.EnableBackChannelLogout
@@ -452,17 +480,17 @@ var File_zitadel_feature_v2_instance_proto protoreflect.FileDescriptor
 
 const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	"\n" +
-	"!zitadel/feature/v2/instance.proto\x12\x12zitadel.feature.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1ezitadel/object/v2/object.proto\x1a zitadel/feature/v2/feature.proto\"\x9c\x18\n" +
+	"!zitadel/feature/v2/instance.proto\x12\x12zitadel.feature.v2\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\x1ezitadel/object/v2/object.proto\x1a zitadel/feature/v2/feature.proto\"\xe8\x14\n" +
 	"\x1aSetInstanceFeaturesRequest\x12\xaf\x01\n" +
 	"\x11login_default_org\x18\x01 \x01(\bB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueH\x00R\x0floginDefaultOrg\x88\x01\x01\x12\xdb\x01\n" +
 	"\vuser_schema\x18\x04 \x01(\bB\xb4\x01\x92A\xb0\x012\xa7\x01User Schemas allow to manage data schemas of user. If the flag is enabled, you'll be able to use the new API and its features. Note that it is still in an early stage.J\x04trueH\x01R\n" +
-	"userSchema\x88\x01\x01\x12\xd0\x02\n" +
-	"\x13oidc_token_exchange\x18\x05 \x01(\bB\x9a\x02\x92A\x96\x022\x8d\x02Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance.J\x04trueH\x02R\x11oidcTokenExchange\x88\x01\x01\x12\xa9\x01\n" +
+	"userSchema\x88\x01\x01\x127\n" +
+	"\x13oidc_token_exchange\x18\x05 \x01(\bB\x02\x18\x01H\x02R\x11oidcTokenExchange\x88\x01\x01\x12\xa9\x01\n" +
 	"\x14improved_performance\x18\a \x03(\x0e2'.zitadel.feature.v2.ImprovedPerformanceBM\x92A922Improves performance of specified execution paths.J\x03[1]\xfaB\x0e\x92\x01\v\x18\x01\"\a\x82\x01\x04\x10\x01 \x00R\x13improvedPerformance\x12\x85\x02\n" +
 	"\x17debug_oidc_parent_error\x18\t \x01(\bB\xc8\x01\x92A\xc4\x012\xbb\x01Return parent errors to OIDC clients for debugging purposes. Parent errors may contain sensitive data or unwanted details about the system status of zitadel. Only enable if really needed.J\x04trueH\x03R\x14debugOidcParentError\x88\x01\x01\x12\xce\x03\n" +
 	"\"oidc_single_v1_session_termination\x18\n" +
-	" \x01(\bB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueH\x04R\x1eoidcSingleV1SessionTermination\x88\x01\x01\x12\xdd\x01\n" +
-	"\x1aenable_back_channel_logout\x18\f \x01(\bB\x9a\x01\x92A\x96\x012\x8d\x01If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions.J\x04trueH\x05R\x17enableBackChannelLogout\x88\x01\x01\x12\x95\x01\n" +
+	" \x01(\bB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueH\x04R\x1eoidcSingleV1SessionTermination\x88\x01\x01\x12D\n" +
+	"\x1aenable_back_channel_logout\x18\f \x01(\bB\x02\x18\x01H\x05R\x17enableBackChannelLogout\x88\x01\x01\x12\x95\x01\n" +
 	"\blogin_v2\x18\r \x01(\v2\x1b.zitadel.feature.v2.LoginV2BX\x92AU2SSpecify the login UI for all users and applications regardless of their preference.H\x06R\aloginV2\x88\x01\x01\x12\x99\x01\n" +
 	"\x13permission_check_v2\x18\x0e \x01(\bBd\x92Aa2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.J\x04trueH\aR\x11permissionCheckV2\x88\x01\x01\x12\xa9\x01\n" +
 	"\x17console_use_v2_user_api\x18\x0f \x01(\bBn\x92Ak2cIf this is enabled the management console web client will use the new User v2 API for certain callsJ\x04trueH\bR\x13consoleUseV2UserApi\x88\x01\x01\x12\xca\x02\n" +
@@ -483,18 +511,18 @@ const file_zitadel_feature_v2_instance_proto_rawDesc = "" +
 	"\x1dResetInstanceFeaturesResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\"\xa0\x03\n" +
 	"\x1aGetInstanceFeaturesRequest\x12\x81\x03\n" +
-	"\vinheritance\x18\x01 \x01(\bB\xde\x02\x92A\xda\x022\xd1\x02Inherit unset features from the resource owners. This option is recursive: if the flag is set, the resource's ancestors are consulted up to system defaults. If this option is disabled and the feature is not set on the instance, it will be omitted from the response or Not Found is returned when the instance has no features flags at all.J\x04trueR\vinheritance\"\xea\x18\n" +
+	"\vinheritance\x18\x01 \x01(\bB\xde\x02\x92A\xda\x022\xd1\x02Inherit unset features from the resource owners. This option is recursive: if the flag is set, the resource's ancestors are consulted up to system defaults. If this option is disabled and the feature is not set on the instance, it will be omitted from the response or Not Found is returned when the instance has no features flags at all.J\x04trueR\vinheritance\"\xb6\x15\n" +
 	"\x1bGetInstanceFeaturesResponse\x124\n" +
 	"\adetails\x18\x01 \x01(\v2\x1a.zitadel.object.v2.DetailsR\adetails\x12\xcb\x01\n" +
 	"\x11login_default_org\x18\x02 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueR\x0floginDefaultOrg\x12\xf7\x01\n" +
 	"\vuser_schema\x18\x05 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\xb4\x01\x92A\xb0\x012\xa7\x01User Schemas allow to manage data schemas of user. If the flag is enabled, you'll be able to use the new API and its features. Note that it is still in an early stage.J\x04trueR\n" +
-	"userSchema\x12\xec\x02\n" +
-	"\x13oidc_token_exchange\x18\x06 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x9a\x02\x92A\x96\x022\x8d\x02Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance.J\x04trueR\x11oidcTokenExchange\x12\xa3\x01\n" +
+	"userSchema\x12S\n" +
+	"\x13oidc_token_exchange\x18\x06 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x02\x18\x01R\x11oidcTokenExchange\x12\xa3\x01\n" +
 	"\x14improved_performance\x18\b \x01(\v22.zitadel.feature.v2.ImprovedPerformanceFeatureFlagB<\x92A922Improves performance of specified execution paths.J\x03[1]R\x13improvedPerformance\x12\xa1\x02\n" +
 	"\x17debug_oidc_parent_error\x18\n" +
 	" \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\xc8\x01\x92A\xc4\x012\xbb\x01Return parent errors to OIDC clients for debugging purposes. Parent errors may contain sensitive data or unwanted details about the system status of zitadel. Only enable if really needed.J\x04trueR\x14debugOidcParentError\x12\xea\x03\n" +
-	"\"oidc_single_v1_session_termination\x18\v \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueR\x1eoidcSingleV1SessionTermination\x12\xf9\x01\n" +
-	"\x1aenable_back_channel_logout\x18\r \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x9a\x01\x92A\x96\x012\x8d\x01If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions.J\x04trueR\x17enableBackChannelLogout\x12\xba\x01\n" +
+	"\"oidc_single_v1_session_termination\x18\v \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueR\x1eoidcSingleV1SessionTermination\x12`\n" +
+	"\x1aenable_back_channel_logout\x18\r \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB\x02\x18\x01R\x17enableBackChannelLogout\x12\xba\x01\n" +
 	"\blogin_v2\x18\x0e \x01(\v2&.zitadel.feature.v2.LoginV2FeatureFlagBw\x92At2lIf the flag is set, all users will be redirected to the login V2 regardless of the application's preference.J\x04trueR\aloginV2\x12\xaf\x01\n" +
 	"\x13permission_check_v2\x18\x0f \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagB^\x92A[2YEnable a newer, more performant, permission check used for v2 and v3 resource based APIs.R\x11permissionCheckV2\x12\xc5\x01\n" +
 	"\x17console_use_v2_user_api\x18\x10 \x01(\v2\x1f.zitadel.feature.v2.FeatureFlagBn\x92Ak2cIf this is enabled the management console web client will use the new User v2 API for certain callsJ\x04trueR\x13consoleUseV2UserApi\x12\xe6\x02\n" +

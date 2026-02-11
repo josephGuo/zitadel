@@ -5502,7 +5502,7 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\x06policy\x18\x01 \x01(\v2 .zitadel.policy.v1.PrivacyPolicyR\x06policy\"\x19\n" +
 	"\x17GetMyLoginPolicyRequest\"R\n" +
 	"\x18GetMyLoginPolicyResponse\x126\n" +
-	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xfd\x92\x01\n" +
+	"\x06policy\x18\x01 \x01(\v2\x1e.zitadel.policy.v1.LoginPolicyR\x06policy2\xe5\x90\x01\n" +
 	"\vAuthService\x12\xd3\x01\n" +
 	"\aHealthz\x12\x1f.zitadel.auth.v1.HealthzRequest\x1a .zitadel.auth.v1.HealthzResponse\"\x84\x01\x92Aq\n" +
 	"\aGeneral\x12\aHealthz\x1a]The health endpoint allows an external system to probe if Zitadel authentication API is alive\x82\xd3\xe4\x93\x02\n" +
@@ -5605,27 +5605,29 @@ const file_zitadel_auth_proto_rawDesc = "" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02**(/users/me/idps/{idp_id}/{linked_user_id}\x12\xbf\x02\n" +
 	"\x11ListMyAuthFactors\x12).zitadel.auth.v1.ListMyAuthFactorsRequest\x1a*.zitadel.auth.v1.ListMyAuthFactorsResponse\"\xd2\x01\x92A\x95\x01\n" +
 	"\x1aUser Authentication Factor\x12\x1bList Authentication Factors\x1aZReturns a list of possible authentication factors, multi-factor (MFA), second factor (2FA)\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02 \"\x1e/users/me/auth_factors/_search\x12\xc8\x03\n" +
-	"\x12AddMyAuthFactorOTP\x12*.zitadel.auth.v1.AddMyAuthFactorOTPRequest\x1a+.zitadel.auth.v1.AddMyAuthFactorOTPResponse\"\xd8\x02\x92A\x9c\x02\n" +
-	"\x1aUser Authentication Factor\x12\x1bAdd One-Time Password (OTP)\x1a\xe0\x01Add a new One-Time Password (OTP) factor to the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed. After adding a new OTP it has to be verified.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/users/me/auth_factors/otp\x12\xba\x03\n" +
-	"\x15VerifyMyAuthFactorOTP\x12-.zitadel.auth.v1.VerifyMyAuthFactorOTPRequest\x1a..zitadel.auth.v1.VerifyMyAuthFactorOTPResponse\"\xc1\x02\x92A\xfd\x01\n" +
-	"\x1aUser Authentication Factor\x12\x1eVerify One-Time Password (OTP)\x1a\xbe\x01Verify the last added One-Time Password (OTP) factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02':\x01*\"\"/users/me/auth_factors/otp/_verify\x12\xeb\x03\n" +
-	"\x15RemoveMyAuthFactorOTP\x12-.zitadel.auth.v1.RemoveMyAuthFactorOTPRequest\x1a..zitadel.auth.v1.RemoveMyAuthFactorOTPResponse\"\xf2\x02\x92A\xb9\x02\n" +
-	"\x1aUser Authentication Factor\x12\x1eRemove One-Time Password (OTP)\x1a\xfa\x01Remove the configured One-Time Password (OTP) factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. As only one OTP per user is allowed, the user will not have OTP as a second factor afterward.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x1c*\x1a/users/me/auth_factors/otp\x12\xd2\x03\n" +
-	"\x15AddMyAuthFactorOTPSMS\x12-.zitadel.auth.v1.AddMyAuthFactorOTPSMSRequest\x1a..zitadel.auth.v1.AddMyAuthFactorOTPSMSResponse\"\xd9\x02\x92A\x99\x02\n" +
-	"\x1aUser Authentication Factor\x12\x1fAdd One-Time Password (OTP) SMS\x1a\xd9\x01Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/users/me/auth_factors/otp_sms\x12\xbb\x03\n" +
-	"\x18RemoveMyAuthFactorOTPSMS\x120.zitadel.auth.v1.RemoveMyAuthFactorOTPSMSRequest\x1a1.zitadel.auth.v1.RemoveMyAuthFactorOTPSMSResponse\"\xb9\x02\x92A\xfc\x01\n" +
-	"\x1aUser Authentication Factor\x12\"Remove One-Time Password (OTP) SMS\x1a\xb9\x01Remove the configured One-Time Password (OTP) SMS factor of the authenticated user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02 *\x1e/users/me/auth_factors/otp_sms\x12\xd2\x03\n" +
-	"\x17AddMyAuthFactorOTPEmail\x12/.zitadel.auth.v1.AddMyAuthFactorOTPEmailRequest\x1a0.zitadel.auth.v1.AddMyAuthFactorOTPEmailResponse\"\xd3\x02\x92A\x91\x02\n" +
-	"\x1aUser Authentication Factor\x12!Add One-Time Password (OTP) Email\x1a\xcf\x01Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02%:\x01*\" /users/me/auth_factors/otp_email\x12\xcb\x03\n" +
-	"\x1aRemoveMyAuthFactorOTPEmail\x122.zitadel.auth.v1.RemoveMyAuthFactorOTPEmailRequest\x1a3.zitadel.auth.v1.RemoveMyAuthFactorOTPEmailResponse\"\xc3\x02\x92A\x84\x02\n" +
-	"\x1aUser Authentication Factor\x12$Remove One-Time Password (OTP) Email\x1a\xbf\x01Remove the configured One-Time Password (OTP) Email factor of the authenticated user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02 \"\x1e/users/me/auth_factors/_search\x12\xa0\x03\n" +
+	"\x12AddMyAuthFactorOTP\x12*.zitadel.auth.v1.AddMyAuthFactorOTPRequest\x1a+.zitadel.auth.v1.AddMyAuthFactorOTPResponse\"\xb0\x02\x92A\xf4\x01\n" +
+	"\x1aUser Authentication Factor\x12\aAdd OTP\x1a\xcc\x01Add a new OTP factor to the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed. After adding a new OTP it has to be verified.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1f:\x01*\"\x1a/users/me/auth_factors/otp\x12\x92\x03\n" +
+	"\x15VerifyMyAuthFactorOTP\x12-.zitadel.auth.v1.VerifyMyAuthFactorOTPRequest\x1a..zitadel.auth.v1.VerifyMyAuthFactorOTPResponse\"\x99\x02\x92A\xd5\x01\n" +
+	"\x1aUser Authentication Factor\x12\n" +
+	"Verify OTP\x1a\xaa\x01Verify the last added OTP factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02':\x01*\"\"/users/me/auth_factors/otp/_verify\x12\xc3\x03\n" +
+	"\x15RemoveMyAuthFactorOTP\x12-.zitadel.auth.v1.RemoveMyAuthFactorOTPRequest\x1a..zitadel.auth.v1.RemoveMyAuthFactorOTPResponse\"\xca\x02\x92A\x91\x02\n" +
+	"\x1aUser Authentication Factor\x12\n" +
+	"Remove OTP\x1a\xe6\x01Remove the configured OTP factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. As only one OTP per user is allowed, the user will not have OTP as a second factor afterward.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x1c*\x1a/users/me/auth_factors/otp\x12\xaa\x03\n" +
+	"\x15AddMyAuthFactorOTPSMS\x12-.zitadel.auth.v1.AddMyAuthFactorOTPSMSRequest\x1a..zitadel.auth.v1.AddMyAuthFactorOTPSMSResponse\"\xb1\x02\x92A\xf1\x01\n" +
+	"\x1aUser Authentication Factor\x12\vAdd OTP SMS\x1a\xc5\x01Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/users/me/auth_factors/otp_sms\x12\x93\x03\n" +
+	"\x18RemoveMyAuthFactorOTPSMS\x120.zitadel.auth.v1.RemoveMyAuthFactorOTPSMSRequest\x1a1.zitadel.auth.v1.RemoveMyAuthFactorOTPSMSResponse\"\x91\x02\x92A\xd4\x01\n" +
+	"\x1aUser Authentication Factor\x12\x0eRemove OTP SMS\x1a\xa5\x01Remove the configured OTP SMS factor of the authenticated user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02 *\x1e/users/me/auth_factors/otp_sms\x12\xaa\x03\n" +
+	"\x17AddMyAuthFactorOTPEmail\x12/.zitadel.auth.v1.AddMyAuthFactorOTPEmailRequest\x1a0.zitadel.auth.v1.AddMyAuthFactorOTPEmailResponse\"\xab\x02\x92A\xe9\x01\n" +
+	"\x1aUser Authentication Factor\x12\rAdd OTP Email\x1a\xbb\x01Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.\x82\xb5\x18\x0f\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02%:\x01*\" /users/me/auth_factors/otp_email\x12\xa3\x03\n" +
+	"\x1aRemoveMyAuthFactorOTPEmail\x122.zitadel.auth.v1.RemoveMyAuthFactorOTPEmailRequest\x1a3.zitadel.auth.v1.RemoveMyAuthFactorOTPEmailResponse\"\x9b\x02\x92A\xdc\x01\n" +
+	"\x1aUser Authentication Factor\x12\x10Remove OTP Email\x1a\xab\x01Remove the configured OTP Email factor of the authenticated user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\"* /users/me/auth_factors/otp_email\x12\xcf\x03\n" +
 	"\x12AddMyAuthFactorU2F\x12*.zitadel.auth.v1.AddMyAuthFactorU2FRequest\x1a+.zitadel.auth.v1.AddMyAuthFactorU2FResponse\"\xdf\x02\x92A\xa3\x02\n" +
 	"\x1aUser Authentication Factor\x12!Add Universal Second Factor (U2F)\x1a\xe1\x01Add a new Universal Second Factor (U2F) to the authenticated user. U2F is a device-dependent authentication like FingerScan, FaceID, WindowHello, etc. The factor has to be verified after adding. Multiple factors can be added.\x82\xb5\x18\x0f\n" +

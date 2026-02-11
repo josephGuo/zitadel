@@ -4272,10 +4272,10 @@ const file_zitadel_user_proto_rawDesc = "" +
 	"\aprofile\x18\x01 \x01(\v2\x18.zitadel.user.v1.ProfileR\aprofile\x12,\n" +
 	"\x05email\x18\x02 \x01(\v2\x16.zitadel.user.v1.EmailR\x05email\x12,\n" +
 	"\x05phone\x18\x03 \x01(\v2\x16.zitadel.user.v1.PhoneR\x05phone\x12E\n" +
-	"\x10password_changed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0fpasswordChanged\"\x8c\x02\n" +
+	"\x10password_changed\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0fpasswordChanged\"\x91\x02\n" +
 	"\aMachine\x12\"\n" +
-	"\x04name\x18\x01 \x01(\tB\x0e\x92A\vJ\t\"zitadel\"R\x04name\x12=\n" +
-	"\vdescription\x18\x02 \x01(\tB\x1b\x92A\x18J\x16\"The one and only IAM\"R\vdescription\x12*\n" +
+	"\x04name\x18\x01 \x01(\tB\x0e\x92A\vJ\t\"zitadel\"R\x04name\x12B\n" +
+	"\vdescription\x18\x02 \x01(\tB \x92A\x1dJ\x1b\"The one and only instance\"R\vdescription\x12*\n" +
 	"\n" +
 	"has_secret\x18\x03 \x01(\bB\v\x92A\bJ\x06\"true\"R\thasSecret\x12r\n" +
 	"\x11access_token_type\x18\x04 \x01(\x0e2 .zitadel.user.v1.AccessTokenTypeB$\x92A!2\x1fType of access token to receiveR\x0faccessTokenType\"\xe0\x04\n" +
@@ -4382,18 +4382,18 @@ const file_zitadel_user_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629023906488334\"R\x02id\x12W\n" +
 	"\x05state\x18\x02 \x01(\x0e2 .zitadel.user.v1.AuthFactorStateB\x1f\x92A\x1c2\x1acurrent state of the tokenR\x05state\x12)\n" +
 	"\x04name\x18\x03 \x01(\tB\x15\x92A\x12J\n" +
-	"\"fido key\"x\xc8\x01\x80\x01\x01R\x04name\"\xfa\x04\n" +
+	"\"fido key\"x\xc8\x01\x80\x01\x01R\x04name\"\x8e\x05\n" +
 	"\n" +
 	"Membership\x121\n" +
 	"\auser_id\x18\x01 \x01(\tB\x18\x92A\x15J\x13\"69629023906488334\"R\x06userId\x123\n" +
 	"\adetails\x18\x02 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12(\n" +
 	"\x05roles\x18\x03 \x03(\tB\x12\x92A\x0fJ\r[\"IAM_OWNER\"]R\x05roles\x12P\n" +
-	"\fdisplay_name\x18\x04 \x01(\tB-\x92A*2\x18display name of the userJ\x0e\"Gigi Giraffe\"R\vdisplayName\x12T\n" +
-	"\x03iam\x18\x05 \x01(\bB@\x92A=2;one of type use iam, org id, project id or project grant idH\x00R\x03iam\x12Y\n" +
-	"\x06org_id\x18\x06 \x01(\tB@\x92A=2;one of type use iam, org id, project id or project grant idH\x00R\x05orgId\x12a\n" +
+	"\fdisplay_name\x18\x04 \x01(\tB-\x92A*2\x18display name of the userJ\x0e\"Gigi Giraffe\"R\vdisplayName\x12Y\n" +
+	"\x03iam\x18\x05 \x01(\bBE\x92AB2@one of type use instance, org id, project id or project grant idH\x00R\x03iam\x12^\n" +
+	"\x06org_id\x18\x06 \x01(\tBE\x92AB2@one of type use instance, org id, project id or project grant idH\x00R\x05orgId\x12f\n" +
 	"\n" +
-	"project_id\x18\a \x01(\tB@\x92A=2;one of type use iam, org id, project id or project grant idH\x00R\tprojectId\x12l\n" +
-	"\x10project_grant_id\x18\b \x01(\tB@\x92A=2;one of type use iam, org id, project id or project grant idH\x00R\x0eprojectGrantIdB\x06\n" +
+	"project_id\x18\a \x01(\tBE\x92AB2@one of type use instance, org id, project id or project grant idH\x00R\tprojectId\x12q\n" +
+	"\x10project_grant_id\x18\b \x01(\tBE\x92AB2@one of type use instance, org id, project id or project grant idH\x00R\x0eprojectGrantIdB\x06\n" +
 	"\x04type\"\xd7\x02\n" +
 	"\x0fMembershipQuery\x12B\n" +
 	"\torg_query\x18\x01 \x01(\v2#.zitadel.user.v1.MembershipOrgQueryH\x00R\borgQuery\x12N\n" +

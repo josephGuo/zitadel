@@ -180,20 +180,20 @@ type ZITADELUsersClient interface {
 	RemoveWebAuthNAuthenticator(ctx context.Context, in *RemoveWebAuthNAuthenticatorRequest, opts ...grpc.CallOption) (*RemoveWebAuthNAuthenticatorResponse, error)
 	// Start a TOTP registration
 	//
-	// Start the registration of a new time-based one-time password (TOTP) generator for a user.
+	// Start the registration of a new TOTP generator for a user.
 	// As a response a secret is returned, which is used to initialize a TOTP app or device.
 	StartTOTPRegistration(ctx context.Context, in *StartTOTPRegistrationRequest, opts ...grpc.CallOption) (*StartTOTPRegistrationResponse, error)
 	// Verify a TOTP registration
 	//
-	// Verify the time-based one-time password (TOTP) registration with the generated code.
+	// Verify the TOTP registration with the generated code.
 	VerifyTOTPRegistration(ctx context.Context, in *VerifyTOTPRegistrationRequest, opts ...grpc.CallOption) (*VerifyTOTPRegistrationResponse, error)
 	// Remove a TOTP authenticator
 	//
-	// Remove an existing time-based one-time password (TOTP) authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing TOTP authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveTOTPAuthenticator(ctx context.Context, in *RemoveTOTPAuthenticatorRequest, opts ...grpc.CallOption) (*RemoveTOTPAuthenticatorResponse, error)
 	// Add a OTP SMS authenticator
 	//
-	// Add a new one-time password (OTP) SMS authenticator to a user.
+	// Add a new OTP SMS authenticator to a user.
 	// If the phone is not passed as verified, a verification code will be generated,
 	// which can be either returned or will be sent to the user by SMS.
 	AddOTPSMSAuthenticator(ctx context.Context, in *AddOTPSMSAuthenticatorRequest, opts ...grpc.CallOption) (*AddOTPSMSAuthenticatorResponse, error)
@@ -203,11 +203,11 @@ type ZITADELUsersClient interface {
 	VerifyOTPSMSRegistration(ctx context.Context, in *VerifyOTPSMSRegistrationRequest, opts ...grpc.CallOption) (*VerifyOTPSMSRegistrationResponse, error)
 	// Remove a OTP SMS authenticator
 	//
-	// Remove an existing one-time password (OTP) SMS authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing OTP SMS authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveOTPSMSAuthenticator(ctx context.Context, in *RemoveOTPSMSAuthenticatorRequest, opts ...grpc.CallOption) (*RemoveOTPSMSAuthenticatorResponse, error)
 	// Add a OTP Email authenticator
 	//
-	// Add a new one-time password (OTP) Email authenticator to a user.
+	// Add a new OTP Email authenticator to a user.
 	// If the email is not passed as verified, a verification code will be generated,
 	// which can be either returned or will be sent to the user by email.
 	AddOTPEmailAuthenticator(ctx context.Context, in *AddOTPEmailAuthenticatorRequest, opts ...grpc.CallOption) (*AddOTPEmailAuthenticatorResponse, error)
@@ -217,7 +217,7 @@ type ZITADELUsersClient interface {
 	VerifyOTPEmailRegistration(ctx context.Context, in *VerifyOTPEmailRegistrationRequest, opts ...grpc.CallOption) (*VerifyOTPEmailRegistrationResponse, error)
 	// Remove a OTP Email authenticator
 	//
-	// Remove an existing one-time password (OTP) Email authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing OTP Email authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveOTPEmailAuthenticator(ctx context.Context, in *RemoveOTPEmailAuthenticatorRequest, opts ...grpc.CallOption) (*RemoveOTPEmailAuthenticatorResponse, error)
 	// Start an IDP authentication intent
 	//
@@ -729,20 +729,20 @@ type ZITADELUsersServer interface {
 	RemoveWebAuthNAuthenticator(context.Context, *RemoveWebAuthNAuthenticatorRequest) (*RemoveWebAuthNAuthenticatorResponse, error)
 	// Start a TOTP registration
 	//
-	// Start the registration of a new time-based one-time password (TOTP) generator for a user.
+	// Start the registration of a new TOTP generator for a user.
 	// As a response a secret is returned, which is used to initialize a TOTP app or device.
 	StartTOTPRegistration(context.Context, *StartTOTPRegistrationRequest) (*StartTOTPRegistrationResponse, error)
 	// Verify a TOTP registration
 	//
-	// Verify the time-based one-time password (TOTP) registration with the generated code.
+	// Verify the TOTP registration with the generated code.
 	VerifyTOTPRegistration(context.Context, *VerifyTOTPRegistrationRequest) (*VerifyTOTPRegistrationResponse, error)
 	// Remove a TOTP authenticator
 	//
-	// Remove an existing time-based one-time password (TOTP) authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing TOTP authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveTOTPAuthenticator(context.Context, *RemoveTOTPAuthenticatorRequest) (*RemoveTOTPAuthenticatorResponse, error)
 	// Add a OTP SMS authenticator
 	//
-	// Add a new one-time password (OTP) SMS authenticator to a user.
+	// Add a new OTP SMS authenticator to a user.
 	// If the phone is not passed as verified, a verification code will be generated,
 	// which can be either returned or will be sent to the user by SMS.
 	AddOTPSMSAuthenticator(context.Context, *AddOTPSMSAuthenticatorRequest) (*AddOTPSMSAuthenticatorResponse, error)
@@ -752,11 +752,11 @@ type ZITADELUsersServer interface {
 	VerifyOTPSMSRegistration(context.Context, *VerifyOTPSMSRegistrationRequest) (*VerifyOTPSMSRegistrationResponse, error)
 	// Remove a OTP SMS authenticator
 	//
-	// Remove an existing one-time password (OTP) SMS authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing OTP SMS authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveOTPSMSAuthenticator(context.Context, *RemoveOTPSMSAuthenticatorRequest) (*RemoveOTPSMSAuthenticatorResponse, error)
 	// Add a OTP Email authenticator
 	//
-	// Add a new one-time password (OTP) Email authenticator to a user.
+	// Add a new OTP Email authenticator to a user.
 	// If the email is not passed as verified, a verification code will be generated,
 	// which can be either returned or will be sent to the user by email.
 	AddOTPEmailAuthenticator(context.Context, *AddOTPEmailAuthenticatorRequest) (*AddOTPEmailAuthenticatorResponse, error)
@@ -766,7 +766,7 @@ type ZITADELUsersServer interface {
 	VerifyOTPEmailRegistration(context.Context, *VerifyOTPEmailRegistrationRequest) (*VerifyOTPEmailRegistrationResponse, error)
 	// Remove a OTP Email authenticator
 	//
-	// Remove an existing one-time password (OTP) Email authenticator from a user, so it cannot be used for authentication anymore.
+	// Remove an existing OTP Email authenticator from a user, so it cannot be used for authentication anymore.
 	RemoveOTPEmailAuthenticator(context.Context, *RemoveOTPEmailAuthenticatorRequest) (*RemoveOTPEmailAuthenticatorResponse, error)
 	// Start an IDP authentication intent
 	//

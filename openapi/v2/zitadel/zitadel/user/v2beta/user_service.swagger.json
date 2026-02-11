@@ -192,8 +192,8 @@
     },
     "/v2beta/users/human": {
       "post": {
-        "summary": "Create a new human user",
-        "description": "Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA)",
+        "summary": "Create a new User (Human)",
+        "description": "Create/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA)",
         "operationId": "UserService_AddHumanUser",
         "responses": {
           "200": {
@@ -240,7 +240,7 @@
     "/v2beta/users/{userId}": {
       "get": {
         "summary": "User by ID",
-        "description": "Returns the full user object (human or machine) including the profile, email, etc.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "description": "Returns the full user or Service Account including the profile, email, etc.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_GetUserByID",
         "responses": {
           "200": {
@@ -854,8 +854,8 @@
     },
     "/v2beta/users/{userId}/otp_email": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) Email from a user",
-        "description": "Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "summary": "Remove OTP Email from a user",
+        "description": "Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_RemoveOTPEmail",
         "responses": {
           "200": {
@@ -898,7 +898,7 @@
       },
       "post": {
         "summary": "Add OTP Email for a user",
-        "description": "Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "description": "Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_AddOTPEmail",
         "responses": {
           "200": {
@@ -950,8 +950,8 @@
     },
     "/v2beta/users/{userId}/otp_sms": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) SMS from a user",
-        "description": "Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "summary": "Remove OTP SMS from a user",
+        "description": "Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_RemoveOTPSMS",
         "responses": {
           "200": {
@@ -994,7 +994,7 @@
       },
       "post": {
         "summary": "Add OTP SMS for a user",
-        "description": "Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
+        "description": "Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor.\n\nDeprecated: please move to the corresponding endpoint under user service v2 (GA).",
         "operationId": "UserService_AddOTPSMS",
         "responses": {
           "200": {
@@ -2988,7 +2988,7 @@
         },
         "description": {
           "type": "string",
-          "example": "The one and only IAM"
+          "example": "The one and only instance"
         },
         "hasSecret": {
           "type": "boolean",

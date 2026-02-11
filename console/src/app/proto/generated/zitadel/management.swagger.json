@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Management API",
-    "description": "The management API is as the name states the interface where systems can mutate IAM objects like organizations, projects, clients, users and so on if they have the necessary access rights.",
+    "description": "The management API is as the name states the interface where systems can mutate instance objects like organizations, projects, applications, users and so on if they have the necessary access rights.",
     "version": "1.0",
     "contact": {
       "name": "ZITADEL",
@@ -20,7 +20,7 @@
     },
     {
       "name": "Applications",
-      "description": "Applications are the entry point to your project. Users either login into one of your clients and interact with them directly or use one of your APIs. All applications share the roles and authorizations of their project."
+      "description": "Applications are the entry point to your project. Users either login into one of your applications and interact with them directly or use one of your APIs. All applications share the roles and authorizations of their project."
     },
     {
       "name": "Authentication Methods"
@@ -3850,7 +3850,7 @@
     "/policies/domain": {
       "get": {
         "summary": "Get Domain Policy",
-        "description": "Returns the domain policy (this policy is managed by the IAM administrator)",
+        "description": "Returns the domain policy (this policy is managed by the instance administrator)",
         "operationId": "ManagementService_GetDomainPolicy",
         "responses": {
           "200": {
@@ -8462,8 +8462,8 @@
     },
     "/text/default/message/verifyemailotp/{language}": {
       "get": {
-        "summary": "Get Default Verify Email OTP Message Text",
-        "description": "Get the default text of the verify Email OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Default Verify OTP Email Message Text",
+        "description": "Get the default text of the verify OTP Email message that is set on the instance or as translation files in Zitadel itself. The message is sent when an OTP Email Email should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetDefaultVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -8540,8 +8540,8 @@
     },
     "/text/default/message/verifysmsotp/{language}": {
       "get": {
-        "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify SMS OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Default Verify OTP SMS Message Text",
+        "description": "Get the default text of the verify OTP SMS message that is set on the instance or as translation files in Zitadel itself. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetDefaultVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -9547,8 +9547,8 @@
     },
     "/text/message/verifyemailotp/{language}": {
       "get": {
-        "summary": "Get Custom Verify Email OTP Message Text",
-        "description": "Get the custom text of the verify Email OTP message that is set on the organization. The message is sent when an Email One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Custom Verify OTP Email Message Text",
+        "description": "Get the custom text of the verify OTP Email message that is set on the organization. The message is sent when an OTP Email Email should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetCustomVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -9584,8 +9584,8 @@
         ]
       },
       "delete": {
-        "summary": "Reset Custom Verify Email OTP Message Text to Default",
-        "description": "Removes the custom text of the verify Email OTP message from the organization and therefore the default texts will trigger for the users afterward.",
+        "summary": "Reset Custom Verify OTP Email Message Text to Default",
+        "description": "Removes the custom text of the verify OTP Email message from the organization and therefore the default texts will trigger for the users afterward.",
         "operationId": "ManagementService_ResetCustomVerifyEmailOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9621,8 +9621,8 @@
         ]
       },
       "put": {
-        "summary": "Set Custom Verify Email OTP Reset Message Text",
-        "description": "Set the custom text of the verify Email OTP message for the organization. The message is sent when an Email One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
+        "summary": "Set Custom Verify OTP Email Reset Message Text",
+        "description": "Set the custom text of the verify OTP Email message for the organization. The message is sent when an OTP Email Email should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
         "operationId": "ManagementService_SetCustomVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -9789,8 +9789,8 @@
     },
     "/text/message/verifysmsotp/{language}": {
       "get": {
-        "summary": "Get Custom Verify SMS OTP Message Text",
-        "description": "Get the custom text of the verify SMS OTP message that is set on the organization. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Custom Verify OTP SMS Message Text",
+        "description": "Get the custom text of the verify OTP SMS message that is set on the organization. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "ManagementService_GetCustomVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -9826,8 +9826,8 @@
         ]
       },
       "delete": {
-        "summary": "Reset Custom Verify SMS OTP Message Text to Default",
-        "description": "Removes the custom text of the verify SMS OTP message from the organization and therefore the default texts will trigger for the users afterward.",
+        "summary": "Reset Custom Verify OTP SMS Message Text to Default",
+        "description": "Removes the custom text of the verify OTP SMS message from the organization and therefore the default texts will trigger for the users afterward.",
         "operationId": "ManagementService_ResetCustomVerifySMSOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9863,8 +9863,8 @@
         ]
       },
       "put": {
-        "summary": "Set Custom Verify SMS OTP Reset Message Text",
-        "description": "Set the custom text of the verify SMS OTP message for the organization. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
+        "summary": "Set Custom Verify OTP SMS Reset Message Text",
+        "description": "Set the custom text of the verify OTP SMS message for the organization. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
         "operationId": "ManagementService_SetCustomVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -10089,7 +10089,7 @@
     "/users/human": {
       "post": {
         "summary": "Create User (Human)",
-        "description": "Deprecated: use [user service v2 CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) instead.\n\nCreate a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.",
+        "description": "Deprecated: use [user service v2 CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) instead.\n\nCreate a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.",
         "operationId": "ManagementService_AddHumanUser",
         "responses": {
           "200": {
@@ -10131,7 +10131,7 @@
     "/users/human/_import": {
       "post": {
         "summary": "Create/Import User (Human)",
-        "description": "Deprecated: use [user service v2 UpdateHumanUser](apis/resources/user_service_v2/user-service-update-human-user.api.mdx) instead.\n\nCreate/import a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.",
+        "description": "Deprecated: use [user service v2 UpdateHumanUser](apis/resources/user_service_v2/user-service-update-human-user.api.mdx) instead.\n\nCreate/import a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.",
         "operationId": "ManagementService_ImportHumanUser",
         "responses": {
           "200": {
@@ -10217,7 +10217,7 @@
     "/users/{id}": {
       "get": {
         "summary": "User by ID",
-        "description": "Deprecated: use [user service v2 ListUsers with InUserIDQuery](apis/resources/user_service_v2/user-service-list-users.api.mdx) instead.\n\nReturns the full user object (human or machine) including the profile, email, etc.",
+        "description": "Deprecated: use [user service v2 ListUsers with InUserIDQuery](apis/resources/user_service_v2/user-service-list-users.api.mdx) instead.\n\nReturns the full user or Service Account including the profile, email, etc.",
         "operationId": "ManagementService_GetUserByID",
         "responses": {
           "200": {
@@ -10868,7 +10868,7 @@
     "/users/{userId}/auth_factors/otp": {
       "delete": {
         "summary": "Remove Multi-Factor OTP",
-        "description": "Deprecated: use [user service v2 RemoveTOTP](apis/resources/user_service_v2/user-service-remove-totp.api.mdx) instead.\n\nRemove the configured One-Time Password (OTP) as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.",
+        "description": "Deprecated: use [user service v2 RemoveTOTP](apis/resources/user_service_v2/user-service-remove-totp.api.mdx) instead.\n\nRemove the configured OTP as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.",
         "operationId": "ManagementService_RemoveHumanAuthFactorOTP",
         "responses": {
           "200": {
@@ -10909,7 +10909,7 @@
     "/users/{userId}/auth_factors/otp_email": {
       "delete": {
         "summary": "Remove Multi-Factor OTP Email",
-        "description": "Deprecated: use [user service v2 RemoveOTPEmail](apis/resources/user_service_v2/user-service-remove-otp-email.api.mdx) instead.\n\nRemove the configured One-Time Password (OTP) Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
+        "description": "Deprecated: use [user service v2 RemoveOTPEmail](apis/resources/user_service_v2/user-service-remove-otp-email.api.mdx) instead.\n\nRemove the configured OTP Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
         "operationId": "ManagementService_RemoveHumanAuthFactorOTPEmail",
         "responses": {
           "200": {
@@ -10950,7 +10950,7 @@
     "/users/{userId}/auth_factors/otp_sms": {
       "delete": {
         "summary": "Remove Multi-Factor OTP SMS",
-        "description": "Deprecated: use [user service v2 RemoveOTPSMS](apis/resources/user_service_v2/user-service-remove-otpsms.api.mdx) instead.\n\nRemove the configured One-Time Password (OTP) SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
+        "description": "Deprecated: use [user service v2 RemoveOTPSMS](apis/resources/user_service_v2/user-service-remove-otpsms.api.mdx) instead.\n\nRemove the configured OTP SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
         "operationId": "ManagementService_RemoveHumanAuthFactorOTPSMS",
         "responses": {
           "200": {
@@ -13721,17 +13721,17 @@
       "properties": {
         "title": {
           "type": "string",
-          "example": "ZITADEL - One-time Password",
+          "example": "ZITADEL - OTP",
           "maxLength": 500
         },
         "preHeader": {
           "type": "string",
-          "example": "Verify One-time Password ",
+          "example": "Verify OTP ",
           "maxLength": 500
         },
         "subject": {
           "type": "string",
-          "example": "Verify One-time Password",
+          "example": "Verify OTP",
           "maxLength": 500
         },
         "greeting": {
@@ -13741,7 +13741,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -13797,7 +13797,7 @@
       "properties": {
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }
@@ -15697,7 +15697,7 @@
         },
         "description": {
           "type": "string",
-          "example": "The one and only IAM"
+          "example": "The one and only instance"
         },
         "hasSecret": {
           "type": "boolean",
@@ -20196,19 +20196,19 @@
         },
         "iam": {
           "type": "boolean",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "orgId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "projectId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "projectGrantId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         }
       }
     },

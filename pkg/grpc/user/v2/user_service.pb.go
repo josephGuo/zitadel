@@ -388,7 +388,7 @@ type CreateUserRequest struct {
 	// It can't be changed after creation.
 	UserId *string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3,oneof" json:"user_id,omitempty"`
 	// The username is a unique identifier for the user in the organization.
-	// If not specified, Zitadel sets the username to the email for users of type human and to the user_id for users of type machine.
+	// If not specified, Zitadel sets the username to the email for user and to the user_id for Service Accounts.
 	// It is used to identify the user in the organization and can be used for login.
 	Username *string `protobuf:"bytes,3,opt,name=username,proto3,oneof" json:"username,omitempty"`
 	// The type of the user.

@@ -439,8 +439,8 @@
     },
     "/users/me/auth_factors/otp": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP)",
-        "description": "Remove the configured One-Time Password (OTP) factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. As only one OTP per user is allowed, the user will not have OTP as a second factor afterward.",
+        "summary": "Remove OTP",
+        "description": "Remove the configured OTP factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. As only one OTP per user is allowed, the user will not have OTP as a second factor afterward.",
         "operationId": "AuthService_RemoveMyAuthFactorOTP",
         "responses": {
           "200": {
@@ -461,8 +461,8 @@
         ]
       },
       "post": {
-        "summary": "Add One-Time Password (OTP)",
-        "description": "Add a new One-Time Password (OTP) factor to the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed. After adding a new OTP it has to be verified.",
+        "summary": "Add OTP",
+        "description": "Add a new OTP factor to the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed. After adding a new OTP it has to be verified.",
         "operationId": "AuthService_AddMyAuthFactorOTP",
         "responses": {
           "200": {
@@ -495,8 +495,8 @@
     },
     "/users/me/auth_factors/otp/_verify": {
       "post": {
-        "summary": "Verify One-Time Password (OTP)",
-        "description": "Verify the last added One-Time Password (OTP) factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed.",
+        "summary": "Verify OTP",
+        "description": "Verify the last added OTP factor of the authenticated user. OTP is an authenticator app like Google/Microsoft Authenticator, Authy, etc. Only one OTP per user is allowed.",
         "operationId": "AuthService_VerifyMyAuthFactorOTP",
         "responses": {
           "200": {
@@ -529,8 +529,8 @@
     },
     "/users/me/auth_factors/otp_email": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) Email",
-        "description": "Remove the configured One-Time Password (OTP) Email factor of the authenticated user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
+        "summary": "Remove OTP Email",
+        "description": "Remove the configured OTP Email factor of the authenticated user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.",
         "operationId": "AuthService_RemoveMyAuthFactorOTPEmail",
         "responses": {
           "200": {
@@ -551,8 +551,8 @@
         ]
       },
       "post": {
-        "summary": "Add One-Time Password (OTP) Email",
-        "description": "Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.",
+        "summary": "Add OTP Email",
+        "description": "Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.",
         "operationId": "AuthService_AddMyAuthFactorOTPEmail",
         "responses": {
           "200": {
@@ -585,8 +585,8 @@
     },
     "/users/me/auth_factors/otp_sms": {
       "delete": {
-        "summary": "Remove One-Time Password (OTP) SMS",
-        "description": "Remove the configured One-Time Password (OTP) SMS factor of the authenticated user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
+        "summary": "Remove OTP SMS",
+        "description": "Remove the configured OTP SMS factor of the authenticated user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.",
         "operationId": "AuthService_RemoveMyAuthFactorOTPSMS",
         "responses": {
           "200": {
@@ -607,8 +607,8 @@
         ]
       },
       "post": {
-        "summary": "Add One-Time Password (OTP) SMS",
-        "description": "Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.",
+        "summary": "Add OTP SMS",
+        "description": "Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.",
         "operationId": "AuthService_AddMyAuthFactorOTPSMS",
         "responses": {
           "200": {
@@ -1770,7 +1770,7 @@
         },
         "description": {
           "type": "string",
-          "example": "The one and only IAM"
+          "example": "The one and only instance"
         },
         "hasSecret": {
           "type": "boolean",
@@ -2759,19 +2759,19 @@
         },
         "iam": {
           "type": "boolean",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "orgId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "projectId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         },
         "projectGrantId": {
           "type": "string",
-          "description": "one of type use iam, org id, project id or project grant id"
+          "description": "one of type use instance, org id, project id or project grant id"
         }
       }
     },

@@ -25,12 +25,20 @@ const (
 )
 
 type SetSystemFeaturesRequest struct {
-	state                          protoimpl.MessageState `protogen:"open.v1"`
-	LoginDefaultOrg                *bool                  `protobuf:"varint,1,opt,name=login_default_org,json=loginDefaultOrg,proto3,oneof" json:"login_default_org,omitempty"`
-	UserSchema                     *bool                  `protobuf:"varint,4,opt,name=user_schema,json=userSchema,proto3,oneof" json:"user_schema,omitempty"`
-	OidcTokenExchange              *bool                  `protobuf:"varint,5,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3,oneof" json:"oidc_token_exchange,omitempty"`
-	ImprovedPerformance            []ImprovedPerformance  `protobuf:"varint,7,rep,packed,name=improved_performance,json=improvedPerformance,proto3,enum=zitadel.feature.v2beta.ImprovedPerformance" json:"improved_performance,omitempty"`
-	OidcSingleV1SessionTermination *bool                  `protobuf:"varint,8,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3,oneof" json:"oidc_single_v1_session_termination,omitempty"`
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	LoginDefaultOrg *bool                  `protobuf:"varint,1,opt,name=login_default_org,json=loginDefaultOrg,proto3,oneof" json:"login_default_org,omitempty"`
+	UserSchema      *bool                  `protobuf:"varint,4,opt,name=user_schema,json=userSchema,proto3,oneof" json:"user_schema,omitempty"`
+	// Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`
+	// grant type for the OIDC token endpoint is enabled by default.
+	// Token exchange can be used to request tokens with a lesser scope or impersonate other users.
+	// See the security policy to allow impersonation on an instance.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	// Setting the field will have no effect.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2beta/system.proto.
+	OidcTokenExchange              *bool                 `protobuf:"varint,5,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3,oneof" json:"oidc_token_exchange,omitempty"`
+	ImprovedPerformance            []ImprovedPerformance `protobuf:"varint,7,rep,packed,name=improved_performance,json=improvedPerformance,proto3,enum=zitadel.feature.v2beta.ImprovedPerformance" json:"improved_performance,omitempty"`
+	OidcSingleV1SessionTermination *bool                 `protobuf:"varint,8,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3,oneof" json:"oidc_single_v1_session_termination,omitempty"`
 	unknownFields                  protoimpl.UnknownFields
 	sizeCache                      protoimpl.SizeCache
 }
@@ -79,6 +87,7 @@ func (x *SetSystemFeaturesRequest) GetUserSchema() bool {
 	return false
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2beta/system.proto.
 func (x *SetSystemFeaturesRequest) GetOidcTokenExchange() bool {
 	if x != nil && x.OidcTokenExchange != nil {
 		return *x.OidcTokenExchange
@@ -261,10 +270,17 @@ func (*GetSystemFeaturesRequest) Descriptor() ([]byte, []int) {
 }
 
 type GetSystemFeaturesResponse struct {
-	state                          protoimpl.MessageState          `protogen:"open.v1"`
-	Details                        *v2beta.Details                 `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
-	LoginDefaultOrg                *FeatureFlag                    `protobuf:"bytes,2,opt,name=login_default_org,json=loginDefaultOrg,proto3" json:"login_default_org,omitempty"`
-	UserSchema                     *FeatureFlag                    `protobuf:"bytes,5,opt,name=user_schema,json=userSchema,proto3" json:"user_schema,omitempty"`
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Details         *v2beta.Details        `protobuf:"bytes,1,opt,name=details,proto3" json:"details,omitempty"`
+	LoginDefaultOrg *FeatureFlag           `protobuf:"bytes,2,opt,name=login_default_org,json=loginDefaultOrg,proto3" json:"login_default_org,omitempty"`
+	UserSchema      *FeatureFlag           `protobuf:"bytes,5,opt,name=user_schema,json=userSchema,proto3" json:"user_schema,omitempty"`
+	// Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`
+	// grant type for the OIDC token endpoint is enabled by default.
+	// Token exchange can be used to request tokens with a lesser scope or impersonate other users.
+	// See the security policy to allow impersonation on an instance.
+	// This field is only kept for backward compatibility and will be removed in the next major version of Zitadel.
+	//
+	// Deprecated: Marked as deprecated in zitadel/feature/v2beta/system.proto.
 	OidcTokenExchange              *FeatureFlag                    `protobuf:"bytes,6,opt,name=oidc_token_exchange,json=oidcTokenExchange,proto3" json:"oidc_token_exchange,omitempty"`
 	ImprovedPerformance            *ImprovedPerformanceFeatureFlag `protobuf:"bytes,8,opt,name=improved_performance,json=improvedPerformance,proto3" json:"improved_performance,omitempty"`
 	OidcSingleV1SessionTermination *FeatureFlag                    `protobuf:"bytes,9,opt,name=oidc_single_v1_session_termination,json=oidcSingleV1SessionTermination,proto3" json:"oidc_single_v1_session_termination,omitempty"`
@@ -323,6 +339,7 @@ func (x *GetSystemFeaturesResponse) GetUserSchema() *FeatureFlag {
 	return nil
 }
 
+// Deprecated: Marked as deprecated in zitadel/feature/v2beta/system.proto.
 func (x *GetSystemFeaturesResponse) GetOidcTokenExchange() *FeatureFlag {
 	if x != nil {
 		return x.OidcTokenExchange
@@ -348,12 +365,13 @@ var File_zitadel_feature_v2beta_system_proto protoreflect.FileDescriptor
 
 const file_zitadel_feature_v2beta_system_proto_rawDesc = "" +
 	"\n" +
-	"#zitadel/feature/v2beta/system.proto\x12\x16zitadel.feature.v2beta\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\"zitadel/object/v2beta/object.proto\x1a$zitadel/feature/v2beta/feature.proto\"\xc1\f\n" +
+	"#zitadel/feature/v2beta/system.proto\x12\x16zitadel.feature.v2beta\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\x1a\"zitadel/object/v2beta/object.proto\x1a$zitadel/feature/v2beta/feature.proto\"\xa7\n" +
+	"\n" +
 	"\x18SetSystemFeaturesRequest\x12\xaf\x01\n" +
 	"\x11login_default_org\x18\x01 \x01(\bB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueH\x00R\x0floginDefaultOrg\x88\x01\x01\x12\xdb\x01\n" +
 	"\vuser_schema\x18\x04 \x01(\bB\xb4\x01\x92A\xb0\x012\xa7\x01User Schemas allow to manage data schemas of user. If the flag is enabled, you'll be able to use the new API and its features. Note that it is still in an early stage.J\x04trueH\x01R\n" +
-	"userSchema\x88\x01\x01\x12\xd0\x02\n" +
-	"\x13oidc_token_exchange\x18\x05 \x01(\bB\x9a\x02\x92A\x96\x022\x8d\x02Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance.J\x04trueH\x02R\x11oidcTokenExchange\x88\x01\x01\x12\xad\x01\n" +
+	"userSchema\x88\x01\x01\x127\n" +
+	"\x13oidc_token_exchange\x18\x05 \x01(\bB\x02\x18\x01H\x02R\x11oidcTokenExchange\x88\x01\x01\x12\xad\x01\n" +
 	"\x14improved_performance\x18\a \x03(\x0e2+.zitadel.feature.v2beta.ImprovedPerformanceBM\x92A922Improves performance of specified execution paths.J\x03[1]\xfaB\x0e\x92\x01\v\x18\x01\"\a\x82\x01\x04\x10\x01 \x00R\x13improvedPerformance\x12\xce\x03\n" +
 	"\"oidc_single_v1_session_termination\x18\b \x01(\bB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueH\x03R\x1eoidcSingleV1SessionTermination\x88\x01\x01B\x14\n" +
 	"\x12_login_default_orgB\x0e\n" +
@@ -365,13 +383,14 @@ const file_zitadel_feature_v2beta_system_proto_rawDesc = "" +
 	"\x1aResetSystemFeaturesRequest\"W\n" +
 	"\x1bResetSystemFeaturesResponse\x128\n" +
 	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2beta.DetailsR\adetails\"\x1a\n" +
-	"\x18GetSystemFeaturesRequest\"\x91\r\n" +
+	"\x18GetSystemFeaturesRequest\"\xf7\n" +
+	"\n" +
 	"\x19GetSystemFeaturesResponse\x128\n" +
 	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2beta.DetailsR\adetails\x12\xcf\x01\n" +
 	"\x11login_default_org\x18\x02 \x01(\v2#.zitadel.feature.v2beta.FeatureFlagB~\x92A{2sThe login UI will use the settings of the default org (and not from the instance) if no organization context is setJ\x04trueR\x0floginDefaultOrg\x12\xfb\x01\n" +
 	"\vuser_schema\x18\x05 \x01(\v2#.zitadel.feature.v2beta.FeatureFlagB\xb4\x01\x92A\xb0\x012\xa7\x01User Schemas allow to manage data schemas of user. If the flag is enabled, you'll be able to use the new API and its features. Note that it is still in an early stage.J\x04trueR\n" +
-	"userSchema\x12\xf0\x02\n" +
-	"\x13oidc_token_exchange\x18\x06 \x01(\v2#.zitadel.feature.v2beta.FeatureFlagB\x9a\x02\x92A\x96\x022\x8d\x02Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance.J\x04trueR\x11oidcTokenExchange\x12\xa7\x01\n" +
+	"userSchema\x12W\n" +
+	"\x13oidc_token_exchange\x18\x06 \x01(\v2#.zitadel.feature.v2beta.FeatureFlagB\x02\x18\x01R\x11oidcTokenExchange\x12\xa7\x01\n" +
 	"\x14improved_performance\x18\b \x01(\v26.zitadel.feature.v2beta.ImprovedPerformanceFeatureFlagB<\x92A922Improves performance of specified execution paths.J\x03[1]R\x13improvedPerformance\x12\xee\x03\n" +
 	"\"oidc_single_v1_session_termination\x18\t \x01(\v2#.zitadel.feature.v2beta.FeatureFlagB\xfc\x02\x92A\xf8\x022\xef\x02If the flag is enabled, you'll be able to terminate a single session from the login UI by providing an id_token with a `sid` claim as id_token_hint on the end_session endpoint. Note that currently all sessions from the same user agent (browser) are terminated in the login UI. Sessions managed through the Session API already allow the termination of single sessions.J\x04trueR\x1eoidcSingleV1SessionTerminationJ\x04\b\x03\x10\x04J\x04\b\x04\x10\x05J\x04\b\a\x10\bR&oidc_trigger_introspection_projectionsR\x19oidc_legacy_introspectionR\aactionsB<Z:github.com/zitadel/zitadel/pkg/grpc/feature/v2beta;featureb\x06proto3"
 

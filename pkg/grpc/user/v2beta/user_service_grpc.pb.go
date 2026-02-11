@@ -61,15 +61,15 @@ const (
 //
 // Deprecated: use user service v2 instead. This service will be removed in the next major version of ZITADEL.
 type UserServiceClient interface {
-	// Create a new human user
+	// Create a new User (Human)
 	//
-	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
+	// Create/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA)
 	AddHumanUser(ctx context.Context, in *AddHumanUserRequest, opts ...grpc.CallOption) (*AddHumanUserResponse, error)
 	// User by ID
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDResponse, error)
@@ -207,25 +207,25 @@ type UserServiceClient interface {
 	RemoveTOTP(ctx context.Context, in *RemoveTOTPRequest, opts ...grpc.CallOption) (*RemoveTOTPResponse, error)
 	// Add OTP SMS for a user
 	//
-	// Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
+	// Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPSMS(ctx context.Context, in *AddOTPSMSRequest, opts ...grpc.CallOption) (*AddOTPSMSResponse, error)
-	// Remove One-Time Password (OTP) SMS from a user
+	// Remove OTP SMS from a user
 	//
-	// Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPSMS(ctx context.Context, in *RemoveOTPSMSRequest, opts ...grpc.CallOption) (*RemoveOTPSMSResponse, error)
 	// Add OTP Email for a user
 	//
-	// Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.
+	// Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPEmail(ctx context.Context, in *AddOTPEmailRequest, opts ...grpc.CallOption) (*AddOTPEmailResponse, error)
-	// Remove One-Time Password (OTP) Email from a user
+	// Remove OTP Email from a user
 	//
-	// Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPEmail(ctx context.Context, in *RemoveOTPEmailRequest, opts ...grpc.CallOption) (*RemoveOTPEmailResponse, error)
@@ -621,15 +621,15 @@ func (c *userServiceClient) ListAuthenticationMethodTypes(ctx context.Context, i
 //
 // Deprecated: use user service v2 instead. This service will be removed in the next major version of ZITADEL.
 type UserServiceServer interface {
-	// Create a new human user
+	// Create a new User (Human)
 	//
-	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
+	// Create/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA)
 	AddHumanUser(context.Context, *AddHumanUserRequest) (*AddHumanUserResponse, error)
 	// User by ID
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
@@ -767,25 +767,25 @@ type UserServiceServer interface {
 	RemoveTOTP(context.Context, *RemoveTOTPRequest) (*RemoveTOTPResponse, error)
 	// Add OTP SMS for a user
 	//
-	// Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
+	// Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPSMS(context.Context, *AddOTPSMSRequest) (*AddOTPSMSResponse, error)
-	// Remove One-Time Password (OTP) SMS from a user
+	// Remove OTP SMS from a user
 	//
-	// Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPSMS(context.Context, *RemoveOTPSMSRequest) (*RemoveOTPSMSResponse, error)
 	// Add OTP Email for a user
 	//
-	// Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.
+	// Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPEmail(context.Context, *AddOTPEmailRequest) (*AddOTPEmailResponse, error)
-	// Remove One-Time Password (OTP) Email from a user
+	// Remove OTP Email from a user
 	//
-	// Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPEmail(context.Context, *RemoveOTPEmailRequest) (*RemoveOTPEmailResponse, error)

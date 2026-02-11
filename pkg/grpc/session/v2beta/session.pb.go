@@ -968,13 +968,13 @@ const file_zitadel_session_v2beta_session_proto_rawDesc = "" +
 	"\x0eWebAuthNFactor\x12t\n" +
 	"\vverified_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB7\x92A422\"time when the passkey challenge was last checked\"R\n" +
 	"verifiedAt\x12#\n" +
-	"\ruser_verified\x18\x02 \x01(\bR\fuserVerified\"\x8d\x01\n" +
+	"\ruser_verified\x18\x02 \x01(\bR\fuserVerified\"u\n" +
 	"\n" +
-	"TOTPFactor\x12\x7f\n" +
-	"\vverified_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampBB\x92A?2=\"time when the Time-based One-Time Password was last checked\"R\n" +
-	"verifiedAt\"\x81\x01\n" +
-	"\tOTPFactor\x12t\n" +
-	"\vverified_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB7\x92A422\"time when the One-Time Password was last checked\"R\n" +
+	"TOTPFactor\x12g\n" +
+	"\vverified_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB*\x92A'2%\"time when the TOTP was last checked\"R\n" +
+	"verifiedAt\"s\n" +
+	"\tOTPFactor\x12f\n" +
+	"\vverified_at\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampB)\x92A&2$\"time when the OTP was last checked\"R\n" +
 	"verifiedAt\"\x84\x02\n" +
 	"\vSearchQuery\x12?\n" +
 	"\tids_query\x18\x01 \x01(\v2 .zitadel.session.v2beta.IDsQueryH\x00R\bidsQuery\x12I\n" +

@@ -802,10 +802,10 @@ const file_zitadel_user_v2beta_user_proto_rawDesc = "" +
 	"\x14preferred_login_name\x18\x05 \x01(\tB\x17\x92A\x14J\x12\"gigi@zitadel.com\"R\x12preferredLoginName\x12]\n" +
 	"\x05human\x18\x06 \x01(\v2\x1e.zitadel.user.v2beta.HumanUserB%\x92A\"2 one of type use human or machineH\x00R\x05human\x12c\n" +
 	"\amachine\x18\a \x01(\v2 .zitadel.user.v2beta.MachineUserB%\x92A\"2 one of type use human or machineH\x00R\amachineB\x06\n" +
-	"\x04type\"\x94\x02\n" +
+	"\x04type\"\x99\x02\n" +
 	"\vMachineUser\x12\"\n" +
-	"\x04name\x18\x01 \x01(\tB\x0e\x92A\vJ\t\"zitadel\"R\x04name\x12=\n" +
-	"\vdescription\x18\x02 \x01(\tB\x1b\x92A\x18J\x16\"The one and only IAM\"R\vdescription\x12*\n" +
+	"\x04name\x18\x01 \x01(\tB\x0e\x92A\vJ\t\"zitadel\"R\x04name\x12B\n" +
+	"\vdescription\x18\x02 \x01(\tB \x92A\x1dJ\x1b\"The one and only instance\"R\vdescription\x12*\n" +
 	"\n" +
 	"has_secret\x18\x03 \x01(\bB\v\x92A\bJ\x06\"true\"R\thasSecret\x12v\n" +
 	"\x11access_token_type\x18\x04 \x01(\x0e2$.zitadel.user.v2beta.AccessTokenTypeB$\x92A!2\x1fType of access token to receiveR\x0faccessTokenType*X\n" +

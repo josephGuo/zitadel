@@ -123,15 +123,15 @@ const (
 
 // UserServiceClient is a client for the zitadel.user.v2beta.UserService service.
 type UserServiceClient interface {
-	// Create a new human user
+	// Create a new User (Human)
 	//
-	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
+	// Create/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA)
 	AddHumanUser(context.Context, *connect.Request[v2beta.AddHumanUserRequest]) (*connect.Response[v2beta.AddHumanUserResponse], error)
 	// User by ID
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	GetUserByID(context.Context, *connect.Request[v2beta.GetUserByIDRequest]) (*connect.Response[v2beta.GetUserByIDResponse], error)
@@ -269,25 +269,25 @@ type UserServiceClient interface {
 	RemoveTOTP(context.Context, *connect.Request[v2beta.RemoveTOTPRequest]) (*connect.Response[v2beta.RemoveTOTPResponse], error)
 	// Add OTP SMS for a user
 	//
-	// Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
+	// Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPSMS(context.Context, *connect.Request[v2beta.AddOTPSMSRequest]) (*connect.Response[v2beta.AddOTPSMSResponse], error)
-	// Remove One-Time Password (OTP) SMS from a user
+	// Remove OTP SMS from a user
 	//
-	// Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPSMS(context.Context, *connect.Request[v2beta.RemoveOTPSMSRequest]) (*connect.Response[v2beta.RemoveOTPSMSResponse], error)
 	// Add OTP Email for a user
 	//
-	// Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.
+	// Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPEmail(context.Context, *connect.Request[v2beta.AddOTPEmailRequest]) (*connect.Response[v2beta.AddOTPEmailResponse], error)
-	// Remove One-Time Password (OTP) Email from a user
+	// Remove OTP Email from a user
 	//
-	// Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPEmail(context.Context, *connect.Request[v2beta.RemoveOTPEmailRequest]) (*connect.Response[v2beta.RemoveOTPEmailResponse], error)
@@ -760,15 +760,15 @@ func (c *userServiceClient) ListAuthenticationMethodTypes(ctx context.Context, r
 
 // UserServiceHandler is an implementation of the zitadel.user.v2beta.UserService service.
 type UserServiceHandler interface {
-	// Create a new human user
+	// Create a new User (Human)
 	//
-	// Create/import a new user with the type human. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
+	// Create/import a new user. The newly created user will get a verification email if either the email address is not marked as verified and you did not request the verification to be returned.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA)
 	AddHumanUser(context.Context, *connect.Request[v2beta.AddHumanUserRequest]) (*connect.Response[v2beta.AddHumanUserResponse], error)
 	// User by ID
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	GetUserByID(context.Context, *connect.Request[v2beta.GetUserByIDRequest]) (*connect.Response[v2beta.GetUserByIDResponse], error)
@@ -906,25 +906,25 @@ type UserServiceHandler interface {
 	RemoveTOTP(context.Context, *connect.Request[v2beta.RemoveTOTPRequest]) (*connect.Response[v2beta.RemoveTOTPResponse], error)
 	// Add OTP SMS for a user
 	//
-	// Add a new One-Time Password (OTP) SMS factor to the authenticated user. OTP SMS will enable the user to verify a OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
+	// Add a new OTP SMS factor to the authenticated user. OTP SMS will enable the user to verify an OTP with the latest verified phone number. The phone number has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPSMS(context.Context, *connect.Request[v2beta.AddOTPSMSRequest]) (*connect.Response[v2beta.AddOTPSMSResponse], error)
-	// Remove One-Time Password (OTP) SMS from a user
+	// Remove OTP SMS from a user
 	//
-	// Remove the configured One-Time Password (OTP) SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS factor of a user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPSMS(context.Context, *connect.Request[v2beta.RemoveOTPSMSRequest]) (*connect.Response[v2beta.RemoveOTPSMSResponse], error)
 	// Add OTP Email for a user
 	//
-	// Add a new One-Time Password (OTP) Email factor to the authenticated user. OTP Email will enable the user to verify a OTP with the latest verified email. The email has to be verified to add the second factor.
+	// Add a new OTP Email factor to the authenticated user. OTP Email will enable the user to verify an OTP with the latest verified email. The email has to be verified to add the second factor.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	AddOTPEmail(context.Context, *connect.Request[v2beta.AddOTPEmailRequest]) (*connect.Response[v2beta.AddOTPEmailResponse], error)
-	// Remove One-Time Password (OTP) Email from a user
+	// Remove OTP Email from a user
 	//
-	// Remove the configured One-Time Password (OTP) Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email factor of a user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	//
 	// Deprecated: please move to the corresponding endpoint under user service v2 (GA).
 	RemoveOTPEmail(context.Context, *connect.Request[v2beta.RemoveOTPEmailRequest]) (*connect.Response[v2beta.RemoveOTPEmailResponse], error)

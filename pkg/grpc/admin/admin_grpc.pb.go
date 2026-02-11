@@ -558,19 +558,19 @@ type AdminServiceClient interface {
 	SetCustomLoginText(ctx context.Context, in *SetCustomLoginTextsRequest, opts ...grpc.CallOption) (*SetCustomLoginTextsResponse, error)
 	ResetCustomLoginTextToDefault(ctx context.Context, in *ResetCustomLoginTextsToDefaultRequest, opts ...grpc.CallOption) (*ResetCustomLoginTextsToDefaultResponse, error)
 	ListIAMMemberRoles(ctx context.Context, in *ListIAMMemberRolesRequest, opts ...grpc.CallOption) (*ListIAMMemberRolesResponse, error)
-	// List IAM Members
+	// List instance Members
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
 	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
 	ListIAMMembers(ctx context.Context, in *ListIAMMembersRequest, opts ...grpc.CallOption) (*ListIAMMembersResponse, error)
-	// Add IAM Member
+	// Add instance Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
 	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.
 	AddIAMMember(ctx context.Context, in *AddIAMMemberRequest, opts ...grpc.CallOption) (*AddIAMMemberResponse, error)
-	// Update IAM Member
+	// Update instance Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//
@@ -2983,19 +2983,19 @@ type AdminServiceServer interface {
 	SetCustomLoginText(context.Context, *SetCustomLoginTextsRequest) (*SetCustomLoginTextsResponse, error)
 	ResetCustomLoginTextToDefault(context.Context, *ResetCustomLoginTextsToDefaultRequest) (*ResetCustomLoginTextsToDefaultResponse, error)
 	ListIAMMemberRoles(context.Context, *ListIAMMemberRolesRequest) (*ListIAMMemberRolesResponse, error)
-	// List IAM Members
+	// List instance Members
 	//
 	// Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.
 	//
 	// Members are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.
 	ListIAMMembers(context.Context, *ListIAMMembersRequest) (*ListIAMMembersResponse, error)
-	// Add IAM Member
+	// Add instance Member
 	//
 	// Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.
 	//
 	// Members are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.
 	AddIAMMember(context.Context, *AddIAMMemberRequest) (*AddIAMMemberResponse, error)
-	// Update IAM Member
+	// Update instance Member
 	//
 	// Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.
 	//

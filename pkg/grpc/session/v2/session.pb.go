@@ -516,7 +516,7 @@ func (x *WebAuthNFactor) GetUserVerified() bool {
 
 type TOTPFactor struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The timestamp when the Time-based One-Time Password was last verified.
+	// The timestamp when the TOTP was last verified.
 	VerifiedAt    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=verified_at,json=verifiedAt,proto3" json:"verified_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -561,7 +561,7 @@ func (x *TOTPFactor) GetVerifiedAt() *timestamppb.Timestamp {
 
 type OTPFactor struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The timestamp when the One-Time Password was last verified either by SMS or Email.
+	// The timestamp when the OTP was last verified either by SMS or Email.
 	VerifiedAt    *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=verified_at,json=verifiedAt,proto3" json:"verified_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

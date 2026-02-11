@@ -656,8 +656,7 @@
         },
         "oidcTokenExchange": {
           "$ref": "#/definitions/v2FeatureFlag",
-          "example": true,
-          "description": "Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance."
+          "description": "Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`\ngrant type for the OIDC token endpoint is enabled by default.\nToken exchange can be used to request tokens with a lesser scope or impersonate other users.\nSee the security policy to allow impersonation on an instance.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel."
         },
         "improvedPerformance": {
           "$ref": "#/definitions/v2ImprovedPerformanceFeatureFlag",
@@ -678,8 +677,7 @@
         },
         "enableBackChannelLogout": {
           "$ref": "#/definitions/v2FeatureFlag",
-          "example": true,
-          "description": "If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions."
+          "description": "Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel."
         },
         "loginV2": {
           "$ref": "#/definitions/v2LoginV2FeatureFlag",
@@ -728,8 +726,7 @@
         },
         "oidcTokenExchange": {
           "$ref": "#/definitions/v2FeatureFlag",
-          "example": true,
-          "description": "Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance."
+          "description": "Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`\ngrant type for the OIDC token endpoint is enabled by default.\nToken exchange can be used to request tokens with a lesser scope or impersonate other users.\nSee the security policy to allow impersonation on an instance.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel."
         },
         "improvedPerformance": {
           "$ref": "#/definitions/v2ImprovedPerformanceFeatureFlag",
@@ -745,8 +742,7 @@
         },
         "enableBackChannelLogout": {
           "$ref": "#/definitions/v2FeatureFlag",
-          "example": true,
-          "description": "If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions."
+          "description": "Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel."
         },
         "loginV2": {
           "$ref": "#/definitions/v2LoginV2FeatureFlag",
@@ -878,8 +874,7 @@
         },
         "oidcTokenExchange": {
           "type": "boolean",
-          "example": true,
-          "description": "Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance."
+          "description": "Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`\ngrant type for the OIDC token endpoint is enabled by default.\nToken exchange can be used to request tokens with a lesser scope or impersonate other users.\nSee the security policy to allow impersonation on an instance.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel.\nSetting the field will have no effect."
         },
         "improvedPerformance": {
           "type": "array",
@@ -903,8 +898,7 @@
         },
         "enableBackChannelLogout": {
           "type": "boolean",
-          "example": true,
-          "description": "If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions."
+          "description": "Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel.\nSetting the field will have no effect."
         },
         "loginV2": {
           "$ref": "#/definitions/v2LoginV2",
@@ -958,8 +952,7 @@
         },
         "oidcTokenExchange": {
           "type": "boolean",
-          "example": true,
-          "description": "Enable the experimental `urn:ietf:params:oauth:grant-type:token-exchange` grant type for the OIDC token endpoint. Token exchange can be used to request tokens with a lesser scope or impersonate other users. See the security policy to allow impersonation on an instance."
+          "description": "Deprecated: the flag has been removed and `urn:ietf:params:oauth:grant-type:token-exchange`\ngrant type for the OIDC token endpoint is enabled by default.\nToken exchange can be used to request tokens with a lesser scope or impersonate other users.\nSee the security policy to allow impersonation on an instance.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel.\nSetting the field will have no effect."
         },
         "improvedPerformance": {
           "type": "array",
@@ -978,8 +971,7 @@
         },
         "enableBackChannelLogout": {
           "type": "boolean",
-          "example": true,
-          "description": "If the flag is enabled, you'll be able to use the OIDC Back-Channel Logout to be notified in your application about terminated user sessions."
+          "description": "Deprecated: the flag has been removed and OIDC Back-Channel Logout is always enabled.\nThis field is only kept for backward compatibility and will be removed in the next major version of Zitadel.\nSetting the field will have no effect."
         },
         "loginV2": {
           "$ref": "#/definitions/v2LoginV2",

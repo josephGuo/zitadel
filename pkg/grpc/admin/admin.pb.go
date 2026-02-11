@@ -25007,7 +25007,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	" TestEmailProviderSMTPByIdRequest\x12\x19\n" +
 	"\x02id\x18\x01 \x01(\tB\t\xfaB\x06r\x04\x10\x01\x18dR\x02id\x12_\n" +
 	"\x10receiver_address\x18\x02 \x01(\tB4\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\tr\a\x10\x01\x18\xc8\x01`\x01R\x0freceiverAddress\"#\n" +
-	"!TestEmailProviderSMTPByIdResponse\"\xe2\x06\n" +
+	"!TestEmailProviderSMTPByIdResponse\"\xdd\x06\n" +
 	"\x1cTestEmailProviderSMTPRequest\x12Y\n" +
 	"\x0esender_address\x18\x01 \x01(\tB2\x92A!J\x19\"noreply@m.zitadel.cloud\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\rsenderAddress\x12C\n" +
 	"\vsender_name\x18\x02 \x01(\tB\"\x92A\x11J\t\"ZITADEL\"x\xc8\x01\x80\x01\x01\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\n" +
@@ -25021,8 +25021,8 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x04none\x18\t \x01(\v2\x1c.zitadel.admin.v1.SMTPNoAuthH\x00R\x04none\x127\n" +
 	"\x05plain\x18\n" +
 	" \x01(\v2\x1f.zitadel.admin.v1.SMTPPlainAuthH\x00R\x05plain\x12=\n" +
-	"\axoauth2\x18\v \x01(\v2!.zitadel.admin.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\v\n" +
-	"\x04Auth\x12\x03\xf8B\x01\"\x1f\n" +
+	"\axoauth2\x18\v \x01(\v2!.zitadel.admin.v1.SMTPXOAuth2AuthH\x00R\axoauth2B\x06\n" +
+	"\x04Auth\"\x1f\n" +
 	"\x1dTestEmailProviderSMTPResponse\"F\n" +
 	"\x17ListSMSProvidersRequest\x12+\n" +
 	"\x05query\x18\x01 \x01(\v2\x15.zitadel.v1.ListQueryR\x05query\"\x87\x01\n" +
@@ -26066,10 +26066,10 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\"p\n" +
 	")GetDefaultVerifySMSOTPMessageTextResponse\x12C\n" +
 	"\vcustom_text\x18\x01 \x01(\v2\".zitadel.text.v1.MessageCustomTextR\n" +
-	"customText\"\xbe\x02\n" +
+	"customText\"\xb0\x02\n" +
 	"(SetDefaultVerifySMSOTPMessageTextRequest\x123\n" +
-	"\blanguage\x18\x01 \x01(\tB\x17\x92A\x06J\x04\"de\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xdc\x01\n" +
-	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"`\n" +
+	"\blanguage\x18\x01 \x01(\tB\x17\x92A\x06J\x04\"de\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xce\x01\n" +
+	"\x04text\x18\x02 \x01(\tB\xb9\x01\x92A\xad\x01J\xa7\x01\"Please visit {{ .VerifyURL }} or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"`\n" +
 	")SetDefaultVerifySMSOTPMessageTextResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\\\n" +
 	"2ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x12&\n" +
@@ -26088,15 +26088,15 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\"r\n" +
 	"+GetDefaultVerifyEmailOTPMessageTextResponse\x12C\n" +
 	"\vcustom_text\x18\x01 \x01(\v2\".zitadel.text.v1.MessageCustomTextR\n" +
-	"customText\"\xe0\x05\n" +
+	"customText\"\xa7\x05\n" +
 	"*SetDefaultVerifyEmailOTPMessageTextRequest\x123\n" +
-	"\blanguage\x18\x01 \x01(\tB\x17\x92A\x06J\x04\"de\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12C\n" +
-	"\x05title\x18\x02 \x01(\tB-\x92A\"J\x1d\"ZITADEL - One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\x05title\x12J\n" +
+	"\blanguage\x18\x01 \x01(\tB\x17\x92A\x06J\x04\"de\"\xe2A\x01\x02\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x125\n" +
+	"\x05title\x18\x02 \x01(\tB\x1f\x92A\x14J\x0f\"ZITADEL - OTP\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\x05title\x12;\n" +
 	"\n" +
-	"pre_header\x18\x03 \x01(\tB+\x92A J\x1b\"Verify One-time Password \"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x12D\n" +
-	"\asubject\x18\x04 \x01(\tB*\x92A\x1fJ\x1a\"Verify One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
-	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xe6\x01\n" +
-	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
+	"pre_header\x18\x03 \x01(\tB\x1c\x92A\x11J\f\"Verify OTP\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x126\n" +
+	"\asubject\x18\x04 \x01(\tB\x1c\x92A\x11J\f\"Verify OTP\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
+	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xd8\x01\n" +
+	"\x04text\x18\x06 \x01(\tB\xc3\x01\x92A\xb6\x01J\xb0\x01\"Please use the \\\"Authenticate\\\" button or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
 	"\vbutton_text\x18\a \x01(\tB\x1e\x92A\x13J\x0e\"Authenticate\"x\xf4\x03\xfaB\x05r\x03(\xa0\x1fR\n" +
 	"buttonText\x12)\n" +
 	"\vfooter_text\x18\b \x01(\tB\b\xfaB\x05r\x03(\xc0>R\n" +
@@ -26570,7 +26570,7 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x17GetRestrictionsResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\x12\x8a\x02\n" +
 	" disallow_public_org_registration\x18\x02 \x01(\bB\xc0\x01\x92A\xbc\x012\xb9\x01defines if Zitadel should expose the endpoint /ui/login/register/org. If it is true, the org registration endpoint returns the HTTP status 404 on GET requests, and 409 on POST requests.R\x1ddisallowPublicOrgRegistration\x12\xdd\x01\n" +
-	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xa4\xa3\x05\n" +
+	"\x11allowed_languages\x18\x03 \x03(\tB\xaf\x01\x92A\xab\x012\xa8\x01defines the allowed languages. If allowed_languages has one or more entries, only these languages are allowed. If it has no entries, all supported languages are allowedR\x10allowedLanguages2\xf9\xa2\x05\n" +
 	"\fAdminService\x12\xb7\x02\n" +
 	"\aHealthz\x12 .zitadel.admin.v1.HealthzRequest\x1a!.zitadel.admin.v1.HealthzResponse\"\xe6\x01\x92A\xd2\x01\n" +
 	"\aGeneral\x12\aHealthz\x1a~The health endpoint allows an external system to probe if Zitadel system API is alive. Response as soon as Zitadel is running.J\x18\n" +
@@ -26739,12 +26739,12 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x0fGetOIDCSettings\x12(.zitadel.admin.v1.GetOIDCSettingsRequest\x1a).zitadel.admin.v1.GetOIDCSettingsResponse\"\x8d\x01\x92Af\n" +
 	"\bSettings\x12\x11Get OIDC Settings\x1aGThe OIDC Settings define the lifetimes of the different tokens in OIDC.\x82\xb5\x18\n" +
 	"\n" +
-	"\biam.read\x82\xd3\xe4\x93\x02\x10\x12\x0e/settings/oidc\x12\xd1\x02\n" +
-	"\x0fAddOIDCSettings\x12(.zitadel.admin.v1.AddOIDCSettingsRequest\x1a).zitadel.admin.v1.AddOIDCSettingsResponse\"\xe8\x01\x92A\xbc\x01\n" +
-	"\bSettings\x12\x11Add OIDC Settings\x1a\x9c\x01Create new OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and clients.\x82\xb5\x18\v\n" +
-	"\tiam.write\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/settings/oidc\x12\xdf\x02\n" +
-	"\x12UpdateOIDCSettings\x12+.zitadel.admin.v1.UpdateOIDCSettingsRequest\x1a,.zitadel.admin.v1.UpdateOIDCSettingsResponse\"\xed\x01\x92A\xc1\x01\n" +
-	"\bSettings\x12\x11Add OIDC Settings\x1a\xa1\x01Update existing OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and clients.\x82\xb5\x18\v\n" +
+	"\biam.read\x82\xd3\xe4\x93\x02\x10\x12\x0e/settings/oidc\x12\xd6\x02\n" +
+	"\x0fAddOIDCSettings\x12(.zitadel.admin.v1.AddOIDCSettingsRequest\x1a).zitadel.admin.v1.AddOIDCSettingsResponse\"\xed\x01\x92A\xc1\x01\n" +
+	"\bSettings\x12\x11Add OIDC Settings\x1a\xa1\x01Create new OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and applications.\x82\xb5\x18\v\n" +
+	"\tiam.write\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/settings/oidc\x12\xe4\x02\n" +
+	"\x12UpdateOIDCSettings\x12+.zitadel.admin.v1.UpdateOIDCSettingsRequest\x1a,.zitadel.admin.v1.UpdateOIDCSettingsResponse\"\xf2\x01\x92A\xc6\x01\n" +
+	"\bSettings\x12\x11Add OIDC Settings\x1a\xa6\x01Update existing OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and applications.\x82\xb5\x18\v\n" +
 	"\tiam.write\x82\xd3\xe4\x93\x02\x13:\x01*\x1a\x0e/settings/oidc\x12\xb4\x03\n" +
 	"!GetFileSystemNotificationProvider\x12:.zitadel.admin.v1.GetFileSystemNotificationProviderRequest\x1a;.zitadel.admin.v1.GetFileSystemNotificationProviderResponse\"\x95\x02\x92A\xe0\x01\n" +
 	"\x16Notification Providers\x12$Get Notification Provider Filesystem\x1a\x9f\x01Returns a filesystem notification provider if configured. This provider is only used for testing purposes. The notifications will be written to the filesystem.\x82\xb5\x18\n" +
@@ -27306,30 +27306,30 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02):\x01*\x1a$/text/message/verifyphone/{language}\x12\xcc\x04\n" +
 	"*ResetCustomVerifyPhoneMessageTextToDefault\x12C.zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultRequest\x1aD.zitadel.admin.v1.ResetCustomVerifyPhoneMessageTextToDefaultResponse\"\x92\x03\x92A\xcb\x02\n" +
 	"\rMessage Texts\x121Reset Custom Verify Phone Message Text to Default\x1a\x86\x02Removes the custom text of the verify-phone message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
-	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyphone/{language}\x12\xe5\x04\n" +
-	"!GetDefaultVerifySMSOTPMessageText\x12:.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a;.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xc6\x03\x92A\xf8\x02\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbd\x02Get the default text of the verify SMS OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xdb\x04\n" +
-	" GetCustomVerifySMSOTPMessageText\x129.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest\x1a:.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse\"\xbf\x03\x92A\xf9\x02\n" +
-	"\rMessage Texts\x12&Get Custom Verify SMS OTP Message Text\x1a\xbf\x02Get the custom text of the verify SMS OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02'\x12%/text/message/verifysmsotp/{language}\x12\xf5\x06\n" +
-	"!SetDefaultVerifySMSOTPMessageText\x12:.zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest\x1a;.zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse\"\xd6\x05\x92A\x8c\x05\n" +
-	"\rMessage Texts\x12-Set Default Verify SMS OTP Reset Message Text\x1a\xcb\x04Set the custom text of the verify SMS OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
+	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyphone/{language}\x12\xd7\x04\n" +
+	"!GetDefaultVerifySMSOTPMessageText\x12:.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a;.zitadel.admin.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xb8\x03\x92A\xea\x02\n" +
+	"\rMessage Texts\x12'Get Default Verify OTP SMS Message Text\x1a\xaf\x02Get the default text of the verify OTP SMS message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xcd\x04\n" +
+	" GetCustomVerifySMSOTPMessageText\x129.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextRequest\x1a:.zitadel.admin.v1.GetCustomVerifySMSOTPMessageTextResponse\"\xb1\x03\x92A\xeb\x02\n" +
+	"\rMessage Texts\x12&Get Custom Verify OTP SMS Message Text\x1a\xb1\x02Get the custom text of the verify OTP SMS message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02'\x12%/text/message/verifysmsotp/{language}\x12\xe7\x06\n" +
+	"!SetDefaultVerifySMSOTPMessageText\x12:.zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextRequest\x1a;.zitadel.admin.v1.SetDefaultVerifySMSOTPMessageTextResponse\"\xc8\x05\x92A\xfe\x04\n" +
+	"\rMessage Texts\x12-Set Default Verify OTP SMS Reset Message Text\x1a\xbd\x04Set the custom text of the verify OTP SMS user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02*:\x01*\x1a%/text/message/verifysmsotp/{language}\x12\xd4\x04\n" +
 	"+ResetCustomVerifySMSOTPMessageTextToDefault\x12D.zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x1aE.zitadel.admin.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse\"\x97\x03\x92A\xcf\x02\n" +
-	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x88\x02Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
-	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02'*%/text/message/verifysmsotp/{language}\x12\xef\x04\n" +
-	"#GetDefaultVerifyEmailOTPMessageText\x12<.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xca\x03\x92A\xfa\x02\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xbf\x02Get the default text of the verify Email OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xde\x04\n" +
-	"\"GetCustomVerifyEmailOTPMessageText\x12;.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse\"\xbc\x03\x92A\xf4\x02\n" +
-	"\rMessage Texts\x12&Get Custom Verify SMS OTP Message Text\x1a\xba\x02Get the custom text of the Email OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
-	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02)\x12'/text/message/verifyemailotp/{language}\x12\xf8\x06\n" +
-	"#SetDefaultVerifyEmailOTPMessageText\x12<.zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest\x1a=.zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse\"\xd3\x05\x92A\x87\x05\n" +
-	"\rMessage Texts\x12-Set Default Verify SMS OTP Reset Message Text\x1a\xc6\x04Set the custom text of the Email OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
+	"\rMessage Texts\x123Reset Custom Verify OTP SMS Message Text to Default\x1a\x88\x02Removes the custom text of the verify OTP SMS message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02'*%/text/message/verifysmsotp/{language}\x12\xe1\x04\n" +
+	"#GetDefaultVerifyEmailOTPMessageText\x12<.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1a=.zitadel.admin.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xbc\x03\x92A\xec\x02\n" +
+	"\rMessage Texts\x12'Get Default Verify OTP SMS Message Text\x1a\xb1\x02Get the default text of the verify OTP Email message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xd0\x04\n" +
+	"\"GetCustomVerifyEmailOTPMessageText\x12;.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextRequest\x1a<.zitadel.admin.v1.GetCustomVerifyEmailOTPMessageTextResponse\"\xae\x03\x92A\xe6\x02\n" +
+	"\rMessage Texts\x12&Get Custom Verify OTP SMS Message Text\x1a\xac\x02Get the custom text of the OTP Email message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.\x82\xb5\x18\x11\n" +
+	"\x0fiam.policy.read\x82\xd3\xe4\x93\x02)\x12'/text/message/verifyemailotp/{language}\x12\xea\x06\n" +
+	"#SetDefaultVerifyEmailOTPMessageText\x12<.zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextRequest\x1a=.zitadel.admin.v1.SetDefaultVerifyEmailOTPMessageTextResponse\"\xc5\x05\x92A\xf9\x04\n" +
+	"\rMessage Texts\x12-Set Default Verify OTP SMS Reset Message Text\x1a\xb8\x04Set the custom text of the OTP Email user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}\x82\xb5\x18\x12\n" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02,:\x01*\x1a'/text/message/verifyemailotp/{language}\x12\xd7\x04\n" +
 	"-ResetCustomVerifyEmailOTPMessageTextToDefault\x12F.zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest\x1aG.zitadel.admin.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse\"\x94\x03\x92A\xca\x02\n" +
-	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x83\x02Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
+	"\rMessage Texts\x123Reset Custom Verify OTP SMS Message Text to Default\x1a\x83\x02Removes the custom text of the OTP Email message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
 	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02)*'/text/message/verifyemailotp/{language}\x12\xf2\x04\n" +
 	"\"GetDefaultDomainClaimedMessageText\x12;.zitadel.admin.v1.GetDefaultDomainClaimedMessageTextRequest\x1a<.zitadel.admin.v1.GetDefaultDomainClaimedMessageTextResponse\"\xd0\x03\x92A\x81\x03\n" +
 	"\rMessage Texts\x12'Get Default Domain Claimed Message Text\x1a\xc6\x02Get the default text of the domain claimed message/email that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an organization claims a domain and a user of this domain exists in another organization.\x82\xb5\x18\x11\n" +
@@ -27390,42 +27390,42 @@ const file_zitadel_admin_proto_rawDesc = "" +
 	"\x10iam.policy.write\x82\xd3\xe4\x93\x02\x1b:\x01*\x1a\x16/text/login/{language}\x12\x99\x04\n" +
 	"\x1dResetCustomLoginTextToDefault\x127.zitadel.admin.v1.ResetCustomLoginTextsToDefaultRequest\x1a8.zitadel.admin.v1.ResetCustomLoginTextsToDefaultResponse\"\x84\x03\x92A\xcb\x02\n" +
 	"\vLogin Texts\x12\"Reset Custom Login Text to Default\x1a\x97\x02Removes the custom texts for the login and register UI of ZITADEL, which is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be shown to the users of all organizations, that do not have a custom text configured.\x82\xb5\x18\x13\n" +
-	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02\x18*\x16/text/login/{language}\x12\xad\x03\n" +
-	"\x12ListIAMMemberRoles\x12+.zitadel.admin.v1.ListIAMMemberRolesRequest\x1a,.zitadel.admin.v1.ListIAMMemberRolesResponse\"\xbb\x02\x92A\x84\x02\n" +
+	"\x11iam.policy.delete\x82\xd3\xe4\x93\x02\x18*\x16/text/login/{language}\x12\xb7\x03\n" +
+	"\x12ListIAMMemberRoles\x12+.zitadel.admin.v1.ListIAMMemberRolesRequest\x1a,.zitadel.admin.v1.ListIAMMemberRolesResponse\"\xc5\x02\x92A\x8e\x02\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL Administrators\x12\x15List IAM Member Roles\x1a\xa2\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the instance level.J%\n" +
-	"\x03200\x12\x1e\n" +
-	"\x1croles on the IAM of the user\x82\xb5\x18\x11\n" +
-	"\x0fiam.member.read\x82\xd3\xe4\x93\x02\x18\"\x16/members/roles/_search\x12\xd8\x01\n" +
-	"\x0eListIAMMembers\x12'.zitadel.admin.v1.ListIAMMembersRequest\x1a(.zitadel.admin.v1.ListIAMMembersResponse\"s\x92A@\n" +
-	"\aMembers\n" +
-	"\x16ZITADEL AdministratorsJ\x1b\n" +
-	"\x03200\x12\x14\n" +
-	"\x12members of the IAMX\x01\x82\xb5\x18\x11\n" +
-	"\x0fiam.member.read\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/members/_search\x12\x99\x02\n" +
-	"\fAddIAMMember\x12%.zitadel.admin.v1.AddIAMMemberRequest\x1a&.zitadel.admin.v1.AddIAMMemberResponse\"\xb9\x01\x92A\x8c\x01\n" +
+	"\x16ZITADEL Administrators\x12\x1aList instance Member Roles\x1a\xa2\x01Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the instance level.J*\n" +
+	"\x03200\x12#\n" +
+	"!roles on the instance of the user\x82\xb5\x18\x11\n" +
+	"\x0fiam.member.read\x82\xd3\xe4\x93\x02\x18\"\x16/members/roles/_search\x12\xdd\x01\n" +
+	"\x0eListIAMMembers\x12'.zitadel.admin.v1.ListIAMMembersRequest\x1a(.zitadel.admin.v1.ListIAMMembersResponse\"x\x92AE\n" +
 	"\aMembers\n" +
 	"\x16ZITADEL AdministratorsJ \n" +
 	"\x03200\x12\x19\n" +
-	"\x17Member added to the IAMJE\n" +
+	"\x17members of the instanceX\x01\x82\xb5\x18\x11\n" +
+	"\x0fiam.member.read\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/members/_search\x12\x9e\x02\n" +
+	"\fAddIAMMember\x12%.zitadel.admin.v1.AddIAMMemberRequest\x1a&.zitadel.admin.v1.AddIAMMemberResponse\"\xbe\x01\x92A\x91\x01\n" +
+	"\aMembers\n" +
+	"\x16ZITADEL AdministratorsJ%\n" +
+	"\x03200\x12\x1e\n" +
+	"\x1cMember added to the instanceJE\n" +
 	"\x03400\x12>\n" +
 	"\x1fuser not found or invalid roles\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusX\x01\x82\xb5\x18\x12\n" +
-	"\x10iam.member.write\x82\xd3\xe4\x93\x02\r:\x01*\"\b/members\x12\xa4\x02\n" +
-	"\x0fUpdateIAMMember\x12(.zitadel.admin.v1.UpdateIAMMemberRequest\x1a).zitadel.admin.v1.UpdateIAMMemberResponse\"\xbb\x01\x92A\x84\x01\n" +
+	"\x10iam.member.write\x82\xd3\xe4\x93\x02\r:\x01*\"\b/members\x12\xa9\x02\n" +
+	"\x0fUpdateIAMMember\x12(.zitadel.admin.v1.UpdateIAMMemberRequest\x1a).zitadel.admin.v1.UpdateIAMMemberResponse\"\xc0\x01\x92A\x89\x01\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL AdministratorsJ\"\n" +
-	"\x03200\x12\x1b\n" +
-	"\x19Member of the IAM updatedJ;\n" +
+	"\x16ZITADEL AdministratorsJ'\n" +
+	"\x03200\x12 \n" +
+	"\x1eMember of the instance updatedJ;\n" +
 	"\x03400\x124\n" +
 	"\x15invalid user or roles\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusX\x01\x82\xb5\x18\x12\n" +
-	"\x10iam.member.write\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/members/{user_id}\x12\x98\x02\n" +
-	"\x0fRemoveIAMMember\x12(.zitadel.admin.v1.RemoveIAMMemberRequest\x1a).zitadel.admin.v1.RemoveIAMMemberResponse\"\xaf\x01\x92A{\n" +
+	"\x10iam.member.write\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/members/{user_id}\x12\x9e\x02\n" +
+	"\x0fRemoveIAMMember\x12(.zitadel.admin.v1.RemoveIAMMemberRequest\x1a).zitadel.admin.v1.RemoveIAMMemberResponse\"\xb5\x01\x92A\x80\x01\n" +
 	"\aMembers\n" +
-	"\x16ZITADEL AdministratorsJ\"\n" +
-	"\x03200\x12\x1b\n" +
-	"\x19Member of the IAM removedJ2\n" +
+	"\x16ZITADEL AdministratorsJ'\n" +
+	"\x03200\x12 \n" +
+	"\x1eMember of the instance removedJ2\n" +
 	"\x03400\x12+\n" +
 	"\finvalid user\x12\x1b\n" +
 	"\x19\x1a\x17#/definitions/rpcStatusX\x01\x82\xb5\x18\x13\n" +

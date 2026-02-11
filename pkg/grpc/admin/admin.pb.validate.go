@@ -10832,7 +10832,6 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	oneofAuthPresent := false
 	switch v := m.Auth.(type) {
 	case *TestEmailProviderSMTPRequest_None:
 		if v == nil {
@@ -10845,7 +10844,6 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 			}
 			errors = append(errors, err)
 		}
-		oneofAuthPresent = true
 
 		if all {
 			switch v := interface{}(m.GetNone()).(type) {
@@ -10887,7 +10885,6 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 			}
 			errors = append(errors, err)
 		}
-		oneofAuthPresent = true
 
 		if all {
 			switch v := interface{}(m.GetPlain()).(type) {
@@ -10929,7 +10926,6 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 			}
 			errors = append(errors, err)
 		}
-		oneofAuthPresent = true
 
 		if all {
 			switch v := interface{}(m.GetXoauth2()).(type) {
@@ -10962,16 +10958,6 @@ func (m *TestEmailProviderSMTPRequest) validate(all bool) error {
 
 	default:
 		_ = v // ensures v is used
-	}
-	if !oneofAuthPresent {
-		err := TestEmailProviderSMTPRequestValidationError{
-			field:  "Auth",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {

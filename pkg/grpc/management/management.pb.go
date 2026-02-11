@@ -34375,10 +34375,10 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\"p\n" +
 	")GetDefaultVerifySMSOTPMessageTextResponse\x12C\n" +
 	"\vcustom_text\x18\x01 \x01(\v2\".zitadel.text.v1.MessageCustomTextR\n" +
-	"customText\"\xb9\x02\n" +
+	"customText\"\xab\x02\n" +
 	"'SetCustomVerifySMSOTPMessageTextRequest\x12/\n" +
-	"\blanguage\x18\x01 \x01(\tB\x13\x92A\x06J\x04\"de\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xdc\x01\n" +
-	"\x04text\x18\x02 \x01(\tB\xc7\x01\x92A\xbb\x01J\xb5\x01\"Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"_\n" +
+	"\blanguage\x18\x01 \x01(\tB\x13\x92A\x06J\x04\"de\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12\xce\x01\n" +
+	"\x04text\x18\x02 \x01(\tB\xb9\x01\x92A\xad\x01J\xa7\x01\"Please visit {{ .VerifyURL }} or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\xa0\x06\xfaB\x05r\x03\x18\xa0\x06R\x04text\"_\n" +
 	"(SetCustomVerifySMSOTPMessageTextResponse\x123\n" +
 	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails\"\\\n" +
 	"2ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x12&\n" +
@@ -34397,15 +34397,15 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\"r\n" +
 	"+GetDefaultVerifyEmailOTPMessageTextResponse\x12C\n" +
 	"\vcustom_text\x18\x01 \x01(\v2\".zitadel.text.v1.MessageCustomTextR\n" +
-	"customText\"\xdb\x05\n" +
+	"customText\"\xa3\x05\n" +
 	")SetCustomVerifyEmailOTPMessageTextRequest\x12/\n" +
-	"\blanguage\x18\x01 \x01(\tB\x13\x92A\x06J\x04\"de\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x12C\n" +
-	"\x05title\x18\x02 \x01(\tB-\x92A\"J\x1d\"ZITADEL - One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\x05title\x12J\n" +
+	"\blanguage\x18\x01 \x01(\tB\x13\x92A\x06J\x04\"de\"\xfaB\ar\x05\x10\x01\x18\xc8\x01R\blanguage\x125\n" +
+	"\x05title\x18\x02 \x01(\tB\x1f\x92A\x14J\x0f\"ZITADEL - OTP\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\x05title\x12<\n" +
 	"\n" +
-	"pre_header\x18\x03 \x01(\tB+\x92A J\x1b\"Verify One-time Password \"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x12D\n" +
-	"\asubject\x18\x04 \x01(\tB*\x92A\x1fJ\x1a\"Verify One-time Password\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
-	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xe6\x01\n" +
-	"\x04text\x18\x06 \x01(\tB\xd1\x01\x92A\xc4\x01J\xbe\x01\"Please use the \\\"Authenticate\\\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
+	"pre_header\x18\x03 \x01(\tB\x1d\x92A\x12J\r\"Verify OTP \"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\tpreHeader\x126\n" +
+	"\asubject\x18\x04 \x01(\tB\x1c\x92A\x11J\f\"Verify OTP\"x\xf4\x03\xfaB\x05r\x03(\xd0\x0fR\asubject\x12Q\n" +
+	"\bgreeting\x18\x05 \x01(\tB5\x92A*J%\"Hello {{.FirstName}} {{.LastName}},\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\bgreeting\x12\xd8\x01\n" +
+	"\x04text\x18\x06 \x01(\tB\xc3\x01\x92A\xb6\x01J\xb0\x01\"Please use the \\\"Authenticate\\\" button or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.\"x\x90N\xfaB\x06r\x04(\xc0\xb8\x02R\x04text\x12?\n" +
 	"\vbutton_text\x18\a \x01(\tB\x1e\x92A\x13J\x0e\"Authenticate\"x\xe8\a\xfaB\x05r\x03(\xa0\x1fR\n" +
 	"buttonText\x12)\n" +
 	"\vfooter_text\x18\b \x01(\tB\b\xfaB\x05r\x03(\xc0>R\n" +
@@ -35101,7 +35101,7 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\n" +
 	"action_ids\x18\x03 \x03(\tR\tactionIds\"P\n" +
 	"\x19SetTriggerActionsResponse\x123\n" +
-	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2ԟ\n" +
+	"\adetails\x18\x01 \x01(\v2\x19.zitadel.v1.ObjectDetailsR\adetails2\x97\x9f\n" +
 	"\n" +
 	"\x11ManagementService\x12\xe8\x01\n" +
 	"\aHealthz\x12%.zitadel.management.v1.HealthzRequest\x1a&.zitadel.management.v1.HealthzResponse\"\x8d\x01\x92Az\n" +
@@ -36090,10 +36090,10 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x0fDomain Settings\x12\x12Get Org IAM Policy\x1a\x1fUse Get Domain Settings insteadX\x01r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
-	"\rauthenticated\x82\xd3\xe4\x93\x02\x12\x12\x10/policies/orgiam\x12\x83\x04\n" +
-	"\x0fGetDomainPolicy\x12-.zitadel.management.v1.GetDomainPolicyRequest\x1a..zitadel.management.v1.GetDomainPolicyResponse\"\x90\x03\x92A\xe1\x02\n" +
+	"\rauthenticated\x82\xd3\xe4\x93\x02\x12\x12\x10/policies/orgiam\x12\x88\x04\n" +
+	"\x0fGetDomainPolicy\x12-.zitadel.management.v1.GetDomainPolicyRequest\x1a..zitadel.management.v1.GetDomainPolicyResponse\"\x95\x03\x92A\xe6\x02\n" +
 	"\bSettings\n" +
-	"\x0fDomain Settings\x12\x11Get Domain Policy\x1aKReturns the domain policy (this policy is managed by the IAM administrator)r\xe3\x01\n" +
+	"\x0fDomain Settings\x12\x11Get Domain Policy\x1aPReturns the domain policy (this policy is managed by the instance administrator)r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
 	"\rauthenticated\x82\xd3\xe4\x93\x02\x12\x12\x10/policies/domain\x12\xdf\x05\n" +
@@ -36491,44 +36491,44 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\rMessage Texts\x121Reset Custom Verify Phone Message Text to Default\x1a\x8f\x01Removes the custom text of the verify-phone message from the organization and therefore the default texts will trigger for the users afterward.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
-	"\rpolicy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyphone/{language}\x12\xca\x05\n" +
-	" GetCustomVerifySMSOTPMessageText\x12>.zitadel.management.v1.GetCustomVerifySMSOTPMessageTextRequest\x1a?.zitadel.management.v1.GetCustomVerifySMSOTPMessageTextResponse\"\xa4\x04\x92A\xe2\x03\n" +
-	"\rMessage Texts\x12&Get Custom Verify SMS OTP Message Text\x1a\xc2\x01Get the custom text of the verify SMS OTP message that is set on the organization. The message is sent when an SMS One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\rpolicy.delete\x82\xd3\xe4\x93\x02&*$/text/message/verifyphone/{language}\x12\xbc\x05\n" +
+	" GetCustomVerifySMSOTPMessageText\x12>.zitadel.management.v1.GetCustomVerifySMSOTPMessageTextRequest\x1a?.zitadel.management.v1.GetCustomVerifySMSOTPMessageTextResponse\"\x96\x04\x92A\xd4\x03\n" +
+	"\rMessage Texts\x12&Get Custom Verify OTP SMS Message Text\x1a\xb4\x01Get the custom text of the verify OTP SMS message that is set on the organization. The message is sent when an OTP SMS should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02'\x12%/text/message/verifysmsotp/{language}\x12\xfd\x05\n" +
-	"!GetDefaultVerifySMSOTPMessageText\x12?.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a@.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xd4\x04\x92A\x8a\x04\n" +
-	"\rMessage Texts\x12'Get Default Verify SMS OTP Message Text\x1a\xe9\x01Get the default text of the verify SMS OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an SMS One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02'\x12%/text/message/verifysmsotp/{language}\x12\xef\x05\n" +
+	"!GetDefaultVerifySMSOTPMessageText\x12?.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextRequest\x1a@.zitadel.management.v1.GetDefaultVerifySMSOTPMessageTextResponse\"\xc6\x04\x92A\xfc\x03\n" +
+	"\rMessage Texts\x12'Get Default Verify OTP SMS Message Text\x1a\xdb\x01Get the default text of the verify OTP SMS message that is set on the instance or as translation files in Zitadel itself. The message is sent when an OTP SMS should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xd0\a\n" +
-	" SetCustomVerifySMSOTPMessageText\x12>.zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest\x1a?.zitadel.management.v1.SetCustomVerifySMSOTPMessageTextResponse\"\xaa\x06\x92A\xe4\x05\n" +
-	"\rMessage Texts\x12,Set Custom Verify SMS OTP Reset Message Text\x1a\xbe\x03Set the custom text of the verify SMS OTP message for the organization. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}r\xe3\x01\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02/\x12-/text/default/message/verifysmsotp/{language}\x12\xc2\a\n" +
+	" SetCustomVerifySMSOTPMessageText\x12>.zitadel.management.v1.SetCustomVerifySMSOTPMessageTextRequest\x1a?.zitadel.management.v1.SetCustomVerifySMSOTPMessageTextResponse\"\x9c\x06\x92A\xd6\x05\n" +
+	"\rMessage Texts\x12,Set Custom Verify OTP SMS Reset Message Text\x1a\xb0\x03Set the custom text of the verify OTP SMS message for the organization. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
 	"\fpolicy.write\x82\xd3\xe4\x93\x02*:\x01*\x1a%/text/message/verifysmsotp/{language}\x12\xc9\x05\n" +
 	"+ResetCustomVerifySMSOTPMessageTextToDefault\x12I.zitadel.management.v1.ResetCustomVerifySMSOTPMessageTextToDefaultRequest\x1aJ.zitadel.management.v1.ResetCustomVerifySMSOTPMessageTextToDefaultResponse\"\x82\x04\x92A\xbe\x03\n" +
-	"\rMessage Texts\x123Reset Custom Verify SMS OTP Message Text to Default\x1a\x91\x01Removes the custom text of the verify SMS OTP message from the organization and therefore the default texts will trigger for the users afterward.r\xe3\x01\n" +
+	"\rMessage Texts\x123Reset Custom Verify OTP SMS Message Text to Default\x1a\x91\x01Removes the custom text of the verify OTP SMS message from the organization and therefore the default texts will trigger for the users afterward.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
-	"\rpolicy.delete\x82\xd3\xe4\x93\x02'*%/text/message/verifysmsotp/{language}\x12\xd8\x05\n" +
-	"\"GetCustomVerifyEmailOTPMessageText\x12@.zitadel.management.v1.GetCustomVerifyEmailOTPMessageTextRequest\x1aA.zitadel.management.v1.GetCustomVerifyEmailOTPMessageTextResponse\"\xac\x04\x92A\xe8\x03\n" +
-	"\rMessage Texts\x12(Get Custom Verify Email OTP Message Text\x1a\xc6\x01Get the custom text of the verify Email OTP message that is set on the organization. The message is sent when an Email One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\rpolicy.delete\x82\xd3\xe4\x93\x02'*%/text/message/verifysmsotp/{language}\x12\xd0\x05\n" +
+	"\"GetCustomVerifyEmailOTPMessageText\x12@.zitadel.management.v1.GetCustomVerifyEmailOTPMessageTextRequest\x1aA.zitadel.management.v1.GetCustomVerifyEmailOTPMessageTextResponse\"\xa4\x04\x92A\xe0\x03\n" +
+	"\rMessage Texts\x12(Get Custom Verify OTP Email Message Text\x1a\xbe\x01Get the custom text of the verify OTP Email message that is set on the organization. The message is sent when an OTP Email Email should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x02)\x12'/text/message/verifyemailotp/{language}\x12\x8b\x06\n" +
-	"#GetDefaultVerifyEmailOTPMessageText\x12A.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xdc\x04\x92A\x90\x04\n" +
-	"\rMessage Texts\x12)Get Default Verify Email OTP Message Text\x1a\xed\x01Get the default text of the verify Email OTP message that is set on the instance or as translation files in Zitadel itself. The message is sent when an Email One-time password should be verified and a notification provider is configured.r\xe3\x01\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x02)\x12'/text/message/verifyemailotp/{language}\x12\x83\x06\n" +
+	"#GetDefaultVerifyEmailOTPMessageText\x12A.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextRequest\x1aB.zitadel.management.v1.GetDefaultVerifyEmailOTPMessageTextResponse\"\xd4\x04\x92A\x88\x04\n" +
+	"\rMessage Texts\x12)Get Default Verify OTP Email Message Text\x1a\xe5\x01Get the default text of the verify OTP Email message that is set on the instance or as translation files in Zitadel itself. The message is sent when an OTP Email Email should be verified and a notification provider is configured.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\r\n" +
-	"\vpolicy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xde\a\n" +
-	"\"SetCustomVerifyEmailOTPMessageText\x12@.zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest\x1aA.zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextResponse\"\xb2\x06\x92A\xea\x05\n" +
-	"\rMessage Texts\x12.Set Custom Verify Email OTP Reset Message Text\x1a\xc2\x03Set the custom text of the verify Email OTP message for the organization. The message is sent when an Email One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}r\xe3\x01\n" +
+	"\vpolicy.read\x82\xd3\xe4\x93\x021\x12//text/default/message/verifyemailotp/{language}\x12\xd6\a\n" +
+	"\"SetCustomVerifyEmailOTPMessageText\x12@.zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextRequest\x1aA.zitadel.management.v1.SetCustomVerifyEmailOTPMessageTextResponse\"\xaa\x06\x92A\xe2\x05\n" +
+	"\rMessage Texts\x12.Set Custom Verify OTP Email Reset Message Text\x1a\xba\x03Set the custom text of the verify OTP Email message for the organization. The message is sent when an OTP Email Email should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0e\n" +
 	"\fpolicy.write\x82\xd3\xe4\x93\x02,:\x01*\x1a'/text/message/verifyemailotp/{language}\x12\xd5\x05\n" +
 	"-ResetCustomVerifyEmailOTPMessageTextToDefault\x12K.zitadel.management.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultRequest\x1aL.zitadel.management.v1.ResetCustomVerifyEmailOTPMessageTextToDefaultResponse\"\x88\x04\x92A\xc2\x03\n" +
-	"\rMessage Texts\x125Reset Custom Verify Email OTP Message Text to Default\x1a\x93\x01Removes the custom text of the verify Email OTP message from the organization and therefore the default texts will trigger for the users afterward.r\xe3\x01\n" +
+	"\rMessage Texts\x125Reset Custom Verify OTP Email Message Text to Default\x1a\x93\x01Removes the custom text of the verify OTP Email message from the organization and therefore the default texts will trigger for the users afterward.r\xe3\x01\n" +
 	"\xe0\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xca\x01The default is always the organization of the requesting user. If you like to get/set a result of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x0f\n" +
 	"\rpolicy.delete\x82\xd3\xe4\x93\x02)*'/text/message/verifyemailotp/{language}\x12\xde\x05\n" +
@@ -36891,8 +36891,8 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\aActions\x12\x13Set Trigger Actionsr\xdc\x01\n" +
 	"\xd9\x01\n" +
 	"\x0fx-zitadel-orgid\x12\xc3\x01The default is always the organization of the requesting user. If you like to get users of another organization include the header. Make sure the user has permission to access the requested data.\x18\x01\x82\xb5\x18\x10\n" +
-	"\x0eorg.flow.write\x82\xd3\xe4\x93\x02.:\x01*\")/flows/{flow_type}/trigger/{trigger_type}B\x89\x11\x92A\xd5\x10\x12\xd0\x02\n" +
-	"\x0eManagement API\x12\xbc\x01The management API is as the name states the interface where systems can mutate IAM objects like organizations, projects, clients, users and so on if they have the necessary access rights.\".\n" +
+	"\x0eorg.flow.write\x82\xd3\xe4\x93\x02.:\x01*\")/flows/{flow_type}/trigger/{trigger_type}B\x98\x11\x92A\xe4\x10\x12\xda\x02\n" +
+	"\x0eManagement API\x12\xc6\x01The management API is as the name states the interface where systems can mutate instance objects like organizations, projects, applications, users and so on if they have the necessary access rights.\".\n" +
 	"\aZITADEL\x12\x13https://zitadel.com\x1a\x0ehi@zitadel.com*J\n" +
 	"\x12Apache License 2.0\x124https://github.com/zitadel/zitadel/blob/main/LICENSE2\x031.0\x1a\x0e$CUSTOM_DOMAIN\"\x0e/management/v1*\x01\x022\x10application/json2\x10application/grpc2\x1aapplication/grpc-web+proto:\x10application/json:\x10application/grpc:\x1aapplication/grpc-web+protoZ\xd3\x01\n" +
 	"\x0f\n" +
@@ -36907,8 +36907,8 @@ const file_zitadel_management_proto_rawDesc = "" +
 	"\x06OAuth2\x124\n" +
 	"\x06openid\n" +
 	"*urn:zitadel:iam:org:project:id:zitadel:audj\t\n" +
-	"\aActionsj\xed\x01\n" +
-	"\fApplications\x12\xdc\x01Applications are the entry point to your project. Users either login into one of your clients and interact with them directly or use one of your APIs. All applications share the roles and authorizations of their project.j\x18\n" +
+	"\aActionsj\xf2\x01\n" +
+	"\fApplications\x12\xe1\x01Applications are the entry point to your project. Users either login into one of your applications and interact with them directly or use one of your APIs. All applications share the roles and authorizations of their project.j\x18\n" +
 	"\x16Authentication Methodsj\x0f\n" +
 	"\rAuthorizationj\n" +
 	"\n" +

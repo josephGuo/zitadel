@@ -1088,17 +1088,17 @@ const file_zitadel_session_v2beta_session_service_proto_rawDesc = "" +
 	"\rsession_token\x18\x02 \x01(\tB\xdc\x01\x92A\xd8\x012\xd5\x01\"The current token of the session, previously returned on the create / update request. The token is required unless the authenticated user terminates the own session or is granted the `session.delete` permission.\"H\x00R\fsessionToken\x88\x01\x01B\x10\n" +
 	"\x0e_session_token\"Q\n" +
 	"\x15DeleteSessionResponse\x128\n" +
-	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2beta.DetailsR\adetails\"\xc8\f\n" +
+	"\adetails\x18\x01 \x01(\v2\x1e.zitadel.object.v2beta.DetailsR\adetails\"\x94\f\n" +
 	"\x06Checks\x12u\n" +
 	"\x04user\x18\x01 \x01(\v2!.zitadel.session.v2beta.CheckUserB9\x92A624\"checks the user and updates the session on success\"H\x00R\x04user\x88\x01\x01\x12\xe0\x01\n" +
 	"\bpassword\x18\x02 \x01(\v2%.zitadel.session.v2beta.CheckPasswordB\x97\x01\x92A\x93\x012\x90\x01\"Checks the password and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x01R\bpassword\x88\x01\x01\x12\x80\x02\n" +
 	"\n" +
 	"web_auth_n\x18\x03 \x01(\v2%.zitadel.session.v2beta.CheckWebAuthNB\xb5\x01\x92A\xb1\x012\xae\x01\"Checks the public key credential issued by the WebAuthN client. Requires that the user is already checked and a WebAuthN challenge to be requested, in any previous request.\"H\x02R\bwebAuthN\x88\x01\x01\x12\xb4\x01\n" +
 	"\n" +
-	"idp_intent\x18\x04 \x01(\v2&.zitadel.session.v2beta.CheckIDPIntentBh\x92Ae2c\"Checks the IDP intent. Requires that the userlink is already checked and a successful idp intent.\"H\x03R\tidpIntent\x88\x01\x01\x12\xe8\x01\n" +
-	"\x04totp\x18\x05 \x01(\v2!.zitadel.session.v2beta.CheckTOTPB\xab\x01\x92A\xa7\x012\xa4\x01\"Checks the Time-based One-Time Password and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x04R\x04totp\x88\x01\x01\x12\xef\x01\n" +
-	"\aotp_sms\x18\x06 \x01(\v2 .zitadel.session.v2beta.CheckOTPB\xae\x01\x92A\xaa\x012\xa7\x01\"Checks the One-Time Password sent over SMS and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x05R\x06otpSms\x88\x01\x01\x12\xf5\x01\n" +
-	"\totp_email\x18\a \x01(\v2 .zitadel.session.v2beta.CheckOTPB\xb0\x01\x92A\xac\x012\xa9\x01\"Checks the One-Time Password sent over Email and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x06R\botpEmail\x88\x01\x01B\a\n" +
+	"idp_intent\x18\x04 \x01(\v2&.zitadel.session.v2beta.CheckIDPIntentBh\x92Ae2c\"Checks the IDP intent. Requires that the userlink is already checked and a successful idp intent.\"H\x03R\tidpIntent\x88\x01\x01\x12\xd0\x01\n" +
+	"\x04totp\x18\x05 \x01(\v2!.zitadel.session.v2beta.CheckTOTPB\x93\x01\x92A\x8f\x012\x8c\x01\"Checks the TOTP and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x04R\x04totp\x88\x01\x01\x12\xe1\x01\n" +
+	"\aotp_sms\x18\x06 \x01(\v2 .zitadel.session.v2beta.CheckOTPB\xa0\x01\x92A\x9c\x012\x99\x01\"Checks the OTP sent over SMS and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x05R\x06otpSms\x88\x01\x01\x12\xe7\x01\n" +
+	"\totp_email\x18\a \x01(\v2 .zitadel.session.v2beta.CheckOTPB\xa2\x01\x92A\x9e\x012\x9b\x01\"Checks the OTP sent over Email and updates the session on success. Requires that the user is already checked, either in the previous or the same request.\"H\x06R\botpEmail\x88\x01\x01B\a\n" +
 	"\x05_userB\v\n" +
 	"\t_passwordB\r\n" +
 	"\v_web_auth_nB\r\n" +

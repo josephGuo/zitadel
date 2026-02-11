@@ -3331,12 +3331,12 @@
     },
     "/members": {
       "post": {
-        "summary": "Add IAM Member",
+        "summary": "Add instance Member",
         "description": "Deprecated: use [CreateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-create-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request adds a new user to the members list with one or multiple roles.",
         "operationId": "AdminService_AddIAMMember",
         "responses": {
           "200": {
-            "description": "Member added to the IAM",
+            "description": "Member added to the instance",
             "schema": {
               "$ref": "#/definitions/v1AddIAMMemberResponse"
             }
@@ -3385,12 +3385,12 @@
     },
     "/members/_search": {
       "post": {
-        "summary": "List IAM Members",
+        "summary": "List instance Members",
         "description": "Deprecated: use [ListAdministrators](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-list-administrators.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request returns all users with memberships on the instance level, matching the search queries. The search queries will be AND linked.",
         "operationId": "AdminService_ListIAMMembers",
         "responses": {
           "200": {
-            "description": "members of the IAM",
+            "description": "members of the instance",
             "schema": {
               "$ref": "#/definitions/zitadeladminv1ListIAMMembersResponse"
             }
@@ -3433,12 +3433,12 @@
     },
     "/members/roles/_search": {
       "post": {
-        "summary": "List IAM Member Roles",
+        "summary": "List instance Member Roles",
         "description": "Members are users with permission to administrate Zitadel on different levels. This request returns all roles possible for a Zitadel member on the instance level.",
         "operationId": "AdminService_ListIAMMemberRoles",
         "responses": {
           "200": {
-            "description": "roles on the IAM of the user",
+            "description": "roles on the instance of the user",
             "schema": {
               "$ref": "#/definitions/v1ListIAMMemberRolesResponse"
             }
@@ -3475,7 +3475,7 @@
         "operationId": "AdminService_RemoveIAMMember",
         "responses": {
           "200": {
-            "description": "Member of the IAM removed",
+            "description": "Member of the instance removed",
             "schema": {
               "$ref": "#/definitions/v1RemoveIAMMemberResponse"
             }
@@ -3520,12 +3520,12 @@
         "deprecated": true
       },
       "put": {
-        "summary": "Update IAM Member",
+        "summary": "Update instance Member",
         "description": "Deprecated: use [UpdateAdministrator](apis/resources/internal_permission_service_v2/zitadel-internal-permission-v-2-internal-permission-service-update-administrator.api.mdx) instead.\n\nMembers are users with permission to administrate Zitadel on different levels. This request changes the roles of an existing member. The whole roles list will be updated. Make sure to include roles that you don't want to change (remove).",
         "operationId": "AdminService_UpdateIAMMember",
         "responses": {
           "200": {
-            "description": "Member of the IAM updated",
+            "description": "Member of the instance updated",
             "schema": {
               "$ref": "#/definitions/v1UpdateIAMMemberResponse"
             }
@@ -6307,7 +6307,7 @@
       },
       "post": {
         "summary": "Add OIDC Settings",
-        "description": "Create new OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and clients.",
+        "description": "Create new OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and applications.",
         "operationId": "AdminService_AddOIDCSettings",
         "responses": {
           "200": {
@@ -6351,7 +6351,7 @@
       },
       "put": {
         "summary": "Add OIDC Settings",
-        "description": "Update existing OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and clients.",
+        "description": "Update existing OIDC settings. The OIDC Settings define the lifetimes of the different tokens in OIDC. These settings are used for all organizations and applications.",
         "operationId": "AdminService_UpdateOIDCSettings",
         "responses": {
           "200": {
@@ -7803,8 +7803,8 @@
     },
     "/text/default/message/verifyemailotp/{language}": {
       "get": {
-        "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify Email OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Default Verify OTP SMS Message Text",
+        "description": "Get the default text of the verify OTP Email message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetDefaultVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -7891,8 +7891,8 @@
     },
     "/text/default/message/verifysmsotp/{language}": {
       "get": {
-        "summary": "Get Default Verify SMS OTP Message Text",
-        "description": "Get the default text of the verify SMS OTP message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Default Verify OTP SMS Message Text",
+        "description": "Get the default text of the verify OTP SMS message that is stored as translation files in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetDefaultVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -9023,8 +9023,8 @@
     },
     "/text/message/verifyemailotp/{language}": {
       "get": {
-        "summary": "Get Custom Verify SMS OTP Message Text",
-        "description": "Get the custom text of the Email OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Custom Verify OTP SMS Message Text",
+        "description": "Get the custom text of the OTP Email message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetCustomVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -9065,8 +9065,8 @@
         ]
       },
       "delete": {
-        "summary": "Reset Custom Verify SMS OTP Message Text to Default",
-        "description": "Removes the custom text of the Email OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "summary": "Reset Custom Verify OTP SMS Message Text to Default",
+        "description": "Removes the custom text of the OTP Email message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifyEmailOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9107,8 +9107,8 @@
         ]
       },
       "put": {
-        "summary": "Set Default Verify SMS OTP Reset Message Text",
-        "description": "Set the custom text of the Email OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
+        "summary": "Set Default Verify OTP SMS Reset Message Text",
+        "description": "Set the custom text of the OTP Email user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
         "operationId": "AdminService_SetDefaultVerifyEmailOTPMessageText",
         "responses": {
           "200": {
@@ -9295,8 +9295,8 @@
     },
     "/text/message/verifysmsotp/{language}": {
       "get": {
-        "summary": "Get Custom Verify SMS OTP Message Text",
-        "description": "Get the custom text of the verify SMS OTP message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured.",
+        "summary": "Get Custom Verify OTP SMS Message Text",
+        "description": "Get the custom text of the verify OTP SMS message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured.",
         "operationId": "AdminService_GetCustomVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -9337,8 +9337,8 @@
         ]
       },
       "delete": {
-        "summary": "Reset Custom Verify SMS OTP Message Text to Default",
-        "description": "Removes the custom text of the verify SMS OTP message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
+        "summary": "Reset Custom Verify OTP SMS Message Text to Default",
+        "description": "Removes the custom text of the verify OTP SMS message that is overwritten on the instance and triggers the text from the translation files stored in Zitadel itself. The text will be sent to the users of all organizations, that do not have a custom text configured.",
         "operationId": "AdminService_ResetCustomVerifySMSOTPMessageTextToDefault",
         "responses": {
           "200": {
@@ -9379,8 +9379,8 @@
         ]
       },
       "put": {
-        "summary": "Set Default Verify SMS OTP Reset Message Text",
-        "description": "Set the custom text of the verify SMS OTP user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an SMS One-time password should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
+        "summary": "Set Default Verify OTP SMS Reset Message Text",
+        "description": "Set the custom text of the verify OTP SMS user message that is overwritten on the instance as settings/database. The text will be sent to the users of all organizations, that do not have a custom text configured. The message is sent when an OTP SMS should be verified and a notification provider is configured. The Following Variables can be used: {{.Code}} {{.UserName}} {{.FirstName}} {{.LastName}} {{.NickName}} {{.DisplayName}} {{.LastEmail}} {{.VerifiedEmail}} {{.LastPhone}} {{.VerifiedPhone}} {{.PreferredLoginName}} {{.LoginNames}} {{.ChangeDate}} {{.CreationDate}}",
         "operationId": "AdminService_SetDefaultVerifySMSOTPMessageText",
         "responses": {
           "200": {
@@ -9952,17 +9952,17 @@
       "properties": {
         "title": {
           "type": "string",
-          "example": "ZITADEL - One-time Password",
+          "example": "ZITADEL - OTP",
           "maxLength": 500
         },
         "preHeader": {
           "type": "string",
-          "example": "Verify One-time Password ",
+          "example": "Verify OTP",
           "maxLength": 500
         },
         "subject": {
           "type": "string",
-          "example": "Verify One-time Password",
+          "example": "Verify OTP",
           "maxLength": 500
         },
         "greeting": {
@@ -9972,7 +9972,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -10028,7 +10028,7 @@
       "properties": {
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }
@@ -17288,17 +17288,17 @@
         },
         "title": {
           "type": "string",
-          "example": "ZITADEL - One-time Password",
+          "example": "ZITADEL - OTP",
           "maxLength": 500
         },
         "preHeader": {
           "type": "string",
-          "example": "Verify One-time Password ",
+          "example": "Verify OTP ",
           "maxLength": 500
         },
         "subject": {
           "type": "string",
-          "example": "Verify One-time Password",
+          "example": "Verify OTP",
           "maxLength": 500
         },
         "greeting": {
@@ -17308,7 +17308,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please use the \"Authenticate\" button or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please use the \"Authenticate\" button or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 10000
         },
         "buttonText": {
@@ -17372,7 +17372,7 @@
         },
         "text": {
           "type": "string",
-          "example": "Please visit {{ .VerifyURL }} or copy the one-time password {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
+          "example": "Please visit {{ .VerifyURL }} or copy the OTP {{.OTP}} and paste it to to the authentication screen in order to authenticate at Zitadel within the next five minutes.",
           "maxLength": 800
         }
       }

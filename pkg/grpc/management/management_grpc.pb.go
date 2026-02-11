@@ -329,7 +329,7 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [user service v2 ListUsers with InUserIDQuery](apis/resources/user_service_v2/user-service-list-users.api.mdx) instead.
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDResponse, error)
 	// Get User by login name (globally)
 	//
@@ -354,13 +354,13 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [user service v2 CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) instead.
 	//
-	// Create a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
+	// Create a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
 	AddHumanUser(ctx context.Context, in *AddHumanUserRequest, opts ...grpc.CallOption) (*AddHumanUserResponse, error)
 	// Create/Import User (Human)
 	//
 	// Deprecated: use [user service v2 UpdateHumanUser](apis/resources/user_service_v2/user-service-update-human-user.api.mdx) instead.
 	//
-	// Create/import a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
+	// Create/import a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
 	ImportHumanUser(ctx context.Context, in *ImportHumanUserRequest, opts ...grpc.CallOption) (*ImportHumanUserResponse, error)
 	// Create User (Machine)
 	//
@@ -534,7 +534,7 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [user service v2 RemoveTOTP](apis/resources/user_service_v2/user-service-remove-totp.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.
+	// Remove the configured OTP as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.
 	RemoveHumanAuthFactorOTP(ctx context.Context, in *RemoveHumanAuthFactorOTPRequest, opts ...grpc.CallOption) (*RemoveHumanAuthFactorOTPResponse, error)
 	// Remove Multi-Factor U2F
 	//
@@ -546,13 +546,13 @@ type ManagementServiceClient interface {
 	//
 	// Deprecated: use [user service v2 RemoveOTPSMS](apis/resources/user_service_v2/user-service-remove-otpsms.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	RemoveHumanAuthFactorOTPSMS(ctx context.Context, in *RemoveHumanAuthFactorOTPSMSRequest, opts ...grpc.CallOption) (*RemoveHumanAuthFactorOTPSMSResponse, error)
 	// Remove Multi-Factor OTP Email
 	//
 	// Deprecated: use [user service v2 RemoveOTPEmail](apis/resources/user_service_v2/user-service-remove-otp-email.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	RemoveHumanAuthFactorOTPEmail(ctx context.Context, in *RemoveHumanAuthFactorOTPEmailRequest, opts ...grpc.CallOption) (*RemoveHumanAuthFactorOTPEmailResponse, error)
 	// Search Passkey authentication
 	//
@@ -4308,7 +4308,7 @@ type ManagementServiceServer interface {
 	//
 	// Deprecated: use [user service v2 ListUsers with InUserIDQuery](apis/resources/user_service_v2/user-service-list-users.api.mdx) instead.
 	//
-	// Returns the full user object (human or machine) including the profile, email, etc.
+	// Returns the full user or Service Account including the profile, email, etc.
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDResponse, error)
 	// Get User by login name (globally)
 	//
@@ -4333,13 +4333,13 @@ type ManagementServiceServer interface {
 	//
 	// Deprecated: use [user service v2 CreateUser](apis/resources/user_service_v2/user-service-create-user.api.mdx) instead.
 	//
-	// Create a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
+	// Create a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
 	AddHumanUser(context.Context, *AddHumanUserRequest) (*AddHumanUserResponse, error)
 	// Create/Import User (Human)
 	//
 	// Deprecated: use [user service v2 UpdateHumanUser](apis/resources/user_service_v2/user-service-update-human-user.api.mdx) instead.
 	//
-	// Create/import a new user with the type human. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
+	// Create/import a new user. The newly created user will get an initialization email if either the email address is not marked as verified or no password is set. If a password is set the user will not be requested to set a new one on the first login.
 	ImportHumanUser(context.Context, *ImportHumanUserRequest) (*ImportHumanUserResponse, error)
 	// Create User (Machine)
 	//
@@ -4513,7 +4513,7 @@ type ManagementServiceServer interface {
 	//
 	// Deprecated: use [user service v2 RemoveTOTP](apis/resources/user_service_v2/user-service-remove-totp.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.
+	// Remove the configured OTP as a factor from the user. OTP is an authentication app, like Authy or Google/Microsoft Authenticator.
 	RemoveHumanAuthFactorOTP(context.Context, *RemoveHumanAuthFactorOTPRequest) (*RemoveHumanAuthFactorOTPResponse, error)
 	// Remove Multi-Factor U2F
 	//
@@ -4525,13 +4525,13 @@ type ManagementServiceServer interface {
 	//
 	// Deprecated: use [user service v2 RemoveOTPSMS](apis/resources/user_service_v2/user-service-remove-otpsms.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
+	// Remove the configured OTP SMS as a factor from the user. As only one OTP SMS per user is allowed, the user will not have OTP SMS as a second factor afterward.
 	RemoveHumanAuthFactorOTPSMS(context.Context, *RemoveHumanAuthFactorOTPSMSRequest) (*RemoveHumanAuthFactorOTPSMSResponse, error)
 	// Remove Multi-Factor OTP Email
 	//
 	// Deprecated: use [user service v2 RemoveOTPEmail](apis/resources/user_service_v2/user-service-remove-otp-email.api.mdx) instead.
 	//
-	// Remove the configured One-Time Password (OTP) Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
+	// Remove the configured OTP Email as a factor from the user. As only one OTP Email per user is allowed, the user will not have OTP Email as a second factor afterward.
 	RemoveHumanAuthFactorOTPEmail(context.Context, *RemoveHumanAuthFactorOTPEmailRequest) (*RemoveHumanAuthFactorOTPEmailResponse, error)
 	// Search Passkey authentication
 	//

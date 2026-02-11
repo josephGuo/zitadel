@@ -130,12 +130,12 @@ type Authenticators struct {
 	Password *Password `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	// Meta information about the user's WebAuthN authenticators.
 	WebAuthN []*WebAuthN `protobuf:"bytes,3,rep,name=web_auth_n,json=webAuthN,proto3" json:"web_auth_n,omitempty"`
-	// A list of the user's time-based one-time password (TOTP) authenticators,
+	// A list of the user's TOTP authenticators,
 	// incl. the name for identification.
 	Totps []*TOTP `protobuf:"bytes,4,rep,name=totps,proto3" json:"totps,omitempty"`
-	// A list of the user's one-time password (OTP) SMS authenticators.
+	// A list of the user's OTP SMS authenticators.
 	OtpSms []*OTPSMS `protobuf:"bytes,5,rep,name=otp_sms,json=otpSms,proto3" json:"otp_sms,omitempty"`
-	// A list of the user's one-time password (OTP) Email authenticators.
+	// A list of the user's OTP Email authenticators.
 	OtpEmail []*OTPEmail `protobuf:"bytes,6,rep,name=otp_email,json=otpEmail,proto3" json:"otp_email,omitempty"`
 	// A list of the user's authentication keys. They can be used to authenticate e.g. by JWT Profile.
 	AuthenticationKeys []*AuthenticationKey `protobuf:"bytes,7,rep,name=authentication_keys,json=authenticationKeys,proto3" json:"authentication_keys,omitempty"`
@@ -610,7 +610,7 @@ func (x *VerifyWebAuthNRegistration) GetWebAuthNName() string {
 
 type OTPSMS struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// unique identifier of the one-time password (OTP) SMS authenticator.
+	// unique identifier of the OTP SMS authenticator.
 	OtpSmsId string `protobuf:"bytes,1,opt,name=otp_sms_id,json=otpSmsId,proto3" json:"otp_sms_id,omitempty"`
 	// The phone number used for the OTP SMS authenticator.
 	Phone string `protobuf:"bytes,2,opt,name=phone,proto3" json:"phone,omitempty"`
@@ -673,7 +673,7 @@ func (x *OTPSMS) GetIsVerified() bool {
 
 type OTPEmail struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// unique identifier of the one-time password (OTP) Email authenticator.
+	// unique identifier of the OTP Email authenticator.
 	OtpEmailId string `protobuf:"bytes,1,opt,name=otp_email_id,json=otpEmailId,proto3" json:"otp_email_id,omitempty"`
 	// The email address used for the OTP Email authenticator.
 	Address string `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
@@ -736,7 +736,7 @@ func (x *OTPEmail) GetIsVerified() bool {
 
 type TOTP struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// unique identifier of the time-based one-time password (TOTP) authenticator.
+	// unique identifier of the TOTP authenticator.
 	TotpId string `protobuf:"bytes,1,opt,name=totp_id,json=totpId,proto3" json:"totp_id,omitempty"`
 	// The name provided during registration. This is used for easier identification.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
