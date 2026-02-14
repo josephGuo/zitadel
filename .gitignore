@@ -66,7 +66,7 @@ buf.lock
 # /proto/v*/
 # /internal/api/assets/authz.go
 # /internal/api/assets/router.go
-# internal/api/ui/console/static
+internal/api/ui/console/static
 !/internal/api/ui/console/static/gitkeep
 apps/docs/content/apis/assets/assets.mdx
 apps/docs/content/reference/api/
