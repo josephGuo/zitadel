@@ -1,10 +1,10 @@
 {
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
   "name": "@zitadel/login",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "NEXT_OUTPUT_MODE=standalone next build && cp -r public scripts/* .next/standalone/ && cp -r .next/static .next/standalone/apps/login/.next/ && rm .next/standalone/apps/login/.env",
+    "build": "NEXT_OUTPUT_MODE=standalone next build && cp -r public scripts/* .next/standalone/ && mv .next/standalone/apps/login/server.js .next/standalone/apps/login/next-server.js && cp .next/standalone/server.mjs .next/standalone/apps/login/server.js && cp -r .next/static .next/standalone/apps/login/.next/ && rm .next/standalone/apps/login/.env",
     "build-vercel": "next build",
     "dev": "HOSTNAME=127.0.0.1 ./scripts/entrypoint.sh next dev",
     "prod": "cd ./.next/standalone && HOSTNAME=127.0.0.1 ./entrypoint.sh node apps/login/server.js",
@@ -45,7 +45,6 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.6",
-    "@bufbuild/buf": "^1.64.0",
     "@faker-js/faker": "^9.9.0",
     "@otplib/core": "^12.0.1",
     "@otplib/plugin-crypto": "^12.0.1",

@@ -2,6 +2,9 @@
 # This stage produces a runnable image that can be used for debugging.
 FROM debian:latest AS builder
 ARG TARGETPLATFORM
+# BINARY allows callers to pass a differently-named local build artifact.
+# Defaults to 'zitadel' for release builds; set to 'zitadel.local' for local dev builds.
+ARG BINARY=zitadel
 
 RUN apt-get update && apt-get install ca-certificates -y
 

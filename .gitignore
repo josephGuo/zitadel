@@ -98,6 +98,7 @@ go.work.sum
 
 # PNPM
 .pnpm-store
+pnpm-lock.yaml
 
 # Nx
 .nx/cache
