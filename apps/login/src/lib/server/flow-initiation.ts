@@ -1,5 +1,6 @@
 import { getValidLocaleFromUILocales } from "@/lib/auth-utils";
 import { getLanguageCookie, setLanguageCookie } from "@/lib/cookies";
+
 import { shouldUILocalesOverrideCookie } from "@/lib/i18n";
 import { idpTypeToSlug } from "@/lib/idp";
 import { createLogger } from "@/lib/logger";
@@ -266,8 +267,14 @@ export async function handleOIDCFlowInitiation(params: FlowInitiationParams): Pr
       }
       return NextResponse.redirect(loginNameUrl);
     } else if (authRequest.prompt.includes(Prompt.NONE)) {
-      const securitySettings = await getSecuritySettings({ serviceConfig });
-
+      let securitySettings: SecuritySettings | undefined;
+      try {
+        securitySettings = await getSecuritySettings({ serviceConfig });
+      } catch (err) {
+        logger.error("Failed to load security settings for CSP in prompt=none flow", {
+          error: err,
+        });
+      }
       const selectedSession = await findValidSession({ serviceConfig, sessions, authRequest, organization });
 
       const noSessionResponse = NextResponse.json({ error: "No active session found" }, { status: 400 });
@@ -301,7 +308,6 @@ export async function handleOIDCFlowInitiation(params: FlowInitiationParams): Pr
 
       const callbackResponse = NextResponse.redirect(callbackUrl);
       setCSPHeaders(callbackResponse, serviceConfig, securitySettings);
-
       return callbackResponse;
     } else {
       let selectedSession = await findValidSession({ serviceConfig, sessions, authRequest, organization });

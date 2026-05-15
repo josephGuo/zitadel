@@ -1,5 +1,4 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import { DEFAULT_CSP } from "./constants/csp.js";
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -20,10 +19,6 @@ const secureHeaders = [
     key: "X-XSS-Protection",
     value: "1; mode=block",
   },
-  {
-    key: "Content-Security-Policy",
-    value: DEFAULT_CSP,
-  },
   { key: "X-Frame-Options", value: "deny" },
 ];
 
@@ -35,7 +30,6 @@ const nextConfig = {
   experimental: {
     // Add React 19 compatibility optimizations
     optimizePackageImports: ["@radix-ui/react-tooltip", "@heroicons/react"],
-    useCache: true,
     serverActions: {
       ...(process.env.SERVER_ACTION_ALLOWED_ORIGINS
         ? { allowedOrigins: process.env.SERVER_ACTION_ALLOWED_ORIGINS.split(",").map((o) => o.trim()) }
